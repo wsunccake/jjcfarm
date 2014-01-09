@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bootstrap 101 Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- load my javascript -->
+    <script type="text/javascript" src="js/myapp.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <!-- <h1>Hello, world!</h1> -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+
+
+    <script type="text/javascript">
+  // document.write(sayHi('xxx') ); 
+  // document.writeln('<br />'); 
+  // document.write(sayGood('yyy') ); 
+  // document.writeln('<br />'); 
+  // document.write(sayHello('zzz') ); 
+  // document.writeln('<br />');
+
+  // var next = countNumber();
+  // document.writeln(next() );
+  // document.writeln(next() );
+
+  // (function (arg) {
+  //   alert(arg + " watch out!");
+  // } ("User") );
+
+  // (function () {
+  //   alert("be careful!");
+  // }) ();
+
+  // var m = new Man('Jo', 15);
+  // document.writeln(m.getName() );
+  // document.writeln(m.name );
+  // document.writeln(m.getAge() );
+
+  // var w = new Woman('Ma');
+  // document.writeln(w.getName() );
+
+
+// $(function() { $('ul').css('background-color', 'White'); });
+// $(function() { $('.script').css('background-color', 'Aqua'); });
+// $(function() { $('#html').css('background-color', 'Green'); });
+
+
+// $(function() { $('#web a').css('background-color', 'Red'); });
+// $(function() { $('#script > a').css('background-color', 'Red'); });
+// $(function() { $('#perl + a').css('background-color', 'Aqua'); });
+// $(function() { $('#html ~ a').css('background-color', 'Aqua'); });
+// $(function() { $('a, p').css('background-color', 'White'); });
+
+
+// $(function() { $('p:first').css('background-color', 'Aqua'); });
+// $(function() { $('p:even').css('background-color', 'Aqua'); });
+// $(function() { $('p:eq(2)').css('background-color', 'Aqua'); });
+// $(function() { $('p:gt(0)').css('background-color', 'Aqua'); });
+// $(function() { $('p:contains("CSS")').css('background-color', 'Aqua'); });
+// $(function() { $('p:empty').text('waiting ...'); });
+// $(function() { $('p:has(a)').css('background-color', 'Aqua'); });
+// $(function() { $('p:last-child').css('background-color', 'Aqua'); });
+// $(function() { $('#script > li:nth-child(4n)').css('background-color', 'Aqua'); });
+// $(function() { $('p img:only-child').css('border', 'solid 5px Aqua'); });
+
+
+// $(function() { $('p[name]').css('border', 'solid 5px Aqua'); });
+// $(function() { $('p[name = "other"]').css('border', 'solid 5px Aqua'); });
+// $(function() { $('li[id ^= "p"]').css('background-color', 'Aqua'); });
+// $(function() { $('a[href $= ".org/"]').css('background-color', 'Aqua'); });
+// $(function() { $('a[href *= "Java"]').css('background-color', 'Aqua'); });
+
+
+    </script>
+
+
+
+
+    <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">jQuery example</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Script <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#perl">Perl</a></li>
+                <li><a href="#php">Php</a></li>
+                <li><a href="#python">Python</a></li>
+                <li><a href="#ruby">Ruby</a></li>
+              </ul>
+            </li>
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Web <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#html">HTML</a></li>
+                <li><a href="#css">CSS</a></li>
+                <li><a href="#javascript">JavaScript</a></li>
+              </ul>
+            </li>
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Framework <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#joomla">Joomla</a></li>
+                <li><a href="#django">Django</a></li>
+                <li><a href="#ror">Ruby on Rails</a></li>
+              </ul>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+
+
+    <ul id="script">
+    <h2>Script</h2>
+    <li class="script" id="perl">Perl</li>
+    <a href="http://www.perl.org/">http://www.perl.org/</a>
+    <p>Perl is a family of high-level, general-purpose, interpreted, dynamic programming languages.
+    <a href="http://en.wikipedia.org/wiki/Perl">more...</a>
+    </p>
+
+    <li class="web" id="php">Php</li>
+    <a href="http://php.net/">http://php.net/</a>
+    <p class="web">This article is about the scripting language.
+    <a href="http://en.wikipedia.org/wiki/Php">more...</a>
+    </p>
+
+    <li class="script" id="python">Python</li>
+    <a href="http://www.python.org/">http://www.python.org/</a>
+    <p>Python is a widely used general-purpose, high-level programming language.
+    <a href="http://en.wikipedia.org/wiki/Python_(programming_language)">more...</a>
+    </p>
+
+    <li class="script" id="ruby">Ruby</li>
+    <a href="https://www.ruby-lang.org/">https://www.ruby-lang.org/</a>
+    <p>Ruby is a dynamic, reflective, object-oriented, general-purpose programming language.
+    <a href="http://en.wikipedia.org/wiki/Ruby_(programming_language)">more...</a>
+    </p>
+    </ul>
+    <hr>
+
+    <ul id="web">
+    <h2>Web</h2>
+    <li class="web" id="html">HTML</li>
+    <p class="web">HyperText Markup Language (HTML) is the main markup language.
+    <a href="http://en.wikipedia.org/wiki/HTML">more...</a>
+    </p>
+
+    <li class="web" id="css">CSS</li>
+    <p>Cascading Style Sheets (CSS) is a style sheet language used for describing the presentation semantics (the look and formatting) of a document written in a markup language.
+    <a href="http://en.wikipedia.org/wiki/Cascading_Style_Sheets">more...</a>
+    </p>
+
+    <li class="web" id="javascript">JavaScript</li>
+    <p>JavaScript (JS) is an interpreted computer programming language.
+    <a href="http://en.wikipedia.org/wiki/JavaScript">more...</a>
+    </p>
+
+    <li class="web" id="other">Other</li>
+    <p name="other"></p>
+    <p name="imgage"><img src="https://lh3.googleusercontent.com/-w0UdIu8UZG4/Ufm1vJAtbqI/AAAAAAAARQw/7buV13g6gdY/w426-h250/css3-html5-javascript-logo.png" alt=""> </p>
+    </ul>
+    <hr>
+
+
+    <ul id="framework">
+    <h2>Framwork</h2>
+    <li class="framwork" id="joomla">Joomla</li>
+    <a href="http://www.joomla.org/">http://www.joomla.org/</a>
+    <p>Joomla is a free and open-source content management framework for publishing web content.
+    <a href="http://en.wikipedia.org/wiki/Joomla">more...</a>
+    </p>
+
+    <li class="framework" id="django">Django</li>
+    <a href="https://www.djangoproject.com/">https://www.djangoproject.com/</a>
+    <p>Django is a free and open source web application framework, written in Python.
+    <a href="http://en.wikipedia.org/wiki/Django_(web_framework)">more...</a>
+    </p>
+
+    <li class="framework" id="ror">Ruby on Rails</li>
+    <a href="http://rubyonrails.org/">http://rubyonrails.org/</a>
+    <p>Ruby on Rails, often simply Rails, is an open source web application framework which runs on the Ruby programming language.
+    <a href="http://en.wikipedia.org/wiki/Ruby_on_Rails">more...</a>
+    </p>
+    <hr>
+
+
+
+
+    </ul>
+  </body>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>Torque</title>
+<link rel="stylesheet" href="../../defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>Torque</h1>
+      <a href="#package"><li class="title">Torque Package</li></a>
+      <br /><a href="#server"><li class="title">Torque Server</li></a>
+      <br /><a href="#scheduler"><li class="title">Torque Schelduer</li></a>
+      <br /><a href="#mom"><li class="title">Torque Mom</li></a>
+      <br /><a href="#usage"><li class="title">Torque Usage</li></a>
+      <br /><a href="#reference"><li class="title">Reference</li></a>
+      <div class="context">
+      </div>
+      <p class="h1">在PC cluster(電腦叢集系統)中, 如何有效且方便地使用各個資源是一個問題, 因此需要排程系統 (queuing system/Portable Batch System; PBS), 來解決這類問題. 常用的free software有DQS和OpenPBS等, 商業版本的有PBS Pro等. 在此簡單介紹TORQUE (Tera-scale Open-source Resource and QUEue manager), TORQUE相當是OpenPBS的延伸版本, 因為OpenPBS已經不再更新. PBS在使用上有分為PBS server, PBS scheduler和PBS mom (machine oriented miniserver). 目前最新已出到4.2版. 
+      <br />Torque server：接受使用者submit job且可以讓使用者知道mom上的使用情形
+	  <br />Torque scheduler：接受server上submit來的job，依queue type去安排job所使用的時間，使用mom的數量
+	  <br />Torque mom：真正執行job的PC在submit job時情形如下：
+	  </p>
+      <hr />
+
+<!-- Torque Pakcage -->
+      <a name="package"><h2>Torque Package</h2>
+      <h3></h3>
+      <p class="h3">先到http://www.clusterresources.com/downloads/torque下載，在安裝可使Autotools用或rpmbuild安裝</p>
+      <div class="commands"><span class="cmts"># rpmbuild方式</span>
+      <br />SLES:~ # <span class="cmds">rpmbuild</span>	-ta <span class="vars">torque-4.2.5.tar.gz</span>
+      <br />SLES:~ # <span class="cmds">ls</span> /usr/src/packages/RPMS/x86_64
+      <br />torque-4.2.5-1.adaptive.x86_64.rpm
+      <span class="cmts"># </span>
+	  <br />torque-client-4.2.5-1.adaptive.x86_64.rpm
+	  <span class="cmts"># mom</span>
+	  <br />torque-devel-4.2.5-1.adaptive.x86_64.rpm
+	  <span class="cmts"># library</span>
+	  <br />torque-scheduler-4.2.5-1.adaptive.x86_64.rpm
+	  <span class="cmts"># scheduler</span>
+	  <br />torque-server-4.2.5-1.adaptive.x86_64.rpm
+	  <span class="cmts"># server</span>
+	  <br />SLES:~ # <span class="cmds">rpm</span> -ivh  /usr/src/packages/RPMS/x86_64/<span class="vars">torque*</span>
+	  <br />
+
+	  <br /><span class="cmts"># Autotools方式</span>
+	  <br />SLES:~ # <span class="cmds">tar</span> zxf <span class="vars">torque-4.2.5.tar.gz</span>
+	  <br />SLES:~ # <span class="cmds">cd</span> <span class="vars">torque-4.2.5</span>
+	  <br />SLES:~/torque-4.2.5 # ./configure --prefix=<span class="vars">/usr/local/torque</span> --with-server-home=<span class="vars">/var/spool/torque</span> --enable-syslog
+	  <br />SLES:~/torque-4.2.5 # <span class="cmds">make</span> &amp;&amp; <span class="cmds">make</span> install
+      </div>
+      <p class="h3">rpmbuild方式, 簡單容易管理，建議使用
+      <br />	
+      <br />Autotools方式, 需編譯安裝, 常用選項如下:
+      <br />--prefix: 安裝程式時, 要安裝在哪個目錄下, 一般習慣安裝在/usr/local/torque預設是裝在/usr/local
+      <br />--with-server-home: 是在執行的設定要放在哪個目錄下，預設是放在/var/spool/torque，若怕忘記可與torque放在同一個目錄
+      <br />--enable-syslog: 在torque執行時，會在syslog中有紀錄
+      <br />--with-default-server:
+      <br />--disable-gui/--enable-gui: [不]使用gui(需多安裝tcl及tk), 編譯安裝後會多xpbs和xpbsmon這兩個指令
+      <br />--with-rcp(支援rcp, scp及mom_rcp)
+  	  </p>
+	  <hr />
+
+<!-- Torque Server -->
+      <a name="server"><h2>Torque Server</h2>
+      <h3></h3>
+      <p class="h3">1. 設定server</p>
+      <div class="commands">Server:~ # <span class="cmds">cat</span> /var/spool/torque/server_name
+      <span class="cmts"># 設定server名稱</span>
+	  <br /><span class="vars">k0</span>
+	  </div>
+	  <br />
+
+	  <p class="h3">2. 設定mom nodes</p>
+	  <div class="commands"><span class="cmts"># 寫設定檔方式</span>
+	  <br />Server:~ # <span class="cmds">cat</span> /var/spool/torque/server_priv/nodes 
+	  <br /><span class="vars">i01</span>
+	  <span class="cmts"># 設定mom hostname</span>
+	  <br /><span class="vars">i02</span> np=<span class="vars">2</span>
+	  <span class="cmts"># np設定有多少cpu core</span>
+	  <br /><span class="vars">i03</span> np=<span class="vars">2</span> gpus=<span class="vars">1</span>
+	  <span class="cmts"># gpus設定有多少gpu</span>
+	  <br /><span class="vars">i04</span> np=<span class="vars">2</span> <span class="vars">numaq</span>
+	  <span class="cmts"># 自定queuing group</span>
+	  <br />
+
+	  <br /><span class="cmts"># 直接使用指令</span>
+	  <br />Server:~ # <span class="cmds">qmgr</span> -c &quot;create node i02&quot; 
+	  <br />Server:~ # <span class="cmds">qmgr</span> -c &quot;set node i02 np=2&quot;
+	  <br />Server:~ # <span class="cmds">qmgr</span> -c &quot;list node i02&quot;
+	  <br />Server:~ # <span class="cmds">qmgr</span> -c &quot;delete node i03&quot;
+	  <span class="cmts"># 使用qmgr設定</span>
+	  </div>
+	  <p class="h3">直接編輯nodes時, 需要重新啟動pbs_server服務才會生效; 使用qmgr指令時, 就直接寫入記憶體, 無須重啟服務</p>
+	  <br />
+
+	  <p class="h3">3. 啓動</p>
+	  <div class="commands">Server:~ # <span class="cmds">trqauthd</span>
+	  <span class="cmts"># 啓動認證服務, 在執行每個torque服務都須先啟動</span>
+	  <br />Server:~ # <span class="cmds">pbs_server</span> -t create
+	  <span class="cmts"># 第一次啟動, 建立db</span>
+	  <br />
+
+	  <br />Server:~ # /etc/init.d/<a href="./init.d/trqauthd">trqauthd</a> start
+	  <br />Server:~ # /etc/init.d/<a href="./init.d/pbs_server">pbs_server</a> start
+	  <br />Server:~ # <span class="cmds">chkconfig</span> trqauthd on
+	  <br />Server:~ # <span class="cmds">chkconfig</span> pbs_server on
+	  </div>
+	  <p class="h3">使用Autotools安裝會沒有/etc/init.d/trqauthd和/etc/init.d/pbs_server, 可直接下載使用</p>
+	  <br />
+
+	  <p class="h3">4. 設定queueing type</p>
+	  <div class="commands">Server:~ # <span class="cmds">cat</span> <span class="vars">queue.qmgr</span>
+	  <br />#
+	  <br /># Create queues and set their attributes.
+	  <br />#
+	  <br /># Create and define queue workq
+	  <br />#
+	  <br />create queue workq
+	  <br />set queue workq queue_type = Execution
+	  <br />set queue workq enabled = True
+	  <br />set queue workq started = True
+	  <br /># set queue numaq resources_default.neednodes = workq
+
+	  <span class="cmts"># 指定node feature</span>
+	  <br /># set queue workq priority = 10
+	  <br /># set queue workq max_running = 10
+	  <span class="cmts"># 設定最多同時有幾個job可以執行的數目 </span>
+	  <br /># set queue workq resources_max.ncpus = 2
+	  <span class="cmts"># 設定job同時可使用cpu最大數目 </span>
+	  <br /># set queue workq resources_default.cput = 3072:00:00
+	  <span class="cmts"># #設定job可以使用的cpu時間，格式為Hour:Minute:Second</span>
+	  
+	  <br />set queue workq acl_host_enable = True 
+	  <span class="cmts"># 啓動acl_hosts設定</span>
+	  <br />set queue workq acl_hosts = "k1+k2" 
+	  <span class="cmts"># 設定哪些host可以sumbit job</span> 
+	  <br />set queue workq acl_groups = group1
+	  <span class="cmts"># 設定哪些group可以sumbit job</span>
+	  <br />set queue workq acl_groups += group2
+
+	  <br />
+	  <br />
+	  <br />#
+	  <br /># Set server attributes.
+	  <br />#
+	  <br />set server scheduling = True
+	  <br />set server max_user_run = 5
+	  <br />set server acl_host_enable = True
+	  <span class="cmts"># 設定Host ACL(Access Control List)</span>
+	  <br />set server acl_hosts = k0.site
+	  <br />set server acl_hosts += k1.site
+	  <br />set server managers = user@*.site
+	  <span class="cmts">設定非root的user可以管理qmgr</span>
+	  <br />set server operators = user@*.site
+	  <br />set server default_queue = workq
+	  <span class="cmts"># 設定預設queue</span>
+	  <br />set server query_other_jobs = True 
+	  <span class="cmts"># 設定非管理員可否看見Job Queue</span>
+	  <br />set server log_events = 63
+	  <br />set server mail_from = root
+	  <br />set server query_other_jobs = True
+	  <br />set server resources_default.cput = 01:00:00
+	  <br />set server resources_default.neednodes = 1
+	  <br />set server resources_default.nodect = 1
+	  <br />set server resources_default.nodes = 1
+	  <br />set server scheduler_iteration = 60
+	  <br />set server workq_node = 1
+	  <br />
+
+	  <br />Server:~ # <span class="cmds">qmgr</span> &lt; <span class="vars">queue.qmgr</span>
+	  </div>
+      <hr />
+
+<!-- Torque Scheduler -->
+      <a name="scheduler"><h2>Torque Scheduler</h2>
+      <p class="h3">Scheduler一般都裝在Serve機器上, Torque預設的pbs_sched只有FIFO功能, 沒有細部排成功能, 若有需要可裝maui或slurm</p>
+      <div class="commands">Server:~ # <span class="cmds">pbs_sched</span>
+      <br />
+      <br />Server:~ # /etc/init.d/<a href="./init.d/pbs_sched">pbs_sched</a> start
+      <br />Server:~ # <span class="cmds">chkconfig</span> pbs_sched on
+      </div>
+      <hr />
+
+<!-- Torque Mom -->
+      <a name="mom"><h2>Torque Mom</h2>
+      <p class="h3">1. 設定server</p>
+      <div class="commands">Mom:~ # <span class="cmds">cat</span> /var/spool/torque/server_name
+      <span class="cmts"># 設定server名稱</span>
+	  <br /><span class="vars">k0</span>
+	  </div>
+	  <br />
+
+	  <p class="h3">2. 設定mom config</p>
+	  <div class="commands">Server:~ # <span class="cmds">cat</span> /var/spool/torque/mom_priv/config
+	  <br />$logevent <span class="vars">255</span> 
+	  <br />$clienthost <span class="vars">k0</span>
+	  </div>
+	  <br />
+
+	  <p class="h3">3. 啟動</p>
+	  <div class="commands">Mom:~ # <span class="cmds">pbs_mom</span>
+      <br />
+      <br />Mom:~ # /etc/init.d/<a href="./init.d/pbs_mom">pbs_mom</a> start
+      <br />Mom:~ # <span class="cmds">chkconfig</span> pbs_mom on
+      </div>
+      <hr />	
+
+<!-- Torque Usage -->
+      <a name="usage"><h2>Torque Usage</h2>
+      <h3>1. Basic</h3>
+      <table class="h3">
+      	<tr>
+      		<th>command</th>
+      		<th>description</th>
+      	</tr>
+      	<tr>
+      		<td>qsub</td>
+      		<td>job submission, 提交job. 建議是先寫成pbs script再用qsub去執行該script</td>
+      	</tr>
+      	<tr>
+      		<td>qstat</td>
+      		<td>job monitoring, 查看job狀態</td>
+      	</tr>
+      	<tr>
+      		<td>qdel</td>
+      		<td>job deletion, 刪除job</td>
+      	</tr>
+      </table>
+      <br />
+
+	  <div class="commands">Server:~ $ <span class="cmds">echo</span> "sleep 30" | <span class="cmds">qsub</span> [-l nodes=2 -l mem=16mb -q workq]
+	  <br />Server:~ $ <span class="cmds">qstat</span> [-a|-r|-i|-e|-q]
+	  <span class="cmts"># -a是all; -r是run; -i是idle; -e是execute; -q是queue</span>
+	  <br />Server:~ $ <span class="cmds">qstat</span> -n1
+	  <span class="cmts"># 顯示較詳細使用情形</span>
+	  <br />Server:~ $ <span class="cmds">qstat</span> -f <span class="vars">9.k0</span>
+	  <span class="cmts"># 顯示此job詳細情形</span>
+	  <br />Server:~ $ <span class="cmds">qstat</span> -Q 
+	  <br />Server:~ $ <span class="cmds">qstat</span> -q 
+	  <br />Server:~ $ <span class="cmds">qdel</span> <span class="vars">9.k0</span>
+	  <span class="cmts"># 刪除job</span>
+	  <br />Server:~ $ <span class="cmds">qsub</span> -I
+	  <span class="cmts"># 使用interactive mode </span>
+
+	  <br />Server:~ # <span class="cmds">qmgr</span> -c 's s acl_roots+=root@*'
+	  <span class="cmts"># 允許root submit job</span>
+	  <br />Server:~ # <span class="cmds">qmgr</span> -c 'set queue workq disallowed_types = interactive'
+	  <span class="cmts"># disable interactive mode</span>
+	  <br />Server:~ # <span class="cmds">qmgr</span> -c unset queue workq disallowed_types'
+	  <span class="cmts"># enable interactive mode</span>
+	  </div>
+	  <p class="h3">注意此時submit job者不可為root. Job id為此程式在queuing system中的id, 當要刪除在queuing system中的程式主要就是靠此id去判別. Name是顯示此submit job的名稱，只是給使用者看，若無指示則顯示STDIN. User表示此job為哪位使用者所執行的程式. Time Use意思是說此程式已執行多久了. S表示queuing status, R表示正在執行, Q則是等待中. Queue表示用哪個queuing type.</p>
+	  <br />
+
+      <h3>2. script</h3>
+	  <div class="commands">Server:~ $ <span class="cmds">cat</span> <span class="vars">test.pbs</span>
+	  <br />#!/bin/sh 
+	  <br />#PBS -N job
+	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">###-N: PBS job name</span>
+	  <br />#PBS -o job.out
+	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">###-o: PBS job output</span>
+	  <br />#PBS -e job.err
+	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">###-e: PBS job error</span>
+	  <br />#PBS -q workq
+	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">###-q: PBS queue type</span>
+	  <br />#PBS -l nodes=4:ppn=2
+	  <span class="cmts">###PBS -l nodes=i01:ppn=2+i02:ppn=2</span>
+	  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">###node: use computing node</span>
+	  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">###ppn: processor per node</span>
+	  <br />#PBS -l mem=32mb 
+	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">###mem: use memory</span>
+	  <br />#PBS -m bae xxx.@mail.edu.tw 
+	  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">###b: send me mail when job begins</span>
+	  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">###a: send me mail when job ends</span>
+	  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">###e: send me mail when job aborts (with an error)</span>
+	  <br />#PBS -V 
+	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">###-V: All environment variables in PBS</span>
+	  <br />
+	  <br />cd $PBS_O_WORKDIR 
+	  <br />
+	  <br />echo "sleep 30"
+	  <br />
+
+	  <br />Server:~ $ <span class="cmds">qsub</span> <span class="vars">test.pbs</span>
+	  </div>
+	  <br />
+
+      <h3>3. admin</h3>
+      <table class="h3">
+      	<tr>
+      		<th>command</th>
+      		<th>descritopn</th>
+      	</tr>
+      	<tr>
+      		<td>pbsnodes/qnodes</td>
+      		<td>查看mom的狀態</td>
+      	</tr>
+
+      	<tr>
+      		<td>qrun</td>
+      		<td>job run</td>
+      	</tr>
+      	<tr>
+      		<td>qhold</td>
+      		<td>變更job狀態, Q -&gt; H (R無法變成Q)</td>
+      	</tr>
+      	<tr>
+      		<td>qrls</td>
+      		<td>變更job狀態, H -&gt; Q</td>
+      	</tr>
+      	<tr>
+      		<td>qdisable</td>
+      		<td>queue不接受job</td>
+      	</tr>
+      		<td>qenable</td>
+      		<td>queue接受job</td>
+      	<tr>
+      		<td>qalter</td>
+      		<td>在job R之前變更job個設定</td>
+      	</tr>
+      	<tr></tr>
+      	<tr></tr>
+
+      </table>
+      <br />
+      <div class="commands">Server:~ # <span class="cmds">qnodes</span>
+      <span class="cmts"># 顯示所有PBS mom狀態 (詳細表示)</span>
+      <br />Server:~ # <span class="cmds">qnodes</span> -l all
+      <span class="cmts"># 顯示所有PBS mom狀態(簡略表示)</span>
+      <br />Server:~ # <span class="cmds">qnodes</span> -o <span class="vars">i01</span>
+      <span class="cmts"># 變更Mom狀態, free/down -&gt; offline</span>
+      <br />Server:~ # <span class="cmds">qnodes</span> -r <span class="vars">i01</span>
+      <span class="cmts"># 變更Mom狀態, offline -&gt; free/down</span>
+      <br />
+
+      <br />Server:~ # <span class="cmds">qdisable</span> <span class="vars">workq</span>
+      <br />Server:~ # <span class="cmds">qenable</span> <span class="vars">workq</span>
+      <br />
+
+      <br />Server:~ # <span class="cmds">qhold</span> <span class="vars">10.k0</span>
+      <br />Server:~ # <span class="cmds">qrls</span> <span class="vars">10.k0</span>
+      <br />Server:~ # <span class="cmds">qalter</span> -l nodes=<span class="vars">1</span>:ppn=<span class="vars">1</span>  <span class="vars">10.k0</span>
+      <br />Server:~ # <span class="cmds">qrun</span> <span class="vars">10.k0</span>
+      </div>
+      <hr />
+
+<!-- reference -->
+    <a name="reference"><h2>Reference</h2>
+    <li class="reference"><a href="http://www.supercluster.org">Supercluster.org</a></li>
+    <br /><li class="reference"><a href="http://pccluster.nchc.org.tw/main">PC Cluster</a></li>
+    <hr />
+
+<!-- changelog -->
+    <h2>Changelog</h2>
+    <li class="changlog">2013/11/09 第一次完成</li>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+#!/bin/sh
+
+. /etc/rc.status
+
+case "$1" in
+    start)
+        for ALLOW_HOST in $(grep -v ^# /etc/ip.allow); do
+            iptables -A INPUT -j ACCEPT -s $ALLOW_HOST
+        done
+
+        for DENY_HOST in $(grep -v ^# /etc/ip.deny); do
+            iptables -A INPUT -j DROP -s $DENY_HOST
+        done
+
+        iptables -t nat -A POSTROUTING -s 192.168.0.1/24 -o eth0 -j MASQUERADE
+        echo "1" > /proc/sys/net/ipv4/ip_forward 
+
+        # create SSH Limit chain
+        iptables -N SSHLimit
+        iptables -A SSHLimit -p tcp -m state --state ESTABLISHED,RELATED -j ACCEPT
+        iptables -A SSHLimit -p tcp --syn -m limit --limit 3/minute --limit-burst 10 -j ACCEPT
+        iptables -A SSHLimit -p tcp -j LOG --log-level "NOTICE" --log-prefix "[SSH_LIMIT]"
+        iptables -A SSHLimit -p tcp -j DROP
+        iptables -A INPUT -p tcp --dport 22 -j SSHLimit
+
+        echo -n "Starting NAT" 
+        rc_status -v 
+        ;;
+     stop)
+        iptables -F
+        iptables -X
+        iptables -Z
+        iptables -t nat -F
+        iptables -t nat -X
+        iptables -t nat -Z
+        echo -n "Shutting down NAT" 
+        rc_status -v 
+        ;;
+      restart)
+        $0 stop
+        $0 start
+        rc_status
+        ;;
+esac

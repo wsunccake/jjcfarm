@@ -1,0 +1,1147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>VIM</title>
+<link rel="stylesheet" href="../defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>VIM</h1>
+      <a href="#基本模式"><li class="title">基本模式</li></a>
+      <br /><a href="#基本操作"><li class="title">基本操作</li></a>
+      <br /><a href="#編輯指令"><li class="title">編輯指令</li></a>
+      <br /><a href="#排版功能"><li class="title">排版功能</li></a>
+      <br /><a href="#視窗操作"><li class="title">視窗操作</li></a>
+      <br /><a href="#搜尋替代"><li class="title">搜尋替代</li></a>
+      <br /><a href="#系統設定"><li class="title">系統設定</li></a>
+      <br /><a href="#vimrc"><li class="title">vimrc</li></a>
+      <br /><a href="#Reference"><li class="title">Reference</li></a>
+      <div class="context" xml:lang="en" lang="en">
+      <p class="h1">在SLES中，</p>
+      </div>
+      <hr />
+
+<!-- 基本模式 -->
+      <a name="基本模式"></a><h2>基本模式</h2>
+      <h3>常態模式（Normal mode）</h3>
+      <p class="h3">進入vim就是處於常態模式，只能下按鍵指令，不能輸入編輯文字。這些指令可能是游標移動的指令，也可能是編輯指令或尋找替換指令。</p>
+      <br />
+
+      <h3>插入模式（Insert mode）</h3>
+      <p class="h3">按i就會進入插入模式，此時才可鍵入文字，編輯文章，按Esc會回到常態模式。在狀態列會有 - INSERT - 字樣。</p>
+      <br />
+
+      <h3>命令列模式（Cmdline mode/Command-line mode）</h3>
+      <p class="h3">按冒號：會進入命令列模式，左下角會有一個冒號：出現可下指令。按Esc回命令列模式。反正正常狀態都是處於常態模式，這樣才不會把您辛苦打字的文章給隨便搞亂掉。搜尋時的 / 及 ? 按鍵也是屬於命令列模式。</p>
+      <br />
+
+      <h3>反白模式（Visual mode）</h3>
+      <p class="h3">這就是把需要處理的文字反白起來，等待處理的模式，底部狀態最會有 - VISUAL - (從Normal mode輸入v進入)或 - VISUAL LINE - (從Normal mode輸入V進入) 或 - VISUAL BLOCK - (從Normal mode輸入^v進入)字樣。</p>
+      <br />
+
+      <h3>選擇模式（Select mode）</h3>
+      <p class="h3">類似Windows操作模式，可直接進入Insert mode。底部狀態最會有 - SELECT - (從Normal mode輸入gh進入)或 - VISUAL LINE - (從Normal mode輸入gH進入) 或  - VISUAL BLOCK - (從Normal mode輸入g^h進入)字樣。</p>
+      <br />
+
+      <h3>Ex模式（Ex mode）</h3>
+      <p class="h3">和命令列模式是一樣的，但下了命令後不會返回，會留在行ex編輯器狀態，有一個冒號在那兒，等待輸入命令。由 gQ 按鍵可以進入 Ex 模式，輸入 visual 可以返回正常模式。</p>
+      <br />
+
+      <h3>額外模式（additional mode）</h3>
+      <p class="h3">除了上述幾個常見的模式，還有以下幾個少用到的模式，這裡稱為額外模式</p>
+      <br />
+
+      <h3>取代模式（replace mode）</h3>
+      <p class="h3">下R指令時所處的狀態。狀態列會有 - REPLACE - 字樣。</p>
+      <br />
+
+      <h3>插入常態模式（insert normal mode）</h3>
+      <p class="h3">特殊模式，在插入模式時，進入輸入狀態，但按 Ctrl+O 就會進入插入常態模式，和常態模式一樣，只不過執行完所下的指令後又會馬上返回原來的插入模式繼續輸入文字。狀態列會有 - (insert) - 字樣，是小寫有小號的。</p>
+      <br />
+
+      <h3>插入反白模式（insert visual mode）</h3>
+      <p class="h3">這和插入常態模式一樣，只不過在按 Ctrl+O 後所執行的是反白的 Ctrl+V 或 V 或 v 而進入反白模式，等反白模式結束又會返回原來的插入模式。狀態列會有 - (insert) VISUAL - 字樣。</p>
+      <br />
+
+      <h3>插入選擇模式（insert select mode）</h3>
+      <p class="h3">這和插入反白模式一樣，只不過進入的是選擇模式，而非反白模式。狀態列會有 - (insert) SELECT - 字樣。</p>
+      <br />
+      <hr />
+
+<!-- 基本操作 -->
+      <a name="基本操作"></a><h2>基本操作</h2>
+
+     <h3>基本移動操作</h3>
+     <table class="h3">
+      <tr><th>normal mode</th>
+          <th>description</th></tr>
+
+      <tr><td>h、→、Backspace</td>
+          <td>向左移動一個字元</td></tr>
+      <tr><td>j、↓、Enter、+</td>
+          <td>向下移動一個字元</td></tr>
+      <tr><td>k、↑、	-</td>
+          <td>向上移動一個字元</td></tr>
+      <tr><td>l、→、Space</td>
+          <td>向右移動一個字元</td></tr>
+
+      <tr><td>[Ctrl]^f、PageDown</td>
+          <td>向下/前翻頁（Forward）</td></tr>
+      <tr><td>[Ctrl]^e</td>
+          <td>向下/前翻頁，但游標固定行數</td></tr>
+      <tr><td>[Ctrl]^d</td>
+          <td>向下/前翻頁，但游標固定位置</td></tr>
+
+      <tr><td>[Crtl]^b、PageUp</td>
+          <td>向上/後翻頁（Backwad）</td></tr>
+      <tr><td>[Ctrl]^y</td>
+          <td>向上/後翻頁，但游標固定行數</td></tr>
+      <tr><td>[Ctrl]^u</td>
+          <td>向上/後翻頁，但游標固定位置</td></tr>
+
+      <tr><td>w</td>
+          <td>移至次一個字（word）字首</td></tr>
+      <tr><td>W</td>
+          <td>同上，但會忽略一些標點符號</td></tr>
+      <tr><td>e</td>
+          <td>移至後一個字字尾</td></tr>
+      <tr><td>E</td>
+          <td>同上，但會忽略一些標點符號</td></tr>
+      <tr><td>b</td>
+          <td>移至前一個字字首</td></tr>
+      <tr><td>B</td>
+          <td>同上，但會忽略一些標點符號</td></tr>
+
+      <tr><td>)</td>
+          <td>移至下一個句子（sentence）首</td></tr>
+      <tr><td>(</td>
+          <td>移至上一個句子（sentence）首</td></tr>
+      <tr><td>{</td>
+          <td>移至下一個段落（paragraph）首</td></tr>
+      <tr><td>}</td>
+          <td>移至上一個段落（paragraph）首</td></tr>
+      <tr><td>%</td>
+          <td>匹配 {}，[]，() </td></tr>
+
+      <tr><td>0、Home</td>
+          <td>移至行首（含空白字元）</td></tr>
+      <tr><td>^</td>
+          <td>移至行首第一個非空白字元</td></tr>
+      <tr><td>$、End</td>
+          <td>移至行尾</td></tr>
+      <tr><td>G</td>
+          <td>移至檔尾（全文最後一行的第一個非空白字元處）</td></tr>
+      <tr><td>gg</td>
+          <td>移至檔首（全文第一行之第一個非空白字元處）</td></tr>
+      <tr><td><i>n</i>|</td>
+          <td>移至第<i>n</i>個字元</td></tr>
+      <tr><td><i>n</i>G</td>
+          <td>移至第<i>n</i>行行首</td></tr>
+
+      <tr><td>H</td>
+          <td>移至螢幕頂第一個非空白字元</td></tr>
+      <tr><td>M</td>
+          <td>移至螢幕中間第一個非空白字元</td></tr>
+      <tr><td>L</td>
+          <td>移至螢幕底第一個非空白字元</td></tr>
+      </table>
+
+     <table class="h3">
+      <tr><th>command mode</th>
+          <th>description</th></tr>
+
+	      <tr><td>:e[dit]</td>
+	          <td>開啓檔案、:e text.txt(開啓text.txt)、:e!(重開檔案，用於修改後但未儲存)</td></tr>
+	      <tr><td>:w[rite]</td>
+	          <td>儲存檔案、:w(存檔)、:w newtext.txt(另存新檔)</td></tr>
+	      <tr><td>:q[uit]</td>
+	          <td>離開檔案、:q(離開)</td></tr>
+	      <tr><td>:r[ead]</td>
+	          <td>讀入檔案、:r tmp.txt(插入tmp.txt內容到檔案)、:r !ls(從stdin插入到檔案)</td></tr>
+	      </table>
+	      <br />	
+      <hr />
+
+<!-- 編輯指令 -->
+      <a name="編輯指令"></a><h2>編輯指令</h2>
+
+
+     <h3>基本編輯</h3>
+     <table class="h3">
+      <tr><th>normal mode</th>
+          <th>description</th></tr>
+
+      <tr><td>i</td>
+          <td>在游標所在字元前開始輸入文字(insert)</td></tr>
+      <tr><td>a</td>
+          <td>在游標所在字元後開始輸入文字(append)</td></tr>
+      <tr><td>o</td>
+          <td>在游標所在行下開一新行來輸入文字(open)</td></tr>
+      <tr><td>I、^i、0i</td>
+          <td>在行首開始輸入文字</td></tr>
+      <tr><td>A、$a</td>
+          <td>在行尾開始輸入文字</td></tr>
+      <tr><td>O</td>
+          <td>在游標所在行上開一新行來輸入文字</td></tr>
+      <tr><td>J</td>
+          <td>將下一行整行接至本行(Joint)</td></tr>
+
+      <tr><td>x</td>
+          <td>刪除游標所在處之字元</td></tr>
+      <tr><td>X</td>
+          <td>刪除游標前之字元</td></tr>
+      <tr><td>dd</td>
+          <td>刪除一整行(delete line)</td></tr>
+      <tr><td>dw</td>
+          <td>刪除一個字(delete word)</td></tr>
+      <tr><td>dgg</td>
+          <td>刪至檔首</td></tr>
+      <tr><td>dG</td>
+          <td>刪至檔尾</td></tr>
+      <tr><td>d<i>n</i>G</td>
+          <td>刪至檔中第<i>n</i>行</td></tr>
+      <tr><td>D、d$</td>
+          <td>刪至行尾</td></tr>
+      <tr><td>d0、d^</td>
+          <td>刪至行首</td></tr>
+
+      <tr><td>r</td>
+          <td>取代游標所在處之單一字元</td></tr>
+      <tr><td>R</td>
+          <td>進入取代模式（replace mode）</td></tr>
+      <tr><td>S、cc</td>
+          <td>取代整行內容</td></tr>
+      <tr><td>cw</td>
+          <td>替換一個英文字(word)</td></tr>
+      <tr><td>~</td>
+          <td>游標所在處字元之大小寫互換</td></tr>
+      <tr><td>C、c$</td>
+          <td>取代至行尾，即游標所在處以後的字都會被替換</td></tr>
+      <tr><td>c0、c^</td>
+          <td>取代至行首</td></tr>
+      <tr><td>s</td>
+          <td>替換一個字元為您所輸入的字串</td></tr>
+      <tr><td>u</td>
+          <td>回復所有編輯動作(undo)</td></tr>
+      <tr><td>U</td>
+          <td>在游標沒離開本行之前，回復所有編輯動作</td></tr>
+      <tr><td>Crtl+r</td>
+          <td>redo</td></tr>
+
+      <tr><td><i>n</i>dd</td>
+          <td>刪除游標所在處（含）起算以下<i>n</i>行</td></tr>
+      <tr><td><i>n</i>r</td>
+          <td>取代<i>n</i>個字元</td></tr>
+      <tr><td><i>n</i>J</td>
+          <td>將<i>n</i>行合併成一行</td></tr>
+      <tr><td><i>n</i>x</td>
+          <td>刪除<i>n</i>個字元</td></tr>
+
+      <tr><td>yy、Y</td>
+          <td>複製整行至緩衝（buffer）</td></tr></td></tr>
+      <tr><td><i>n</i>yy、y<i>n</i>y</td>
+          <td>複製游標所在處（含）起算以下<i>n</i>行至緩衝</td></tr></td></tr>
+      <tr><td>y^</td>
+          <td>複製游標所在處行到首（不含游標）至緩衝</td></tr>
+      <tr><td>y0</td>
+          <td>複製游標所在處行到首（不含游標）至緩衝</td></tr>
+      <tr><td>y$</td>
+          <td>複製游標所在處行到尾（含游標）至緩衝</td></tr>
+      <tr><td>ygg</td>
+          <td>複製游標所在處到檔案首至緩衝</td></tr>
+      <tr><td>yG</td>
+          <td>複製游標所在處到檔案尾至緩衝</td></tr
+      <tr><td>y<i>n</i>w</td>
+          <td>複製<i>n</i>個word至緩衝</td></tr>
+      <tr><td>y<i>n</i>W</td>
+          <td>複製<i>n</i>個word至緩衝</td></tr>
+
+      <tr><td>p</td>
+          <td>貼上緩衝游標後</td></tr>
+      <tr><td>P</td>
+          <td>貼上緩衝游標前</td></tr>
+
+      <tr><td>&quot;<b>c</b>Y</td>
+          <td>複製至名稱為<b>c</b>的緩衝</td></tr>
+      <tr><td>&quot;<b>c</b>y</td>
+          <td>複製至名稱為<b>c</b>的緩衝</td></tr>
+      <tr><td>&quot;<b>c</b>p</td>
+          <td>貼上名稱為<b>c</b>的緩衝游標後</td></tr>
+      <tr><td>&quot;<b>c</b>P</td>
+          <td>貼上名稱為<b>c</b>的緩衝游標前</td></tr>
+
+
+      <tr><td>gUw、gU$</td>
+          <td>小寫轉換大寫(w是單字, $是整行)</td></tr>
+      <tr><td>guw、gu$</td>
+          <td>大寫轉換小寫(w是單字, $是整行)</td></tr>
+      </table>
+      <br />
+
+      <p class="h3">:registers查詢使用的緩衝</p>
+      <br />
+
+      <table class="h3">
+      <tr><th>command mode</th>
+          <th>description</th></tr>
+      
+      <tr><td>:p[rint]</td>
+          <td>顯示、:2,5p(顯示2~5行)</td></tr>
+      <tr><td>:d[elete]</td>
+          <td>刪除、:2,5d(刪除2~5行)</td></tr>
+      <tr><td>:m[ove]</td>
+          <td>移動、:1,10m20(移動1~10行到第20行)</td></tr>
+      <tr><td>:t :c[opy]</td>
+          <td>複製、:20,+5t.(複製20~20+5行到目前行)</td></tr>
+      <tr><td>:y[ank]</td>
+          <td>暫存、:1,5y(1~5暫存到緩衝)</td></tr>
+      <tr><td>:pu[t]</td>
+          <td>貼上、:put(從緩衝貼上)</td></tr>
+
+      </table>
+      <br />
+      
+      <hr />
+
+<!-- 排版功能 -->
+      <a name="編輯指令"></a><h2>排版功能</h2>
+
+
+
+     <table class="h3">
+      <tr><th>normal mode</th>
+          <th>descritpion</th></tr>
+
+      <tr><td></td>
+          <td></td></tr>
+      <tr><td></td>
+          <td></td></tr>
+
+      </table>
+      <br />
+      <hr />
+
+
+<!-- 視窗操作 -->
+      <a name="視窗操作"></a><h2>視窗操作</h2>
+
+
+     <h3>screen split（螢幕分割）</h3>
+     <table class="h3">
+      <tr><th>command mode</th>
+          <th>visual mode</th>
+          <th>descritpion</th></tr>
+      <tr><td>:sp[lit]</td>
+          <td>[Ctrl]^w + s</td>
+          <td>水平分割</td></tr>
+      <tr><td>:vsp[lit]</td>
+          <td>[Ctrl]^w + v</td>
+          <td>垂直分割</td></tr>
+      <tr><td></td>
+          <td>[Ctrl]^w + h, j, k, l</td>
+          <td>切換到左, 下, 上, 右螢幕</td></tr>
+      <tr><td>:res[ize]</td>
+          <td>[Ctrl]^w + +, -</td>
+          <td>增加/減少水平分割螢幕尺寸</td></tr>
+      <tr><td>:vertical resize</td>
+          <td>[Ctrl]^w + &lt;, &gt;</td>
+          <td>增加/減少垂直分割螢幕尺寸</td></tr>
+      <tr><td></td>
+          <td>[Ctrl]^w + _</td>
+          <td>目前分割螢幕最大化</td></tr>
+      <tr><td></td>
+          <td>[Ctrl]^w + =</td>
+          <td>平均分配分割螢幕</td></tr>
+      <tr><td></td>
+          <td>[Ctrl]^o</td>
+          <td></td></tr>
+      <tr><td></td>
+          <td>[Ctrl]^^</td>
+          <td>切換檔案（目前已有多個檔案被開啟）</td></tr>
+      <tr><td></td>
+          <td>q:</td>
+          <td>命令紀錄</td></tr>
+      </table>
+     <p class="h3">vim -O<i>m</i>指令時，在啓動時會先垂直分隔m個screen。
+     <br />vim-o<i>n</i>指令時，，在啓動時會先水平分隔n個screen。
+     <br />在多個檔案被開啟，可使用:ls、:ls!或:bu[ffer]顯是目前有開啟的檔案，使用:bu[ffer] <i>n</i>直接切換到該檔案。
+     </p>
+     <br />
+                     
+     <h3>folding（折疊）</h3>
+     <table class="h3">
+      <tr><th>normal mode</th>
+          <th>command mode</th>
+          <th>descritpion</th></tr>
+
+      <tr><td>:.,+<i>n</i> fol[d]</td>
+          <td>zf<i>n</i>j</td>
+          <td>從本行算起到第<i>n</i>行折疊</td></tr>
+      <tr><td></td>
+          <td>zd</td>
+          <td>刪除折疊</td></tr>
+
+      <tr><td>:foldo[pen]</td>
+          <td>zo</td>
+          <td>開啟折疊（只有目前選擇的折疊）</td></tr>
+      <tr><td>:foldc[lose]</td>
+          <td>zc</td>
+          <td>關閉折疊（只有目前選擇的折疊）</td></tr>
+      <tr><td></td>
+          <td>za</td>
+          <td>開/關折疊（只有目前選擇的折疊）</td></tr>
+
+      <tr><td>:foldo[pen]!</td>
+          <td>zO</td>
+          <td>開啟折疊（巢式折疊以遞迴處理）</td></tr>
+      <tr><td>:foldc[lose]!</td>
+          <td>zC</td>
+          <td>關閉折疊（巢式折疊以遞迴處理）</td></tr>
+      <tr><td></td>
+          <td>zA</td>
+          <td>開/關折疊（巢式折疊以遞迴處理）</td></tr>
+
+      <tr><td></td>
+          <td>zj</td>
+          <td>搜尋上一個折疊</td></tr>
+      <tr><td></td>
+          <td>zk</td>
+          <td>搜尋下一個折疊</td></tr>
+
+      <tr><td></td>
+          <td>zm</td>
+          <td>關閉下一層折疊（文件中所有折疊）</td></tr>
+      <tr><td></td>
+          <td>zr</td>
+          <td>開啟下一層折疊（文件中所有折疊）</td></tr>
+      <tr><td></td>
+          <td>zM</td>
+          <td>關閉所有折疊（文件中所有折疊）</td></tr>
+      <tr><td></td>
+          <td>zR</td>
+          <td>開啟所有折疊（文件中所有折疊）</td></tr>
+
+      </table>
+      <p class="h3">foldcolumn設定顯示折疊欄值為0~12，預設為0（不顯示）;foldmethod設定折疊方式，值可為，預設為mamual
+      <br />manual:以標準vim結構定義摺疊跨越的範圍，類似移動命令
+      <br />indent:摺疊與摺疊層級，對應制文字縮排與shiftwidth選項值
+      <br />expr:以正規表示定義摺疊
+      <br />syntax:摺疊對應制檔案使所用的程式語言
+      <br />diff:摺疊兩個檔案間的差異
+      <br />maker:預先在檔案中定義標記（可由使用者定義），指定摺疊邊界
+      </p>
+      <br />
+
+<!--
+set foldmethod=indent
+set foldmethod=syntax
+foldlevel
+foldenable
+foldtext
+foldcolumn
+
+'foldenable'  'fen':    Open all folds while not set.
+'foldexpr'    'fde':    Expression used for "expr" folding.
+'foldignore'  'fdi':    Characters used for "indent" folding.
+'foldmarker'  'fmr':    Defined markers used for "marker" folding.
+'foldmethod'  'fdm':    Name of the current folding method.
+'foldminlines' 'fml':   Minimum number of screen lines for a fold to be
+                        displayed closed.
+'foldnestmax' 'fdn':    Maximum nesting for "indent" and "syntax" folding.
+'foldopen'    'fdo':    Which kinds of commands open closed folds.
+'foldclose'   'fcl':    When the folds not under the cursor are closed.
+-->
+
+     <h3>mark（標記）</h3>
+     <table class="h3">
+      <tr><th>visual mode</th>
+          <th>descritpion</th></tr>
+
+      <tr><td>m<i>c</i></td>
+          <td>製作名稱為<i>c</i>的標記</td></tr>
+
+      <tr><td>`<i>c</i></td>
+          <td>回到<i>c</i>的標記位置</td></tr>
+      <tr><td>'<i>c</i></td>
+          <td>回到<i>c</i>的標記位置之行首</td></tr>
+
+      <tr><td>d`<i>c</i></td>
+          <td>複製<i>c</i>標記位置和游標之間內容</td></tr>
+      <tr><td>d'<i>c</i></td>
+          <td>複製<i>c</i>標記位置行首和游標行尾之間</td></tr>
+
+      <tr><td>y`<i>c</i></td>
+          <td>複製<i>c</i>標記位置和游標之間內容到緩衝</td></tr>
+      <tr><td>y'<i>c</i></td>
+          <td>複製<i>c</i>標記位置行首和游標行尾之間到緩衝</td></tr>
+
+      <tr><td>c`<i>c</i></td>
+          <td>修改<i>c</i>標記位置和游標之間內容</td></tr>
+      <tr><td>c'<i>c</i></td>
+          <td>修改<i>c</i>標記位置行首和游標行尾之間</td></tr>
+      </table>
+      <p class="h3">:marks查詢以使用的標記</p>
+      <br />
+
+      <h3>tabpage（分頁）</h3>
+      <table class="h3">
+      <tr><th>command mode</th>
+          <th>visual mode</th>
+          <th>descritpion</th></tr>
+
+      <tr><td>tabedit <i>file</i></td>
+          <td></td>
+          <td>以分頁的方式開啟檔案<i>file</i></td></tr>
+
+      <tr><td>tabprevious</td>
+          <td>gT</td>
+          <td>到上一個分頁</td></tr>
+      <tr><td>tabnest</td>
+          <td>gt</td>
+          <td>到下一個分頁</td></tr>
+
+      <tr><td>tabm <i>n</i></td>
+          <td></td>
+          <td>到第<i>n</i>分頁</td></tr>
+      <tr><td></td>
+          <td></td>
+          <td></td></tr>
+      </table>
+      <p class="h3">vim -p<i>n</i>指令時，在啓動時會開啟n個tab。
+      <br />:tabs查詢以使用的標記</p>
+      <br />
+
+      <h3>highlight（突出/高亮）</h3>
+
+      <p class="h3">attr-list:屬性列表，以','分隔</p>
+      <table class="h3">
+      <tr><th>attr-list</th>
+          <th>description</th><tr>
+      <tr><td>bold</td>
+          <td>粗體</td></tr>
+      <tr><td>underline</td>
+          <td>底線</td></tr>
+      <tr><td>undercurl</td>
+          <td></td></tr>
+      <tr><td>reverse</td>
+          <td>反轉</td></tr>
+      <tr><td>inverse</td>
+          <td>逆轉，等同reverse</td></tr>
+      <tr><td>italic</td>
+          <td>斜體</td></tr>
+      <tr><td>standout
+          </td><td></td></tr>
+      <tr><td>none</td>
+          <td>無，也是就重設</td></tr>
+      </table>
+      <br />
+
+      <p class="h3">color-nr:</p>
+      <table class="h3">
+      <tr><th>NR-16</th>
+          <th>NR-8</th>
+          <th>COLOR NAME</th>
+      <tr><td>0</td>
+          <td>0</td>
+          <td>Black</td></tr>
+      <tr><td>1</td>
+          <td>4</td>
+          <td>DarkBlue</td></tr>
+      <tr><td>2</td>
+          <td>2</td>
+          <td>DarkGreen</td></tr>
+      <tr><td>3</td>
+          <td>6</td>
+          <td>DarkCyan</td></tr>
+      <tr><td>4</td>
+          <td>1</td>
+          <td>DarkRed</td></tr>
+      <tr><td>5</td>
+          <td>5</td>
+          <td>DarkMagenta</td></tr>
+      <tr><td>6</td>
+          <td>3</td>
+          <td>Brown, DarkYellow</td></tr>
+      <tr><td>7</td>
+          <td>7</td>
+          <td>LightGray, LightGrey, Gray, Grey</td></tr>
+      <tr><td>8</td>
+          <td>0*</td>
+          <td>DarkGray, DarkGrey</td></tr>
+      <tr><td>9</td>
+          <td>4*</td>
+          <td>Blue, LightBlue</td></tr>
+      <tr><td>10</td>
+          <td>2*</td>
+          <td>Green, LightGreen</td></tr>
+      <tr><td>11</td>
+          <td>6*</td>
+          <td>Cyan, LightCyan</td></tr>
+      <tr><td>12</td>
+          <td>1*</td>
+          <td>Red, LightRed</td></tr>
+      <tr><td>13</td>
+          <td>5*</td>
+          <td>Magenta, LightMagenta</td></tr>
+      <tr><td>14</td>
+          <td>3*</td>
+          <td>Yellow, LightYellow</td></tr>
+      <tr><td>15</td>
+          <td>7*</td>
+          <td>White</td></tr>
+      </table>
+      <br />
+
+      <p class="h3">color name:</p>
+      <table class="h3">
+      <tr><td>Red</td>
+          <td>LightRed</td>
+          <td>DarkRed</td>
+          <td></td></tr>
+
+      <tr><td>Green</td>
+          <td>LightGreen</td>
+          <td>DarkGreen</td>
+          <td>SeaGreen</td></tr>
+
+      <tr><td>Blue</td>
+          <td>LightBlue</td>
+          <td>DarkBlue</td>
+          <td>SlateBlue</td></tr>
+
+      <tr><td>Cyan</td>
+          <td>LightCyan</td>
+          <td>DarkCyan</td>
+          <td></td></tr>
+
+      <tr><td>Magenta</td>
+          <td>LightMagenta</td>
+          <td>DarkMagenta</td>
+          <td></td></tr>
+
+      <tr><td>Yellow</td>
+          <td>LightYellow</td>
+          <td>Brown</td>
+          <td>DarkYellow</td></tr>
+
+      <tr><td>Gray</td>
+          <td>LightGray</td>
+          <td>DarkGray</td>
+          <td></td></tr>
+
+      <tr><td>Black</td>
+          <td>White</td>
+          <td></td>
+          <td></td></tr>
+
+      <tr><td>Orange</td>
+          <td>Purple</td>
+          <td>Violet</td>
+          <td></td></tr>
+
+      </table>
+      <br />
+
+      <p class="h3">highlight arguments: term為terminals, cterm為color terminals, fg為foreground, bg為background, sp為special</p>
+      <table class="h3">
+      <tr><th>highlight argument</th>
+          <th>description</th></tr>
+
+      <!-- for normal terminals -->
+      <tr><td>term={attr-list}</td>
+          <td><td></tr>
+      <tr><td>start={term-list}</td>
+          <td><td></tr>
+      <tr><td>stop={term-list}</td>
+          <td><td></tr>
+
+      <!-- for color terminals -->
+      <tr><td>cterm={attr-list}</td>
+          <td><td></tr>
+      <tr><td>ctermfg={color-nr}</td>
+          <td><td></tr>
+      <tr><td>ctermbg={color-nr}</td>
+           <td><td></tr>
+
+      <!-- for GUI -->
+      <tr><td>gui={attr-list}</td>
+          <td><td></tr>
+      <tr><td>guifg={color-name}</td>
+          <td><td></tr>
+      <tr><td>guibg={color-name}</td>
+          <td><td></tr>
+      <tr><td>guisp={color-name}</td>
+          <td><td></tr>
+      <tr><td>font={font-name}</td>
+          <td><td></tr>
+      </table>
+      <br />
+      
+      <br />
+      :hi CursorLine term=underline cterm=none ctermbg=254 
+      <hr />
+
+      <h2>ins-completion/補齊</h2>
+      <br />C-x C-n, C-x C-p: 補齊內容為檔案內出現字
+      <br />C-x C-k: 補齊內容為字典檔內的字，設定方式為set dictionary+=/usr/share/dict/words
+      <br />
+
+      <h2>tag/標籤</h2>
+      <br />C-]
+      <br />C-t
+      <br />:tags
+      <br />:tag
+      <br />:ts, :tselect
+      <br />:tj,
+      <br />
+
+      <h2>map/綁定</h2>
+      <br />C-]
+
+      <hr />
+      <!-- 搜尋替代 -->
+      <a name="搜尋替代"></a><h2>搜尋替代</h2>
+      <br /> :g/PATTERN/          搜尋
+      <br />:s/PATTERN/RESULTE/  替換
+      <hr />
+
+
+<!-- 系統設定 -->
+      <a name="系統設定"></a><h2>系統設定</h2>
+<br />
+<br />:help 
+<br />: set all      顯示所有設定
+<br />: set [no]nu   顯示行列
+<br />: set [no]ic   搜尋時不區分大小寫
+<br />: set visibell
+<br />: syntax off
+      <hr />
+
+
+      <img src="vim/vim_cheat_sheet_for_programmers_print.png" width="70%">
+      <hr />
+
+<!-- vim script -->
+      <a name="script"></a><h2>script</h2>
+      <div class="commands">SLES:~ # <span class="cmds">cat</span> <i>let_exampl.vim</i>
+      <br /><span class="cmts">&quot; 雙引號在開頭(&quot;)表示註解</span>
+
+      <br /><span class="cmts">&quot; let設定變數，scalar可以是字串、整數；list/array；hash/dictionary</span>
+      <br />let str = 'ABC'
+      <span class="cmts">|&quot; 設定scalar is string</span>
+      <br />let var = 123
+      <span class="cmts">|&quot; 設定scalar is integer</span>
+      <br />let lst = [0, 'foo']
+      <span class="cmts">|&quot; 設定list/array</span>
+      <br />let hsh = {&quot;xyz&quot;: '321'}
+      <span class="cmts">|&quot; 設定hash/dictionary</span>
+      <br />
+      <br />echo str
+      <br />echo var
+      <br />echo lst
+      <br />echo hsh
+      <br />
+
+      <br />echo g:var
+      <br />echo s:var
+      <br />echo b:var
+      <br />
+
+      <br />echo $USER <span class="cmts">|&quot; 顯示環境變數</span>
+      <br />echo @&quot; <span class="cmts">|&quot; 顯示當前register</span>
+      <br />
+
+      <br />unlet g:var
+      <br />unlet s:var
+      <br />unlet b:var
+      <br />
+
+      <br />SLES:~ # <span class="cmds">vim</span> -S <i>let_example.vim</i>
+      <span class="cmts"># 執行script。另一種方式是在vim底下進入command mode使用source script.vim</span>
+      </div>
+      <br />
+
+      <br />
+      <div class="commands">SLES:~ # <span class="cmds">cat</span> ex.vim
+      <br />:set all
+      <span class="cmts">|" 顯示所有設定</span>
+      <br />:version
+      <span class="cmts">|" 顯示環境變數版本</span>
+      <br />:q
+      <br />
+      <br />SLES:~ # <span class="cmds">vim</span> -s <i>ex.vim</i>
+      <span class="cmts"># 執行script。但-s輸入的script為ex用的command</span>
+      </div>
+      <br />
+
+      <p class="h3">variables</p>
+      <table class="h3">
+      <tr><th>symbol</th>
+          <th>descritpion</th></tr>
+
+      <tr><td>&quot;</td>
+          <td>comment，註解（僅限使用在句首）</td></tr>
+      <tr><td>|</td>
+          <td>斷行（在vim中;另有功能）</td></tr>
+      <tr><td>\</td>
+          <td>接續（僅限使用在句首）</td></tr>
+
+      <tr><td>non-prefix variable</td>
+          <td>The variable is global、變數範圍為全域</td></tr>
+      <tr><td>g:</td>
+          <td>The variable is global、變數範圍為全域</td></tr>
+      <tr><td>s:</td>
+          <td>The variable is local to the current script file、變數範圍為當前的腳本文件</td></tr>
+      <tr><td>w:</td>
+          <td>The variable is local to the current editor window、變數範圍為當前的編輯器窗口</td></tr>
+      <tr><td>b:</td>
+          <td>The variable is local to the current editor buffer、變數範圍為當前的緩衝</td></tr>
+      <tr><td>t:</td>
+          <td>The variable is local to the current editor tab、變數範圍為當前的編輯器選項卡</td></tr>
+      <tr><td>l:</td>
+          <td>The variable is local to the current function、變數範圍為當前的函數</td></tr>
+      <tr><td>a:</td>
+          <td>The variable is a parameter of the current function、變數範圍為函數參數</td></tr>
+      <tr><td>v:</td>
+          <td>The variable is one that Vim predefines、Vim的預定義變數</td></tr>
+      </table>
+      <br />
+
+      <p class="h3">pseudovariables</p>
+      <table class="h3">
+      <tr><th>symbol</th>
+          <th>descritpion</th></tr>
+      <tr><td>&amp;var</td>
+          <td>vim option、vim 選項（如果指定的話，則為本地選項，否則為全局選項）</td></tr>
+      <tr><td>&amp;g:var</td>
+          <td>global vim option、全域vim選項</td></tr>
+      <tr><td>&amp;l:var</td>
+          <td>local vim option、局部vim選項</td></tr>
+      <tr><td>@var</td>
+          <td>regiester、vim註冊器</td></tr>
+      <tr><td>$var</td>
+          <td>environment variable、環境變數</td></tr>
+      <tr><td></td>
+          <td></td></tr>
+      </table>
+      <br />
+
+      <div class="commands">SLES:~ # <span class="cmds">cat</span> <i>if_exmaple.vim</i>
+      <span class="cmts"># if condition使用方式</span>
+      <br />let var = 1
+      <br />if var > 1
+      <br />&nbsp;&nbsp;echo &quot;gt 1&quot;
+      <br />elseif var < 1
+      <br />&nbsp;&nbsp;echo &quot;lt 1&quot;
+      <br />else
+      <br />&nbsp;&nbsp;echo &quot;eq 1&quot;
+      <br />endif
+      <br />
+      </div>
+      <p class="h3">在vim script中0為false，非0為true</p>
+      <br />
+
+     <table class="h3">
+     <tr>
+       <th>operetor</th>
+       <th>syntax</th>
+     </tr>
+
+     <tr>
+       <td>Assignment</td>
+       <td><b>let</b> var = expr </td>
+     </tr>
+     <tr>
+       <td>Numeric-add-and-assign</td>
+       <td><b>let</b> var += expr</td>
+     </tr>
+     <tr>
+       <td>Numeric-subtract-and-assign</td>
+       <td><b>let</b> var -= expr</td>
+     </tr>
+     <tr>
+       <td>String-concatenate-and-assign</td>
+       <td><b>let</b> var .= expr</td>
+     </tr>
+
+     <tr>
+       <td>Ternary operator</td>
+       <td>bool ? expr-if-true : expr-if-false</td>
+     </tr>
+     <tr>
+       <td>Logical OR</td>
+       <td>bool || bool</td>
+     </tr>
+     <tr>
+       <td>Logical AND</td>
+       <td>bool &amp;&amp; bool</td>
+     </tr>
+     <tr>
+       <td>Logical NOT</td>
+       <td>!bool</td>
+     </tr>
+
+     <tr>
+       <td>Numeric or string equality</td>
+       <td>expr == expr</td>
+     </tr>
+     <tr>
+       <td>Numeric or string inequality</td>
+       <td>expr != expr</td>
+     </tr>
+     <tr>
+       <td>Numeric or string greater-then</td>
+       <td>expr &gt; expr</td>
+     </tr>
+     <tr>
+       <td>Numeric or string greater-or-equal</td>
+       <td>expr &gt;= expr</td>
+     </tr>
+     <tr>
+       <td>Numeric or string less than</td>
+       <td>expr &lt; expr</td>
+     </tr>
+     <tr>
+       <td>Numeric or string less-or-equal</td>
+       <td>expr &lt;= expr</td>
+     </tr>
+     <tr>
+       <td>Parenthetical precedence</td>
+       <td>(expr)</td>
+     </tr>
+
+     <tr>
+       <td>Numeric addition</td>
+       <td>num + num</td>
+     </tr>
+     <tr>
+       <td>Numeric subtraction</td>
+       <td>num - num</td>
+     </tr>
+     <tr>
+       <td>Numeric multiplication</td>
+       <td>num *num</td>
+     </tr>
+     <tr>
+       <td>Numeric division</td>
+       <td>num / num</td>
+     </tr>
+     <tr>
+       <td>Numeric modulus</td>
+       <td>num % num</td>
+     </tr>
+     <tr>
+       <td>Convert to number</td>
+       <td>+ num</td>
+     </tr>
+     <tr>
+       <td>Numeric negation</td>
+       <td>- num</td>
+     </tr>
+
+     <tr>
+       <td>String concatenation</td>
+       <td>str . str</td>
+     </tr>
+     </table>
+     <br />
+
+      <div class="commands">SLES:~ # <span class="cmds">cat</span> <i>for_example.vim</i>
+      <br />for i in lst
+      <span class="cmts">!&quot; for loop使用list</span>
+      <br />&nbsp;&nbsp;echo i
+      <br />endfor
+      <br />
+
+      <br />for i in range(1, 10)
+      <span class="cmts">!&quot; for loop使用數值</span>
+      <br />&nbsp;&nbsp;echo i
+      <br />endfor
+      </div>
+      <br />
+
+      <div class="commands">SLES:~ # <span class="cmds">cat</span> <i>function_example.vim</i>
+      <br />function! Test1()
+      <span class="cmts">|&quot;function宣告，加上!表示強制複寫（當有重復名稱時會有錯誤，可使用!覆蓋），vim function名稱習慣以大寫字母開頭</span>
+      <br />&nbsp;&nbsp;echo &quot;Test1&quot;
+      <br />endfunction
+      <br />
+
+      <br />call Test1()
+      <span class="cmts">!&quot; funcrion呼叫</span>
+      <br />
+
+      <br />fun! Test2()
+      <br />&nbsp;&nbsp;echo &quot;Test2&quot;
+      <br />&nbsp;&nbsp;return &quot;test2&quot;
+      <span class="cmts">|&quot; function回傳</span>
+      <br />endf
+      <br />
+
+      <br />let ret = Test2()
+      <br />echo ret
+      <br />
+
+      <br />fun! Test3(arg)
+      <span class="cmts">|&quot; function參數</span>
+      <br />&nbsp;&nbsp;echo a:arg
+      <br />endf
+      <br />
+
+      <br />call Test3(&quot;Xyz&quot;)
+      </div>
+      <br />
+
+      <div class="commands">SLES:~ # <span class="cmds">cat</span> <i>function_example.vim</i>
+      <br />" Define Radom Colorscheme
+      <br />function RandomColorscheme()
+      <br />let hour = strftime(&quot;%H&quot;)
+      <br />&nbsp;&nbsp;if hour &lt; 6
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;let colorScheme = &quot;koehler&quot;
+      <br />&nbsp;&nbsp;elseif hour &lt; 12
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;let colorScheme = &quot;torte&quot;
+      <br />&nbsp;&nbsp;elseif hour &lt; 18
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;let colorScheme  = &quot;delek&quot;
+      <br />&nbsp;&nbsp;else
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;let colorScheme = &quot;pablo&quot;
+      <br />&nbsp;&nbsp;endif
+      <br />&nbsp;&nbsp;echo &quot;set color to &quot; . colorScheme
+      <br />&nbsp;&nbsp;execute &quot;colorscheme &quto; . colorScheme
+      <br />endfunction
+      <br />
+
+      <br />function! ToggleSyntax()                                                         
+      <br />&nbsp;&nbsp;if exists("g:syntax_on")
+	      syntax off
+      <br />&nbsp;&nbsp;else
+	      syntax enable
+      <br />&nbsp;&nbsp;endif
+      <br />endfunction
+      <br />nmap &lt;silent&gt;  ;s  :call ToggleSyntax()&lt;CR&gt;
+      <br />
+
+      <br />function! CapitalizeCenterAndMoveDown()
+      <br />&nbsp;&nbsp;s/\&gt;./\u&amp;/g
+      <span class="cmts">"Built-in substitution capitalizes each word</span>
+      <br />&nbsp;&nbsp;center
+      <span class="cmts">"Built-in center command centers entire line</span>
+      <br />&nbsp;&nbsp;+1
+      <span class="cmts">"Built-in relative motion (+1 line down)</span>
+      <br />endfunction
+      <br />nmap &lt;silent&gt; \C :call CapitalizeCenterAndMoveDown()&lt;CR&gt;
+      <br />
+
+      <br />nmap &lt;silent&gt; ]] :let &amp;tabstop += 1&lt;CR&gt;
+      <br />nmap &lt;silent&gt; [[ :let &amp;tabstop -= &amp;tabstop &gt; 1 ? 1 : 0&lt;CR&gt;
+      </div>
+      <hr />
+
+<!-- vimrc -->
+      <a name="vimrc"></a><h2>vimrc</h2>
+      <div class="commands">SLES:~ # <span class="cmds">cat</span> ~/.vimrc
+      <br />"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      <br />" => General
+      <br />"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      <br />" Get out of VI's compatible mode..
+      <br />" set [no]compatible
+      <br />set nocompatible
+      <br />
+      <br />" Define global variable
+      <br />"version
+      <br />"echo "~:" expand('~')
+      <br />"echo "HOME:" $HOME
+      <br />"echo "VIM:" $VIM
+      <br />"echo "VIMRUNTIME:" $VIMRUNTIME
+      <br />"echo "MYVIMRC:" $MYVIMRC
+      <br />"echo "MYGVIMRC:" $MYGVIMRC
+      <br />"let home = system('echo $HOME')
+      <br />
+      <br />" Define MySys
+      <br />function! MySys()
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;if has("win16") || has("win32") || has("win64")
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return "win"
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;elseif has("dos16") || has("dos32")
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return "dos"
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;elseif has("unix")
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return "unix"
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;elseif has("mac") || has("macunix")
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return "mac"
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;elseif has("win32")
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return "cywin"
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;elseif has("os2")
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return "os2"
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;elseif has("vms")
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return "vms"
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;else
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return "unknown"
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;endif
+      <br />endfunction
+      <br />
+      <br />" Set shell to be bash
+      <br />if MySys() == "unix" || MySys() == "mac"
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;set shell=bash
+      <br />endif
+      <br />
+      <br />" Sets how many lines of history VIM har to remember
+      <br />set history=1000
+      <br />
+      <br />" Set to auto read when a file is changed from the outside
+      <br />if exists("&autoread")
+      <br />    set autoread
+      <br />endif
+      <br />
+      <br />" Set line number
+      <br />" set [no]number
+      <br />set nonumber
+      <br />
+      <br />" Set help language and encode
+      <br />set helplang=cn
+      <br />set encoding=utf-8
+      <br />
+      <br />" Set visual bell
+      <br />" set [no]visualbell
+      <br />set visualbell
+      <br />
+      <br />" Set syntax highlighting and color style
+      <br />syntax on
+      <br />"colorscheme murphy
+      <br />colorscheme koehler
+      <br />
+      <br />" Set search pattern option
+      <br />set incsearch
+      <br />set hlsearch
+      <br />
+      <br />" Set auto wrap
+      <br />set wrap
+      <br />
+      <br />" Set statusline
+      <br />"set statusline=%&lt;%F%h%m%r%h%w%y\ %{&ff}\ %{strftime(\"%Y/%m/%d-%H:%M\")}%=\ col:%c%V\ ascii:%b\ pos:%o\ lin:%l\,%L\ %P
+      <br />"set statusline=%&lt;%F%h%m%r%h%w%y\ %{&ff}\ %{strftime(\"%c\",getftime(expand(\"%:p\")))}%=\ lin:%l\,%L\ col:%c%V\ pos:%o\ ascii:%b\ %P
+      <br />set statusline=%F%&lt;%h%m%r%h%w%y\ %{&ff}\ %{strftime(\"%c\",getftime(expand(\"%:p\")))}\ %=%b\ %c%V\,%l\/%L(%o)\ %P
+      <br />set laststatus=2
+      <br />
+      <br />
+      <br />"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      <br />" => VIM plugin TagList
+      <br />"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+</div>
+
+
+     <table class="h3">
+      <tr><th>normal mode</th>
+          <th>descritpion</th></tr>
+
+      <tr><td></td>
+          <td></td></tr>
+      <tr><td></td>
+          <td></td></tr>
+
+      </table>
+      <br />
+      <hr />
+
+
+
+<!-- reference -->
+     <a name="Reference"></a><h2>Reference</h2>

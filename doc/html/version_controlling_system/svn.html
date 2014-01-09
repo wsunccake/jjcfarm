@@ -1,0 +1,518 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>SVN</title>
+<link rel="stylesheet" href="../defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>SVN</h1>
+      <a href="#Server"><li class="title">Server</li></a>
+      <br /><a href="#Client"><li class="title">Client</li></a>
+      <br /><a href="#Reference"><li class="title">Reference</li></a>
+      <div class="context">
+      </div>
+      <p class="h1">SVN（<em>S</em>uem<em>V</em>erio<em>N</em>）是種version controlling system（版本控制系統）。是一個開放原始碼的版本控制系統，相對於的RCS、CVS，採用了分支管理系統，設計目標就是取代CVS它保留CVS的基本思想，但沒有它的錯誤和局限。
+      </p>
+      <hr />
+
+<!-- SVN Server -->
+      <a name="Server"><h2>SVN Server</h2>
+      <h3>Installation:</h3>
+      <p class="h3">
+      </p>
+      <div class="commands">Server:~ # <span class="cmds">zypper</span> in subversion
+      <br />Server:~ # <span class="cmds">mkdir</span> /srv/svn/repos
+      <br />Server:~ # <span class="cmds">groupadd</span> -r svn
+      <br />Server:~ # <span class="cmds">useradd</span> -r svn -g svn -d /srv/svn
+      <br />Server:~ # <span class="cmds">chown</span> -R /srv/svn
+      <br />
+      <br />Server:~ # <span class="cmds">cat</span> /etc/sysconfig/svnserve
+      <span class="cmts">#設定檔</span>
+      <br />SVNSERVE_OPTIONS="-d -R -r /srv/svn/repos"
+      <br />SVNSERVE_USERID="svn"
+      <br />SVNSERVE_GROUPID="svn"
+      <br />
+      <br />Server:~ # /etc/init.d/svnserve start
+      </div>
+      <p class="h3">首先需要先建立svn的使用者帳號跟群組，使用useradd和groupadd，然後系統設定svn的reposity目錄在/srv/svn/repos（系統預設，有需要可修改/etc/sysconfig/svnserve），目前YaST並沒有提供SVN的設定方式，所以需要手動調整。</p>
+      <br />
+
+
+      <h3>Configuration </h3>
+      <p class="h3">
+      </p>
+      <div class="commands">Server:~ # <span class="cmds">su</span> - svn
+      <br />Server:~ $ <span class="cmds">svnadmin</span>create /srv/svn/repos/project
+      <span class="cmts">#新增reposity</span>
+      <br />
+      <br />Server:~ $ <span class="cmds">svn</span> import /<span class="vars">dir</span> file:///srv/svn/repos/project/<span class="vars">dir</span> -m "message"
+      <br />Server:~ $ <span class="cmds">svn</span> import /<span class="vars">file</span> file:///srv/svn/repos/project/<span class="vars">file</span> -m "message"
+      <span class="cmts">#匯入檔案或目錄</span>
+      <br />
+      <br />Server:~ $ <span class="cmds">cat</span> /srv/svn/repos/project/conf/svnserve.conf
+      <br />[general]
+      <br />anon-access = none
+      <span class="cmts">#設定匿名使用者權限，none、read和write</span>
+      <br />auth-access = read
+      <span class="cmts">#設定使用者權限，none、read和write</span>
+      <br />password-db = passwd
+      <span class="cmts">#設定使用者帳號密碼檔，預設為當前目錄下的passwd</span>
+      <br />authz-db = authz
+      <span class="cmts">#設定使用者權限，預設為當前目錄下的authz</span>
+      <br />
+      <br />[sasl]
+      <br />
+      <br />
+      <br />Server:~ $ <span class="cmds">cat</span> /srv/svn/repos/project/conf/authz
+      <br />[aliases]
+      <br />
+      <br />[groups]
+      <br />svnadm = sysadm, bin
+      <span class="cmts">#設定群組</span>
+      <br />
+      <br />[/]
+      <span class="cmts">#[/]是表示/srv/svn/repos/project</span>
+      <br />svn = rw
+      <span class="cmts">#設定使用者、群組權限，r為讀、w為寫、空格則無</span>
+      <br />user = r
+      <br />&amp;svnadm = rw
+      <br />* =
+      <br />
+      <br />Server:~ $ cat /srv/svn/repos/project/conf/passwd
+      <br />[users]
+      <br />svn = svnpasswd
+      <span class="cmts">#設定使用者密碼，為明碼</span>
+      </div>
+      <p class="h3">SVN reposity下權限設定是根據目錄下的config/svnserve.conf，預設的/指的就是該reposity，</p>
+      <hr />
+
+<!-- SVN Client -->
+      <a name="Client"><h2>SVN Client</h2>
+      <h3>Comamnds</h3>
+      <div class="commands">Server:~ $ <span class="cmds">svn</span> list file:///srv/svn/repos/project
+      <span class="cmts">#在localhost測試方式</span>
+      <br />
+      
+      <br />Client:~ $ <span class="cmds">svn</span> list svn+ssh://<span class="cmds"><span class="vars">Server</span></span>/srv/svn/repos/project
+      <span class="cmts">#從遠端透過ssh測試方法</span>
+      <br />Client:~ $ <span class="cmds">svn</span> list svn+ssh://<span class="vars">user</span>@<span class="cmds"><span class="vars">Server</span></span>/srv/svn/repos/project
+      </div>
+      <p class="h3">在localhost的測試要注意到authz檔案中權限的設定；而透過ssh的測試除了要確定authz之外，也要注意到該帳號是否存在/etc/passwd（可是用ssh登入）</p>
+      <br />
+
+      <h3>Usage</h3>
+      <div class="commands">Client:~ $ <span class="cmds">svn</span> checkout <span class="vars">url</span>
+      <span class="cmts"># 第一次使用下載整project</span>
+      <br />Client:~/<span class="vars">prjecot</span> $ <span class="cmds">svn</span> update
+      <span class="cmts"># 從remote server更新project到local host</span>
+      <br />Client:~/<span class="vars">prjecot</span> $ <span class="cmds">svn</span> commit
+      <span class="cmts"># 從local host送交project到remote server
+      </div>
+      <br />
+
+      <p class="h3">lock-modify-unlock, copy-modify-merge</p>
+      <table class="h3" border="1">
+        <tr>
+          <th>raw data</th>
+          <th>remote server</th>
+          <th>local host</th>
+          <th>commit</th>
+          <th>update</th>
+        </tr>
+        <tr>
+          <td>R</td>
+          <td>R</td>
+          <td>R</td>
+          <td>N</td>
+          <td>N</td>
+        </tr>
+        <tr>
+          <td>R</td>
+          <td>R'</td>
+          <td>R</td>
+          <td>N</td>
+          <td>A</td>
+        </tr>
+        <tr>
+          <td>R</td>
+          <td>R</td>
+          <td>R"</td>
+          <td>A</td>
+          <td>N</td>
+        </tr>
+        <tr>
+          <td>R</td>
+          <td>R'</td>
+          <td>R"</td>
+          <td>U</td>
+          <td>A</td>
+        </tr>
+      </table>
+      <p class="h3">N: noaction, A:action, U:unkonwn</p>
+      <br />
+      
+      <p class="h3">svn常用到的command如下：</p>
+      <table class="h3" border="1">
+        <tr>
+          <th>command</th>
+          <th>description</th>
+          <th>example</th>
+        </tr>
+        <tr>
+          <td>add</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>blame, praise, annotate, ann</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>cat</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>changelist, cl</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>checkout, co</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>cleanup</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>commit, ci</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>copy, cp</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>delete, del, remove, rm</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>diff, di</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>export</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>help, ?, h</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>import</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>info</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>list, ls</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>lock</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>log</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>merge</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>mergeinfo</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>mkdir</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>move, mv, rename, ren</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>propdel, pdel, pd</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>propedit, pedit, pe</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>propget, pget, pg</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>proplist, plist, pl</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>propset, pset, ps</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>resovle</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>resovled</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>revert</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>status, stat, st</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>switch, sw</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>unlock</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>update, up</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+      <br />
+      
+      <p class="h3">First column: Says if item was added, deleted, or otherwise changed</p>
+      <table class="h3">
+        <tr>
+          <th>status</th>
+          <th>description</th>
+        </tr>
+        <tr>
+          <td>' '</td>
+          <td>no modifications</td>
+        </tr>
+        <tr>
+          <td>'A'</td>
+          <td>Added</td>
+        </tr>
+        <tr>
+          <td>'C'</td>
+          <td>Conflicted</td>
+        </tr>
+        <tr>
+          <td>'D'</td>
+          <td>Deleted</td>
+        </tr>
+        <tr>
+          <td>'I'</td>
+          <td>Ignored</td>
+        </tr>
+        <tr>
+          <td>'M'</td>
+          <td>Modified</td>
+        </tr>
+        <tr>
+          <td>'R'</td>
+          <td>Replaced</td>
+        </tr>
+        <tr>
+          <td>'X'</td>
+          <td>item is unversioned, but is used by an externals definition</td>
+        </tr>
+        <tr>
+          <td>'?'</td>
+          <td>item is not under version control</td>
+        </tr>
+        <tr>
+          <td>'!'</td>
+          <td>item is missing (removed by non-svn command) or incomplete</td>
+        </tr>
+        <tr>
+          <td>'~'</td>
+          <td>versioned item obstructed by some item of a different kind</td>
+        </tr>
+      </table>
+      <br />
+      
+      <p class="h3">Second column: Modifications of a file's or directory's properties</p>
+      <table class="h3">
+        <tr>
+          <th>status</th>
+          <th>description</th>
+        </tr>
+        <tr>
+          <td>''</td>
+          <td>no modifications</td>
+        </tr>
+        <tr>
+          <td>'C'</td>
+          <td>Conflicted</td>
+        </tr>
+        <tr>
+          <td>'M'</td>
+          <td>Modified</td>
+        </tr>
+      </table>
+      <br />
+      
+      <p class="h3">Third column: Whether the working copy directory is locked</p>
+      <table class="h3">
+        <tr>
+          <th>status</th>
+          <th>description</th>
+        </tr>
+        <tr>
+          <td>' '</td>
+          <td>not locked</td>
+        </tr>
+        <tr>
+          <td>'L'</td>
+          <td>locked</td>
+        </tr>
+      </table>
+      <br />
+      
+      <p class="h3">Fourth column: Scheduled commit will contain addition-with-history</p>
+      <table class="h3">
+        <tr>
+          <th>status</th>
+          <th>description</th>
+        </tr>
+        <tr>
+          <td>' '</td>
+          <td>no history scheduled with commit</td>
+        </tr>
+        <tr>
+          <td>'+'</td>
+          <td>history scheduled with commit</td>
+        </tr>
+      </table>
+      <br />
+      
+      <p class="h3">Fifth column: Whether the item is switched relative to its parent
+      <br />' ' normal
+      <br />'S' switched</p>
+      <table class="h3">
+        <tr>
+          <th>status</th>
+          <th>description</th>
+        </tr>
+        <tr>
+          <td>' '</td>
+          <td>normal</td>
+        </tr>
+        <tr>
+          <td>'S'</td>
+          <td>switched</td>
+        </tr>
+      </table>
+      <br />
+      
+      <p class="h3">Sixth column: Repository lock token</p>
+      <table class="h3">
+        <tr>
+          <th>status</th>
+          <th>description</th>
+        </tr>
+        <tr>
+          <td>' '</td>
+          <td>not locked in repository, no lock token</td>
+        </tr>
+        <tr>
+          <td>'K'</td>
+          <td>locked in repository, lock toKen present</td>
+        </tr>
+        <tr>
+          <td>'O'</td>
+          <td>locked in repository, lock token in some Other working copy</td>
+        </tr>
+        <tr>
+          <td>'T'</td>
+          <td>locked in repository, lock token present but sTolen</td>
+        </tr>
+        <tr>
+          <td>'B'</td>
+          <td>not locked in repository, lock token present but Broken</td>
+        </tr>
+      </table>
+      <br />
+      
+      
+      <p class="h3">The out-of-date information appears in the eighth column (with -u):</p>
+      <table class="h3">
+        <tr>
+          <th>status</th>
+          <th>description</th>
+        </tr>
+        <tr>
+          <td>'*'</td>
+          <td>a newer revision exists on the server</td>
+        </tr>
+        <tr>
+          <td>' '</td>
+          <td>the working copy is up to date</td>
+        </tr>
+      </table>
+      <hr />
+
+ 
+<!-- reference -->
+    <a name="Reference"></a><h2>Reference</h2>
+    <li class="reference"><b>wiki</b> <a href="http://zh.wikipedia.org/wiki/Subversion">http://zh.wikipedia.org/wiki/Subversion</a></li>
+    <br /><li class="reference"><b><a href="http://twpug.net/docs/Subversion">Version Control with Subversion</a></b>, <i>Ben Collins-Sussman etc</i></li>
+    <hr />
+
+<!-- changelog -->
+    <h2>Changelog</h2>
+    <li class="changelog">07/09/2011 第一次完成</li>
+
+
+</body>
+</html>

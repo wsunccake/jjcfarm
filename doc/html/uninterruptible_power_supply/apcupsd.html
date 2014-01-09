@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>Apcupsd</title>
+<link rel="stylesheet" href="../defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>Apcupsd</h1>
+      <a href="#Apcupsd install"><li class="title">Apcupsd 安裝</li></a>
+      <br /><a href="#Master Configuration"><li class="title">Master 設定</li></a>
+      <br /><a href="#Slave Configuration"><li class="title">Slave 設定</li></a>
+      <br /><a href="#Other important parameter"><li class="title">其它重要參數</li></a>
+      <br /><a href="#Test UPS"><li class="title">測試UPS</li></a>
+
+      <p class="h1">Apcupsd (APC UPS Daemon) 是一套開放原始碼且可以跨平台管理UPS的程式，APC原廠有出一套 Powerchute來管理UPS，個人版的只有單台UPS對上單台電腦，商業版的可以一台電腦透過網路對多台電腦甚至管理多台UPS，但以連線數計費。
+      <br />因此就有人開始寫 Apcupsd，而且功能不輸原廠的軟體且不用錢，因此，原廠就開始對傳輸協定做調整，所以有些型號的UPS並無法支援。
+      <br />Apcupsd並不只支援APC的UPS，只要符合Apcupsd官方網站的型號，皆有支援。
+      <br />APC系列的UPS不建議使用RS232，同樣都是RS232，每條不一樣型號的傳輸線皆不一樣，標準RS232也無法使用，建議挑有USB埠口的UPS。
+      <br />本文教學以Master和UPS通訊，Master透過網路提供UPS資訊給Slave，因此Master與Slave的UPS資訊是一樣的，但每台可以針對需求設置其它參數。
+      <br />底下型號無法支援Apcupsd：
+      <ul>
+      <li>SmartUPS SMX/SMT 750, 1000, 1500
+    　<li>SmartUPS RT 3000XL, 5000XL
+      </ul>
+      </p>
+      <hr />
+
+<!-- Apcupsd 安裝 -->
+      <a name="Apcupsd install"><h2>Apcupsd 安裝</h2>
+      <h3>1. install</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts"># install Apcupsd</span>
+      <br />SLES:~ # <span class="cmds">zypper</span> in apcupsd
+      </div>
+      <br />
+      <hr />
+
+<!-- Master 設定 -->
+      <a name="Master Configuration"><h2>Apcupsd 設定</h2>
+      <h3>1. Master Configuration</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts"># Master Configuration</span>
+      <br />Master:~ # <span class="cmds">cat</span> /etc/apcupsd/apcupsd.conf
+      <br />UPSCABLE usb <span class="cmts"># 使用 USB 傳輸線</span>
+      <br />UPSTYPE usb <span class="cmts"># 使用 USB 傳輸</span>
+      <br />DEVICE <span class="cmts"># USB 會自動偵測 空白即可</span>
+      <br />POLLTIME 20 <span class="cmts"># 每20秒確認狀態</span>
+      <br />#BATTERYLEVEL 5 <span class="cmts"># 不使用電池低於5%關機方式 所以註解起來</span>
+      <br />#MINUTES 3 <span class="cmts"># 不使用電池續航時間低於3分鐘關機方式 所以註解起來</span>
+      <br />TIMEOUT 420 <span class="cmts"># 使用跳電後420秒進行關機 所以去掉註解</span>
+      <br />Master:~ # /etc/init.d/apcupsd start
+      <br />Master:~ # <span class="cmds">chkconfig</span> apcupsd on
+      <br />Master:~ # <span class="cmds">apcaccess</span> status <span class="cmts"># 查詢UPS目前狀態</span>
+      </div>
+      <br />
+
+<!-- Slave 設定 -->
+      <a name="Slave Configuration">
+      <h3>2. Slave Configuration</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts"># Slave Configuration</span>
+      <br />Slave:~ # <span class="cmds">cat</span> /etc/apcupsd/apcupsd.conf
+      <br />UPSCABLE ether <span class="cmts"># 使用網路線</span>
+      <br />UPSTYPE net <span class="cmts"># 使用網路傳輸</span>
+      <br />DEVICE <span class="vars">master</span>:3551
+      <span class="cmts"># 設定 Master IP</span>
+      <br />POLLTIME 20
+      <br />#BATTERYLEVEL 5
+      <br />#MINUTES 3
+      <br />TIMEOUT 300
+      <br />Slave:~ # /etc/init.d/apcupsd start
+      <br />Slave:~ # <span class="cmds">chkconfig</span> apcupsd on
+      <br />Slava:~ # <span class="cmds">apcaccess</span> status <span class="cmts"># 查詢UPS目前狀態</span>
+      </div>
+      <br />
+      <hr />
+
+<!-- 其他重要參數 -->
+      <a name="Other important parameter"><h2>其它重要參數</h2>
+      <p class="h3"></p>
+      <div class="commands">ONBATTERYDELAY 6 <span class="cmts"># 跳電後等待6秒後Apcupsd才開始動作；如果只是瞬間跳電或電壓不穩則不做動作</span>
+      <br />ANNOY 300 <span class="cmts"># 每300秒對登入用戶告知跳電</span>
+      <br />ANNOYDELAY 60 <span class="cmts"># 首次跳電60秒對登入用戶告知跳電</span>
+      <br />NOLOGON disable <span class="cmts"># 不使用在跳電時禁止用戶登入</span>
+      <br />NETSERVER on <span class="cmts"># 啟動Apcupsd information server (提供其它電腦讀取UPS資訊)</span>
+      <br />EVENTSFILE /var/log/apcupsd.events <span class="cmts"># log檔位置</span>
+      <br />UPSCLASS standalone <span class="cmts"># 使用standalone方式運作</span>
+      <br />WAKEUP 60 <span class="cmts"># UPS在市電恢復後等待60秒再對設備供電</span>
+      <br />LOWBATT 02 <span class="cmts"># 每兩週進行一次自我檢測</span>
+      </div>
+      <br />
+      <hr />
+
+<!-- 測試UPS -->
+      <a name="Test UPS"><h2>測試UPS</h2>
+      <h3>1. Master test</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts"># 移除市電三分鐘後再接上市電</span>
+      <br />Master:~ # <span class="cmts"># 不下任何指令</span>
+      <br />
+      <br />Broadcast Message from root@Master
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(somewhere) at 17:53 ...
+      <br />
+      <br />Power failure on UPS x1. Running on batteries.
+      <br />
+      <br />
+      <br />Broadcast Message from root@Master
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(somewhere) at 17:56 ...
+      <br />
+      <br />Power has returned on UPS x1...
+      <br />
+      <br />Master:~ # <span class="cmds">tail</span> /var/log/message
+      <br />Nov&nbsp;&nbsp;5 17:53:31 Master apcupsd[19699]: Power failure.
+      <br />Nov&nbsp;&nbsp;5 17:53:37 Master apcupsd[19699]: Running on UPS batteries.
+      <br />Nov&nbsp;&nbsp;5 17:56:18 Master apcupsd[19699]: Mains returned. No longer on UPS batteries.
+      <br />Nov&nbsp;&nbsp;5 17:56:18 Master apcupsd[19699]: Power is back. UPS running on mains.
+      </div>
+      <br />
+
+      <h3>2. Slave test</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts"># 移除市電三分鐘後再接上市電</span>
+      <br />Slave:~ # <span class="cmts"># 不下任何指令</span>
+      <br />
+      <br />Broadcast Message from root@Slave
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(somewhere) at 17:53 ...
+      <br />
+      <br />Power failure on UPS x1. Running on batteries.
+      <br />
+      <br />
+      <br />Broadcast Message from root@Slave
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(somewhere) at 17:56 ...
+      <br />
+      <br />Power has returned on UPS x1...
+      <br />
+      <br />Slave:~ # <span class="cmds">tail</span> /var/log/message
+      <br />Nov&nbsp;&nbsp;5 17:53:41 Slave apcupsd[6879]: Power failure.
+      <br />Nov&nbsp;&nbsp;5 17:53:47 Slave apcupsd[6879]: Running on UPS batteries.
+      <br />Nov&nbsp;&nbsp;5 17:56:22 Slave apcupsd[6879]: Mains returned. No longer on UPS batteries.
+      <br />Nov&nbsp;&nbsp;5 17:56:22 Slave apcupsd[6879]: Power is back. UPS running on mains.
+      </div>
+      <br />
+      <hr />
+
+<!-- reference -->
+    <h2>Reference</h2>
+    <li class="reference"><a href="http://www.apcupsd.com/manual/manual.html">Apcupsd official website</a></li>
+    <br /><li class="reference"><a href="http://blog.crboy.net/2011/03/linuxapc-ups-apcupsd.html">Linux上安裝APC UPS的控制程式 - apcupsd</a></li>
+    <br /><li class="reference"><a href="https://blog.delphij.net/2011/05/-apc-be550g-ups.html">配合 APC BE550G UPS 的 apcupsd 配置</a></li>
+    <hr />
+
+<!-- changelog -->
+    <h2>Changelog</h2>
+    <li class="changelog">2013/11/07 第一次完成</li>
+
+</body>
+</html>

@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bootstrap 101 Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="css/mycustom.css">
+  </head>
+  <body>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- // <script src="http://code.jquery.com/jquery-1.8.0.min.js"></script> -->
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+
+
+    <script type="text/javascript">
+// Selector
+// $(function() { $('ul').css('background-color', 'White'); });
+// $(function() { $('.script').css('background-color', 'Aqua'); });
+// $(function() { $('#html').css('background-color', 'Green'); });
+
+
+// $(function() { $('#web a').css('background-color', 'Red'); });
+// $(function() { $('#script > a').css('background-color', 'Red'); });
+// $(function() { $('#perl + a').css('background-color', 'Aqua'); });
+// $(function() { $('#html ~ a').css('background-color', 'Aqua'); });
+// $(function() { $('a, p').css('background-color', 'White'); });
+
+
+// $(function() { $('p:first').css('background-color', 'Aqua'); });
+// $(function() { $('p:even').css('background-color', 'Aqua'); });
+// $(function() { $('p:eq(2)').css('background-color', 'Aqua'); });
+// $(function() { $('p:gt(0)').css('background-color', 'Aqua'); });
+// $(function() { $('p:contains("CSS")').css('background-color', 'Aqua'); });
+// $(function() { $('p:empty').text('waiting ...'); });
+// $(function() { $('p:has(a)').css('background-color', 'Aqua'); });
+// $(function() { $('p:last-child').css('background-color', 'Aqua'); });
+// $(function() { $('#script > li:nth-child(4n)').css('background-color', 'Aqua'); });
+// $(function() { $('p img:only-child').css('border', 'solid 5px Aqua'); });
+
+
+// $(function() { $('p[name]').css('border', 'solid 5px Aqua'); });
+// $(function() { $('p[name = "other"]').css('border', 'solid 5px Aqua'); });
+// $(function() { $('li[id ^= "p"]').css('background-color', 'Aqua'); });
+// $(function() { $('a[href $= ".org/"]').css('background-color', 'Aqua'); });
+// $(function() { $('a[href *= "Java"]').css('background-color', 'Aqua'); });
+
+
+
+// Content
+// $(function() {
+//   var msg = $('body').css('background-color');
+//   console.log(msg);
+// });
+
+// $(function() { $('body').css('background-color', 'Aqua'); });
+
+// $(function() {
+//   $('body').css({fontSize: '20px',
+//                   backgroundColor: 'Aqua'});
+// });
+
+
+// $(function() { $('#perl').addClass('sample'); });
+// $(function() { $('#perl').removeClass('sample'); });
+// $(function() { $('#perl').toggleClass('sample'); });
+
+
+// $(function() {
+//   var msg = $('img').attr('src');
+//   console.log(msg);
+// });
+// $(function() { console.log($('li').attr('class') ); });
+
+// $(function() { $('img').attr('title', 'logo'); });
+
+// $(function() {
+//   $('img').attr({title: 'logo',
+//                  height: '100',
+//                  width: '160'});
+// });
+
+// $(function() { ($('#script a').removeAttr('href') ); });
+
+
+// $(function() { console.log("height:" + $('img').height() + "width: " + $('img').height() ); }); 
+
+// $(function() { $('img').height(100);
+//                $('img'),width(160);
+// }); 
+
+// $(function() { $('img').height(100).width(160); }
+
+
+// $(function() { console.log($(window).scrollTop() ); } );
+
+// $(function() { $(window).scrollTop(100).scrollLeft(20); } );
+
+
+// $(function() { alert($('ul > p').text() ); });
+// $(function() { alert($('ul > p').html() ); });
+
+// $(function() { $('p:empty').text('<a href="http://www.google.com">Google</a>'); });
+// $(function() { $('p:empty').html('<a href="http://www.google.com">Google</a>'); });
+
+// $(function() { console.log($('input[name = "sex"]').val() ); });
+// $(function() { $(':text').val('abc@mail')});
+
+
+// Element
+// $(function() {$('<li class="framework" id="catalyst">Catalst</li>').insertBefore('#joomla'); });
+// $(function() {$('<li class="framework" id="drupal">Drupal</li>').insertAfter('#joomla'); });
+
+// $(function() {$('<li class="web" id="ecmascript">ECMASCript</li>').appendTo('#web'); });
+// $(function() {$('<li class="web" id="db">db</li>').prependTo('#web'); });
+
+
+
+// $(function() {$('#joomla').before('<li class="framework" id="catalyst">Catalst</li>'); });
+// $(function() {$('#joomla').after('<li class="framework" id="drupal">Drupal</li>'); });
+// $(function() {$('#joomla').before('<li class="framework" id="catalyst">Catalst</li>')
+//                           .after('<li class="framework" id="drupal">Drupal</li>'); });
+
+// $(function() {$('#web').append('<li class="web" id="ecmascript">ECMASCript</li>'); });
+// $(function() {$('#web').prepend('<li class="web" id="db">db</li>'); });
+// $(function() {$('#web').append('<li class="web" id="ecmascript">ECMASCript</li>')
+//                        .prepend('<li class="web" id="db">db</li>'); });
+
+// $(function() {$('p').wrap('<pre></pre>'); })
+// $(function() {$('p').wrapAll('<pre></pre>'); })
+// $(function() {$('p').wrapInner('<pre></pre>'); })
+
+
+// $(function() {$('#perl').replaceWith('<code>Perl</code>'); })
+// $(function() {$('<code>Perl</code>').replaceAll('#perl'); })
+// $('h2').replaceWith(function(){ $("<code />").append($(this).contents()); });
+
+// $(function() { $('#web').remove(); });
+// $(function() { $('p').empty(); });
+// $(function() { $('p').unwrap(); });
+
+
+// $(function() { $('#dphp').nextAll().css('color', 'Yellow') });
+// $(function() { $('#dphp').nextAll().andSelf().css('color', 'Yellow') });
+// $(function() { $('#dphp').nextAll().end().css('color', 'Yellow') });
+
+// $(function() { $('#dphp').next().css('color', 'Yellow') });
+// $(function() { $('#dphp').prev().css('color', 'Green') });
+// $(function() { $('#dphp').next().css('color', 'Yellow')
+//           .end()
+//           .prev().css('color', 'Green');
+// });
+
+// $(function() { $('#dphp').children().css('color', 'Red'); });
+// $(function() { $('#dphp').parents().css('color', 'Red'); });
+// $(function() { $('#dphp').parent().css('color', 'Red'); });
+
+
+
+// Event 
+
+// $(function() {
+//   var onMouseOver = function () { $('#big').attr('src', $(this).attr('src') ); };
+//   var onMouseOut = function () { $('#big').removeAttr('src'); };
+//   $('#list img')
+//     .mouseover(onMouseOver)
+//     .mouseout(onMouseOut);
+// }) ;
+
+
+// $(function() {
+//   var waterString = "any opinion";
+//   var keyIn = function() {
+//     $(this).removeClass('watermark');
+//     if ($(this).val() == waterString) {
+//       $(this).val('');
+//     }
+//   };
+//   var keyOut = function() {
+//     if ($(this).val() == '') {
+//       $(this).addClass('watermark');
+//       $(this).val(waterString);
+//     }
+//   };
+//   var checkSubmit = function() {
+//     if ($('#opinion').val() == waterString) {
+//       $('#opinion').val('');
+//     }
+//   };
+//   $('#opinion').addClass('watermark')
+//                .val(waterString)
+//                .focus(keyIn)
+//                .blur(keyOut);
+// });
+
+
+// $(function () {
+//   // console.log( $('#switchMenu').html() );
+//   // console.log( $('#switchMenu').attr('value') );
+//   // console.log( $('#switchMenu').val() );
+//   // for jquery 1.8
+//   var disableMenu = function() {
+//     // $(this).html('disable menu');
+//     $(this).attr('value', 'enable menu');
+//     $(document).bind('contextmenu', function(e) {
+//       e.preventDefault();
+//     });
+//   };
+//   var enableMenu = function() {
+//     // $(this).html('enable menu');
+//     $(this).val('disable menu');
+//     $(document).unbind('contextmenu');
+//   };
+//   // $('#switchMenu').toggle(enableMenu, disableMenu);
+//   // for jquery 1.9
+//   $('#switchMenu').click(function() {
+//     if ($(this).val() == 'disable menu') {
+//       $(this).attr('value', 'enable menu');
+//       $(document).bind('contextmenu', function(e) {
+//         e.preventDefault();
+//       });
+//     } else {
+//       $(this).val('disable menu');
+//       $(document).unbind('contextmenu');
+//     }
+//   });
+// });
+
+
+// $(function () {
+//   $('#answer').one('click', function() {
+//     alert('Hi, ' + $('#name').val() );
+//   });
+// });
+
+
+// jquery 1.8
+// $(function() {
+//   $('.addMenu').live('click', function() {
+//     var i = $('.food').length - 1;
+//     j = i + 1;
+//    $('#rembtn_' + i.toString() ).after('<br><label class="control-label">food: </label> <input id="food_' + j.toString() + '" class="food" type="text" placeholder="FOOD"> <button id="rembtn_' + j.toString() + '" type="button" class="remMenu btn btn-danger">remove</button>'); 
+//   });
+// });
+
+
+// jquery 1.9
+// $(function() {
+//   $(document).on('click', '.addMenu', function() {
+//     var i = $('.food').length - 1;
+//     j = i + 1;
+//     $('#rembtn_' + i.toString() ).after('<br><label class="control-label">food: </label> <input id="food_' + j.toString() + '" class="food" type="text" placeholder="FOOD"> <button id="rembtn_' + j.toString() + '" type="button" class="remMenu btn btn-danger">remove</button>'); 
+//   });
+// });
+
+
+// $(function() {
+//   var cssDiplay = function(e) {
+//     if (e.which == 1) {
+//       $(e.data.exp).css({display: 'block',
+//                          top: e.pageY,
+//                          left: e.pageX
+//       });
+//     }
+//     console.log(e.pageX + ', ' + e.pageY);
+//     e.stopPropagation();
+//   };
+
+//   $(document)
+//     .click({exp: '#webMenu'}, cssDiplay)
+//     .dblclick(function(e) {
+//       if (e.which == 1) {
+//         $('#webMenu').css('display', 'none');
+//         // $('#bookStore').css('display', 'none');
+//       }
+//   });
+
+//   $('table#leaningWeb')
+//     .click({exp: '#bookStore'}, cssDiplay) 
+//     .dblclick(function(e) {
+//       if (e.which == 1) {
+//         $('#bookStore').css('display', 'none');
+//       }
+//       e.stopPropagation();
+//   });
+// });
+
+
+// $(function() {
+//   var msgs;
+//   var setError = function(elem, msg) {
+//     msgs.push('<li>' + msg + '</li>');
+//     $(elem)
+//       .addClass('error_field')
+//       .after('<span class="error_mark">*</span>');
+//   };
+
+//   $('#fm').submit(function(e) {
+//     msgs = [];
+//     $('.error_mark').remove();
+
+//     $('.valid', this)
+//       .removeClass('error_field')
+//       .filter('.required')
+//       .each(function() {
+//         if ($(this).val() == '') {
+//           setError(this, $(this).prev('label').text() + '必須輸入');
+//         }
+//       })
+//       .end()
+//       .filter('.length')
+//       .each(function() {
+//         if ($(this).val().length > $(this).data('length') ) {
+//           setError(this, $(this).prev('label').text() + '不可超過' + $(this).data('length') + '長度');
+//         }
+//       })
+//       .end()
+//       .filter('.range')
+//       .each(function() {
+//         var v = parseFloat($(this).val() );
+//         if (v < $(this).data('min') || v > $(this).data('max') ) {
+//            // $('#myid').data('value') = $('#myid').attr('data-value'), document.getElementById('myid').getAttribute('data-value');
+//           setError(this, $(this).prev('label').text() + '請輸入在' + $(this).data('min') + '~' + $(this).data('max') + '範圍');
+//         }
+//       })
+//       .end()
+//       .filter('inarray')
+//       .each(function() {
+//         var opts = $(this).data('option').split(' ');
+//         if ($.inArray($(this).val(), opts ) == -1) {
+//           setError(this, $(this).prev('label').text() + opts.toString() + '的其中一個輸入');
+//         }
+//       })
+//       .end()
+//       .filter('.regexp')
+//       .each(function() {
+//         var reg = new RegExp($(this).data('pattern'), 'gi');
+//         if (!reg.test($(this).val() ) ) {
+//           setError(this, $(this).prev('label').text() + '格式有誤');
+//         }
+//       });
+
+//     if (msgs.length == 0) {
+//       $('error_summary').css('display', 'none');
+//     } else {
+//       $('#error_summary')
+//         .css('display', 'block')
+//         .html(msgs.join('') );
+//       e.preventDefault();
+//     }
+
+//   });
+// });
+
+
+// Effect
+
+// $(function() {
+//   $('.tiplink')
+//     .mouseover(function(e) {
+//       $('div.tip:not(:animated)')
+//         .html($(this).data('tip'))
+//         .css({
+//           top: e.pageY,
+//           left: e.pageX
+//         })
+//         .fadeIn(500);
+//     })
+//     .mouseout(function(e) {
+//       $('div.tip').fadeOut(2000);
+//     });
+// });
+
+
+// $(function() {
+//   $('#panel dd').hide();
+//   $('#panel dt')
+//     .click(function(e) {
+//       var d = $('+dd', this);
+//       if (d.css('display') == 'block') {
+//         d.slideUp(1000);
+//       }
+//       else {
+//         d.slideDown(1000);
+//       }
+//     });
+// });
+    </script>
+
+    <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">jQuery example</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Script <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#perl">Perl</a></li>
+                <li><a href="#php">Php</a></li>
+                <li><a href="#python">Python</a></li>
+                <li><a href="#ruby">Ruby</a></li>
+              </ul>
+            </li>
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Web <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#html">HTML</a></li>
+                <li><a href="#css">CSS</a></li>
+                <li><a href="#javascript">JavaScript</a></li>
+              </ul>
+            </li>
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Framework <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#joomla">Joomla</a></li>
+                <li><a href="#django">Django</a></li>
+                <li><a href="#ror">Ruby on Rails</a></li>
+              </ul>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+
+    <div class="tip"></div>
+    <ul id="script">
+    <h2>Script</h2>
+    <li class="script" id="perl">Perl</li>
+    <a href="http://www.perl.org/">http://www.perl.org/</a>
+    <p class="tiplink" data-tip="<a href='http://zh.wikipedia.org/wiki/Perl'>Perl</a>是一族高階、通用、直譯式、動態的程式語言">Perl is a family of high-level, general-purpose, interpreted, dynamic programming languages.
+    
+    <a href="http://en.wikipedia.org/wiki/Perl">more...</a>
+    </p>
+
+    <li class="script" id="php">PHP</li>
+    <a href="http://php.net/">http://php.net/</a>
+    <p class="tiplink" data-tip="<a href='http://zh.wikipedia.org/wiki/Php'>PHP</a>是一種開源的通用電腦指令碼語言，尤其適用於網路開發並可嵌入HTML中使用">This article is about the scripting language.
+    <a href="http://en.wikipedia.org/wiki/Php">more...</a>
+    </p>
+
+    <li class="script" id="python">Python</li>
+    <a href="http://www.python.org/">http://www.python.org/</a>
+    <p class="tiplink" data-tip="<a href='http://zh.wikipedia.org/wiki/Python'>Python</a>是一種物件導向、直譯式電腦程式語言">Python is a widely used general-purpose, high-level programming language.
+    <a href="http://en.wikipedia.org/wiki/Python_(programming_language)">more...</a>
+    </p>
+
+    <li class="script" id="ruby">Ruby</li>
+    <a href="https://www.ruby-lang.org/">https://www.ruby-lang.org/</a>
+    <p class="tiplink" data-tip="<a href='http://zh.wikipedia.org/wiki/Ruby'>Ruby<a>是一種物件導向、命令式、函數式、動態的通用程式語言">Ruby is a dynamic, reflective, object-oriented, general-purpose programming language.
+    <a href="http://en.wikipedia.org/wiki/Ruby_(programming_language)">more...</a>
+    </p>
+    </ul>
+    <hr>
+
+
+    <ul id="web">
+    <h2>Web</h2>
+    <li class="web" id="html">HTML</li>
+    <p class="web">HyperText Markup Language (HTML) is the main markup language.
+    <a href="http://en.wikipedia.org/wiki/HTML">more...</a>
+    </p>
+
+    <li class="web" id="css">CSS</li>
+    <p>Cascading Style Sheets (CSS) is a style sheet language used for describing the presentation semantics (the look and formatting) of a document written in a markup language.
+    <a href="http://en.wikipedia.org/wiki/Cascading_Style_Sheets">more...</a>
+    </p>
+
+    <li class="web" id="javascript">JavaScript</li>
+    <p>JavaScript (JS) is an interpreted computer programming language.
+    <a href="http://en.wikipedia.org/wiki/JavaScript">more...</a>
+    </p>
+
+    <li class="web" id="other">Other</li>
+    <p name="other"></p>
+    <p name="imgage"><img src="https://lh3.googleusercontent.com/-w0UdIu8UZG4/Ufm1vJAtbqI/AAAAAAAARQw/7buV13g6gdY/w426-h250/css3-html5-javascript-logo.png" alt=""> </p>
+    </ul>
+    <hr>
+
+
+    <ul id="framework">
+    <h2>Framwork</h2>
+    <li class="framwork" id="joomla">Joomla</li>
+    <a href="http://www.joomla.org/">http://www.joomla.org/</a>
+    <p>Joomla is a free and open-source content management framework for publishing web content.
+    <a href="http://en.wikipedia.org/wiki/Joomla">more...</a>
+    </p>
+
+    <li class="framework" id="django">Django</li>
+    <a href="https://www.djangoproject.com/">https://www.djangoproject.com/</a>
+    <p>Django is a free and open source web application framework, written in Python.
+    <a href="http://en.wikipedia.org/wiki/Django_(web_framework)">more...</a>
+    </p>
+
+    <li class="framework" id="ror">Ruby on Rails</li>
+    <a href="http://rubyonrails.org/">http://rubyonrails.org/</a>
+    <p>Ruby on Rails, often simply Rails, is an open source web application framework which runs on the Ruby programming language.
+    <a href="http://en.wikipedia.org/wiki/Ruby_on_Rails">more...</a>
+    </p>
+    </ul>
+    <hr>
+
+    <ul>
+    <form class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label" spellcheck="true">Email</label>
+        <div class="controls">
+          <input type="text" placeholder="Email">
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">Password</label>
+        <div class="controls">
+          <input type="password" placeholder="Password">
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">Sex</label>
+        <div class="controls">
+            <label class="radio"><input type="radio" name="sex" value="male" checked> Male</label>
+            <label class="radio"><input type="radio" name="sex" value="female"> Female</label>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="contriol-label">Other Info</label>
+        <div class="controls">
+          <textarea rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="controls">
+          <label class="checkbox">
+            <input type="checkbox"> Remember me
+          </label>
+          <button type="submit" class="btn">Sign in</button>
+        </div>
+      </div>
+    </form>
+    </ul>
+    <hr>
+
+    <ul>
+    <div class="row show-grid">
+      <div class="col-md-12" id="ddynamic">
+        dynamic
+        <div class="row show-grid">
+          <div class="col-md-2" id="djs">javascript</div>
+          <div class="col-md-2" id="dperl">perl</div>
+          <div class="col-md-4" id="dphp">php
+            <div class="col-md-2" id="drupal">drupal</div>
+            <div class="col-md-2" id="djoomla">joomla</div>
+          </div>
+          <div class="col-md-2" id="dpython">python</div>
+          <div class="col-md-2" id="druby">ruby</div>
+        </div>
+      </div>
+      <div class="col-md-12" id="static">
+        static
+        <div class="row show-grid">
+          <div class="col-md-2">Basic</div>
+          <div class="col-md-2">C/C++</div>
+          <div class="col-md-2">Java</div>
+        </div>
+      </div>
+    </div>
+    </ul>
+    <hr>
+    
+    <ul id="list">
+      <li><img src="http://www3.pcmag.com/media/images/338225-chrome.jpg?thumb=y" alt=""></li>
+      <li><img src="http://www2.pcmag.com/media/images/338226-firefox.jpg?thumb=y" alt=""></li>
+      <li><img src="http://www1.pcmag.com/media/images/338222-ie9.jpg?thumb=y" alt=""></li>
+      <li><img src="http://www3.pcmag.com/media/images/353966-maxthon.jpg?thumb=y" alt=""></li>
+      <li><img src="http://www6.pcmag.com/media/images/338224-opera.jpg?thumb=y" alt=""></li>
+    </ul>
+    <br>
+    <br>
+    <hr>
+
+    <ul>
+    <img id="big">
+    </ul>
+    <hr>
+
+    <ul>
+    <form class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label">Opinion</label>
+        <div class="controls">
+          <textarea id="opinion" rows="4" cols="50"></textarea>
+        </div>
+        <br>
+      </div>
+    </form>
+    </ul>
+    <hr>
+
+    <ul>
+    <!-- <button type="button" class="btn btn-primary" id="switchMenu">switch</button> -->
+    <input type="button" id="switchMenu" value="swtich" />
+    </ul>
+    <hr>
+
+    <ul>
+      <form class="form-horizontal">
+        <div class="control-group">
+        <label class="control-label">Question</label>
+        <div class="controls">
+          <label class="control-label">Input your name: </label>
+          <input id="name" type="text" placeholder="NAME">
+          <button id="answer" type="button" class="btn btn-primary">answer</button>
+        </div>
+        <br>
+      </div>
+      </form>
+    </ul>
+    <hr>
+
+
+    <ul>
+      <form id="menu" class="form-horizontal">
+        <div class="control-group">
+        <label class="control-label">Menu</label>
+        <div class="controls">
+          <br><label class="control-label">food: </label>
+          <input id="food_0" class="food" type="text" placeholder="FOOD">
+          <button id="rembtn_0" type="button" class="remMenu btn btn-danger">remove</button>
+          <br><br>
+
+          <button type="button" class="addMenu btn btn-primary">add</button>
+          <button type="button" class="resMenu btn btn-info">reset</button>
+          <button type="button" class="subMenu btn btn-default">submit</button>
+        </div>
+        <br>
+      </div>
+      </form>
+    </ul>
+    <hr>
+
+
+    <ul id="webMenu" class="webContext">
+      <li><a href="http://www.google.com.tw"><span style="color:blue">Google</span></a></li>
+      <li><a href="http://www.amazon.com"><span style="color:blue">Amozon</span></a></li>
+      <li><a href="http://www.facebook.com"><span style="color:blue">FACEBOOK</span></a></li>
+      <li><a href="http://www.yahoo.com"><span style="color:blue">Yahoo</span></a></li>
+    </ul>
+
+    <ul id="bookStore" class="webContext">
+      <li><a href="http://www.oreilly.com/">O'REILLY</a></li>
+      <li><a href="http://pragprog.com/">The Pragmatic Bookshelf</a></li>
+      <li><a href="http://www.mindviewinc.com/Index.php">mindview</a></li>
+    </ul>
+
+    <ul>
+    <table id="leaningWeb" class="table table-responsive" style="width: initial;">
+    <tbody>
+      <tr>
+        <th>WebSite</th>
+        <th>Author</th>
+      </tr>
+      <tr>
+        <td><a href="http://www.learnpython.org/">learnpython</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a href="http://ruby-doc.com/docs/ProgrammingRuby/">ProgrammingRuby</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a href="http://www.djangobook.com/en/2.0/index.html">The Django Book</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a href="http://ruby.railstutorial.org/">Ruby on Rails Tutorial</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+    </table>
+    </ul>
+    <hr>
+
+    <ul id="errorSummary"></ul>
+    <ul>
+    <form id="fm" class="form-horizontal" role="form">
+
+      <div class="form-group">
+        <label for="title" class="control-label col-sm-2">Name</label>
+        <input id="title" class="form-control valid length" placeholder="書名" style="width: initial;" data-length="30">
+        <!-- <div class="col-sm-4"><input id="title" class="form-control valid length" placeholder="書名" style="width: initial;" data-length="5"></div> -->
+      </div>
+
+      <div class="form-group">
+        <label for="isbn" class="control-label col-sm-2">ISBN</label>
+        <input id="isbn" class="form-control valid required regexp" placeholder="123456789-0" style="width: initial;" data-pattern="[0-9]{1}-[0-9]{3,5}-[0-9]{3-5}-[0-9X]{1}">
+        <!-- <div class="col-sm-4"><input id="isbn" class="form-control valid required regexp" placeholder="123456789-0" style="width: initial;"></div> -->
+      </div>
+
+      <div class="form-group">
+        <label for="price" class="control-label col-sm-2">Price</label>
+        <input id="price" class="form-control valid range" placeholder="價格" style="width: initial;" data-min="100" data-max="10000" mydata-min="1">
+        <!-- <div class="col-sm-4"><input id="price" class="form-control valid range" placeholder="價格" style="width: initial;"></div> -->
+      </div>
+
+      <div class="form-group">
+        <label for="publish" class="control-label col-sm-2">Press</label>
+        <input id="publish" class="form-control valid inarray" placeholder="出版社" style="width: initial;" data-option="Orelly Pragmatic mindview">
+        <!-- <div class="col-sm-4"><input id="price" class="form-control valid inarray" placeholder="出版社" style="width: initial;"></div> -->
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <input type="submit" class="btn btn-default" value="submit"></input>
+        </div>
+      </div>
+
+    </form>
+    </ul>
+
+    <ul>
+    <dl id="panel" class="dl-horizontal">
+      <dt>Static language</dt>
+      <dd>Static languages are languages that variables need to be declared before use and type checking is done at compile time.</dd>
+
+      <dt>Dynamic language</dt>
+      <dd>Dynamic languages are languages that don’t necessarily need variables to be declared before they are used.</dd>
+
+      <dt>Strong typing</dt>
+      <dd>strong (no implicit conversion) types</dd>
+
+      <dt>Weak typing</dt>
+      <dd>weak (implicit conversion) types</dd>
+    </dl>
+    </ul>
+
+
+<script type="text/javascript">
+
+
+
+
+</script>
+
+    
+  </body>
+</html>

@@ -1,0 +1,110 @@
+﻿<head>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<link rel="stylesheet" href="../defaults.css" type="text/css">
+<title>rpm&zypper</title>
+</head><body>
+
+<!--header-->
+	<h1>rpm&zypper套件安裝</h1>
+	<a href="#rpm"><li class="title">1.rpm</li></a>
+    <br /><a href="#pdsh"><li class="title">2.pdsh & pdcp</li></a>
+    <br /><a href="#zypper"><li class="title">3.Zypper套件安裝</li></a>
+    <br /><a href="#tar"><li class="title">4.解tar</li></a>
+    <br /><a href="#test"><li class="title">5.測試是否成功設定</li></a>
+    <br />
+	<hr/>
+
+<!--1.rpm -->
+	<a name="rpm"><h2>1.rpm</h2>
+	<h3>rpm來源</h3>
+	<p class="h3"></p>
+	<div class="commands">/home/pkg/rpm
+	<span class="cmts">#裡面有包含pdsh ganglia torque等等的rpm</span>
+	</div>
+	<br />
+
+	<h3>rpm指令</h3>
+	<p class="h3"></p>
+	<div class="commands">k0:~ # rpm -ivh pkg.rpm
+	<span class="cmts">#安裝rpm</span>
+	<br />k0:~ # rpm -e pkg.rpm
+	<span class="cmts">#移除rpm</span><br/><br/>
+	<span class="cmts">#查詢rpm</span>
+	<br />k0:~ # rpm -qa {pkgname}
+	<br />k0:~ # rpm -ql pkg
+	<br />k0:~ # rpm -qf path
+	</div>
+	<br />
+
+	<h3>rpmbuild</h3>
+	<p class="h3"></p>
+	<div class="commands">/usr/src/packages/SOURCES
+	<br />
+	<span class="cmts"># 將要build的檔案複製到此目錄下再解壓縮</span>
+	<br/>k0:~ # ls *.spec<br/>
+	<span class="cmts"># 有.spec的檔案才可以build</span>
+	<br/>k0:~ # rpmbuild -ta {filename}<br/>
+	<span class="cmts"># {filename}是解壓縮後的檔案</span>
+	<br /><span class="cmts"># 過程中若有缺少套件用zypper補齊</span>
+	</div>
+	<hr/>
+
+<!-- 2.pdsh -->
+	<a name="pdsh"><h2>2.pdsh & pdcp</h2>
+	<h3>安裝</h3>
+	<p class="h3"></p>
+	<div class="commands">k0:~ # rpm -ivh 
+	<br />pdsh-2.26-1.x86_64.rpm
+	<br />pdsh-rcmd-ssh-2.26-1.x86_64.rpm
+	</div>
+	<br />
+
+	<h3>pdsh&pdcp指令</h3>
+	<p class="h3"></p>
+	<div class="commands">k0:~ # pdsh -a {cmd} 
+	<span class="cmts">#所有主機執行cmd指令</span>
+	<br />k0:~ # pdsh -w {cmd}
+    <span class="cmts">#指定host進行cmd指令</span>
+    <br /><span class="cmts">#ex: pdsh -w i1[0-9] => 指定 i10-i19 執行cmd</span>
+    <br />k0:~ # pdcp -a (-w) {filename}
+    <span class="cmts">#複製檔案至所有(或指定)host</span>
+	</div>
+	<hr/>
+
+<!--3.zypper-->
+	<a name="zypper"><h2>3.Zypper套件安裝</h2>
+	<h3>path</h3>
+	<p class="h3"></p>
+	<div class="commands">/etc/zypp/repos.d</div>
+	<br />
+	<h3>zypper 指令</h3>
+	<p class="h3"></p>
+	<div class="commands">k0:~ # 
+	<br/>zypper in pkg
+	<span class="cmts"># Install</span>
+	<br />zypper se pkg
+	<span class="cmts"># search</span>
+	<br />zypper rm pkg
+	<span class="cmts"># remove</span>
+	</div>
+	<hr />
+
+<!--4.tar-->
+	<a name="tar"><h2>4.解tar</h2>
+	<br/>
+	<div class="commands">tar xf {filename} 
+	<span class="cmts"># 解tar</span>
+	<br />tar zxvf {filename} 
+	<span class="cmts"># for .tgz</span>
+	</div>
+	<hr/>
+
+<!--changelog-->
+<h2>Changelog</h2>
+<li class="changelog">2013/10/07 第一次完成</li>
+<li class="changelog">2013/10/31 新增rpmbuild, tar</li>
+<li class="changelog">2013/11/07 重新排版</li>
+</body>
+</html>

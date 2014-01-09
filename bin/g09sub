@@ -1,0 +1,55 @@
+#!/bin/bash
+#
+### modified date: 2013/10/26
+### submit gaussian 09 job on jjc farm
+#
+
+INPFILE=$1
+JOB=${INPFILE%.*}
+CHKFILE=`awk -F= '/%chk/{sub("\r", ""); printf "%s", $2}' $INPFILE`
+
+echo -n "which queue do you choose? workq, fmemq [workq]"
+read QUEUE
+QUEUE=${QUEUE:-workq}
+
+if [ "x$QUEUE" == "xfmemq" ]
+then
+  PPN=8
+else
+  PPN=8
+fi
+
+cat <<EOF > $JOB.pbs
+#!/bin/sh
+#PBS -N $JOB
+#PBS -o $JOB.out
+#PBS -e $JOB.err
+#PBS -q $QUEUE
+#PBS -l nodes=1:ppn=$PPN
+#PBS -V
+
+cd \$PBS_O_WORKDIR
+cp \$PBS_NODEFILE NODE.\$PBS_JOBID
+source /usr/local/pkg/g09/bsd/g09.profile
+mkdir -p /tmp/$USER
+cd /tmp/$USER
+cp \$PBS_O_WORKDIR/$INPFILE .
+ulimit -s unlimited
+
+#
+### run g09
+#
+echo "Begin time: \`date\`"
+g09 $INPFILE > $JOB.log
+echo "Finish time: \`date\`"
+
+#
+### run formchk
+#
+test -f $CHKFILE && formchk $CHKFILE
+cp $JOB.log $CHKFILE ${CHKFILE%.*}.fchk \$PBS_O_WORKDIR
+
+EOF
+
+chmod u+x $JOB.pbs
+qsub $JOB.pbs

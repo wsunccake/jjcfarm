@@ -1,0 +1,1747 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> <html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>jQuery</title>
+<link rel="stylesheet" href="../../defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>jQuery</h1>
+      <!-- basic -->
+      <a href="#selector"><li class="title">Selector</li></a>
+      <br /><a href="#content"><li class="title">Content</li></a>
+      <br /><a href="#element"><li class="title">Element</li></a>
+      <br /><a href="#event"><li class="title">Event</li></a>
+      <br /><a href="#effect"><li class="title">Effect</li></a>
+      <br /><a href="#ajax"><li class="title">Ajax</li></a>
+      <br /><a href="#jquery_ui"><li class="title">jQuery UI</li></a>
+      <br /><a href="#jquery_plugin"><li class="title">jQuery Plugin</li></a>
+      <br /><br /><li class="title">Reference</li>
+      <div class="context">
+      <p class="h1">
+            
+      </p>
+      </div>
+      <hr />
+
+<!-- Selector -->
+      <a name="selector"></a><h2>Selector</h2>
+      <div class="commands">$(document).ready(function() {
+      <br />&nbsp;&nbsp;$('<span class="vars">selector</span>')<span class="vars">method</span>     
+      <br />&nbsp;&nbsp;...
+      <br />}
+      <br />
+
+      <br />$(function() { 
+      <span class="cmts">// 可略(document).ready</span>
+      <br />&nbsp;&nbsp;$('<span class="vars">selector</span>')<span class="vars">method</span>     
+      <br />&nbsp;&nbsp;...
+      <br />}
+            
+      </div>
+      <br />
+
+
+      <p class="h3">basic selector</p>
+      <table class="h3">
+        <tr>
+          <th>Selector</th>
+          <th>jQuery example</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>Elements</td>
+          <td><span class="ftns">$('<span class="vars">a</span>')</span></td>
+          <td>選擇所有符合標籤名稱(Tag name)的元素</td>
+        </tr>
+        <tr>
+          <td>ID</td>
+          <td><span class="ftns">$('<span class="vars"><em>#</em>html</span>')</span></td>
+          <td>選擇一個符合id屬性</td>
+        </tr>
+        <tr>
+          <td>Class</td>
+          <td><span class="ftns">$('<span class="vars"><em>.</em>web</span>')</span></td>
+          <td>選擇所有符合class的元素</td>
+        </tr>
+      </table>
+      <br />
+
+      <p class="h3">advanced seletor</p>
+      <table class="h3">
+        <tr>
+          <th>Selector</th>
+          <th>jQuery example</th>
+          <th>Description</th> 
+        </tr>
+
+        <tr>
+          <td></td>
+          <td><span class="ftns">$('<span class="vars">a</span>, <span class="vars">p</span>')</span></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>descendant</td>
+          <td><span class="ftns">$('<span class="vars">#web</span> <span class="vars">a</span>')</span></td>
+          <td>底下所有層數之element</td>
+        </tr>
+        <tr>
+          <td>child</td>
+          <td><span class="ftns">$('<span class="vars">#script</span> &gt; <span class="vars">a</span>')</span></td>
+          <td>底下一層所有element</td>
+        </tr>
+        <tr>
+          <td>adjacent sibling</td>
+          <td><span class="ftns">$('<span class="vars">#perl</span> + <span class="vars">p</span>')</span></td>
+          <td>下一個element</td>
+        </tr>
+
+        <tr>
+          <td>all sibling</td>
+          <td><span class="ftns">$('<span class="vars">#html</span> ~ <span class="vars">p</span>')</span></td>
+          <td>之後所有element</td>
+        </tr>
+      </table>
+      <br />
+      
+      <p class="h3">filter</p>
+      <table class="h3">
+      <tbody>
+        <tr>
+          <th>Filter</th>
+          <th>jQuery example</th>
+          <th>Description</th>
+        </tr>
+
+        <!-- 依照出現順序 -->
+        <tr>
+          <td>first, last</td>
+          <td><span class="ftns">$('<span class="vars">p</span>:first')</td>
+          <td>取出最初/最後的element</td>
+        </tr>
+
+        <tr>
+          <td>even, odd</td>
+          <td><span class="ftns">$('<span class="vars">p</span>:even')</td>
+          <td>取出第奇數/偶數的element</td>
+        </tr>
+
+        <tr>
+          <td>eq</td>
+          <td><span class="ftns">$('<span class="vars">p</span>:eq(<span class="vars">2</span>)')</td>
+          <td>取出第n個的element</td>
+        </tr>
+
+        <tr>
+          <td>lt, gt</td>
+          <td><span class="ftns">$('<span class="vars">p</span>:gt(<span class="vars">0</span>)')</td>
+          <td>取出第n個之前/後的element</td>
+        </tr>
+
+        <!-- 內容作為篩選 -->
+        <tr>
+          <td>contains</td>
+          <td><span class="ftns">$('<span class="vars">p</span>:contains(&quot;<span class="vars">CSS</span>&quot;)')</td>
+          <td>包含字串的element</td>
+        </tr>
+
+        <tr>
+          <td>empty</td>
+          <td><span class="ftns">$('<span class="vars">p</span>:empty')</td>
+          <td>內容為空的element</td>
+        </tr>
+
+        <tr>
+          <td>has</td>
+          <td><span class="ftns">$('<span class="vars">p</span>:has(<span class="vars">a</span>)')</td>
+          <td>sub element</td>
+        </tr>
+
+        <!-- 子元素 -->
+        <tr>
+          <td>first-child, last-child</td>
+          <td><span class="ftns">$('<span class="vars">p</span>:last-child')</td>
+          <td>取出最初/最後的child element</td>
+        </tr>
+
+        <tr>
+          <td>nth-child</td>
+          <td><span class="ftns">$('<span class="vars">#script</span> &gt; <span class="vars">li</span>:nth-child(<span class="vars">4n</span>)')</td>
+          <td>取出第n個的child element</td>
+        </tr>
+
+        <tr>
+          <td>only-child</td>
+          <td><span class="ftns">$('<span class="vars">p</span> <span class="vars">img</span>:only-child')</td>
+          <td>取出唯一的child element</td>
+        </tr>
+
+        <!-- header -->
+        <tr>
+          <td>header</td>
+          <td></td>
+          <td>取出所有head element</td>
+        </tr>
+
+        <!-- table -->
+        <tr>
+          <td>input</td>
+          <td></td>
+          <td>取出所有form element(&lt;input&gt;,&lt;textarea&gt;,&lt;button&gt;,&lt;select&gt;)</td>
+        </tr>
+
+        <tr>
+          <td>text</td>
+          <td></td>
+          <td>取出所有element</td>
+        </tr>
+
+        <tr>
+          <td>password</td>
+          <td></td>
+          <td>取出所有element</td>
+        </tr>
+
+        <tr>
+          <td>radio</td>
+          <td></td>
+          <td>取出所有element</td>
+        </tr>
+
+        <tr>
+          <td>chcekbox</td>
+          <td></td>
+          <td>取出所有element</td>
+        </tr>
+
+        <tr>
+          <td>file</td>
+          <td></td>
+          <td>取出所有element</td>
+        </tr>
+
+        <tr>
+          <td>submit</td>
+          <td></td>
+          <td>取出所有element</td>
+        </tr>
+
+        <tr>
+          <td>image</td>
+          <td></td>
+          <td>取出所有element</td>
+        </tr>
+
+        <tr>
+          <td>reset</td>
+          <td></td>
+          <td>取出所有element</td>
+        </tr>
+
+        <tr>
+          <td>hidden</td>
+          <td></td>
+          <td>取出所有element</td>
+        </tr>
+
+        <!-- attribute -->
+
+        <tr>
+          <td>enabled, disabled</td>
+          <td></td>
+          <td>取出所有enabled/disabled狀態element</td>
+        </tr>
+
+        <tr>
+          <td>hidden, visible</td>
+          <td></td>
+          <td>取出所有idden/visible狀態element</td>
+        </tr>
+
+        <tr>
+          <td>chceked</td>
+          <td></td>
+          <td>取出所有checked狀態element</td>
+        </tr>
+
+        <tr>
+          <td>selected</td>
+          <td></td>
+          <td>取出所有selected狀態element</td>
+        </tr>
+
+        <tr>
+          <td>animated</td>
+          <td></td>
+          <td>取出所有animated狀態element</td>
+        </tr>
+
+        <!-- other -->
+        <tr>
+          <td>not</td>
+          <td></td>
+          <td>取出不符合只element</td>
+        </tr>
+
+      </tbody>
+      </table>
+      <br />
+
+      <p class="h3">attributed seletor</p>
+      <table class="h3">
+        <tr>
+          <th>Condition</th>
+          <th>jQuery example</th>
+          <th>Description</th> 
+        </tr>
+
+        <tr>
+          <td></td>
+          <td><span class="ftns">$('<span class="vars">p</span>[<span class="vars">name</span>]')</span></td>
+          <td>擁有特定attribute</td>
+        </tr>
+
+        <tr>
+          <td>=</td>
+          <td><span class="ftns">$('<span class="vars">p</span>[<span class="vars">name</span> = &quot;<span class="vars">other</span>&quot;]')</span></td>
+          <td>attribute等於特定條件</td>
+        </tr>
+
+        <tr>
+          <td>=</td>
+          <td><span class="ftns">$('<span class="vars">p</span>[<span class="vars">name</span> != &quot;<span class="vars">other</span>&quot;]')</span></td>
+          <td>attribute不等於特定條件</td>
+        </tr>
+
+        <tr>
+          <td>^=</td>
+          <td><span class="ftns">$('<span class="vars">li</span>[<span class="vars">id</span> ^= &quot;<span class="vars">p</span>&quot;]')</span></td>
+          <td>attribute值開頭符合特定條件</td>
+        </tr>
+
+        <tr>
+          <td>$=</td>
+          <td><span class="ftns">$(<span class="vars">'a</span>[<span class="vars">href</span> $= &quot;<span class="vars">.org/</span>&quot;]')</span></td>
+          <td>attribute值結尾符合特定條件</td>
+        </tr>
+
+        <tr>
+          <td>*=</td>
+          <td><span class="ftns">$(<span class="vars">'a</span>[<span class="vars">href</span> *= &quot;<span class="vars">Java</span>&quot;]')</span></td>
+          <td>attribute值內容符合特定條件</td>
+        </tr>
+      </table>
+      <br />
+
+      <p class="h3"><a href="./js_ex/selector_ex.html">selector_ex</a></p>
+      <div class="commands">&gt; $(function() { $('ul').css('background-color', 'White'); });
+      <br />&gt; $(function() { $('.script').css('background-color', 'Aqua'); });
+      <br />&gt; $(function() { $('#html').css('background-color', 'Green'); });
+      <br />&gt;
+      <br />
+
+      <br />&gt; $(function() { $('#web a').css('background-color', 'Red'); });
+      <br />&gt; $(function() { $('#script > a').css('background-color', 'Red'); });
+      <br />&gt; $(function() { $('#perl + a').css('background-color', 'Aqua'); });
+      <br />&gt; $(function() { $('#html ~ a').css('background-color', 'Aqua'); });
+      <br />&gt; $(function() { $('a, p').css('background-color', 'White'); });      
+      <br />&gt;
+      <br />
+
+      <br />&gt; $(function() { $('p:first').css('background-color', 'Aqua'); });
+      <br />&gt; $(function() { $('p:even').css('background-color', 'Aqua'); });
+      <br />&gt; $(function() { $('p:eq(2)').css('background-color', 'Aqua'); });
+      <br />&gt; $(function() { $('p:gt(0)').css('background-color', 'Aqua'); });
+      <br />&gt; $(function() { $('p:contains(&quot;CSS&quot;)').css('background-color', 'Aqua'); });
+      <br />&gt; $(function() { $('p:empty').text('waiting ...'); });
+      <br />&gt; $(function() { $('p:has(a)').css('background-color', 'Aqua'); });
+      <br />&gt; $(function() { $('p:last-child').css('background-color', 'Aqua'); });
+      <br />&gt; $(function() { $('#script > li:nth-child(4n)').css('background-color', 'Aqua'); });
+      <br />&gt; $(function() { $('p img:only-child').css('border', 'solid 5px Aqua'); });
+      <br />&gt;
+      <br />
+
+      <br />&gt; $(function() { $('p[name]').css('border', 'solid 5px Aqua'); });
+      <br />&gt; $(function() { $('p[name = &quot;other&quot;]').css('border', 'solid 5px Aqua'); });
+      <br />&gt; $(function() { $('li[id ^= &quot;p&quot;]').css('background-color', 'Aqua'); });
+      <br />&gt; $(function() { $('a[href $= &quot;.org/&quot;]').css('background-color', 'Aqua'); });
+      <br />&gt; $(function() { $('a[href*= &quot;Java&quot;]').css('background-color', 'Aqua'); });
+      </div>
+
+      <hr />
+
+
+<!-- Content -->
+      <a name="content"></a><h2>Content</h2>
+
+
+      <table class="h3">
+        <tbody>
+          <tr>
+          <th>Function</th>
+          <th>jQuery example</th>
+          <th>Description</th>
+          </tr>
+
+          <!-- css/class -->
+
+          <tr>
+            <td>css</td>
+            <td><span class="ftns">css('<span class="vars">background-color</span>')</span>
+            <span class="cmts">// 讀取css attribute value</span><br />
+            <span class="ftns">css('<span class="vars">background-color</span>', '<span class="vars">Aqua</span>')</span>
+            <span class="cmts">// 設定css attribute</span><br />
+            <span class="ftns">css({<span class="vars">background-color</span>: '<span class="vars">Aqua</span>',
+            <span class="cmts">// 設定css 多個attribute, 以hash方式寫入設定</span><br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">fontSize</span>: '<span class="vars">20px</span>'})
+            <span class="cmts">// 但background-color =&gt; backgroundColor (hyphen改成camelCase)</span>
+            </span>
+            </td>
+            <td>讀取/設定CSS</td>
+          </tr>
+
+          <tr>
+            <td>addClass</td>
+            <td><span class="ftns">addClass('<span class="vars">sample</span>')</span></td>
+            <td>新增class</td>
+          </tr>
+
+          <tr>
+            <td>removeClass</td>
+            <td><span class="ftns">removeClass('<span class="vars">sample</span>')</span></td>
+            <td>移除class</td>
+          </tr>
+
+          <tr>
+            <td>toggleClass</td>
+            <td><span class="ftns">toggleClass('<span class="vars">sample</span>')</span></td>
+            <td>切換class</td>
+          </tr>
+
+          <!-- tag/attribute -->
+
+          <tr>
+            <td>attr</td>
+            <td><span class="ftns">attr('<span class="vars">src</span>')</span>
+            <span class="cmts">// 讀取attribute value</span><br />
+            <span class="ftns">attr('<span class="vars">title</span>', '<span class="vars">logo</span>')</span>
+            <span class="cmts">// 設定attribute</span><br />
+            <span class="ftns">css({<span class="vars">title</span>: '<span class="vars">logo</span>',
+            <span class="cmts">// 設定多個attribute, 以hash方式寫入設定</span><br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">height</span>: '<span class="vars">100</span><br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">width</span>: '<span class="vars">160</span>'})
+            </span>
+            </td>
+            <td>讀取/設定attribute</td>
+          </tr>
+
+          <tr>
+            <td>removeAttr</td>
+            <td><span class="ftns">removeAttr('<span class="vars">href</span>')</span></td>
+            <td>移除attribute</td>
+          </tr>
+
+          <tr>
+            <td>height, width<br />
+            innerHeight, innerWidth<br />
+            outerHeight, outerWidth
+            </td>
+            <td><span class="ftns">height()</span>
+            <span class="cmts">// 讀取height</span><br />
+            <span class="ftns"><span class="ftns">width(<span class="vars">160</span>)</span></span>
+            <span class="cmts">// 設定width</span><br />
+            <span class="ftns">height((<span class="vars">100</span>).width((<span class="vars">160</span>)</span>
+            <span class="cmts">// 用chain的方式同時設定</span>
+            </td>
+            <td>讀取/設定hegiht, width</td>
+          </tr>
+
+          <tr>
+            <td>scrollTop, scrollLeft</td>
+            <td><span class="ftns">scrollTop()</span>
+            <span class="cmts">// 讀取捲軸垂直位置</span><br />
+            <span class="ftns">scrollTop(<span class="vars">100</span>).scrollLeft(<span class="vars">20</span>)</span>
+            <span class="cmts">// 設定垂直, 水平捲軸位置</span>
+            </td>
+            <td>讀取/設定垂直, 水平捲軸位置</td>
+          </tr>
+
+          <!-- text/html -->
+
+          <tr>
+            <td>text, html</td>
+            <td><span class="ftns">text()</span>
+            <span class="cmts">// 讀取文字內容</span><br />
+            <span class="ftns">text(<span class="vars">&lt;a href=&quot;http://www.google.com&quot;&gt;http://www.google.comn&lt;/a&gt;</span>)</span>
+            <span class="cmts">// 設定文字內容</span><br />
+            <span class="ftns">html()</span>
+            <span class="cmts">// 讀取html內容</span><br />
+            <span class="ftns">html(<span class="vars">&lt;a href=&quot;http://www.google.com&quot;&gt;http://www.google.comn&lt;/a&gt;</span>)</span>
+            <span class="cmts">// 設定html內容</span>
+            </td>
+            <td>讀取/設定純文字, html格式內容</td>
+          </tr>
+
+          <!-- form -->
+          <tr>
+            <td>val</td>
+            <td><span class="ftns">val()</span>
+            <span class="cmts">// 讀取val</span><br />
+            <span class="ftns">val('<span class="vars">abc@mail</span>')</span>
+            <span class="cmts">// 設定val</span>
+            </td>
+            <td>讀取/設定form table element內容<br />
+            (&lt;input&gt;, &lt;textarea&gt;, &lt;button&gt;, &lt;select&gt;)</td>
+          </tr>
+
+        </tbody>
+      </table>
+      <br />
+
+      <div class="commands">&gt; $(function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var msg = $('body').css('background-color');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;console.log(msg);
+      <br />&nbsp;&nbsp;});
+      <br />&gt; $(function() { $('body').css('background-color', 'Aqua'); });
+      <br />&gt; $(function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;$('body').css({fontSize: '20px',
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundColor: 'Aqua'});
+      <br />&nbsp;&nbsp;});
+      <br />
+
+      <br />&gt; $(function() { $('#perl').addClass('sample'); });
+      <br />&gt; $(function() { $('#perl').removeClass('sample'); });
+      <br />&gt; $(function() { $('#perl').toggleClass('sample'); });
+      <br />
+
+      <br />&gt; $(function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var msg = $('img').attr('src');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;console.log(msg);
+      <br />&nbsp;&nbsp;});
+      <br />&gt; $(function() { console.log($('li').attr('class') ); });
+      <br />&gt; $(function() { $('img').attr('title', 'logo'); });
+      <br />&gt; $(function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;$('img').attr({title: 'logo',
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height: '100',
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width: '160'});
+      <br />&nbsp;&nbsp;});
+      <br />
+
+      <br />&gt; $(function() { ($('#script a').removeAttr('href') ); });
+      <br />
+
+
+      <br />&gt; $(function() { console.log(&quot;height:&quot; + $('img').height() + &quot;width: &quot; + $('img').height() ); }); 
+      <br />&gt; $(function() { $('img').height(100);
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$('img'),width(160);
+      <br />&nbsp;&nbsp;}); 
+      <br />&gt; $(function() { $('img').height(100).width(160); }
+      <br />
+
+      <br />&gt; $(function() { console.log($(window).scrollTop() ); } );
+      <br />&gt; $(function() { $(window).scrollTop(100).scrollLeft(20); } );
+      <br />
+
+      <br />&gt; $(function() { alert($('ul > p').text() ); });
+      <br />&gt; $(function() { $('p:empty').text('&lt;a href=&quot;http://www.google.com&quot;&gt;Google&lt;/a&gt;'); });
+      <br />&gt; $(function() { alert($('ul > p').html() ); });
+      <br />&gt; $(function() { $('p:empty').html('&lt;a href=&quot;http://www.google.com&quot;&gt;Google&lt;/a&gt;'); });
+      <br />
+
+      <br />&gt; $(function() { console.log($('input[name = "sex"]').val() ); });
+      <br />&gt; $(function() { $(':text').val('abc@mail')});
+      
+      </div>
+      <hr />
+
+
+<!-- Element -->
+      <a name="elemet"></a><h2>Element</h2>
+      <table class="h3">
+      <tbody>
+        <tr>
+          <th>Function</th>
+          <th>jQuery Example</th>
+          <th>Description</th>
+        </tr>
+
+        <!-- edit -->
+
+        <tr>
+          <td>insertBefore, insertAfter</td>
+          <td><span class="ftns">insertBefore('<span class="vars">#joomla</span>')</span></td>
+          <td>在element開頭/結尾新增select element(內部插入)</td>
+        </tr>
+
+        <tr>
+          <td>prependTo, appendTo</td>
+          <td><span class="ftns">prependTo('<span class="vars">#web</span>')</span></td>
+          <td>在element之前/後新增select element(外部插入)</td>
+        </tr>
+
+        <tr>
+          <td>before, after</td>
+          <td><span class="ftns">before('<span class="vars">&lt;li class=&quot;web&quot; id=&quot;ecmascript&quot;&gt;ECMASCript&lt;/li&gt;</span>')</span></td>
+          <td>在select element開頭/結尾新增element(內部插入)</td>
+        </tr>
+
+        <tr>
+          <td>prepend, append</td>
+          <td><span class="ftns">prepend('<span class="vars">&lt;li class=&quot;web&quot; id=&quot;db&quot;&gt;db&lt;/li&gt;</span>')</span></td>
+          <td>在select elemenet之前/後新增element(外部插入)</td>
+        </tr>
+
+        <tr>
+          <td>wrap, wrapAll, wrapInner</td>
+          <td><span class="ftns">wrap('<span class="vars">&lt;pre&gt;&lt;/pre&gt;</span>')</span></td>
+          <td>包覆element</td>
+        </tr>
+
+        <tr>
+          <td>repalceWith, replaceAll</td>
+          <td><span class="ftns">replaceWith('<span class="vars">&lt;code&gt;Perl&lt;/code&gt;</span>')</span><br />
+          <span class="ftns">replaceAll('<span class="vars">#Perl')</span>
+          </td>
+          <td>替換element</td>
+        </tr>
+
+        <tr>
+          <td>clone</td>
+          <td><span class="ftns">clone()</span></td>
+          <td>複製element</td>
+        </tr>
+
+        <!-- position -->
+        <tr>
+          <td>prev, next<br />
+          prevAll, nextAll
+          </td>
+          <td><span class="ftns">prev()</span></td>
+          <td>選取前/後element</td>
+        </tr>
+
+        <tr>
+          <td>siblings</td>
+          <td><span class="ftns">siblings()</span></td>
+          <td>選取兄弟element</td>
+        </tr>
+
+        <tr>
+          <td>parent, parents</td>
+          <td><span class="ftns">parent()</span></td>
+          <td>選取父element</td>
+        </tr>
+
+        <tr>
+          <td>children</td>
+          <td><span class="ftns">children()</span></td>
+          <td>選取子element</td>
+        </tr>
+
+        <tr>
+          <td>end, andSelf</td>
+          <td><span class="ftns">end()</span></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>remove, empty, unwrap</td>
+          <td><span class="ftns">remove()</span></td>
+          <td>刪除elemet</td>
+        </tr>
+
+        <!-- other -->
+        <tr>
+          <td>find, filter</td>
+          <td></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>each</td>
+          <td></td>
+          <td></td>
+        </tr>
+
+      </tbody>
+      </table>
+      <br />
+
+      <div class="commands">&gt; $(function() { $('<span class="vars">&lt;li class=&quot;framework&quot; id=&quot;catalyst&quot;&gt;Catalst&lt;/li&gt;</span>').insertBefore('<span class="vars">#joomla</span>'); });
+      <br />&gt; $(function() { $('<span class="vars">&lt;li class=&quot;framework&quot; id=&quot;drupal&quot;&gt;Drupal&lt;/li&gt;</span>').insertAfter('<span class="vars">#joomla</span>'); });
+      <br />
+
+      <br />&gt; $(function() { $('<span class="vars">&lt;li class=&quot;web&quot; id=&quot;ecmascript&quot;&gt;ECMASCript&lt;/li&gt;</span>').appendTo('<span class="vars">#web</span>'); });
+      <br />&gt; $(function() { $('<span class="vars">&lt;li class=&quot;web&quot; id=&quot;db&quot;&gt;db&lt;/li&gt;</span>').prependTo('<span class="vars">#web</span>'); });
+      <br />
+
+      <br />&gt; $(function() { $('<span class="vars">#joomla</span>').before('<span class="vars">&lt;li class=&quot;framework&quot; id=&quot;catalyst&quot;&gt;Catalst&lt;/li&gt;</span>'); });
+      <br />&gt; $(function() { $('<span class="vars">#joomla</span>').after('<span class="vars">&lt;li class=&quot;framework&quot; id=&quot;drupal&quot;&gt;Drupal&lt;/li&gt;</span>'); });
+      <br />&gt; $(function() { $('<span class="vars">#joomla</span>').before('<span class="vars">&lt;li class=&quot;framework&quot; id=&quot;catalyst&quot;&gt;Catalst&lt;/li&gt;</span>')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.after('<span class="vars">&lt;li class=&quot;framework&quot; id=&quot;drupal&quot;&gt;Drupal&lt;/li&gt;</span>'); });
+      <br />
+
+      <br />&gt; $(function() { $('<span class="vars">#web</span>').append('<span class="vars">#&lt;li class=&quot;web&quot; id=&quot;ecmascript&quot;&gt;ECMASCript&lt;/li&gt;</span>'); });
+      <br />&gt; $(function() { $('<span class="vars">#web</span>').prepend('<span class="vars">#&lt;li class=&quot;web&quot; id=&quot;db&quot;&gt;db&lt;/li&gt;</span>'); });
+      <br />&gt; $(function() { $('<span class="vars">#web</span>').append('<span class="vars">#&lt;li class=&quot;web&quot; id=&quot;ecmascript&quot;&gt;ECMASCript&lt;/li&gt;</span>')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.prepend('<span class="vars">#&lt;li class=&quot;web&quot; id=&quot;db&quot;&gt;db&lt;/li&gt;</span>'); });
+      <br />
+
+      <br />&gt; $(function() { $('<span class="vars">p</span>').wrap('<span class="vars">&lt;pre&gt;&lt;/pre&gt;</span>''); })
+      <br />&gt; $(function() { $('<span class="vars">p</span>').wrapAll('<span class="vars">&lt;pre&gt;&lt;/pre&gt;</span>''); })
+      <br />&gt; $(function() { $('<span class="vars">p</span>').wrapInner('<span class="vars">&lt;pre&gt;&lt;/pre&gt;</span>''); })
+      <br />
+
+      <br />&gt; $(function() { $('<span class="vars">#perl</span>').replaceWith('<span class="vars">&lt;code&gt;Perl&lt;/code&gt;</span>'); })
+      <br />&gt; $(function() { $('<span class="vars">&lt;code&gt;Perl&lt;/code&gt;</span>').replaceAll('<span class="vars">#perl</span>'); })
+      <br />&gt; $(function() { $('<span class="vars">h2</span>').replaceWith(function(){ $(<span class="vars">&quot;&lt;code /&gt;&quot;</span>).append($(this).contents() ); }); });
+      <br />
+
+      <br />&gt; $(function() { $('<span class="vars">img</span>').clone().prependTo('<span class="vars">#perl</span>'); )};
+      <br />&gt; $(function() { $('<span class="vars">#web</span>').remove(); });
+      <br />&gt; $(function() { $('<span class="vars">p</span>').empty(); });
+      <br />&gt; $(function() { $('<span class="vars">p</span>').unwrap(); });
+      <br />
+
+      <br />&gt; $(function() { $('<span class="vars">#dphp</span>').nextAll().css('<span class="vars">color</span>', '<span class="vars">Yellow</span>') });
+      <br />&gt; $(function() { $('<span class="vars">#dphp</span>').nextAll().andSelf().css('<span class="vars">color</span>', '<span class="vars">Yellow</span>') });
+      <br />&gt; $(function() { $('<span class="vars">#dphp</span>').nextAll().end().css('<span class="vars">color</span>', '<span class="vars">Yellow</span>') });
+      <br />
+
+      <br />&gt; $(function() { $('<span class="vars">#dphp</span>').next().css('<span class="vars">color</span>', '<span class="vars">Yellow</span>') });
+      <br />&gt; $(function() { $('<span class="vars">#dphp</span>').prev().css('<span class="vars">color</span>', '<span class="vars">Green</span>') });
+      <br />&gt; $(function() { $('<span class="vars">#dphp</span>').next().css('<span class="vars">color</span>', '<span class="vars">Yellow</span>')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.end()
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.prev().css('<span class="vars">color</span>', '<span class="vars">Green</span>'); });
+      <br />
+
+      <br />&gt; $(function() { $('<span class="vars">#dphp</span>').children().css('<span class="vars">color</span>', '<span class="vars">Red</span>'); });
+      <br />&gt; $(function() { $('<span class="vars">#dphp</span>').parents().css('<span class="vars">color</span>', '<span class="vars">Red</span>'); });
+      <br />&gt; $(function() { $('<span class="vars">#dphp</span>').parent().css('<span class="vars">color</span>', '<span class="vars">Red</span>'); });
+      </div>
+
+      <hr />
+
+      <!-- Event -->
+      <a name="event"></a><h2>Event</h2>
+
+      <table class="h3">
+        <tr>
+          <th>Function</th>
+          <th>Description</th>
+        </tr>
+
+        <!-- mouse event -->
+        <tr>
+          <td>click</td>
+          <td>滑鼠點擊物件</td>
+        </tr>
+        <tr>
+          <td>dblclick</td>
+          <td>滑鼠雙擊物件</td>
+        </tr>
+        <tr>
+          <td>mousedown</td>
+          <td>按下滑鼠按鍵</td>
+        </tr>
+        <tr>
+          <td>mouseup</td>
+          <td>放開滑鼠按鍵</td>
+        </tr>
+        <tr>
+          <td>mouseover</td>
+          <td>滑鼠移動到物件</td>
+        </tr>
+        <tr>
+          <td>mouseout</td>
+          <td>滑鼠從物件移開</td>
+        </tr>
+
+        <!-- document/window event -->
+        <tr>
+          <td>load</td>
+          <td>網頁或圖片載入下載完成</td>
+        </tr>
+        <tr>
+          <td>resize</td>
+          <td>視窗或框架大小改變</td>
+        </tr>
+        <tr>
+          <td>scroll</td>
+          <td>拉動捲軸</td>
+        </tr>
+        <tr>
+          <td>unload</td>
+          <td>關閉網頁</td>
+        </tr>
+
+        <!-- form event -->
+        <tr>
+          <td>submit</td>
+          <td>點擊submit</td>
+        </tr>
+        <tr>
+          <td>reset</td>
+          <td>點擊reset</td>
+        </tr>
+        <tr>
+          <td>change</td>
+          <td>改變物件內容</td>
+        </tr>
+        <tr>
+          <td>focus</td>
+          <td>物件取得焦點</td>
+        </tr>
+        <tr>
+          <td>blur</td>
+          <td>物件失去焦點</td>
+        </tr>
+
+        <!-- keyboard event -->
+        <tr>
+          <td>keypress</td>
+          <td>按住鍵盤按鍵</td>
+        </tr>
+        <tr>
+          <td>keydown</td>
+          <td>按下鍵盤按鍵</td>
+        </tr>
+        <tr>
+          <td>keyup</td>
+          <td>鬆開鍵盤按鍵</td>
+        </tr>
+
+      <!-- swtich event -->
+        <tr>
+          <td>hover</td>
+          <td>滑鼠停留在物件上或滑鼠移開物件
+          <br />mouserover &amp; mouserout</td>
+        </tr>
+        <tr>
+          <td>toggle</td>
+          <td>按下滑鼠切換事件
+          <br />click</td>
+        </tr>
+
+      <!-- other event -->
+        <tr>
+          <td>bind, unbind</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>live, die <span class="cmts">// jquery 1.8</span><br />
+              on, off <span class="cmts">// jquery 1.9</span></td>
+          <td></td>
+        </tr>
+      </table>
+      <br />
+
+      <table class="h3">
+      <tbody>
+        <tr>
+          <th>Object</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>pageX/pageY
+          <br />offsetX/offsetY</td>
+          <td>滑鼠在網頁的座標</td>
+        </tr>
+        <tr>
+          <td>clientX/clientY</td>
+          <td>滑鼠在網頁的座標
+          <br />(只限可視範圍)</td>
+        </tr>
+        <tr>
+          <td>screenX/screenY</td>
+          <td>滑鼠在螢幕上的座標</td>
+        </tr>
+        <tr>
+          <td>which</td>
+          <td>1滑鼠左鍵, 2滑鼠滾輪, 3滑鼠右鍵</td>
+        </tr>
+        <tr>
+          <td>shiftKey</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>target</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>data</td>
+          <td></td>
+        </tr>
+      </tbody>
+      </table>
+      <br />
+      <p class="h3"></p>
+
+      <div class="commands">&gt; $(function() {
+      <span class="cmts">// 滑鼠動作</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var onMouseOver = function () { $('#big').attr('src', $(this).attr('src') ); };
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var onMouseOut = function () { $('#big').removeAttr('src'); };
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;$('#list img')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.mouseover(onMouseOver)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.mouseout(onMouseOut);
+      <br />&nbsp;&nbsp;}) ;
+      <br />
+
+      <br />&gt; $(function() {
+      <span class="cmts">// 浮水印</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var waterString = &quot;any opinion&quot;;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var keyIn = function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(this).removeClass('watermark');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ($(this).val() == waterString) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(this).val('');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;};
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var keyOut = function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ($(this).val() == '') {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(this).addClass('watermark');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(this).val(waterString);
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;};
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var checkSubmit = function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ($('#opinion').val() == waterString) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$('#opinion').val('');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;};
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;$('#opinion').addClass('watermark')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.val(waterString)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.focus(keyIn)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.blur(keyOut);
+      <br />&nbsp;&nbsp;});
+      <br />
+
+      <br />&gt; $(function () {
+      <span class="cmts">// 按鈕功能切換</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">// console.log( 1('#switchMenu').html() );</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">// console.log( 1('#switchMenu').attr('value') );</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">// console.log( 1('#switchMenu').val() );</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">// for jquery 1.8</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var disableMenu = function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// $(this).html('disable menu');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(this).attr('value', 'enable menu');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(document).bind('contextmenu', function(e) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.preventDefault();
+      <span class="cmts">// 禁止內容選單顯示</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;};
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var enableMenu = function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// $(this).html('enable menu');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(this).val('disable menu');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(document).unbind('contextmenu');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;};
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;$('#switchMenu').toggle(enableMenu, disableMenu);
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">// for jquery 1.9</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;$('#switchMenu').click(function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ($(this).val() == 'disable menu') {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(this).attr('value', 'enable menu');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(document).bind('contextmenu', function(e) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.preventDefault();
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(this).val('disable menu');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(document).unbind('contextmenu');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;});
+      <br />&nbsp;&nbsp;});
+      <br />
+
+      <br />&gt; $(function () {
+      <br />&nbsp;&nbsp;$('#answer').one('click', function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;alert('Hi, ' + $('#name').val() );
+      <br />&nbsp;&nbsp;});
+      <br />});
+
+
+      <br />&gt; <span class="cmts">// jquery 1.8</span>
+      <br />&gt; $(function() {
+      <span class="cmts">// 動態增加按鈕</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;$('.addMenu').live('click', function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var i = $('.food').length - 1;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var j = i + 1;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$('#rembtn_' + i.toString() ).after('&lt;br&gt;&lt;label class=&quot;control-label&quot;&gt;food: &lt;/label&gt; &lt;input id=&quot;food_' + j.toString() + '&quot; class=&quot;food&quot; type=&quot;text&quot; placeholder=&quot;FOOD&quot;&gt; &lt;button id=&quot;rembtn_' + j.toString() + '&quot; type=&quot;button&quot; class=&quot;remMenu btn btn-danger&quot;&gt;remove&lt;/button&gt;'); 
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;});
+      <br />&nbsp;&nbsp;});
+      <br />
+
+      <br />&gt; <span class="cmts">// jquery 1.9</span>
+      <br />&gt; $(function() {
+      <span class="cmts">// 動態增加按鈕</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;$(document).on('click', '.addMenu', function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var i = $('.food').length - 1;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var j = i + 1;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$('#rembtn_' + i.toString() ).after('&lt;br&gt;&lt;label class=&quot;control-label&quot;&gt;food: &lt;/label&gt; &lt;input id=&quot;food_' + j.toString() + '&quot; class=&quot;food&quot; type=&quot;text&quot; placeholder=&quot;FOOD&quot;&gt; &lt;button id=&quot;rembtn_' + j.toString() + '&quot; type=&quot;button&quot; class=&quot;remMenu btn btn-danger&quot;&gt;remove&lt;/button&gt;'); 
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;});
+      <br />&nbsp;&nbsp;});
+      <br />
+
+      <br />&gt; $(function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var cssDiplay = function(e) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (e.which == 1) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(e.data.exp).css({display: 'block',
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;top: e.pageY,
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;left: e.pageX
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(e.pageX + ', ' + e.pageY);
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.stopPropagation();
+      <span class="cmts">//防止上層event trigger</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;};
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;$(document)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.click({exp: '#webMenu'}, cssDiplay)
+      <span class="cmts">// 第一個參數使用hash, 第二個參數使用function. hash傳變數, function執行動作</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.dblclick(function(e) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (e.which == 1) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$('#webMenu').css('display', 'none');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// $('#bookStore').css('display', 'none');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;});
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;$('table#leaningWeb')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.click({exp: '#bookStore'}, cssDiplay) 
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.dblclick(function(e) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (e.which == 1) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$('#bookStore').css('display', 'none');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.stopPropagation();
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;});
+      <br />&nbsp;&nbsp;});
+      <br /> 
+
+      <br />&gt; $(function() {
+      <span class="cmts">// 表格驗證</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var msgs;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var setError = function(elem, msg) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;msgs.push('&lt;li&gt;' + msg + '&lt;/li&gt;');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(elem)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.addClass('error_field')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.after('&lt;span class=&quot;error_mark&quot;&gt;*&lt;/span&gt;');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;};
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;$('#fm').submit(function(e) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;msgs = [];
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$('.error_mark').remove();
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$('.valid', this)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.removeClass('error_field')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.filter('.required')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.each(function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ($(this).val() == '') {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setError(this, $(this).prev('label').text() + '必須輸入');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;})
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.end()
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.filter('.length')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.each(function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ($(this).val().length &gt; $(this).data('length') ) {
+      <span class="cmts">// 讀取html tag中的data-length 使用data('length')或attr('data-length')</span>
+      <!-- // $('#myid').data('value') = $('#myid').attr('data-length') for jquery -->
+      <!-- // document.getElementById('myid').getAttribute('data-value') for javascript -->
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setError(this, $(this).prev('label').text() + '不可超過' + $(this).data('length') + '長度');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;})
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.end()
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.filter('.range')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.each(function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var v = parseFloat($(this).val() );
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (v &lt; $(this).data('min') || v &gt; $(this).data('max') ) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setError(this, $(this).prev('label').text() + '請輸入在' + $(this).data('min') + '~' + $(this).data('max') + '範圍');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  }
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;})
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.end()
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.filter('inarray')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.each(function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var opts = $(this).data('option').split(' ');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ($.inArray($(this).val(), opts ) == -1) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setError(this, $(this).prev('label').text() + opts.toString() + '的其中一個輸入');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;})
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.end()
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.filter('.regexp')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.each(function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var reg = new RegExp($(this).data('pattern'), 'gi');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!reg.test($(this).val() ) ) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setError(this, $(this).prev('label').text() + '格式有誤');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (msgs.length == 0) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$('error_summary').css('display', 'none');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$('#error_summary')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.css('display', 'block')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.html(msgs.join('') );
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.preventDefault();
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;});
+      <br />&nbsp;&nbsp;});
+      
+      </div>
+
+      <hr />
+
+
+<!-- Effect -->
+      <a name="effect"></a><h2>Effect</h2>
+      <table class="h3">
+        <tbody>
+          <tr>
+            <th>Function</th>
+            <th>jQuery Example</th>
+            <th>Description</th>
+          </tr>
+
+          <tr>
+            <td>show, hide, toggle</td>
+            <td>show()<br />
+                show(6000)<br />
+                show(6000, function() {...} )</td>
+            <td>顯示/隱藏/切換顯示或隱藏 element, 單位為毫秒</td>
+          </tr>
+
+          <tr>
+            <td>slideDown, slideUp, slideToggle</td>
+            <td></td>
+            <td>以幻燈片的形式顯示/隱藏/切換顯示或隱藏 element</td>
+          </tr>
+
+          <tr>
+            <td>fadeIn, fadeOut</td>
+            <td></td>
+            <td>把element淡入/淡出畫面</td>
+          </tr>
+
+          <tr>
+            <td>animate</td>
+            <td></td>
+            <td>依照參數執行動畫</td>
+          </tr>
+        </tbody>
+      </table>
+      <br />
+
+      <div class="commands">&gt; $(function() {
+      <span class="cmts">// 滑鼠動作</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var onMouseOver = function () { $('#big').attr('src', $(this).attr('src') ).hide(6000, function() { $(this).show(6000) }); };
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var onMouseOut = function () { $('#big').removeAttr('src').show(6000); };
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;$('#list img')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.hover(onMouseOver, onMouseOut);
+      <br />&nbsp;&nbsp;}) ;
+      <br />
+
+      <br />&gt; $(function() {
+      <span class="cmts">// 提示視窗</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;$('.tiplink')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.mouseover(function(e) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$('div.tip:not(:animated)')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.html($(this).data('tip'))
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.css({
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;top: e.pageY,
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;left: e.pageX
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;})
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.fadeIn(500);
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;})
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.mouseout(function(e) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$('div.tip').fadeOut(2000);
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});
+      <br />&nbsp;&nbsp;});
+
+      <br />&gt; $(function() {
+      <span class="cmts">// 開合面版</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;$('#panel dd').hide();
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;$('#panel dt')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.click(function(e) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var d = $('+dd', this);
+      <span class="cmts">// $('+dd'), 指的是選到的tag下個鄰近的dd</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (d.css('display') == 'block') {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d.slideUp(1000);
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d.slideDown(1000);
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});
+      <br />&nbsp;&nbsp;});
+
+        
+      </div>
+
+
+
+
+
+      <hr />
+
+      <!-- <p class="h3">Content</p> -->
+      <table class="h3">
+        <tr>
+          <th>Function</th>
+          <th>Description</th>
+          <th>Example</th>
+        </tr>
+        <tr>
+          <td>html</td>
+          <td>html用為讀取和修改元素的HTML標籤</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p&gt;&lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">html</span>('&lt;b&gt;Hello jQuery&lt;/b&gt;');
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;p&gt;&lt;b&gt;Hello jQuery&lt;/b&gt;&lt;/p&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>text</td>
+          <td>用來讀取或修改元素的純文本內容</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p&gt;&lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">text</span>('&lt;b&gt;Hello jQuery&lt;/b&gt;');
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;p&gt;&amp;lt;b&amp;gt;Hello jQuery&amp;lt;/b&amp;gt;&lt;/p&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>append</td>
+          <td>在匹配的元素內部最後面加入(內部插入)</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p&gt;jQuery&lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">append</span>('&lt;b&gt;Hello&lt;/b&gt;');
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;p&gt;jQuery&lt;b&gt;Hello&lt;/b&gt;&lt;/p&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>prepend</td>
+          <td>在匹配的元素內部最前面加入(內部插入)</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p&gt;jQuery&lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">prepend</span>('&lt;b&gt;Hello&lt;/b&gt;');
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;p&gt;&lt;b&gt;Hello&lt;/b&gt;jQuery&lt;/p&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>after</td>
+          <td>在匹配的元素外部後面加入(外部插入)</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p&gt;jQuery&lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">after</span>('&lt;b&gt;Hello&lt;/b&gt;');
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;p&gt;jQuery&lt;/p&gt;&lt;b&gt;Hello&lt;/b&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>before</td>
+          <td>在匹配的元素外部前面加入(外部插入)</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p&gt;jQuery&lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">before</span>('&lt;b&gt;Hello&lt;/b&gt;');
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;b&gt;Hello&lt;/b&gt;&lt;p&gt;jQuery&lt;/p&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>remove</td>
+          <td>從DOM中刪除所有匹配到的元素
+          <br />(但此函式不會將匹配的元素從jQuery物件中刪除)</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;div&gt;&lt;p&gt;Hello&lt;/p&gt;jQuery&lt;/div&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">remove</span>();
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;div&gt;jQuery&lt;/div&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>empty</td>
+          <td>刪除匹配到的元素其所有子節點</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;div&gt;&lt;p&gt;Hello&lt;/p&gt;jQuery&lt;/div&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">empty</span>();
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;div&gt;&lt;p&gt;&lt;/p&gt;jQuery&lt;/div&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>clone</td>
+          <td>複製匹配元素的副本</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;b&gt;Hello&lt;/b&gt;&lt;i&gt;jQuery&lt;/i&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('b').<span class="ftns">clone</span>().<span class="ftns">prependTo</span>('i');
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;b&gt;Hello&lt;/b&gt;&lt;i&gt;&lt;b&gt;Hello&lt;/b&gt;jQuery&lt;/i&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>replaceWith</td>
+          <td>替代匹配的元素</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;b&gt;Hello&lt;/b&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('b').<span class="ftns">replaceWith</span>('&lt;i&gt;jQuery&lt;/i&gt;')
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;i&gt;jQuery&lt;/i&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>addClass</td>
+          <td>增加class</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p&gt;Hello jQuery&lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">addClass</span>(&quot;myClass&quot;)
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;p class=&quot;myClass&quot;&gt;Hello jQuery&lt;/p&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>removeClass</td>
+          <td>移除class</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p class=&quot;myClass&quot;&gt;Hello jQuery&lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">removeClass</span>(&quot;myClass&quot;)
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;p class=&quot;&quot;&gt;Hello jQuery&lt;/p&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>toggleClass</td>
+          <td>切換class</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p class=&quot;newClass&quot;&gt;Hello&lt;/p&gt;
+          <br />&lt;p class=&quot;myClass&quot;&gt;jQuery&lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">click</span>(function() { $(<span class="ftns">this</span>).<span class="ftns">toggleClass</span>(&quot;newClass&quot;); });
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;p class=&quot;newClass myClass&quot;&gt;Hello&lt;/p&gt;
+          <br />&lt;p class=&quot;myClass myClass&quot;&gt;jQuery&lt;/p&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>css</td>
+          <td>設定css</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p&gt;Hello jQuery&lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">css</span>('color', 'red');
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;p style=&quot;color: red;&quot;&gt;Hello jQuery&lt;/p&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>atrr</td>
+          <td>設定atrribute</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;a href=&quot;http://google.com&quot;&gt;Google&lt;/a&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('a').<span class="ftns">attr</span>('href', &quot;http://www.google.com&quot;);
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;a href=&quot;http://www.google.com/&quot;&gt;Google&lt;/a&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>removeAtrr</td>
+          <td>移除atrribute</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;a href=&quot;http://google.com&quot;&gt;Google&lt;/a&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('a').<span class="ftns">removeAttr</span>('href');
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;a&gt;Google&lt;/a&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>each</td>
+          <td></td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p&gt; jQuery &lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">each</span>(function() {
+          <br />&nbsp;&nbsp;$(<span class="ftns">this</span>).<span class="ftns">prepend</span>('Hello');
+          <br />&nbsp;&nbsp;$(<span class="ftns">this</span>).<span class="ftns">append</span>('!');
+          <br />});
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;p&gt;HellojQuery!&lt;/p&gt;
+          </td>
+        </tr>
+      </table>
+      <br />
+
+      <table class="h3">
+        <div class="commands">&lt;html&gt;
+        <br />&lt;head&gt;
+        <br /><span class="cmts">&lt;!-- 使用 CDN static linker --&gt;</span>
+        <br />&lt;script type=&quot;text/javascript&quot; src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js&quot;&gt;&lt;/script&gt;
+        <br />&lt;script type=&quot;text/javascript&quot; src=&quot;http://ajax.googleapis.com/ajax/libs/jqueryui/1.5.2/jquery-ui.min.js&quot;&gt;&lt;/script&gt;
+        <br />
+
+        <br /><span class="cmts">&lt;!-- 使用 CDN dynamic linker --&gt;
+        <br />&lt;!--
+        <br />&lt;script type=&quot;text/javascript&quot; src=&quot;http://www.google.com/jsapi&quot;&gt;&lt;/script&gt;
+        <br />&lt;script type=&quot;text/javascript&quot;&gt;
+        <br />google.load(&quot;jquery&quot;, &quot;1.2&quot;);
+        <br />google.load(&quot;jqueryui&quot;, &quot;1.5.2&quot;);
+        <br />&lt;/script&gt;
+        <br />--&gt;</span>
+        <br />
+
+        <br />&lt;script type=&quot;text/javascript&quot;&gt;
+        <br />$(document).ready(function() {
+        <span class="cmts">// 可略$(document).ready寫成$(function() {</span>
+        <br />&nbsp;&nbsp;$('#errors').<span class="ftns">html</span>('&lt;p&gt;There are some errors.&lt;/p&gt;');
+        <span class="cmts">// 取代選取內容，可使用text代替html，這樣解析&lt;, &gt;等特殊符號表示為文字</span>
+
+        <br />&nbsp;&nbsp;$('#errors').<span class="ftns">append</span>('&lt;b&gt;There are some errors.&lt;/b&gt;');
+        <br />&nbsp;&nbsp;$('#errors').<span class="ftns">prepend</span>('&lt;i&gt;There are some errors.&lt;/i&gt;');
+        <br />
+
+        <br />&nbsp;&nbsp;$('#myHighLight').<span class="ftns">css</span>('back-ground-color', &quot;FF0000&quot;);
+        <br />&nbsp;&nbsp;$('#myHighLight').<span class="ftns">css</span>('border', '2px solid #FE0037');
+        <br />
+        <br />&nbsp;&nbsp;<span class="cmts">// $('#myHighLight').<span class="ftns">css</span>('back-ground-color', &quot;FF0000&quot;)
+        // 簡略的寫法
+        <br />&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<span class="ftns">css</span>('border', '2px solid #FE0037');</span>
+        <br />
+        <br />&nbsp;&nbsp;<span class="cmts">// $('#myHighLight').<span class="ftns">css</span>({
+        // 更簡略的寫法，效率比較好。+=和-=的用法
+        <br />&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;&nbsp;'back-ground-color': &quot;FF0000&quot;,
+        <br />&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;&nbsp;'border': '2px solid #FE0037'
+        <br />&nbsp;&nbsp;// });</span>
+
+        <br />});
+        <br />&lt;/script&gt;
+        <br />&lt;/head&gt;
+        <br />
+        <br />&lt;body&gt;
+        <br />&lt;div id=&quot;container&quot;&gt;
+        <br />&nbsp;&nbsp;&lt;div id=&quot;errors&quot;&gt;
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;h2&gt;Error:&lt;/h2&gt;
+        <br />&nbsp;&nbsp;&lt;/div&gt;
+        <br />&lt;/div&gt;
+        <br />&lt;div id="myHighLight"&gt;XXXX&lt;/div&gt;
+        <br />&lt;/body&gt;
+        <br />&lt;/html&gt;
+        </div>
+      </table>
+      <br />
+
+
+
+<!-- Element -->
+      <a name="element"></a><h2>Element</h2>
+
+
+<!-- Event -->
+      <a name="event"></a><h2>Event</h2>
+
+
+
+      <p class="h3"></p>
+
+
+
+      <p class="h3">Effect</p>
+      <p class="h3">AJAX</p>
+      <p class="h3">AJAX return TEXT</p>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> <a href="code/jquery_ajax1.html">jquery_ajax1.html</a>
+      <br />&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&lt;script type=&quot;text/javascript&quot; src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js&quot;&gt;&lt;/script&gt;
+      <br />&lt;/head&gt;
+      <br />
+      <br />&lt;body&gt;
+      <br />&lt;form action=&quot;ajax1.php&quot; method=&quot;GET&quot;&gt;
+      <br />&nbsp;&nbsp;&lt;h3&gt;Select State:&lt;/h3&gt;
+      <br />&nbsp;&nbsp;&lt;div class=&quot;elem&quot;&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;select id=&quot;stateList&quot;&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=&quot;CA&quot;&gt;California&lt;/option&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=&quot;MO&quot;&gt;Missouri&lt;/option&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=&quot;WA&quot;&gt;Washington&lt;/option&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=&quot;ID&quot;&gt;Idaho&lt;/option&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;/select&gt;
+      <br />&nbsp;&nbsp;&lt;/div&gt;
+      <br />&nbsp;&nbsp;&lt;h3&gt;Cities:&lt;/h3&gt;
+      <br />&nbsp;&nbsp;&lt;div class=&quot;elem&quot; id=&quot;cities&quot;&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;select&gt;&lt;/select&gt;
+      <br />&nbsp;&nbsp;&lt;/div&gt;
+      <br />&nbsp;&nbsp;&lt;p&gt;&lt;/p&gt;
+      <br />&lt;/form&gt;
+      <br />
+      <br />&lt;script type=&quot;text/javascript&quot;&gt;
+      <br />function viewSelected() {
+      <br />&nbsp;&nbsp;var v1 = $('#stateList').val();
+      <br />&nbsp;&nbsp;var v2 = $('#stateList :selected').text();
+      <br />&nbsp;&nbsp;var queryString = 'state=' + encodeURIComponent(v1);
+      <br />&nbsp;&nbsp;$<span class="ftns">.get</span>('ajax1.php', queryString, processResponse, &quot;text&quot;).error(errorResponse);
+      <span class="cmts">// 使用get method</span>
+      <br />//$<span class="ftns">.post</span>('ajax1.php', queryString, processResponse, &quot;text&quot;).error(errorResponse);
+      <span class="cmts">// 使用post method</span>
+      <br />
+      <br />&nbsp;&nbsp;function processResponse(data, status) { $('#cities').find('select').html(data); }
+      <br />&nbsp;&nbsp;function errorResponse() { alert('connect server to error'); }
+      <br />}
+      <br />
+      <br />$('#stateList').change(viewSelected);
+      <br />&lt;/script&gt;
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      </div>
+
+      <hr />
+
+
+
+
+
+
+
+      <h3>Document object</h3>
+      <div class="commands"><span class="cmts">&lt;!-- 使用document object範例--&gt;</span>
+      <br />&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&lt;/head&gt;
+      <br />&lt;body&gt;
+      <br />
+
+      <br />&lt;p&gt;Note that write() does NOT add a new line after each statement:&lt;/p&gt;
+      <br />&lt;pre&gt;
+      <br />&lt;script&gt;
+      <br />document.write(&quot;Hello World!&quot;);
+      <br />document.write(&quot;Have a nice day!&quot;);
+      <br />&lt;/script&gt;
+      <br />&lt;/pre&gt;
+      <br />
+
+      <br />&lt;p&gt;Note that writeln() add a new line after each statement:&lt;/p&gt;
+      <br />&lt;pre&gt;
+      <br />&lt;script&gt;
+      <br />document.writeln(&quot;Hello World!&quot;);
+      <br />document.writeln(&quot;Have a nice day!&quot;);
+      <br />&lt;/script&gt;
+      <br />&lt;/pre&gt;
+      <br />
+
+      <br />&lt;a name=&quot;html&quot;&gt;HTML Tutorial&lt;/a&gt;&lt;br&gt;
+      <br />&lt;a name=&quot;css&quot;&gt;CSS Tutorial&lt;/a&gt;&lt;br&gt;
+      <br />&lt;a name=&quot;xml&quot;&gt;XML Tutorial&lt;/a&gt;&lt;br&gt;
+      <br />&lt;a href=&quot;/js/&quot;&gt;JavaScript Tutorial&lt;/a&gt;
+      <br />&lt;p&gt;Number of anchors:
+      <br />&lt;script&gt;document.write(document.anchors.length);&lt;/script&gt;
+      <br />&lt;/p&gt;
+      <br />
+
+      <br />&lt;form name=&quot;Form1&quot;&gt;&lt;/form&gt;
+      <br />&lt;form name=&quot;Form2&quot;&gt;&lt;/form&gt;
+      <br />&lt;form&gt;&lt;/form&gt;
+      <br />&lt;p&gt;Number of forms:
+      <br />&lt;script&gt;document.write(document.forms.length);&lt;/script&gt;
+      <br />&lt;/p&gt;
+      <br />
+
+      <br />&lt;img id=&quot;klematis lilac&quot; border=&quot;0&quot; src=&quot;klematis.jpg&quot; width=&quot;150&quot; height=&quot;113&quot;&gt;
+      <br />&lt;img id=&quot;klematis pink&quot; border=&quot;0&quot; src=&quot;klematis2.jpg&quot; width=&quot;152&quot; height=&quot;128&quot;&gt;
+      <br />&lt;p&gt;Id of first image:
+      <br />&lt;script&gt;document.write(document.images[0].id);&lt;/script&gt;
+      <br />&lt;/p&gt;
+      <br />
+
+      <br />Cookies associated with this document: 
+      <br />&lt;script&gt;document.write(document.cookie);&lt;/script&gt;
+
+      <br />&lt;html&gt;
+      </div>
+      <br />
+
+      <div class="commands">&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&lt;/head&gt;
+      <br />&lt;body&gt;
+      <br />
+
+      <br />&lt;script&gt;
+      <br />function getValue(){
+      <br />&nbsp;&nbsp;var x=document.getElementById(&quot;myHeader&quot;);
+      <span class="cmts">// 取得id method</span>
+      <br />&nbsp;&nbsp;alert(x.innerHTML);
+      <br />}
+      <br />
+
+      <br />function getElements() {
+      <br />&nbsp;&nbsp;var x=document.getElementsByName(&quot;x&quot;);
+      <span class="cmts">// 取得name method</span>
+      <br />&nbsp;&nbsp;alert(x.length);
+      <br />}
+      <br />
+
+      <br />function getElements() {
+      <br />&nbsp;&nbsp;var x=document.getElementsByTagName(&quot;input&quot;);
+      <span class="cmts">// 取得tag method</span>
+      <br />&nbsp;&nbsp;alert(x.length);
+      <br />}
+      <br />&lt;/script&gt;
+      <br />
+
+      <br />&lt;body&gt;
+      <br />
+
+      <br />&lt;h1 id=&quot;myHeader&quot; onclick=&quot;getValue()&quot;&gt;Click me!&lt;/h1&gt;
+      <br />
+
+      <br />Cats: &lt;input name=&quot;x&quot; type=&quot;radio&quot; value=&quot;Cats&quot;&gt;
+      <br />Dogs: &lt;input name=&quot;x&quot; type=&quot;radio&quot; value=&quot;Dogs&quot;&gt;
+      <br />&lt;input type=&quot;button&quot; onclick=&quot;getElements()&quot; value=&quot;How many elements named 'x'?&quot;&gt;
+      <br />
+
+      <br />&lt;input type=&quot;text&quot; size=&quot;20&quot;&gt;&lt;br&gt;
+      <br />&lt;input type=&quot;text&quot; size=&quot;20&quot;&gt;&lt;br&gt;
+      <br />&lt;input type=&quot;text&quot; size=&quot;20&quot;&gt;&lt;br&gt;&lt;br&gt;
+      <br />&lt;input type=&quot;button&quot; onclick=&quot;getElements()&quot; value=&quot;How many input elements?&quot;&gt;
+      <br />&lt;/body&gt;
+      </div>
+      <br />
+
+      <h3>Event Object</h3>
+      <div class="commands">&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />function myFunction1() {
+      <br />&nbsp;&nbsp;var x=document.getElementById(&quot;fname1&quot;);
+      <br />&nbsp;&nbsp;x.value=x.value.toUpperCase();
+      <br />}
+      <br />
+
+      <br />function myFunction2() {
+      <br />&nbsp;&nbsp;var x=document.getElementById(&quot;fname2&quot;);
+      <br />&nbsp;&nbsp;x.value=x.value.toUpperCase();
+      <br />}
+      <br />
+
+      <br />function myFunction3() {
+      <br />&nbsp;&nbsp;document.getElementById(&quot;demo1&quot;).innerHTML=&quot;Hello World&quot;;
+      <br />}
+      <br />
+
+      <br />function myFunction4() {
+      <br />&nbsp;&nbsp;document.getElementById(&quot;demo2&quot;).innerHTML=&quot;Hello World&quot;;
+      <br />}
+      <br />
+
+      <br />function imgError() {
+      <br />&nbsp;&nbsp;alert('The image could not be loaded.');
+      <br />}
+      <br />
+
+      <br />function myFunction5(x) {
+      <br />&nbsp;&nbsp;x.style.background=&quot;yellow&quot;;
+      <br />}
+      <br />
+
+      <br />function myFunction6() {
+      <br />&nbsp;&nbsp;alert(&quot;You pressed a key inside the input field&quot;);
+      <br />}
+      <br />
+
+      <br />function myFunction7() {
+      <br />&nbsp;&nbsp;alert(&quot;You pressed a key inside the input field&quot;);
+      <br />}
+      <br />
+
+      <br />function myFunction8() {
+      <br />&nbsp;&nbsp;var x=document.getElementById(&quot;fname&quot;);
+      <br />&nbsp;&nbsp;x.value=x.value.toUpperCase();
+      <br />}
+      <br />
+
+      <br />function loadImage() {
+      <br />&nbsp;&nbsp;alert(&quot;Image is loaded&quot;);
+      <br />}
+      <br />
+
+      <br />function myFunction9(elmnt,clr) {
+      <br />&nbsp;&nbsp;elmnt.style.color=clr;
+      <br />}
+      <br />&lt;/head&gt;
+
+      <br />&lt;body&gt;
+      <br />&lt;p&gt;Enter your name: &lt;input type=&quot;text&quot; id=&quot;fname1&quot; onblur=&quot;myFunction1()&quot;&gt;
+      <br />&lt;br /&gt;When you leave the input field, a function is triggered which transforms the input text to upper case.&lt;/p&gt;
+      <br />
+      <br />&lt;p&gt;Enter your name: &lt;input type=&quot;text&quot; id=&quot;fname2&quot; onchange=&quot;myFunction2()&quot;&gt;
+      <br />&lt;br /&gt;When you leave the input field, a function is triggered which transforms the input text to upper case.&lt;/p&gt;
+      <br />
+      <br />&lt;p&gt;Click the button to trigger a function.&lt;/p&gt;
+      <br />&lt;button onclick=&quot;myFunction3()&quot;&gt;Click me&lt;/button&gt;
+      <br />&lt;p id=&quot;demo1&quot;&gt;&lt;/p&gt;
+      <br />
+      <br />&lt;p ondblclick=&quot;myFunction4()&quot;&gt;Doubleclick this paragraph to trigger a function.&lt;/p&gt;
+      <br />&lt;p id=&quot;demo2&quot;&gt;&lt;/p&gt;
+      <br />
+      <br />&lt;img src=&quot;image.gif&quot; onerror=&quot;imgError()&quot;&gt;
+      <br />&lt;p&gt;A function is triggered if an error occurs when loading the image. The function shows an alert box with a text. In this example we refer to an image that does not exist, therefore the onerror event occurs.&lt;/p&gt;
+      <br />
+      <br />&lt;p&gt;Enter your name: &lt;input type=&quot;text&quot; onfocus=&quot;myFunction5(this)&quot;&gt;
+      <br />&lt;br /&gt;When the input field gets focus, a function is triggered which changes the background-color.&lt;/p&gt;
+      <br />
+      <br />
+      <br />&lt;p&gt;A function is triggered when the user is pressing a key in the input field.
+      <br />&lt;br /&gt;&lt;input type=&quot;text&quot; onkeydown=&quot;myFunction6()&quot;&gt;&lt;/p&gt;
+      <br />
+      <br />&lt;p&gt;A function is triggered when the user is pressing a key in the input field.
+      <br />&lt;br /&gt;&lt;input type=&quot;text&quot; onkeypress=&quot;myFunction7()&quot;&gt;&lt;/p&gt;
+      <br />
+      <br />&lt;p&gt;A function is triggered when the user releases a key in the input field. The function transforms the character to upper case.
+      <br />&lt;br /&gt;Enter your name: &lt;input type=&quot;text&quot; id=&quot;fname&quot; onkeyup=&quot;myFunction()&quot;&gt;&lt;/p&gt;
+      <br />
+      <br />&lt;img src=&quot;w3javascript.gif&quot; onload=&quot;loadImage()&quot; width=&quot;100&quot; height=&quot;132&quot;&gt;
+      <br />
+      <br />&lt;p onmousedown=&quot;myFunction9(this,'red')&quot; onmouseup=&quot;myFunction9(this,'green')&quot;&gt;
+      <br />Click the text to change the color. A function, with parameters, is triggered when the mouse button is pressed down, and again, with other parameters, when the mouse button is released.&lt;/p&gt;
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      </div>
+
+
+<!-- reference -->
+    <h2>Reference</h2>
+    <li class="reference"></li>
+    <br /><li class="reference"></li>

@@ -1,0 +1,248 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>maui</title>
+<link rel="stylesheet" href="../../defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>maui</h1>
+      <a href="#install"><li class="title">安裝</li></a>
+      <br /><a href="#configure"><li class="title">設定</li></a>
+      <br /><a href="#usage"><li class="title">操作</li></a>
+      <br /><a href="#admin"><li class="title">管理</li></a>
+      <br /><a href="#reference"><li class="title">Reference</li></a>
+      <div class="context">
+      </div>
+      <p class="h1">Maui是一個advanced scheduler (進階調度器). 所謂的scheduler是在queuing system中負責調度排程, 例如可使用的硬體資源, 程式可執行的時間等等, 比較有名的scheduler如Maui, Moab, slurm等。Maui採用積極的調度策略優化資源的利用和減少作業的回應時間. Maui的資源和負載管理允許高級的參數配置：作業優先順序 (Job Priority), 調度和分配 (Scheduling and Allocation) , 公平性和公平共用 (Fairness and Fairshare) 和預留策略 (Reservation Policy) . Maui的QoS機制允許資源和服務的直接傳遞, 策略解除 (Policy Exemption) 和指定特徵的受限訪問. Maui採用高級的資源預留架構可以保證精確控制資源何時, 何地, 被誰, 怎樣使用. Maui的預留架構完全支持非入侵式的元調度. Maui需要資源管理器與其配合使用, 所以系統必須要有裝設queuing system, 例如Maui可用在PBS和SGE上. </p>
+      <hr />
+
+<!-- install -->
+      <a name="install"><h2>安裝</h2></a>
+      <h3></h3>
+      <p class="h3">在PBS的queuing system中 (如PBS Pro、OpenPBS、torque), 可以將Maui視為pbs_sched，用以取代pbs_sched, 所以在執行PBS時就不需要執行pbs_sched而改用maui</p>
+      <div class="commands">Server:~ <span class="cmds">tar</span> zxf <span class="vars">maui-3.3.1.tar.gz</span>
+      <br />Server:~ <span class="cmds">cd</span> <span class="vars">maui-3.3.1</span>
+      <br />Server:~/maui-3.3.1 # ./configure --prefix=<span class="vars">/usr/local/maui</span> --with-pbs=<span class="vars">/usr/local/torque</span> --with-spooldir=<span class="vars">/var/spool/maui</span>
+      <br />Server:~/maui-3.3.1 # <span class="cmds">make</span> &amp;&amp; <span class="cmds">make</span> install
+      </div>
+      <p class="h3">--prefix就是將Maui安裝到哪個目錄下; 這裡是使用PBS, 需要設定PBS的目錄在哪, 因為在編譯時會用到PBS中的lib, 可以用--with-pbs去設定; --with-spooldir是設定檔放置的目錄</p>
+      <hr />
+
+<!-- configure -->
+      <a name="configure"><h2>設定</h2></a>
+      <h3></h3>
+      <p class="h3">maui.cfg為Maui的設定檔, 只要將此檔設定好就可以用Maui作PBS中的scheduler. (在$spooldir底下設定)</p>
+      <div class="commands">Server:~ # <span class="cmds">cat</span> maui.cfg
+      <br /># maui.cfg 3.3.1
+      <br />
+      <br />SERVERHOST            k0
+      <br /># primary admin must be first in list
+      <br />ADMIN1                root
+      <br />
+      <br /># Resource Manager Definition
+      <br />
+      <br />RMCFG[K0] TYPE=PBS
+      <br />
+      <br /># Allocation Manager Definition
+      <br />
+      <br />AMCFG[bank]  TYPE=NONE
+      <br />
+      <br /># full parameter docs at http://supercluster.org/mauidocs/a.fparameters.html
+      <br /># use the 'schedctl -l' command to display current configuration
+      <br />
+      <br />RMPOLLINTERVAL        00:00:30
+      <br />
+      <br />SERVERPORT            42559
+      <br />SERVERMODE            NORMAL
+      <br />
+      <br /># Admin: http://supercluster.org/mauidocs/a.esecurity.html
+      <br />
+      <br />LOGFILE               maui.log
+      <br />LOGFILEMAXSIZE        10000000
+      <br />LOGLEVEL              3
+      <br />
+      <br /># Job Priority: http://supercluster.org/mauidocs/5.1jobprioritization.html
+      <br />
+      <br />QUEUETIMEWEIGHT       1
+      <br />
+      <br /># FairShare: http://supercluster.org/mauidocs/6.3fairshare.html
+      <br />
+      <br />#FSPOLICY              PSDEDICATED
+      <br />#FSDEPTH               7
+      <br />#FSINTERVAL            86400
+      <br />#FSDECAY               0.80
+      <br />
+      <br /># Throttling Policies: http://supercluster.org/mauidocs/6.2throttlingpolicies.html
+      <br />
+      <br /># NONE SPECIFIED
+      <br />
+      <br /># Backfill: http://supercluster.org/mauidocs/8.2backfill.html
+      <br />
+      <br />BACKFILLPOLICY        FIRSTFIT
+      <br />RESERVATIONPOLICY     CURRENTHIGHEST
+      <br />
+      <br /># Node Allocation: http://supercluster.org/mauidocs/5.2nodeallocation.html
+      <br />
+      <br />NODEALLOCATIONPOLICY  MINRESOURCE
+      <br />
+      <br /># QOS: http://supercluster.org/mauidocs/7.3qos.html
+      <br />
+      <br /># QOSCFG[hi]  PRIORITY=100 XFTARGET=100 FLAGS=PREEMPTOR:IGNMAXJOB
+      <br /># QOSCFG[low] PRIORITY=-1000 FLAGS=PREEMPTEE
+      <br />
+      <br /># Standing Reservations: http://supercluster.org/mauidocs/7.1.3standingreservations.html
+      <br />
+      <br /># SRSTARTTIME[test] 8:00:00
+      <br /># SRENDTIME[test]   17:00:00
+      <br /># SRDAYS[test]      MON TUE WED THU FRI
+      <br /># SRTASKCOUNT[test] 20
+      <br /># SRMAXTIME[test]   0:30:00
+      <br />
+      <br /># Creds: http://supercluster.org/mauidocs/6.1fairnessoverview.html
+      <br />
+      <br /># USERCFG[DEFAULT]      FSTARGET=25.0
+      <br /># USERCFG[john]         PRIORITY=100  FSTARGET=10.0-
+      <br /># GROUPCFG[staff]       PRIORITY=1000 QLIST=hi:low QDEF=hi
+      <br /># CLASSCFG[batch]       FLAGS=PREEMPTEE
+      <br /># CLASSCFG[interactive] FLAGS=PREEMPTOR
+      <br />
+      <br />Server:~ # /etc/init.d/<a href="./init.d/maui">maui</a> start
+      <br />Server:~ # <span class="cmds">chkconfig</span> maui on
+      </div>
+      <p class="h3">SERVERHOST就是pbs server主機, ADMIN1為Maui這程式的管理員, 為了系統安全起見, 不應該為root, 但是管理帳號需要在qmgr中設定符合. maui可以設定三個管理員, 如ADMIN2, ADMIN3; RMCFG就是設定maui所對應到的主機為什麼形式的queuing system，因為是使用PBS, 所以在後面就接PBS; SERVERPORT為Maui所使用的port; SERVERMODE為啟動Maui時的執行模式, 有NORMAL, TEST和SIMULATION三種, 一般正常使用都用NORMAL. 需要注意的一點, 在啟動maui時並沒有程式會確認maui.cfg是否有誤, 所以當cfg設定格式不對時, maui無法啟動</p>
+      <hr />
+
+ <!-- usage -->
+      <a name="usage"><h2>操作</h2></a>
+      <h3></h3>
+      <table class="h3">
+      <tr>
+        <td>Command</td>
+        <td>Description</td>
+      </tr>
+      <tr>
+        <td>showq </td>
+        <td>顯示job狀態</td>
+      </tr>
+    
+      <tr>
+        <td>mjobctl</td>
+        <td>變更job狀態, suspend &lt;-&gt; run (執行中)</td>
+      </tr>
+      <tr>
+        <td>sethold</td>
+        <td>變更job狀態, idle -&gt; block (未執行)</td>
+      </tr>
+      <tr>
+        <td>releasehold</td>
+        <td>變更job狀態, block -&gt; idle (未執行)</td>
+      </tr>
+    </table>
+    <br />
+
+    <div class="commands">Server:~ # <span class="cmds">showq</span> [-r|-i|-b]
+    <span class="cmts"># -r為run state; -i為idle state; -b為block state; 不加參數則全顯示</span>
+    <br />Server:~ <span class="cmds">mjobctl</span> [-s|-r] <span class="vars">10</span>
+    <span class="cmts"># -s為run -&gt; suspend; -r: suspend -&gt; run</span>
+    <br />Server:~ <span class="cmds">sethold</span> <span class="vars">11</span>
+    <br />Server:~ <span class="cmds">releasehold</span> <span class="vars">11</span>
+    </div>
+
+    <hr />
+
+<!-- admin -->
+    <a name="admin"><h2>管理</h2></a>
+
+      <table class="h3">
+      <tr>
+        <td>Command</td>
+        <td>Description</td>
+      </tr>
+
+      <tr>
+        <td>runjob</td>
+        <td>執行job</td>
+      </tr>
+      <tr>
+        <td>checkjob</td>
+        <td>檢查job</td>
+      </tr>
+      <tr>
+        <td>cancel</td>
+        <td>刪除job</td>
+      </tr>
+
+      <tr>
+        <td>showconfig</td>
+        <td>顯示maui現在設定狀態</td>
+      </tr>
+      <tr>
+        <td>changeparam</td>
+        <td>動態設定maui參數 (在maui執行時) </td>
+      </tr>
+    </table>
+    <br />
+    <div class="commands"><span class="cmts"># job</span>
+    <br />Server:~ # <span class="cmds">runjob</span> <span class="vars">12</span>
+    <br />Server:~ # <span class="cmds">checkjob</span> <span class="vars">12</span>
+    <br />Server:~ # <span class="cmds">checkjob</span> <span class="vars">12</span>
+    </div>
+    <br />
+
+    <div class="commands"><span class="cmts">#</span>
+    <br />Sever:~ # <span class="cmds">showconfig</span> 
+    <br />Sever:~ # <span class="cmds">changeparam</span> ADMIN2 <span class="vars">admin</span>
+    <br />Sever:~ # <span class="cmds">showconfig</span> | <span class="cmds">grep</span> ADMIN 
+    <br />
+
+    <br /><span class="cmts">#</span>
+    <br />Sever:~ # <span class="cmds">mdiag</span> -u 
+    <br />Sever:~ # <span class="cmds">changeparam</span> USERCFG[<span class="vars">user</span>] MAXJOB=3,5 MAXPROC=20 
+    <br />Sever:~ # <span class="cmds">mdiag</span> -u 
+    <br />
+
+    <br /><span class="cmts">#</span>
+    <br />Sever:~ # <span class="cmds">diagnose</span> -g 
+    <br />Sever:~ # <span class="cmds">changeparam</span> GROUPCFG[<span class="vars">group</span>] MAXJOB=5,8 MAXPROC=32 
+    <br />Sever:~ # <span class="cmds">diagnose</span> -g 
+    <br />
+
+    <br /><span class="cmts">#</span>
+    <br />Sever:~ # <span class="cmds">diagnose</span> -c 
+    <br />Sever:~ # <span class="cmds">changeparam</span> CLASSCFG[<span class="vars">queue</span>] MAXJOB[USER:<span class="vars">user</span>]=1,2 MAXJOB[GROUP:<span class="vars">group</span>]=10 
+    <br />Sever:~ # <span class="cmds">diagnose</span> -c 
+    <br />
+
+    <br /><span class="cmts">#</span>
+    <br />Sever:~ # <span class="cmds">changeparam</span> SRCFG[interactive] DAYS=MON,TUE,WED,THU,FRI 
+    <br />Sever:~ # <span class="cmds">changeparam</span> SRCFG[interactive] PERIOD=DAY 
+    <br />Sever:~ # <span class="cmds">changeparam</span> SRCFG[interactive] STARTTIME=10:00:00 ENDTIME=15:00:00 
+    <br />Sever:~ # <span class="cmds">changeparam</span> SRCFG[interactive] RESOURCES=PROCS:2,MEM:256 
+    <br />Sever:~ # <span class="cmds">changeparam</span> SRCFG[interactive] HOSTLIST=node001,node002,node005,node020 
+    <br />Sever:~ # <span class="cmds">changeparam</span> SRCFG[interactive] TASKCOUNT=6 
+    <br />Sever:~ # <span class="cmds">changeparam</span> SRCFG[interactive] CLASSLIST=interactive 
+    <br />Sever:~ # <span class="cmds">changeparam</span> SRCFG[debug] HOSTLIST=node001,node002,node003,node004 
+    <br />Sever:~ # <span class="cmds">changeparam</span> SRCFG[debug] USERLIST=helpdesk 
+    <br />Sever:~ # <span class="cmds">changeparam</span> SRCFG[debug] GROUPLIST=operations,sysadmin 
+    <br />Sever:~ # <span class="cmds">changeparam</span> SRCFG[debug] PERIOD=INFINITY 
+    </div>
+    <p class="h3">mdiag和diagnose是一樣的指令，因為maui得設定是動態載入到記憶體，所以在已經啟動maui的情況下，需要變更設定要使用changeparam指令，但是只要重新啟動時，該設定就會被刪除，建議在maui.cfg也作同樣的設定
+    </p>
+
+    <hr />
+
+
+<!-- reference -->
+    <h2>Reference</h2>
+    <li class="reference">
+    <a href="http://www.supercluster.org">Supercluster.org</a></li>
+    <hr />
+
+<!-- changelog -->
+    <h2>Changelog</h2>
+    <li class="changlog">2013/11/11 第一次完成</li>
+
+</body>
+</html>

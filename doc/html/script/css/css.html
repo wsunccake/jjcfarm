@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>CSS</title>
+<link rel="stylesheet" href="../../defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>CSS</h1>
+      <a href="#基本使用"><li class="title">基本使用</li></a>
+<!--       <br /><a href="#基本控制"><li class="title">基本控制</li></a>
+      <br /><a href="#reference"><li class="title">Reference</li></a> -->
+      <div class="context">
+      <hr />
+
+<!-- 基本使用 -->
+      <a name="基本使用"><h2>基本使用</h2></a>
+      <h3></h3>
+      <table class="h3">
+        <tr>
+          <th>selector</th>
+          <th>declare/css</th>
+          <th>usage/html</th>
+          <th>description</th>
+        </tr>
+        <tr>
+          <td>contextual/tag</td>
+          <td>h2 em {color:blue}</td>
+          <td>&lt;h2&gt;一般&lt;em&gt; 藍色 &lt;/em&gt;文字&lt;/h2&gt;</td>
+          <td>指定特定標籤內的標籤可套用樣式</td>
+        </tr>
+        <tr>
+          <td>class</td>
+          <td>.blue {color:blue;}
+          <br />h2.red {color:red;}</td>
+          <td>&lt;span class=blue&gt;.......&lt;/span&gt;
+          <br />&lt;h2 class=red&gt;.........&lt;h2&gt;</td>
+          <td>讓不同的標籤套用相同的樣式
+          <br />只讓固定的標籤有此樣式</td>
+        </tr>
+        <tr>
+          <td>id</td>
+          <td>#blue {color:blue;}</td>
+          <td>&lt;span id=blue&gt;.......&lt;/span&gt;</td>
+          <td>讓指定的標籤套用一次宣告的樣式</td>
+        </tr>
+      </table>
+      <br />
+
+      <table class="h3">
+        <tr>
+          <th>style sheets</th>
+          <th>usage/html</th>
+        </tr>
+        <tr>
+          <td>inline</td>
+          <td>&lt;h2 style=color:blue;font-family:&quot;Serif&quot;&gt;......&lt;/h2&gt;</td>
+        </tr>
+        <tr>
+          <td>embedding</td>
+          <td>&lt;style type=&quot;text/css&quot;&gt; h2 {color:blue} &lt;/style&gt;</td>
+        </tr>
+        <tr>
+          <td>linking</td>
+          <td>&lt;link rel=stylesheet type=&quot;text/css&quot; href=&quot;../main.css&quot;&gt;</td>
+        </tr>
+        <tr>
+          <td>import</td>
+          <td>&lt;style&gt;@import url(&quot;../main.css&quot;);&lt;/style&gt;</td>
+        </tr>
+      </table>
+      <br />
+
+<!-- 
+Emmet/zen coding
+      span.cmts{}           -> <span class="cmts"></span>
+      form[action=get]{abc} -> <form action="get">abc</form>
+
+      p>span          -> <p><span></span></p>
+      br*3            -> <br><br><br>
+      p>span+br       -> <p><span></span><br></p>
+      div(br)         -> <div><br></div>
+
+      ul>li*3
+      ol>li*3
+      dl>dd>dt
+      table>tbody>tr>td*3
+install zen coding on sublime text2
+  emmet
+
+example:
+#page>div.logo+ul#navigation>li*5>a{Item $} 
+ -->
+      <hr />
+
+ 
+<!-- reference -->
+    <h2>Reference</h2>
+<!--     <li class="reference">http://www.proftpd.org</li>
+    <br /><li class="reference">http://vsftpd.beasts.org</li>
+    <br /><li class="reference">http://linux.vbird.org</li> -->
+    <hr />
+
+<!-- changelog -->
+    <h2>Changelog</h2>
+</body>
+</html>

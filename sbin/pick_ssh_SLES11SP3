@@ -1,0 +1,91 @@
+#!/bin/sh
+#
+# Modified date: 2013/09/16
+# for SuSE Linux Enterprise Sever 11 SP3
+#
+
+FILE_flag="false"
+DATE_flag="false"
+TEMP_flag="false"
+NUM_flag="false"
+HELP_flag="false"
+
+while getopts :f:d:t:n:h opt; do
+  case $opt in
+    f)
+      FILE_flag="true"
+      MESSAGE_FILE=$OPTARG;;
+    d)
+      DATE_flag="true"
+      TODAY=$OPTARG;;
+    t)
+      TEMP_flag="true"
+      TMPFILE=$OPTARG;;
+    n)
+      NUM_flag="true"
+      NUM=$OPTARG;;
+    h)
+      HELP_flag="true";;
+  esac
+done
+shift $((OPTIND - 1))
+
+if [ $HELP_flag == "true" ]; then
+  echo "pick_ssh [-f file] [-d 'Dec  7'] [-t /tmp/abc.txt]"
+  echo "-f : file, default /var/log/message"
+  echo "-d : date, default today"
+  echo "-n : int, default 5"
+  echo "-t : temp file, default /tmp"
+  exit 1;
+fi
+
+if [ -z $MESSAGE_FILE ] ; then
+  MESSAGE_FILE=/var/log/messages
+fi
+
+if [ -z ${TODAY%% *} ] ; then
+  TODAY=$(date -d "today" +"%b %_e")
+fi
+
+if [ -z $TMPFILE ] ; then
+  TMPDIR=/tmp
+  TMPFILE=$TMPDIR/$(date -d "today" +"%m%d").tmp
+fi
+
+if [ -z $NUM ] ; then
+  NUM=5
+fi
+
+# Pick up data by date and sshd
+grep "$TODAY" $MESSAGE_FILE | grep sshd > $TMPFILE.ssh
+#awk "/$TODAY/&&/sshd/{print $_}" $MESSAGE_FILE > $TMPFILE.ssh
+
+# Record login fail from ip
+#awk '/invalid user/{print $13}; /Invalid user/{print $10}; /Authentication failure/{print $13}' $TMPFILE.ssh > $TMPFILE.ssh.ip
+##grep "invalid user" $TMPFILE.ssh | awk '{print $13}' | sort -n > $TMPFILE.ssh.ip
+#grep "Invalid user" $TMPFILE.ssh | awk '{print $10}' | sort -n >> $TMPFILE.ssh.ip
+##grep -i "failure" $TMPFILE.ssh | awk '{print $13}' | sort -n >> $TMPFILE.ssh.ip
+grep "Failed keyboard-interactive/pam for" $TMPFILE.ssh | grep "invalid user" | awk '{print $13}' | sort -n > $TMPFILE.ssh.ip
+grep "Failed keyboard-interactive/pam for" $TMPFILE.ssh | grep -v "invalid user" | awk '{print $11}' | sort -n >> $TMPFILE.ssh.ip
+
+# Pick up from other file
+grep "$TODAY" /var/log/firewall | awk '{ printf "%s\n", $10 }' | cut -d"=" -f2 >> $TMPFILE.ssh.ip
+
+# Sort data
+sort -n $TMPFILE.ssh.ip |uniq -c > $TMPFILE.ssh.ipaccount
+
+
+echo "#$TODAY" > $TMPFILE.ipdeny
+awk "{if (\$1 > $NUM) {print \$2}}" $TMPFILE.ssh.ipaccount >> $TMPFILE.ipdeny
+cp $TMPFILE.ipdeny /tmp/ip.deny
+
+# Statistic SSH fail IP and account
+echo "#$TODAY" >> /root/ssh_fail.ip
+cat $TMPFILE.ssh.ipaccount >> /root/ssh_fail.ip
+echo "#$TODAY" >> /root/ssh_fail.account
+#grep -i "failure" $TMPFILE.ssh | grep -v "invalid user" | awk '{print $11}'  | sort | uniq -c >> /root/ssh_fail.account
+grep "Failed keyboard-interactive/pam for" $TMPFILE.ssh | grep "invalid user" | awk '{print $11}' | sort | uniq -c >> /root/ssh_fail.account
+grep "Failed keyboard-interactive/pam for" $TMPFILE.ssh | grep -v "invalid user" | awk '{print $9}' | sort | uniq -c >> /root/ssh_fail.account
+
+# Clean temp
+rm $TMPFILE*

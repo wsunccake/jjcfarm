@@ -1,0 +1,1488 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+
+
+<title>Ruby</title>
+<link rel="stylesheet" href="../../defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>Ruby</h1>
+      <a href="#使用環境"><li class="title">使用環境</li></a>
+      <br /><a href="#基本控制"><li class="title">基本控制</li></a>
+      <br /><a href="#資料型態"><li class="title">資料型態</li></a>
+      <br /><a href="#控制流程"><li class="title">控制流程</li></a>
+      <br /><a href="#函式區塊"><li class="title">函式區塊</li></a>
+      <br /><a href="#物件導向"><li class="title">物件導向</li></a>
+      <br /><a href="#系統指令"><li class="title">系統指令</li></a>
+      <br /><a href="#正規表示"><li class="title">正規表示</li></a>
+      <br /><a href="#輸出輸入"><li class="title">輸出輸入</li></a>
+
+      <br /><a href="#說明安裝"><li class="title">說明安裝</li></a>
+      <br /><a href="#基本函式"><li class="title">基本函式</li></a>
+      <br /><a href="#Reference"><li class="title">Reference</li></a>
+
+      <div class="context">
+      </div>
+      <hr>
+
+<!-- 使用環境 -->
+      <a name="使用環境"><h2>使用環境</h2>
+      <h3></h3>
+
+      <h3>command/指令</h3>
+      <div class="commands">Linux:~ # <span class="cmds">ruby</span> -e "puts 'Hello, Ruby'"
+      <span class="cmts">#-e是在'(單引號)或"(雙引號)下輸入程式碼(多行使用;分隔)，直接執行</span>
+      <br />Hello, Ruby
+      <br />Linux:~ # <span class="cmds">ruby</span> -cw -e "puts 'Hello, Ruby'"
+      <span class="cmts">#-c是只作語法檢查;-w警告訊息</span>
+      <br />Syntax OK
+      </div>
+      <br />
+
+      <h3>script/指令稿</h3>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> hello.rb
+      <br />#!/usr/bin/ruby
+      <br />
+      <br />print "Hello, Ruby";
+      <br />
+      <br />
+      <span class="cmts">#第一種執行方式</span>
+      <br />Linux:~ # <span class="cmds">chmod</span> u+x hello.rb
+      <br />Linux:~ # ./hello.py
+      <br />Hello, Ruby
+      <br />
+      <br />
+      <span class="cmts">#第二種執行方式</span>
+      <br />Linux:~ # <span class="cmds">ruby</span> hello.rb</div>
+      <br />
+
+      <h3>interactive mode/互動模式</h3>
+      <p class="h3">若要使用互動式，可用irb
+      </p><div class="commands">Linux:~ # <span class="cmds">irb</span>
+      <br />&gt;&gt; puts 'Hello, Ruby'
+      <br />Hello, Ruby
+      <br />=&gt; nil
+      <br />&gt;&gt; quit
+      </div>
+      <hr>
+
+<!-- 基本控制 -->
+      </a><a name="基本控制"><h2>基本控制</h2>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> comments.rb
+      <br />#!/usr/bin/ruby
+      <br />
+      <br />puts 'Hello, Ruby'
+      <br />
+      <br /><span class="cmts">#單行註解</span>
+      <br /># puts 'Single line comment'
+      <br />
+      <br /><span class="cmts">#多行註解</span>
+      <br />=begin
+      <br />puts 'Multiple line comment'
+      <br />=end
+      </div>
+
+      <p class="h3">
+<br />識別字中的符號
+<br />$ global variable
+<br />@ instance variable
+<br />@@ class variable
+<br />? 回傳布林值, return boolean
+<br />! 修改副本
+<br />= 賦值方法
+<br />\ 跳脫字元
+<br />; newline
+<br />Ruby和Perl類似的地方，算符和函式可省略()，物件中的方法若是以!結尾，表示此方法會修改物件，若是以?結尾，表示回傳boolean
+<br />&quot;
+<br />一般變數:全部小寫
+<br />常數:全部大寫
+<br />函數:全部小寫
+<br />類別:開頭大寫，其餘小寫
+</p>
+
+      <hr />
+
+<!-- 資料型態 -->
+      </a><a name="資料型態"><h2>資料型態</h2>
+      <h3>built-in data type/內建資料型態</h3>
+      <h3>string/字串</h3>
+
+      <div class="commands">#!/usr/bin/ruby
+      <br />
+      <br /><span class="cmts">#'單引號內皆為文字，
+      <br />#&quot;雙引號內變數、跳脫符號保有</span>
+      <br />print 'Hi\n'
+      <span class="cmts">#顯示\n</span>
+      <br />print &quot;Hi\n&quot;
+      <span class="cmts">#\n顯示成newline，</span>
+      <br />
+
+      <br /><span class="cmts">#字串操作</span>
+      <br />print &quot;Hi, Ruby.&quot; + "\n" * 2
+      <span class="cmts">#+：為字串連結、*：為字串重複</span>
+      <br />print 'Hi, Ruby'downcase()
+      <span class="cmts">#換成小寫</span>
+      <br />print 'Hi, Ruby'.upcase()
+      <span class="cmts">#換成大寫</span>
+      <br />print 'hi, ruby!'.capitalize()
+      <span class="cmts">#句首大寫</span>
+      <br />print 'hi, ruby!'.reverse()
+      <span class="cmts">#字串反轉</span>
+      <br />
+
+      <br />
+      <span class="cmts">#字串修改</span>
+      <br />str1 = 'Hi'
+      <span class="cmts">#使用算符的方式賦值</span>
+      <br />puts str1 &lt;&lt; ', '
+      <span class="cmts">#字串連結，注意原字串內容會被修改</span>
+      <br />puts str1.concat(' ruby')
+      <span class="cmts">#字串連結，注意原字串內容會被修改</span>
+      <br />str2 = String('Hi, ruby')
+      <span class="cmts">#以物件的方式賦值</span>
+      <br />'123'.calss
+      <span class="cmts">#判斷型別</span>
+      <br />'123'.to_i
+      <span class="cmts">#轉型別為整數</span>
+      <br />'123.456'.to_f
+      <span class="cmts">#轉型別為浮點數</span>
+      <br />'hi'.to_s
+      <span class="cmts">#轉型別為字串</span>
+      <br />'hi'.to_str
+      <span class="cmts">#轉型別為字串</span>
+      <br />.to_sym
+      <span class="cmts">#轉型別為符號</span>
+      <br />
+
+      <br />
+      <span class="cmts">#slice operator/[]算符</span>
+      <br />puts 'Hi, Ruby'[0]
+      <span class="cmts">#回傳第一個字元的ASCII</span>
+      <br />puts 'Hi, Ruby'[-1]
+      <span class="cmts">#回傳最後個字元的ASCII</span>
+      <br />puts 'Hi, Ruby!'[4, 4]
+      <span class="cmts">#從第i個位置後顯示j個字元</span>
+      <br />puts 'Hi, Ruby!'[4..8]
+      <span class="cmts">#i到j個字元</span>
+      <br />puts 'Hi, Ruby!'[4...8]
+      <span class="cmts">#i到j-1個字元</span>
+      <br />puts 'Hi, Ruby'['Hi']
+      <span class="cmts">#回傳尋找的字串, 找不到回傳nil</span>
+      <br />
+
+      <br />
+      <span class="cmts">#slice! operator/[] =算符</span>
+      <br />puts str1['ruby'] = 'Ruby.'
+      <span class="cmts">#字串ruby部分被替換成Ruby, 若沒有則失敗</span>
+      <br />puts str1[4, 4] = 'RUBY'
+      <span class="cmts">#字串第i個位置後j個字元替換</span>
+      <br />
+
+      <br />
+      <span class="cmts">#字串長度</span>
+      <br />print str1.empty?()
+      <span class="cmts">#判斷空字串</span>
+      <br />print str1.length()
+      <span class="cmts">#回傳字串長度</span>
+      <br />print str1.size()
+      <span class="cmts">#回傳字串長度</span>
+      <br />
+
+      <br />
+      <span class="cmts">#字串比較</span>
+      <br />print 'hello' == 'Hello'
+      <span class="cmts">#回傳true/false</span>
+      <br />print 'hello'.eq?('Hello')
+      <span class="cmts">#回傳true/false</span>
+
+      <span class="cmts">#字串編碼比較</span>
+      <br />print 'hello' &lt;=&gt; 'Hello'
+      <span class="cmts">#回傳-1(少於);0(等於):1(多於)</span>
+      <br />print 'hello'.casecmp('Hello')
+      <span class="cmts">#同上，但忽略大小寫</span>
+      <br />
+
+      <br />print 'HiRuby'.insert(2, &quot;, &quot;)
+      <span class="cmts">#插入字串</span>
+
+      <br />print &quot;Hi, Ruby\n&quot;.chmop()
+      <span class="cmts">#刪除字尾分隔符號</span>
+      <br />print &quot;Hi, Ruby\n&quot;.chop()
+      <span class="cmts">#刪除字尾最後一個字元</span>
+      <br />print &quot;Hi, Ruby\n&quot;.delete(',')
+      <span class="cmts">#刪除字串</span>
+      <br />print &quot;Hi, Ruby\n&quot;.gsub(', ', '! ')
+      <span class="cmts">#替換字串</span>
+      <br />print &quot;Hi, Ruby\n&quot;.replace(', ', '! ')
+      <span class="cmts">#替換字串</span>
+
+      <br />
+      <br />
+      <span class="cmts">#字串填補/留白</span>
+      <br />print &quot;&nbsp;&nbsp;Hi, Ruby&nbsp;&nbsp;\n&quot;.ljust(12, '*')
+      <br />print &quot;&nbsp;&nbsp;Hi, Ruby&nbsp;&nbsp;\n&quot;.rjust(12, '*')
+      <br />print &quot;&nbsp;&nbsp;Hi, Ruby&nbsp;&nbsp;\n&quot;.center(12, '*')
+
+      <br />
+      <br />
+      <span class="cmts">#字串清除/去白</span>
+      <br />print &quot;&nbsp;&nbsp;Hi, Ruby&nbsp;&nbsp;\n&quot;.lstrip()
+      <br />print &quot;&nbsp;&nbsp;Hi, Ruby&nbsp;&nbsp;\n&quot;.rstrip()
+      <br />print &quot;&nbsp;&nbsp;Hi, Ruby&nbsp;&nbsp;\n&quot;.strip()
+
+      <br />
+      <br />
+      <span class="cmts">#String, Array轉換</span>
+      <br />print 'Sun,Mon,Tue,Wed,Thu,Fri,Sat'.split(/,/)
+      <span class="cmts">#String轉Array</span>
+      <br />print [&quot;Sun&quot;, &quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;, &quot;Fri&quot;, &quot;Sat&quot;].join(',')
+      <span class="cmts">#Array轉String</span>
+      </div>
+      <br />
+
+      <h3>numeric/數值</h3>
+      <p class="h3">Ruby的數值型別有Integer（整數）、Float（浮點數）、Fixnum（）和Bignum（）Complex（複數），數值型態當然支援基本加、減、乘、除
+      <br /><img src="ruby_numeric.png"></p>
+
+      <div class="commands">#!/usr/bin/ruby
+      <br />
+
+      <br />print 0b1010
+      <span class="cmts">#二進位</span>
+      <br />print 01010
+      <span class="cmts">#八進位</span>
+      <br />print 0d1010
+      <span class="cmts">#十進位</span>
+      <br />print 0x1010
+      <span class="cmts">#十六進位</span>
+      <br />print 1_010
+      <span class="cmts">#十進位，可用_作為區隔</span>
+      <br />
+
+      <br />
+      <span class="cmts">#型別轉換</span>
+      <br />puts Integer(1.2)
+      <span class="cmts">#浮點數轉整數</span>
+      <br />puts Integer('1')
+      <span class="cmts">#字串轉整數</span>
+      <br />puts Float(1)
+      <span class="cmts">#整數轉浮點數</span>
+      <br />puts Float('1')
+      <span class="cmts">#字串轉浮點數</span>
+      <br />
+
+      <br />
+      <span class="cmts">數值運算</span>
+      <br />print 9 % 8 / 7 * 6 - 5 + 4 ** 3
+      <span class="cmts">#算符形式 %: 餘數, /: 除, *: 乘, -: 減/負, +: 加/正, **: 指數</span>
+      <br />print 9.div(3)
+      <span class="cmts">#除</span>
+      <br />print 9.quo(5)
+      <span class="cmts">#商數</span>
+      <br />print 9.modulo(5)
+      <span class="cmts">#餘數</span>
+      <br />print 9.divmod(5)
+      <span class="cmts">#回傳商數和餘數陣列</span>
+      <br />
+
+      <br />
+      <span class="cmts">#縮寫算符</span>
+      <br />print x = 1
+      <br />print x += 2
+      <br />print x -= 1
+      <br />print x *= 3
+      <br />print x /= 1
+      <br />print x **= 2
+      <br />print x %= 2
+      <br />
+
+      <br />
+      <span class="cmts">#Range/範圍算符</span>
+      <br />print 1..9
+      <span class="cmts">#i到j</span>
+      <br />print Range.new(1, 9)
+      <span class="cmts">#同上</span>
+      <br />print 1...9
+      <span class="cmts">#i到j-1</span>
+===
+
+
+      </div>
+      <br />
+
+      <h3>array/陣列</h3>
+      <div class="commands">#!/usr/bin/ruby
+      <br />
+
+      <br />
+      <span class="cmts">#陣列建立</span>
+      <br /> print arr1 = []
+      <span class="cmts">建立空陣列</span>
+      <br /> print arr2 = Array.new()
+      <span class="cmts">同上</span>
+      <br /> print arr3 = Array.new(5, 'ruby')
+      <span class="cmts">建立陣列，有五個元素且給定初值</span>
+      <br /> print arr4 = Array(1..9)
+      <span class="cmts">建立陣列，並使用範圍算符給定初值</span>
+      <br /> print arr5 = Array.[]('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat')
+      <span class="cmts">建立陣列，並給定初值</span>
+      <br /> print arr6 = Array['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+      <span class="cmts">同上</span>
+      <br /> print arr7 = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+      <span class="cmts">同上</span>
+      <br />
+
+      <br />
+      <span class="cmts">#陣列顯示</span>
+      <br />print arr7[0]
+      <span class="cmts">#第一個元素，結果為&quot;Sun&quot;</span>
+      <br />print arr7.first()
+      <span class="cmts">#同上</span>
+      <br />print arr7.at(0)
+      <span class="cmts">#同上</span>
+      <br />print arr7.slice(0)
+      <span class="cmts">#同上</span>
+      <br />print arr7[-1]
+      <span class="cmts">#最後一個元素，結果為&quot;Sat&quot;</span>
+      <br />print arr7.last()
+      <span class="cmts">#同上</span>
+      <br />print arr7.at(-1)
+      <span class="cmts">#同上</span>
+      <br />print arr7.slice(-1)
+      <span class="cmts">#同上</span>
+      <br />print arr7[2, 3]
+      <span class="cmts">#第i個元素到後j個元素，結果為[&quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;]</span>
+      <br />print arr7.sloice(2, 3)
+      <span class="cmts">#同上</span>
+      <br />print arr7[2..5]
+      <span class="cmts">#第i個元素到後第j個元素，結果為[&quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;, &quot;Fri&quot;]</span>
+      <br />print arr7.sloice(2..5)
+      <span class="cmts">#同上</span>
+      <br />print arr7[2...5]
+      <span class="cmts">#第i個元素到後第j-1個元素，結果為[&quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;]</span>
+      <br />print arr7.sloice(2...5)
+      <span class="cmts">#同上</span>
+      <br />print arr7.size()
+      <span class="cmts">#陣列長度</span>
+      <br />print arr7.length()
+      <span class="cmts">#同上</span>
+      <br />
+
+      <br />
+      <span class="cmts">#陣列修改</span>
+      <br />
+      <span class="cmts">#FIFO/First In First Out</span>
+      <br />print arr7.shift()
+      <span class="cmts">#移除第一個元素</span>
+      <br />print arr7.shift(2)
+      <span class="cmts">#移除前兩個元素</span>
+      <br />print arr7.unshift('Sun')
+      <span class="cmts">#插入第一個元素</span>
+      <br />
+      <span class="cmts">#FILO/First In Last Out</span>
+      <br />print arr7.pop()
+      <span class="cmts">#移除最後一個元素</span>
+      <br />print arr7.push('Sat')
+      <span class="cmts">#插入最後一個元素</span>
+      <br />
+      <span class="cmts">#插入、刪除</span>
+      <br />puts arr7.insert(0, 'Sun')
+      <span class="cmts">#插入元素</span>
+      <br />puts arr7.delete('Sun')
+      <span class="cmts">#刪除值</span>
+      <br />puts arr7.delete_at(0)
+      <span class="cmts">#刪除元素</span>
+      <br />
+
+      <br />
+      <span class="cmts">#陣列操作</span>
+      <br />puts arr6 + arr7
+      <span class="cmts">#相連</span>
+      <br />puts arr6 &amp; arr7
+      <span class="cmts">#交集</span>
+      <br />puts arr6 - arr7
+      <span class="cmts">#差急</span>
+      <br />puts arr6 | arr7
+      <span class="cmts">#聯集</span>
+      <br />
+
+      <br />
+      <span class="cmts">#陣列操作</span>
+      <br />puts arr7.uniq()
+      <span class="cmts">#唯一</span>
+      <br />puts arr7.sort()
+      <span class="cmts">#排序</span>
+      <br />puts arr7.reverse()
+      <span class="cmts">#反轉</span>
+      <br />puts arr7.clear()
+      <span class="cmts">#清除</span>
+      </div>
+      <br />
+
+      <h3>hash/湊雜</h3>
+      <div class="commands">#!/usr/bin/ruby
+      <br />
+
+      <br />
+      <span class="cmts">#湊雜建立</span>
+      <br />hsh1 = {}
+      <br />hsh2 Hash.new()
+      <br />hsh3 Hash.new(nil)
+      <span class="cmts">#建立湊雜並給定初值</span>
+      <br />hsh4 = {1, 123, 'x', 'xyz', :A, 'ABC'}
+      <br />hsh5 = {1 => 123, 'x' => 'xyz', :A => 'ABC'}
+      <br />hsh6 = Hash[1, 123, 'x', 'xyz', :A, 'ABC']
+      <br />hsh7 = Hash[1 => 123, 'x' => 'xyz', :A => 'ABC']
+      <br />
+
+      <span class="cmts">#回傳陣列</span>
+      <br />hsh7['x']
+      <br />hsh.values_at('x')
+      <br />hsh7['x', 1]
+      <br />hsh.values_at('x', 1)
+      <br />hsh.keys()
+      <br />hsh.values()
+      <br />
+
+      <br />hsh7[:n] = '4321'
+      <span class="cmts">#新增</span>
+      <br />hsh7.delete(:n)
+      <span class="cmts">#刪除</span>
+      <br />hsh7.clear()
+      <span class="cmts">#清除</span>
+      </div>
+
+      <h3>symblo/符號</h3>
+      <br />
+
+      <h3>delimited string/分界字串</h3>
+      <table class="h3">
+        <tr><th>delimited</th>
+            <th>symol</th>
+            <th>meaning</th></tr>
+        <tr><td>%Q</td>
+            <th>&quot;&quot;</th>
+             <td>將分界內文字解析成string</td></tr>
+        <tr><td>%q</td>
+            <th>''</th>
+            <td>分界內文字解析成string</td></tr>
+        <tr><td>%r</td>
+            <td>//</td>
+            <td>分界內文字解析成regexp</td></tr>
+        <tr><td>%s</td>
+            <td>:</td>
+            <td>分界內文字解析成symbol</td></tr>
+        <tr><td>%w</td>
+            <td>[]</td>
+            <td>分界內文字解析成array</td></tr>
+        <tr><td>%W</td>
+            <td>[]</td>
+            <td>分界內文字解析成array</td></tr>
+        <tr><td>%x</td>
+            <td>``</td>
+            <td>分界內文字解析成shell command</td></tr>
+      </table>
+
+      <div class="commands">#!/usr/bin/ruby
+      <br />
+
+      <br /><span class="cmts">#puts '\ Sun Mon Tue Wed Thu Fri Sat'</span>
+      <br />puts %q/\ Sun Mon Tue Wed Thu Fri Sat/
+      <br />
+
+      <br /><span class="cmts">#puts &quot;\ Sun Mon Tue Wed Thu Fri Sat&quot;</span>
+      <br />puts %Q/\ Sun Mon Tue Wed Thu Fri Sat/
+      <br />
+
+      <br /><span class="cmts">#puts :Sun</span>
+      <br />puts %s/Sun/
+      <br />
+
+      <br /><span class="cmts">#weekArray = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']</span>
+      <br />weekArray = %w/Sun Mon Tue Wed Thu Fri Sat/
+      <br />puts weekArray
+      <br />
+
+      <br /><span class="cmts">#puts `ls`</span>
+      <br />puts %x/ls/
+      </div>
+      <br />
+
+      <p class="h3">以下是一系列由 $ 開頭的特別變數， 例如 $$ 包含 Ruby 直譯器的進程識別字 (process id)，只能讀取。這些都是主要的系統變數：</p3>
+      <table class="h3">
+        <tr><th>keyword</th>
+	    <th>description</th></tr>
+        <tr><td>$!</td>
+             <td>最新的錯誤訊息</td></tr>
+        <tr><td>$@</td>
+            <td>錯誤的位置</td></tr>
+        <tr><td>$_</td>
+            <td>gets 最後讀取的子串</td></tr>
+        <tr><td>$,</td>
+             <td>直譯器最後讀取的行數</td></tr>
+        <tr><td>$&amp;</td>
+            <td>正規表示式 (regexp) 最後符合的字串</td></tr>
+        <tr><td>$~</td>
+            <td>最後的正規表示式符合內容，子表示式 (subexpression) 的陣列</td></tr>
+        <tr><td>$n</td>
+             <td>最後符合內容的第n項子表示式（同 $~[n]）</td></tr>
+        <tr><td>$=</td>
+            <td>不區分大小寫旗標</td></tr>
+        <tr><td>$/</td>
+            <td>不區分大小寫旗標</td></tr>
+        <tr><td>$\</td>
+             <td>輸出記錄分隔字元</td></tr>
+        <tr><td>$0</td>
+            <td>Ruby腳本檔案的名稱</td></tr>
+        <tr><td>$*</td>
+            <td>命令列引數</td></tr>
+        <tr><td>$$</td>
+            <td>直譯器的進程識別字 (process id)</td></tr>
+        <tr><td>$?</td>
+            <td>開最後執行的子進程 (child process) 狀態</td></tr>
+        <tr><td></td>
+            <td></td></tr>
+        <tr><td></td>
+            <td></td></tr>
+      </table>
+      <p class="h3">以上的 $_ 與 $~ 具有區域作用域 (local scope)， 他們的名稱看起來是全域變數，但這樣比較有用，而且使用這樣的名稱也有其歷史因素</p>
+
+      <hr />
+
+<!-- 控制流程 -->
+      <a name="控制流程"><h2>控制流程</h2>
+      <h3>if|unless/elsif/else</h3>
+      <div class="commands">#!/usr/bin/ruby
+      <br />
+      <br />f = '/etc/passwd'
+      <br />
+      <br />if File.exists?(f) then
+      <span class="cmts">#使用if then end的格式</span>
+      <br />&nbsp;&nbsp;puts &quot;1.1 method &quot; + f + &quot; exist\n&quot;
+      <br />end
+      <br />
+      <br />if File.exists?(f) :
+      <span class="cmts">#使用if : end的格式，1.9不支援</span>
+      <br />&nbsp;&nbsp;puts &quot;1.2 method &quot; + f + &quot; exist\n&quot;
+      <br />end
+      <br />
+      <br />if File.exists?(f)
+      <span class="cmts">#多行時則可不需要then</span>
+      <br />&nbsp;&nbsp;puts &quot;1.3 method &quot; + f + &quot; exist\n&quot;
+      <br />end
+      <br />
+      <br />if File.exists?(f) then puts &quot;1.4 method &quot; + f + &quot; exist\n&quot; end
+      <br />if File.exists?(f) : puts &quot;1.5 method &quot; + f + &quot; exist\n&quot; end
+      <br />File.exists?(f) and puts &quot;1.6 method &quot; + f + &quot; exist\n&quot;
+      <br />
+      <br />unless not File.exists?(f) then
+      <br />&nbsp;&nbsp;puts &quot;2.1 method &quot; + f + &quot; exist\n&quot;
+      <br />end
+      <br />
+      <br />unless not File.exists?(f) then
+      <br />&nbsp;&nbsp;puts &quot;2.2 method &quot; + f + &quot; exist\n&quot;
+      <br />end
+      <br />
+      <br />unless not File.exists?(f) then
+      <br />&nbsp;&nbsp;puts &quot;2.3 method &quot; + f + &quot; exist\n&quot;
+      <br />end
+      <br />
+      <br />unless not File.exists?(f) then puts &quot;2.4 method &quot; + f + &quot; exist\n&quot; end
+      <br />unless not File.exists?(f) : puts &quot;2.5 method &quot; + f + &quot; exist\n&quot; end
+      </div>
+      <br />
+
+      <div class="commands">#!/usr/bin/env ruby
+      <br />
+      <br />num = gets.to_i
+      <br />if num == 0
+      <br />&nbsp;&nbsp;print &quot;Num is zero\n&quot;
+      <br />elsif num >= 1
+      <br />&nbsp;&nbsp;print &quot;Num is positive\n&quot;
+      <br />else
+      <br />&nbsp;&nbsp;print &quot;Num is negative\n&quot;
+      <br />end
+      </div>
+      <br />
+
+      <div class="commands">#!/usr/bin/env ruby
+      <br />
+      <br />if (File.exist?(File.join(ENV['HOME'], '.profile') ) or File.exist?(File.join(ENV['HOME'], '.bash_profile') ) )
+      <br />&nbsp;&nbsp;puts '.profile or .bash_profile exist'
+      <br />end
+      </div>
+      <br />
+
+      <h3>case/when</h3>
+      <div class="commands">#!/usr/bin/env ruby
+      <br />
+      <br />print 'input sex [m/f] : '
+      <br />gender = case gets.strip
+      <br />&nbsp;&nbsp;when 'm'
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;'Male'
+      <br />&nbsp;&nbsp;when 'f'
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;'Female'
+      <br />&nbsp;&nbsp;else
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;'Unknown'
+      <br />end
+      <br />puts gender
+      <br />
+
+      <br />
+      <span class="cmts">#同上，改用hash的方式</span>
+      <br />sex = {'m'=>'Male', 'f'=>'Female'}
+      <br />sex.default= 'Unknown'
+      <br />print 'input sex [m/f] : '
+      <br />puts sex[gets.strip]
+      </div>
+      <br />
+
+      <h3>for/in</h3>
+      <p class="h3">次數迴圈</p>
+      <div class="commands">#!/usr/bin/env ruby
+      <br />
+
+      <br />
+      <span class="cmts">#numeric方式，可以省略do</span>
+      <br />for i in 1..10 do
+      <br />&nbsp;&nbsp;puts i
+      <br />end
+      <br />
+
+      <br />
+      <span class="cmts">#array方式</span>
+      <br />for w in ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] do
+      <br />&nbsp;&nbsp;puts w
+      <br />end
+      <br />
+
+      <br />
+      <span class="cmts">#hash方式</span>
+      <br />for k in {:Sun=&gt;'Sunday', :Mon=&gt;'Monday', :Tue=&gt;'Tuesday', :Wed=&gt;'Wednesday', :Thu=&gt;'Thursday', :Fir=&gt;'Friday', :Sat=&gt;'Saturday'}.keys do
+      <br />&nbsp;&nbsp;puts k
+      <br />end
+      <br />
+
+      <br />for v in {:Sun=&gt;'Sunday', :Mon=&gt;'Monday', :Tue=&gt;'Tuesday', :Wed=&gt;'Wednesday', :Thu=&gt;'Thursday', :Fir=&gt;'Friday', :Sat=&gt;'Saturday'}.values do
+      <br />&nbsp;&nbsp;puts v
+      <br />end
+      <br />
+
+      <br />for k, v in {:Sun=&gt;'Sunday', :Mon=&gt;'Monday', :Tue=&gt;'Tuesday', :Wed=&gt;'Wednesday', :Thu=&gt;'Thursday', :Fir=&gt;'Friday', :Sat=&gt;'Saturday'} do
+      <br />&nbsp;&nbsp;puts k, v
+      <br />end
+      </div>
+      <br />
+
+      <h3>while|until</h3>
+      <p class="h3">邏輯迴圈</p>
+      <div class="commands">#!/usr/bin/env ruby
+      <br />
+      <br />file = '/etc/passwd'
+      <br />f = File.open(file, 'r')
+      <br />lines = f.readlines
+      <br />while l = lines.shift do
+      <br />&nbsp;&nbsp;puts l
+      <br />end
+      <br />f.close
+      <br />
+
+      <br />file = '/etc/passwd'
+      <br />f = File.open(file, 'r')
+      <br />lines = f.readlines
+      <br />until not(l = lines.shift) do
+      <br />&nbsp;&nbsp;puts l
+      <br />end
+      <br />f.close
+      </div>
+      <br />
+
+      <h3>loop</h3>
+      <p class="h3">無限迴圈</p>
+      <div class="commands">#!/usr/bin/env ruby
+      <br />
+      <br />loop do
+      <br />&nbsp;&nbsp;line = gets.strip()
+      <br />&nbsp;&nbsp;if line == 'Q' then break end
+      <br />&nbsp;&nbsp;puts &quot;your input: #{line} (input Q to quit)\n&quot;
+      <br />end
+      </div>
+      <br />
+
+      <h3>iterator</h3>
+      <p class="h3">物件迴圈</p>
+      <div class="commands">#!/usr/bin/env ruby
+      <br />
+      <br />weekL = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+      <br />weekL.each {|l| puts &quot;#{l}\n&quot;}
+      <br />
+      <br />weekH = {:Sun=&gt;'Sunday', :Mon=&gt;'Monday', :Tue=&gt;'Tuesday', :Wed=&gt;'Wednesday', :Thu=&gt;'Thursday', :Fir=&gt;'Friday', :Sat=&gt;'Saturday'}
+      <br />weekH.each {|k, v| puts &quot;#{k} => #{v}\n&quot;}
+      <br />weekH.each do |k, v| 
+      <br />&nbsp;&nbsp;puts &quot;#{k} => #{v}\n&quot;
+      <br />end
+      <br />weekH.each_value {|k| puts &quot;#{k}\n&quot;}
+      <br />weekH.each_value {|v| puts &quot;#{v}\n&quot;}
+      <br />h.each_pair {|k, v| puts &quot;#{k} => #{v}\n&quot;}
+      <br />
+      <br />9.downto(0) {|i| puts &quot;#{i}\n&quot;}
+      <br />0.upto(9) {|i| puts &quot;#{i}\n&quot;}
+      </div>
+      <br />
+
+      <h3>return、break、next、redo</h3>
+      <p class="h3">基本上，ruby的最後一行就是return，除非有特別需求或註明，要不然很少使用return</p3>	
+      <table class="h3">
+	    <tr><th>keyword</th>
+		    <th>description</th></tr>
+	    <tr><td>return</td>
+		    <td>回傳</td></tr>
+	    <tr><td>break</td>
+		    <td>中斷迴圈，程序到此就跳出迴圈</td></tr>
+	    <tr><td>next</td>
+		    <td>繼續迴圈，程序繼續執行</td></tr>
+	    <tr><td>redo</td>
+		    <td>重新迴圈，程序到此就從迴圈初始值執行迴圈</td></tr>
+      </table>
+      <br />
+
+      <div class="commands">#!/usr/bin/env ruby
+      <br />class Game
+      <br />&nbsp;&nbsp;def initialize
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;@dayOfMonthH = {:Jan => 31, :Feb => 27, :Mar => 31, :Apr => 30,
+	  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:May => 31, :Jun => 30, :Jul => 31, :Aug => 31,
+	  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:Sep => 30, :Oct => 31, :Nov => 30, :Dec => 31}
+
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;@monthL = [:Jan, :Feb, :Mar, :Apr, :May, :Jun,
+	  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:Jul, :Aug, :Sep, :Oct, :Nov, :Dec]
+      <br />&nbsp;&nbsp;end
+      <br />
+      <br />&nbsp;&nbsp;def run
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;puts "Run the guess days of month, keyin 'q' to exit"
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;@monthL.each { |m|
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;puts "How many days are in #{m}?\n"
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line = gets
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;begin
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;day = Integer(line)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (day == @dayOfMonthH[m])
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;puts "Good job"
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next
+      <span class="cmts">#繼續迴圈</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;puts "Guess again!"
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;redo
+      <span class="cmts">#重新迴圈</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rescue ArgumentError
+      <span class="cmts">#捕捉例外</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (line.chomp! == 'q')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;puts "Quit the game"
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break
+      <span class="cmts">#結束迴圈</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;puts "You need input integer"
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;redo
+      <span class="cmts">#重新迴圈</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;end
+      <br />end
+      <br />
+      <br />if __FILE__ == $0
+      <br />&nbsp;&nbsp;g = Game.new
+      <br />&nbsp;&nbsp;g.run
+      <br />end
+      </div>
+      <br />
+			
+      <h3>throw、catch</h3>
+      <h3>raise、rescue、retry</h3>
+      <p class="h3">rescue會捕捉例外事件，ensure會強制執行事件，而raise這關鍵字可以覆寫已定義的Exception之外，也可以新增使用者自行定義的Exception
+	  <br />begin/rescue/else/ensure/end</p>
+	
+      <hr />
+
+<!-- 函式區塊 -->
+      <a name="函式區塊"><h2>函式區塊</h2>
+      <h3></h3>
+
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> swap.rb
+      <br />#!/usr/bin/env ruby
+      <br />
+      <br />def change(arg1, arg2)
+      <span class="cmts">#定義函數</span>
+      <br />&nbsp;&nbsp;puts 'arg1: #{arg1}, arg2 #{arg2}'
+      <br />&nbsp;&nbsp;arg1, arg2 = arg2, arg1
+      <br />&nbsp;&nbsp;puts 'arg1: #{arg1}, arg2 #{arg2}'
+      <br />&nbsp;&nbsp;return [arg1, arg2]
+      <br />end
+      <br />
+      <br />if __FILE__ == $0
+      <span class="cmts">#定義主程式，當使用ruby啟動會執行以下程式碼</span>
+      <br />&nbsp;&nbsp;change('A', 'b')
+      <br />end
+      <br />
+
+      <br />Linux:~ # <span class="cmds">ruby</span> swap.rb
+      <br />
+
+      <br />Linux:~ # <span class="cmds">cat</span> main.rb
+      <br />#!/usr/bin/env ruby
+      <br />
+      <br />$:.push('modulepath')
+      <span class="cmts">#指定module路徑</span>
+      <br />require 'swap.rb'
+      <span class="cmts">#載入swap.rb，必須和main.rb同資料夾，或已定義在RUYLIB、$:</span>
+      <br />
+      <br />if __FILE__ == $0
+      <br />&nbsp;&nbsp;l = change(1, 'a')
+      <br />&nbsp;&nbsp;puts l
+      <br />end
+      <br />
+
+      <br />Linux:~ # <span class="cmds">ruby</span> main.rb
+      <span class="cmts">#在程式碼寫入路徑方式</span>
+      <br />
+
+      <br />Linux:~ # <span class="cmds">ruby</span> -I modulepath main.rb
+      <span class="cmts">#在指令參數的方式</span>
+      <br />
+
+      <br />Linux:~ # <span class="cmds">env</span> RBUYLIB=modulepath <span class="cmds">ruby</span> main.rb
+      <span class="cmts">#使用環境變數的方式</span>
+      </div>
+      <br />
+
+
+      <p class="h3">*開頭的參數表示傳入一連串的參數，可用list。&amp;開頭表示使用block</p>
+      <div class="commands">#!/usr/bin/env ruby
+      <br />
+
+      <br /><span class="cmts"># default value</span>
+      <br />def language (lang = 'Ruby')
+      <br />&nbsp;&nbsp;puts "#{lang}"
+      <br />end
+      <br />
+
+      <br /><span class="cmts"># mutiple argument</span>
+      <br />def zoo(*animal)
+      <br />&nbsp;&nbsp;animal.each { |e|
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;puts "#{e}"
+      <br />&nbsp;&nbsp;}
+      <br />end
+      <br />
+
+      <br /><span class="cmts"># block argument</span>
+      <br />def act(animal, &amp;action)
+      <br />&nbsp;&nbsp;action.call animal
+      <br />end
+      <br />
+
+      <br /><span class="cmts"># main program</span>
+      <br />if __FILE__ == $PROGRAM_NAME
+      <br />&nbsp;&nbsp;language 'Ruby-1.9'
+      <br />&nbsp;&nbsp;language
+      <br />&nbsp;&nbsp;language :rb =&gt; 'Ruby'
+      <span class="cmts">#相當是language({:rb => 'Ruby'})，只是省略{}和()</span>
+      <br />&nbsp;&nbsp;language rb: 'Ruby'
+      <span class="cmts">#同上，1.9語法，1.8不支援</span>
+      <br />&nbsp;&nbsp;zoo "Zebra", "Lion", 'Bear'
+      <br />&nbsp;&nbsp;act("Dock") do |animal|
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;puts &quot;#{animal} voice: quack, quack, quack&quot;
+      <br />&nbsp;&nbsp;end
+      <br />end
+      </div>
+
+
+      <h3>{}、do end</h3>
+      <h3>yield</h3>
+      <hr />
+
+
+<!-- 物件導向 -->
+      <a name="物件導向"><h2>物件導向</h2>
+      <h3></h3>
+
+      <div class="commands">#!/usr/bin/env ruby
+      <br /><span class="cmts">#class/類別:建立一個新類別</span>
+      <br />class Person
+      <br />
+      <span class="cmts">#initialize，建構類別</span>
+      <br />&nbsp;&nbsp;def initialize(fname, lname)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;@fname = fname
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;@lname = lname
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;@@count += 1
+      <br />&nbsp;&nbsp;end
+      <br />
+
+      <br />
+      <span class="cmts">#accessor，用來取代getter和setter</span>
+      <br />&nbsp;&nbsp;attr_accessor :fname, :lname
+      <br />=begin
+      <br />&nbsp;&nbsp;#attr_reader :fname
+      <br />&nbsp;&nbsp;#attr_writer :fname
+      <br />&nbsp;&nbsp;def fname
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;@fname
+      <br />&nbsp;&nbsp;end
+      <br />&nbsp;&nbsp;def fname=(fname)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;@fname = fname
+      <br />&nbsp;&nbsp;end
+
+      <br />&nbsp;&nbsp;#attr :lname
+      <br />&nbsp;&nbsp;def lname
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;@lname
+      <br />&nbsp;&nbsp;end
+      <br />&nbsp;&nbsp;def lname=(lname)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;@lname = lname
+      <br />&nbsp;&nbsp;end
+      <br />=end
+      <br />
+
+      <br />
+      <span class="cmts"># overwrite</span>
+      <br />&nbsp;&nbsp;def to_s
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&quot;#{@lname}, #{@fname}&quot;
+      <br />&nbsp;&nbsp;end
+      <br />
+
+      <br />
+      <span class="cmts"># method</span>
+      <br />&nbsp;&nbsp;def sayHi
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;'Hi ' + to_s
+      <span class="cmts">#to_s是呼叫class內的method</span>
+      <br />&nbsp;&nbsp;end
+      <br />
+
+      <br />
+      <span class="cmts"># static instance</span>
+      <br />&nbsp;&nbsp;@@count = 0
+      <br />
+
+      <br />
+      <span class="cmts"># static method</span>
+      <br />&nbsp;&nbsp;def self.total
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;@@count
+      <br />&nbsp;&nbsp;end
+      <br />end
+      <br />
+
+      <br /><span class="cmts">#Inheritance/繼承:建立一個類別並繼承</span>
+      <br />class Programmer &lt; Person
+      <br />
+
+      <br /><span class="cmts">#Singleton/單體:定義自身的class method</span>
+      <br />&nbsp;&nbsp;class &lt;&lt; self
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def job
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;puts "job is programmer"
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;end
+      <br />&nbsp;&nbsp;end
+      <br />
+
+      <br /><span class="cmts">#同上另一種方式
+      <br />#&nbsp;&nbsp;def self.job
+      <br />#&nbsp;&nbsp;&nbsp;&nbsp;puts "job is programmer"
+      <br />#&nbsp;&nbsp;end</span>
+      <br />
+
+      <br />end
+      <br />
+
+      <br />if __FILE__ == $0
+      <br />&nbsp;&nbsp;matz = Person.new('Yukihiro', 'Matsumoto')
+      <br />&nbsp;&nbsp;puts matz.to_s
+      <br />&nbsp;&nbsp;puts &quot;There are #{Person.total} person.&quot;
+      <br />
+
+      <br />&nbsp;&nbsp;dhh = Programmer.new('David', ' Heinemeier Hansson')
+      <br />&nbsp;&nbsp;puts dhh.to_s
+      <br /><span class="cmts">#&nbsp;&nbsp;dhh.job #這樣是錯誤的使用方式</span>
+      <br />&nbsp;&nbsp;dhh.class.job
+      <br />end
+      </div>
+      <br />
+
+
+	<!-- class MyClass
+	      def method1 # default is 'public'
+	        #... 
+	      end
+	  protected
+	      def method2 # subsequent methods will be 'protected' # will be 'protected'
+	        #... 
+	      end
+	  private
+	      def method3 # subsequent methods will be 'private' # will be 'private'
+	        #...
+	      end
+	  public
+	      def method4 # subsequent methods will be 'public' # so this will be 'public'
+	        #...
+	      end
+	end -->
+	<!-- Symbols (:foo notation)
+	postal_code[:minnesota] = "MN"
+	postal_code[:new_york] = "NY" -->
+	<!-- constants (FOO notation)
+	module Foo
+	  BAR = 1
+	  BAZ = 2
+	  BIZ = 4
+	end
+
+	flags = Foo::BAR | Foo::BAZ # flags = 3 -->
+	
+
+
+
+      <br />new: sub class會繼承super class
+      <br />allocate: 為class建立object
+      <br />initialize: object初始化
+      <br />super:為sub class取用super class method
+      <br />
+
+      <h3>public、protected、private</h3>
+      <p class="h3">public：class本身、heritance class和object
+      <br />protected：class本身和heritance class
+      <br />private：class本身</p>
+      <div class="commands">#!/usr/bin/env ruby
+      <br />
+      <br />class Parents
+      <br />&nbsp;&nbsp;public
+      <br />&nbsp;&nbsp;def pubMthd
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;'public method'
+      <br />&nbsp;&nbsp;end
+      <br />
+      <br />&nbsp;&nbsp;def callPtdMthd
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;'call ' + ptdMthd
+      <br />&nbsp;&nbsp;end
+      <br />
+      <br />&nbsp;&nbsp;def callPvtMthd
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;'call ' + pvtMthd
+      <br />&nbsp;&nbsp;end
+      <br />
+      <br />&nbsp;&nbsp;def selfPtdMthd
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;'self ' + self.ptdMthd
+      <br />&nbsp;&nbsp;end
+      <br />
+      <br />&nbsp;&nbsp;def selfPvtMthd
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;'self ' + self.pvtMthd
+      <br />&nbsp;&nbsp;end
+      <br />
+      
+      <br />&nbsp;&nbsp;protected
+      <br />&nbsp;&nbsp;def ptdMthd
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;'protected methd'
+      <br />&nbsp;&nbsp;end
+      <br />
+
+      <br />&nbsp;&nbsp;private
+      <br />&nbsp;&nbsp;def pvtMthd
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;'private methd'
+      <br />&nbsp;&nbsp;end
+      <br />end
+      <br />
+
+      <br />class Children &lt; Parents
+      <br />&nbsp;&nbsp;def callSelfPtdMthd
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;''self ' + self.ptdMthd
+      <br />&nbsp;&nbsp;end
+      <br />
+      <br />&nbsp;&nbsp;def callSeldPvtMthd
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;''self ' + self.pvtMthd
+      <br />&nbsp;&nbsp;end
+      <br />  
+      <br />&nbsp;&nbsp;def heritPtdMthd
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;'heritance ' + ptdMthd
+      <br />&nbsp;&nbsp;end
+      <br />
+      <br />&nbsp;&nbsp;def heritPvtMthd
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;'heritance ' + pvtMthd
+      <br />&nbsp;&nbsp;end
+      <br />end
+      <br />
+
+      <br />if __FILE__ == $0
+      <br />&nbsp;&nbsp;p = Parents.new
+      <br />&nbsp;&nbsp;puts p.pubMthd
+      <br /><span class="cmts">#&nbsp;&nbsp;puts p.ptdMthd #=>NoMethodError</span>
+      <br /><span class="cmts">#&nbsp;&nbsp;puts p.pvtMthd #=>NoMethodError</span>
+      <br />
+      <br />&nbsp;&nbsp;puts p.callPtdMthd
+      <br />&nbsp;&nbsp;puts p.callPvtMthd
+      <br />
+      <br />&nbsp;&nbsp;puts p.selfPtdMthd
+      <br /><span class="cmts">#&nbsp;&nbsp;puts p.selfPvtMthd #=>NoMethodError 因為self的問題</span>
+      <br />
+
+      <br />&nbsp;&nbsp;c = Children.new
+      <br />&nbsp;&nbsp;puts c.pubMthd
+      <br /><span class="cmts">#&nbsp;&nbsp;puts c.ptdMthd #=>NoMethodError</span>
+      <br /><span class="cmts">#&nbsp;&nbsp;puts c.pvtMthd #=>NoMethodError</span>
+      <br />
+      <br />&nbsp;&nbsp;puts c.heritPtdMthd
+      <br />&nbsp;&nbsp;puts c.heritPvtMthd
+      <span class="cmts">#Ruby裡的private，只要沒有明確指出recevier就可呼叫</span>
+      <br />
+      <br />&nbsp;&nbsp;puts c.callPvtMthd
+      <br />&nbsp;&nbsp;puts c.callPtdMthd
+      <br />end
+      </div>
+      <br />
+
+      <h3>module、require、include</h3>
+      <p class="h3">在module中，呼叫method使用.（dot、逗號），呼叫instance使用::（double colon、雙冒號）</p>
+      <br />
+
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> Months.rb
+      <br />#!/usr/bin/env ruby
+      <br />
+      <br />module Month
+      <br />&nbsp;&nbsp;DayOfMonth = {:Jan => 31, :Feb => 27, :Mar => 31, :Apr => 30,
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:May => 31, :Jun => 30, :Jul => 31, :Aug => 31,
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:Sep => 30, :Oct => 31, :Nov => 30, :Dec => 31}
+      <br />&nbsp;&nbsp;Months = [:Jan, :Feb, :Mar, :Apr, :May, :Jun,
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:Jul, :Aug, :Sep, :Oct, :Nov, :Dec]
+      <br />&nbsp;&nbsp;def Month.day(month)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;DayOfMonth[month]
+      <br />&nbsp;&nbsp;end
+      <br />&nbsp;&nbsp;def self.to_s(m)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;Months[m-1]
+      <br />&nbsp;&nbsp;end
+      <br />end
+      <br />
+      <br />if __FILE__ == $0
+      <br />&nbsp;&nbsp;puts Month::Months
+      <span class="cmts">#使用module中的instance</span>
+      <br />&nbsp;&nbsp;puts Month.to_s(2)
+      <span class="cmts">#使用module中的method</span>
+      <br />end
+      <br />
+
+      <br />Linux:~ # <span class="cmds">cat</span> Game.rb
+      <br />require &quot;Month&quot;
+      <span class="cmts">#載入file，若檔案為.rb結尾，可省略</span>
+      <br />
+      <br />class Game
+      <br />&nbsp;&nbsp;include Month
+      <span class="cmts">#載入module</span>
+      <br />
+      <br />&nbsp;&nbsp;def run
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;puts &quot;Run the guess days of month, keyin 'q' to exit&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;for m in Months.shuffle[0, 1] do
+      <span class="cmts">#使用module中的instance</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;puts &quot;How many days are in #{m}?\n&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line = gets
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;begin
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;day = Integer(line)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (day == Month.day(m))
+      <span class="cmts">#使用module中的method</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;puts &quot;Good job&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;puts &quot;Guess again!&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;redo
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rescue ArgumentError
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (line.chomp! == 'q')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;puts &quot;Quit the game&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;puts &quot;You need input integer&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;redo
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;end
+      <br />&nbsp;&nbsp;end
+      <br />end
+      <br />
+      <br />if __FILE__ == $0
+      <br />&nbsp;&nbsp;g = Game.new
+      <br />&nbsp;&nbsp;g.run
+      <br />end
+      </div>
+      <hr />
+
+
+
+<!-- 系統指令 -->
+      <a name="系統指令"><h2>系統指令</h2>
+      <h3></h3>
+      <div class="commands">#!/usr/bin/env ruby
+      <br />
+      <br />puts `ls`
+      <span class="cmts">#執行系統指令</span>
+      <br />puts ENV['HOME']
+      <span class="cmts">#取得系統環境變數</span>
+      <br />
+
+      <br />system 'ls'
+      <br />
+
+      <br />exec 'ls'
+      <br />
+
+      <br />IO.popen('ls') { |f| puts f.read }
+      <br />
+
+      <br />require "open3"
+      <br />Open3.popen3('ls') {|stdin, stdout, stderr| puts stdout.read}
+      <br />stdin, stdout, stderr = Open3.popen3('ls')
+      <br />puts stdout.read
+      </div>
+      <hr />
+
+<!-- 正規表示 -->
+      <a name="正規表示"><h2>正規表示</h2>
+      <h3></h3>
+
+
+      <table class="h3">
+        <tr><th>符號</th>
+            <th>意義</th></tr>
+        <tr><td>()</td>
+            <td>分組</td></tr>
+        <tr><td>[]</td>
+            <td>指定的範圍（例如：[a-z] 表示一個在 a 到 z 的範圍內的字母）</td></tr>
+        <tr><td>{m,n}</td>
+            <td>前一符號的內容，最少出現 m 次，最多出現 n 次</td></tr>
+        <tr><td>*</td>
+            <td>前一符號的內容出現 0 或數次</td></tr>
+        <tr><td>+</td>
+            <td>前一符號的內容出現 1 或數次</td></tr>
+        <tr><td>?</td>
+            <td>前一符號的內容最多出現一次，同 {0,1}</td></tr>
+        <tr><td>|</td>
+            <td>符合前一個或後一個表示式</td></tr>
+
+        <tr><td>\w</td>
+            <td>一般字元 (word character)，即 [0-9A-Za-z_]</td></tr>
+        <tr><td>\W</td>
+            <td>非一般字元 (non-word character)</td></tr>
+        <tr><td>\s</td>
+            <td>空白字元 (space character)，即 [ \t\n\r\f]</td></tr>
+        <tr><td>\S</td>
+            <td>非空白字元 (non-space character)</td></tr>
+        <tr><td>\d</td>
+            <td>數字 (digit character)，即 [0-9]</td></tr>
+        <tr><td>\D</td>
+            <td>非數字 (non-digit character)</td></tr>
+        <tr><td>\b</td>
+            <td>退位 (0x08)（僅用於指定的範圍）</td></tr>
+        <tr><td>\b</td>
+            <td>單字邊界（若不是於指定的範圍）</td></tr>
+        <tr><td>\B</td>
+            <td>非單字邊界</td></tr>
+
+        <tr><td></td>
+            <td></td></tr>
+        <tr><td></td>
+            <td></td></tr>
+        <tr><td></td>
+            <td></td></tr>
+
+        </table>
+
+      <div class="commands">#!/usr/bin/env ruby
+      <br />
+
+      <br />
+      <span class="cmts">#</span>
+      <br />pattern = ARGV[0]
+      <br />file = ARGV[1]
+      <br />
+
+      <br />f = File.open(file, 'r')
+      <br />lines = f.readlines
+      <br />f.close
+      <br />
+
+      <br />
+      <span class="cmts">#perl式的正規表示，但無法用於變數</span>
+      <br />for l in lines do
+      <br />&nbsp;&nbsp;if l =~ %r[pattern] then
+      <span class="cmts">#搜尋的是pattern字串，而不是pattern變數</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;puts l
+      <br />&nbsp;&nbsp;end
+      <br />end
+      <br />
+
+      <br /><span class="cmts">#python式的正規表示，可用於變數</span>
+      <br />re = Regexp.new(pattern)
+      <br />for l in lines do
+      <br />&nbsp;&nbsp;if (re.match(l) ) then
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;puts l
+      <br />&nbsp;&nbsp;end
+      <br />end
+      </div>
+      <br />
+
+      <div class="commands">#!/usr/bin/env ruby
+      <br />
+
+      <br />str = '/usr/lib/python2.6/site-packages/gtk-2.0/gconf.so'
+      <br />p str
+      <br />
+
+      <br /><span class="cmts"># regex like as perl</span>
+      <br />str =~ /(.*)\.(.*?)$/
+      <span class="cmts">#同sh ${STR%.*}</span>
+      <br />p "#{$~[1]} &lt;=&gt; #{$~[2]}"
+      <br />p str.sub(%r'.[^.]*$', '')
+      <br />
+
+      <br /><span class="cmts"># regex like as python</span>
+      <br />str =~ Regexp.new('(.*?)\.(.*)')
+      <span class="cmts">#同sh ${STR%%.*}</span>
+      <br />p "#{$~[1]} &lt;=&gt; #{$~[2]}"
+      <br />p str.sub(%r'\.(.*)', '')
+      <br />
+
+      <br /><span class="cmts"># perl式的正規表示，但無法用於變數</span>
+      <br />str =~ %r@(.*?)/(.*)@
+      <span class="cmts">#同sh ${STR0#*/}</span>
+      <br />p "#{Regexp.last_match[1]} &lt;=&gt; #{Regexp.last_match[2]}"
+      <br />p str.sub(%r'(.*?)/', '')
+      <br />
+
+      <br /><span class="cmts"># python式的正規表示，可用於變數</span>
+      <br />pattern = '(.*)/(.*)'
+      <br />str =~ Regexp.new(pattern)
+      <span class="cmts">#同sh ${STR0##*/}</span>
+      <br />p "#{Regexp.last_match[1]} &lt;=&gt; #{Regexp.last_match[2]}"
+      <br />p str.sub(%r'(.*)/', '')
+      <br />
+      </div>
+
+      <hr />
+
+<!-- 輸出輸入 -->
+      <a name="輸出輸入"><h2>輸出輸入</h2>
+      <h3></h3>
+
+      <p class="h3">printf和sprintf都是格式化，printf是將直接格式化輸出而回傳值為nil；sprintf則是無輸出而回傳值為格式化輸出</p>
+      <div class="commands">#!/usr/bin/env ruby
+      <br />
+      <br />pbsScript = &lt;&lt;EOF
+      <span class="cmts">#here document/即席文件</span>
+      <br />#!/bin/sh
+      <br />#PBS -N %s
+      <br />#PBS -o %s.out
+      <br />#PBS -e %s.err
+      <br />#PBS -q %s
+      <br />#PBS -l nodes=%i:ppn=%i
+      <br />#PBS -V
+      <br />
+      <br />ulimit -s unlimited
+      <br />cd $PBS_O_WORKDIR
+      <br />
+      <br />echo &quot;Job begin at `date`&quot;
+      <br />%s
+      <br />echo &quot;Job finish at `date`&quot;
+      <br />EOF
+      <br />
+      <br />jobName = 'test'
+      <br />queueName = 'workq'
+      <br />numProc = 1
+      <br />numCore = 8
+      <br />exeRun = 'mpirun -np ' + String(numProc * numCore) + ' mpi.exe'
+      <br />
+      <br />printf(pbsScript, jobName, jobName, jobName, queueName, numProc, numCore, exeRun)
+      <span class="cmts">#使用printf</span>
+      <br />puts pbsScript %[jobName, jobName, jobName, queueName, numProc, numCore, exeRun]
+      <span class="cmts">#使用puts配合%[]</span>
+      <br />puts &quot;submit #{jobsName}&quot;
+      <span class="cmts">#使用puts配合#{}</span>
+      </div>
+      <br />
+
+      <table class="h3">
+        <tr><th>符號</th>
+            <th>意義</th></tr>
+        <tr><td>%c</td>
+            <td>字元</td></tr>
+        <tr><td>%s</td>
+            <td>字串</td></tr>
+        <tr><td>%d</td>
+            <td>十進位整數</td></tr>
+        <tr><td>%o</td>
+            <td>八進位整數</td></tr>
+        <tr><td>%x</td>
+            <td>十六進位整數</td></tr>
+        <tr><td>%u</td>
+            <td>無符號整數</td></tr>
+        <tr><td>%i</td>
+            <td>整數</td></tr>
+        <tr><td>%e</td>
+            <td>指數</td></tr>
+        <tr><td>%f</td>
+            <td>浮點數</td></tr>
+        <tr><td>%%
+            <br />\%</td>
+            <td>%符號</td></tr>
+        <tr><td></td>
+            <td></td></tr>
+      </table>
+      <br />
+      <hr />
+
+<!-- 輸檔案操作 -->
+      <a name="檔案操作"><h2>檔案操作</h2>
+      <h3></h3>
+
+      <div class="commands">#!/usr/bin/env ruby
+      <br />
+
+      <br />file = '/etc/passwd'
+      <br />if ! File.exists?(file) then raise &quot;#{file} don't exist&quot; end
+      <span class="cmts">#檢查檔案是否存在</span>
+      <br />
+
+      <br />
+      <br />begin
+
+      <br />&nbsp;&nbsp;<span class="cmts">#傳統的檔案操作方式</span>
+      <br />&nbsp;&nbsp;f = File.open(file, 'r')
+      <br />&nbsp;&nbsp;contents = f.readlines
+      <br />&nbsp;&nbsp;f.close
+      <br />&nbsp;&nbsp;for l in contents do
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;puts l
+      <br />&nbsp;&nbsp;end
+      <br />
+
+      <br />&nbsp;&nbsp;<span class="cmts">#區塊的檔案操作方式</span>
+      <br />&nbsp;&nbsp;File.open(file, 'r') { |f|
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;for l in f.readlines do
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;puts l
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;end
+      <br />&nbsp;&nbsp;}
+      <br />
+      <br />rescue Errno::EACCES => e
+      <br />&nbsp;&nbsp;puts e.message
+      <br />&nbsp;&nbsp;puts &quot;don't open #{file}&quot;
+      <br />end
+      <br />
+	
+      <br />
+      <span class="cmts">#目錄操作</span>
+      <br />dir = '.'
+      <br />dirs = Dir.entries(dir)
+      <br />for d in dirs do
+      <br />&nbsp;&nbsp;puts d
+      <br />end
+
+      <br />
+      <br />File.open(local_filename, 'w') {|f| f.write(doc) }
+      </div>
+      <hr />
+
+
+
+<!-- reference -->
+     </a><a name="Reference"><h2>Reference</h2>
+</a></body></html>

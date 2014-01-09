@@ -1,0 +1,75 @@
+﻿<head>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<link rel="stylesheet" href="../defaults.css" type="text/css">
+<title>LINUX client network setting</title>
+</head><body>
+
+<!-- header -->
+	<h1>LINUX client端網路設定</h1>
+	<a href="#yast"><li class="title">1.進入設定畫面</li></a>
+    <br /><a href="#edit"><li class="title">2.進入Edit</li></a>
+    <br /><a href="#hostname"><li class="title">3.Hostname</li></a>
+    <br /><a href="#restart"><li class="title">4.重啟</li></a>
+    <br /><a href="#test"><li class="title">5.測試是否成功設定</li></a>
+    <br />
+	<hr/>
+
+<!-- yast -->	
+	<a name="yast"><h2>1.進入設定畫面</h2>
+	<div class="commands">k0:~ # yast<br/>
+	<span class="cmts">#開啟網路設定畫面
+	<br />選擇 Network Devices --> Network Seeting
+	</span>
+	</div><br/>
+	<img src="./SUSE Linux Install/46.png"><br/><br/>
+	<hr/>
+
+<!-- edit -->
+	<a name="edit"><h2>2.進入Edit(按[alt]+i)</h2>
+	<div class="commands">
+	<span class="cmts">ip address: 192.168.0.1**
+	<br />#i01~i25為101~125；e01~e05為126~130
+	<br />Next
+	</span>
+	</div><br/>
+	<img src="./SUSE Linux Install/47.png"><br/><br/>
+	<hr/>
+
+<!-- hostname -->
+	<a name="hostname"><h2>3.Hostname</h2>
+	<div class="commands">Hostname=e** (or i**)
+	<br />name server 1= 192.168.0.1
+	<br />routing --> Default Gateway = 192.168.0.1<br/>
+	<span class="cmts"># k0</span>
+	<br />Quit
+	</div><br/>
+	<img src="./SUSE Linux Install/48.png"><br/><br/>
+	<img src="./SUSE Linux Install/49.png"><br/><br/>
+	<img src="./SUSE Linux Install/50.png"><br/><br/>
+	<hr/>
+
+<!-- restart -->
+	<a name="restart"><h2>4.重啟</h2>
+	<div class="commands">k0:~ # /etc/init.d/network restart</div>
+	<hr/>
+	
+<!-- test -->
+	<a name="test"><h2>5.測試是否成功設定</h2>
+	<div class="commands">k0:~ # ping www.google.com<br/>
+	<span class="cmts">#對外部網站丟封包進行測試
+	<br />[ctrl]+C to cancle
+	</span>
+	</div>
+	<br />
+	<hr/>
+
+<!-- changelog -->
+<h2>Changelog</h2>
+<li class="changelog">2013/09/10 第一次完成</li>
+<li class="changelog">2013/09/16 格式修改完成</li>
+<li class="changelog">2013/10/04 修改格式&補圖</li>
+<li class="changelog">2013/11/07 重新排版</li>
+</body>
+</html>

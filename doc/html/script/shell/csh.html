@@ -1,0 +1,328 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>CSH/TCSH</title>
+<link rel="stylesheet" href="../../defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>CSH/TCSH</h1>
+      <a href="#使用環境"><li class="title">使用環境</li></a>
+      <br /><a href="#基本控制"><li class="title">基本控制</li></a>
+      <br /><a href="#資料型態"><li class="title">資料型態</li></a>
+      <br /><a href="#控制流程"><li class="title">控制流程</li></a>
+      <br /><a href="#函式參數"><li class="title">函式參數</li></a>
+      <br /><a href="#例外/其他處理"><li class="title">例外/其他處理</li></a>
+      <br /><a href="#Reference"><li class="title">Reference</li></a>
+      <div class="context" xml:lang="en" lang="en">
+      <p class="h1">在Linux中，</p>
+      </div>
+      <hr />
+
+<!-- 使用環境 -->
+      <a name="使用環境"><h2>使用環境</h2>
+      <h3></h3>
+      <h3></h3>
+      <h3></h3>
+
+      <h3>script/指令稿</h3>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> <a href="./ex/hello.csh"><span class="vars">hello.csh</span></a>
+      <br />#!/bin/csh
+      <br />
+      <br />echo "Hello, TCSH"
+      <br />Linux:~ # <span class="cmds">chmod</span> u+x <a href="./ex/hello.csh"><span class="vars">hello.csh</span></a>
+      <br />Linux:~ # ./<a href="./ex/hello.csh"><span class="vars">hello.csh</span></a>
+      <br />Hello, TCSH</div>
+      <br />
+      <hr />
+
+<!-- 基本控制 -->
+      <a name="基本控制"><h2>基本控制</h2>
+      <hr />
+
+<!-- 資料型態 -->
+      <a name="資料型態"><h2>資料型態</h2>
+      <h3>string/字串</h3>
+      <div class="commands">#!/bin/csh
+      <br />
+      <br />set STR="ABC"
+      <span class="cmts">#給值，csh宣告變數皆為字串</span>
+      <br />echo $STR
+      <span class="cmts">#顯示變數，記得前面要多加$</span>
+      <br />unset STR
+      <span class="cmts">#不設置變數</span></div>
+      <br />
+
+      <h3>integer/整數</h3>
+      <p class="h3">csh中並沒有明確定義整數或浮點數等數值，存入變數皆為字串，但是有支援整數四則運算</p>
+      <div class="commands">#!/bin/sh
+      <br />
+      <br />set VAR=5
+      <br />@ C1 = $VAR + 2
+      <br />@ C2 = $VAR - 2
+      <br />@ C3 = $VAR * 2
+      <br />@ C4 = $VAR / 2
+      <br />@ C5 = $VAR % 2
+      <br />echo "+:" $C1 "-:" $C2 "*:" $C3 "/:" $C4 "%:" $C5</div>
+      <hr />
+
+<!-- 控制流程 -->
+      <a name="控制流程"><h2>控制流程</h2>
+      <h3>if/else</h3>
+      <p class="h3">在csh中if的判斷的true/false，0為false，非0皆為true</p>
+      <div class="commands">#!/bin/csh
+      <br />
+      <br />if ! $?STR set STR=ABC
+      <span class="cmts"># $?STR用來測試變數是否存在，存在回傳1，不存在回傳0</span>
+      <br />echo $STR</div>
+      <br />
+
+      <div class="commands">#!/bin/csh
+      <br />
+      <br />set NUM=$argv[1]
+      <br />if $NUM == 0 then
+      <br />&nbsp;&nbsp;echo Num is zero"
+      <br />else if ( $NUM >= 1 ) then
+      <br />&nbsp;&nbsp;echo "Num is positive"
+      <br />else
+      <br />&nbsp;&nbsp;echo "Num is negative"
+      <br />endif</div>
+      <br />
+
+      <p class="h3">邏輯測試</p>
+      <table class="h3">
+        <tr>
+          <th>condition</th>
+          <th>mean</th>
+        </tr>
+        <tr>
+          <td>&&</td>
+          <td>and</td>
+        </tr>
+        <tr>
+          <td>||</td>
+          <td>or</td>
+        </tr>
+        <tr>
+          <td>!</td>
+          <td>not</td>
+        </tr>
+      </table>
+      <br />
+
+      <p class="h3">檔案測試</p>
+      <table class="h3">
+        <tr>
+          <th>condition</th>
+          <th>mean</th>
+        </tr>
+        <tr>
+          <td>-d file</td>
+          <td>file存在且為目錄</td>
+        </tr>
+        <tr>
+          <td>-e file</td>
+          <td>file存在</td>
+        </tr>
+        <tr>
+          <td>-f file</td>
+          <td>file存在且為檔案</td>
+        </tr>
+        <tr>
+          <td>-r file</td>
+          <td>擁有file的read的權限</td>
+        </tr>
+        <tr>
+          <td>-s file</td>
+          <td>file存在且不為空的</td>
+        </tr>
+        <tr>
+          <td>-w file</td>
+          <td>擁有file的write的權限</td>
+        </tr>
+        <tr>
+          <td>-x file</td>
+          <td>擁有file的execute的權限</td>
+        </tr>
+        <tr>
+          <td>-O file</td>
+          <td>擁有file的所有的權限</td>
+        </tr>
+        <tr>
+          <td>-G file</td>
+          <td>為file的群組</td>
+        </tr>
+        <tr>
+          <td>file1 -nt file2</td>
+          <td>file1修改時間比file2新</td>
+        </tr>
+        <tr>
+          <td>-file1 -ot file2</td>
+          <td>file1修改時間比file2舊</td>
+        </tr>
+      </table>
+      <br />
+
+      <p class="h3">字串測試</p>
+      <table class="h3">
+        <tr>
+          <th>condition</th>
+          <th>mean</th>
+        </tr>
+        <tr>
+          <td>str1 == str2, str1 =~ str2</td>
+          <td>str1符合str2</td>
+        </tr>
+        <tr>
+          <td>str1 != str2, str1 !~ str2</td>
+          <td>str1不符合str2</td>
+        </tr>
+        <tr>
+          <td>str1 &lt; str2</td>
+          <td>str1小於str2</td>
+        </tr>
+        <tr>
+          <td>str1 &gt; str2</td>
+          <td>str1大於str2</td>
+        </tr>
+        <tr>
+          <td>-n str</td>
+          <td>str不為空字串</td>
+        </tr>
+        <tr>
+          <td>-z str</td>
+          <td>str為空字串</td>
+        </tr>
+      </table>
+      <br />
+
+      <p class="h3">數值測試</p>
+      <table class="h3">
+        <tr>
+          <th>condition</th>
+          <th>mean</th>
+        </tr>
+        <tr>
+          <td>var1 &gt; var2</td>
+          <td>var1大於var2</td>
+        </tr>
+        <tr>
+          <td>var1 &gt;= var2</td>
+          <td>var1大於等於var2</td>
+        </tr>
+        <tr>
+          <td>var1 == var2</td>
+          <td>var1等於var2</td>
+        </tr>
+        <tr>
+          <td>var1 != var2</td>
+          <td>var1不於var2</td>
+        </tr>
+        <tr>
+          <td>var1 &lt; var2</td>
+          <td>var1小於var2</td>
+        </tr>
+        <tr>
+          <td>var1 &lt;= var2</td>
+          <td>var1小於等於var2</td>
+        </tr>
+      </table>
+      <br />
+
+      <h3>foreach</h3>
+      <p class="h3">csh本身沒有for，但有類似的功能的foreach</p>
+      <div class="commands">#!/bin/csh
+      <br />
+      <br />foreach FILE ( `find $HOME/.profile.d/*.csh` )
+      <br />&nbsp;&nbsp;source $FILE
+      <br />end</div>
+      <br />
+
+      <p class="h3">csh並沒有提供數值功能的for，需要藉由seq幫忙</p>
+      <div class="commands">#!/bin/sh
+      <br />
+      <br />foreach i (`seq 0 4`)
+      <br />&nbsp;&nbsp;echo $i
+      <br />done</div>
+      <br />
+      <hr />
+
+<!-- 函式參數 -->
+      <a name="函式參數"><h2>函式參數</h2>
+      <h3>alias</h3>
+      <p class="h3">csh本身並無function的功能，可以用alias去模擬function，（但使用很吃力）</p>
+
+      <h3>argument</h3>
+      <table class="h3">
+      <tr>
+        <th>variable</th>
+        <th>mean</th>
+      </tr>
+      <tr>
+        <td>$argv[<i>N</i>]</td>
+        <td>N表示第幾個參數，$argv[0]是function名稱，$argv[1]為第一個參數，$argv[2]為第二個，依此類推</td>
+      </tr>
+      <tr>
+         <td>$#argv</td>
+         <td>輸入參數的總數，不包括$0</td>
+      </tr>
+      <tr>
+         <td>$?argv[<i>N</i>]</td>
+         <td>判斷是argv否存在，成功輸出0，失敗輸出非0</td>
+      </tr>
+      <tr>
+          <td>$*</td>
+          <td>所有參數的字串</td>
+      </tr>
+      <tr>
+         <td>$&lt;</td>
+         <td>讀入參數指定給變數，set VAR=$&lt;</td>
+      </tr>
+      <tr>
+         <td>!:<i>N</i></td>
+         <td>使用alias讀入</td>
+      </tr>
+      <tr>
+         <td>!*</td>
+         <td>使用alias讀入</td>
+      </tr>
+      </table>
+      <br />
+
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> arg.csh
+      <br />#!/bin/csh
+      <br />
+      <br />echo "arg1: $argv[1], all arg: $*argv, num of arg: $#argv"
+      <br />Linux:~ # ./arg.csh ABC xyz 123</div>
+      <br />
+
+      <div class="commands">#!/bin/csh
+      <br />
+      <br />echo "Input your name?"
+      <br />set NAME=$&lt;
+      <br />echo "Hi, $NAME"</div>
+      <br />
+
+      <div class="commands">Linux:~ # <span class="cmds">alias</span> ls 'ls --color=auto'
+      <span class="cmts">#設定ls為ls --color=auto，會顯示顏色</span>
+      <br />Linux:~ # <span class="cmds">alias</span> viu+x 'vi \!:1; chmod u+x \!:1;'
+      <span class="cmts">#使用viu+x <i>file</i>，<i>file</i>會自動加上可執行的屬性</span>
+      <br />Linux:~ # <span class="cmds">alias</span> use 'source /usr/local/cshrc/\!*.csh'
+      <br />Linux:~ # <span class="cmds">alias</span>
+      <span class="cmts">#顯示已設定的alias</span>
+      <br />ls&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls --color=auto
+      <br />use&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;source /usr/local/cshrc/!*.csh
+      <br />viu+x&nbsp;&nbsp;&nbsp;vi !:1; chmod u+x !:1;
+      <br />
+      <br />Linux:~ # <span class="cmds">unalias</span> ls
+      <span class="cmts">#解除ls設定</span></div>
+      <br />
+      <hr />
+
+<!-- 例外/其他處理 -->
+      <a name="例外/其他處理"><h2>例外/其他處理</h2>
+      <hr />
+
+<!-- reference -->
+     <a name="Reference"><h2>Reference</h2>

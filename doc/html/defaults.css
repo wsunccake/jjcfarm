@@ -1,0 +1,293 @@
+/*
+$LastChangedBy: bdubbs $
+$Date: 2008-10-19 22:30:43 -0600 (Sun, 19 Oct 2008) $
+*/
+/* Global settings */
+body {
+  font-family: verdana, tahoma, helvetica, arial, sans-serif;
+  text-align: left;
+  background: #fff;
+  color: #222;
+  margin: 1em;
+  padding: 0;
+  font-size: 1em;
+  line-height: 1.2em
+}
+
+h1 {
+  font-family: verdana, tahoma, helvetica, arial, sans-serif;
+  font-size: xx-large;
+  text-align: center;
+  background: #fff;
+  color: #33333;
+  margin: 1em;
+  padding: 0;
+  line-height: 1.2em
+}
+
+h2 {
+  font-family: verdana, tahoma, helvetica, arial, sans-serif;
+  font-size: large;
+  text-align: left;
+  background: #fff;
+  color: #0000CC;
+  margin: 1em;
+  padding: 0;
+  line-height: 1.2em
+}
+
+h3 {
+  font-family: verdana, tahoma, helvetica, arial, sans-serif;
+  font-size: medium;
+  text-align: left;
+  background: #fff;
+  color: #0000CC;
+  margin: 0.5em 1em 0em 2.5em ;
+  padding: 0;
+}
+
+h4 {
+  font-family: verdana, tahoma, helvetica, arial, sans-serif;
+  font-size: medium;
+  text-align: left;
+  background: #fff;
+  color: #660033;
+  margin: 0.5em 1em 0em 2.5em ;
+  padding: 0;
+}
+
+li.title {
+  font-size: medium;
+  color: #000000;
+  margin: 0.5em 1em 0em 2em ;
+  display: inline;
+
+}
+
+li.subtitle {
+  font-size: medium;
+  color: #0000FF;
+  margin: 0.5em 1em 0em 4em ;
+  display: inline;
+
+}
+
+li.reference {
+  font-size: medium;
+  color: #000000;
+  margin: 0.5em 1em 0em 2.5em ;
+  display: inline;
+}
+
+p.h1 {
+  margin: 0.5em 1em 0em 2em ;
+}
+
+p.h2 {
+  margin: 0.5em 1em 0em 2.5em ;
+}
+
+p.h3 {
+  margin: 0.5em 1em 0em 2.5em ;
+}
+
+table.h3{
+  border: 0;
+  border-style:double;
+  margin: 0.5em 1em 0em 2.5em ;
+}
+
+th {
+  border:1 ;
+  border-style:ridge ;
+} 
+
+td {
+  border:1 ;
+  border-style:groove ;
+} 
+
+tr {
+  border:1 ;
+border-style:double;
+} 
+
+
+.titlepage {
+  background: #f5f6f7;
+  margin: 0px auto;
+  padding: 0 1em;
+}
+
+.title {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: .3em;
+}
+
+
+.version {
+  text-align: center;
+  background: #dbddec;
+  margin: 0;
+  padding: 0.2em;
+}
+
+/*
+.author
+
+.copyright
+*/
+
+/* TOC, Table of Contents */
+.toc {
+  list-style: none;
+}
+
+.chapter {
+  display: block;
+  margin-bottom: .4em
+}
+
+li.chap h4 {
+  margin: .6em 0 .2em 0;
+}
+
+/* itemizedlist */
+ul {
+  padding-left: 1em
+}
+
+
+
+.itemizedlist ul {
+  margin-left: 1em
+}
+
+.itemizedlist li ul {
+  margin-bottom: 1.2em;
+}
+
+.itemizedlist li ul li p {
+  margin-top: .5em;
+  margin-bottom: .5em;
+}
+
+
+/* Navigation */
+div.navheader, div.navfooter {
+  background: #ecedef;
+  margin: 0;
+  padding: 0.1em .5em;
+}
+
+div.navheader {
+  border-bottom: 1px solid #dbddec;
+}
+
+div.navfooter {
+  border-top: 1px solid #dbddec;
+}
+
+div.navheader h4 {
+  margin-top: .4em;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+div.navheader h3 {
+  margin-top: .2em;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+div.navheader ul, div.navfooter ul {
+  padding: .2em .5em .5em 0;
+  margin: .5em 0;
+  position: relative;
+  background: #dbddec;
+}
+
+div.navheader ul li, div.navfooter ul li {
+  display: inline;
+  width: 40%;
+}
+
+div.navheader ul li.prev, div.navfooter ul li.prev {
+  position: absolute;
+  display: block;
+  left: 0;
+  text-align: left;
+  padding: 0.2em 1em;
+  margin-left: 6px;
+}
+
+div.navheader ul li.next, div.navfooter ul li.next {
+  position: absolute;
+  display: block;
+  text-align: right;
+  right: 5px;
+  padding: 0.2em 0.5em;
+  margin-right: 7px;
+}
+
+div.navheader ul li.prev p, div.navfooter ul li.prev p,
+div.navheader ul li.next p, div.navfooter ul li.next p {
+  padding: 0;
+  margin: 1px 0px;
+}
+
+div.navheader ul li.home, div.navheader ul li.up,
+div.navfooter ul li.home, div.navfooter ul li.up {
+  text-align: center;
+  padding: 0;
+  margin: 0px auto;
+  display: block;
+  color: #dbddec;
+}
+
+/* Monospaced elements */
+tt, code, kbd, pre, .command {
+  
+}
+
+pre.userinput {
+  color: #101310;
+}
+
+/* */
+div.commands {
+  background-color: #e5e5e5;
+/*  border: 1px solid #050505; */
+  color: #101310;
+  font-family: monospace;
+  padding: 0.5em 1em 0.5em 1em ;
+  margin: 0.5em 1em 0em 2.5em ;
+}
+
+span.cmds {
+	font-weight: bold;
+  color: #000000;
+}
+
+span.vars {
+	font-style: italic;
+  color: #00c000;
+}
+
+span.cmts {
+	color: #0000ff;
+}
+
+span.ftns {
+  color: #ff00ff;
+}
+
+span.author {
+  color: #0000ff;
+  font-style: italic;
+}
+
+em {
+  font-size: 120%;
+}

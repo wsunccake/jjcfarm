@@ -1,0 +1,1628 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>Perl</title>
+<link rel="stylesheet" href="../../defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>Perl</h1>
+      <a href="#使用環境"><li class="title">使用環境</li></a>
+      <br /><a href="#基本控制"><li class="title">基本控制</li></a>
+      <br /><a href="#資料型態"><li class="title">資料型態</li></a>
+      <br /><a href="#控制流程"><li class="title">控制流程</li></a>
+      <br /><a href="#函式參數"><li class="title">函式參數</li></a>
+      <br /><a href="#參照算符"><li class="title">參照算符</li></a>
+      <br /><a href="#正規表示"><li class="title">正規表示</li></a>
+      <br /><a href="#輸出輸入"><li class="title">輸出輸入</li></a>
+      <br /><a href="#檔案操作"><li class="title">檔案操作</li></a>
+      <br /><a href="#例外處理"><li class="title">例外處理</li></a>
+      <br /><a href="#系統指令"><li class="title">系統指令</li></a>
+      <br /><a href="#指令應用"><li class="title">指令應用</li></a>
+      <br /><a href="#Reference"><li class="title">Reference</li></a>
+
+      <div class="context">
+      <p class="h1">Perl是<b>P</b>ractical <b>E</b>xtraction and <b>R</b>eport <b>L</b>anguage（實務操作抽取與報告語言）的簡稱。1987 年，Larry Wall融合AWK、Sed、C、shell等語言的特色，創造了Perl。最初Larry Wall在進行一項WAN的設定工作，他想要產生一份報告結果，但AWK做不到，不滿AWK、sed、shell功能不足，Larry Wall發明了Perl，並且開放出來給大家使用。Perl的出現，讓想要偷懶的管理者可以用非常輕鬆的方式完成工作。同樣一件事若用C來寫可能要幾百行甚至幾千行程式碼，但用Perl來寫可能只要幾十行就結束了，剩下的時間，當然可以用來偷偷懶，做一些工作之外比較有趣味的事情囉。後來大家都戲稱Perl是懶惰的程式設計師最愛用的語言，事實上，這也是 Perl 的設計風格之一。
+<br />Perl最初僅著眼於文件(text)的處理，但因為實在太好用了，許多人要求Larry Wall加這個加那個，經過不斷的改良精進，發展至今，Perl變成一個跨平台、十項全能、應用層面無所不包的重要語言，說它是一種通用目的高階程式語言，一點兒也不為過。那麼，Perl可以做什麼呢？舉凡：系統管理、網站設計、網路程式設計(FTP/Webmail/Mail/DNS....)、資料庫處理、文件處理、圖型使用介面、電腦病毒防治、垃圾郵件防堵、破解/防護、網路安全、駭客入侵等等.... 哇! 超能力! 有人說，現在網路管理者，不會寫Perl也要會用一點Perl。可見Perl的重要性了! (事實上許多駭客，都喜歡用 Perl 來寫攻擊程式)這麼強大的語言，會不會難用呢？ 不會! Perl 不但功能完整而且相當容易使用、效率也不錯喔!
+<br />Perl是直譯式的語言，寫好之後，馬上就可以執行，不像C必須經過編譯、組譯、連結等冗長的過程，因此開發周期較短，也較為輕鬆。雖然Perl是直譯式的，但它的效能不錯，主要是因為Perl並非逐列直譯，Perl執行前會先編譯為一種中間bytecode，然後再來執行。因此它有直譯式語言開發快速的優點，卻有編譯語言效率的優點。我們可以說 Perl 既是直譯又是編譯式的。除此之外，Perl自第5版之後，支援物件導向設計，具模組功能。Perl的模組簡明易用，而且Perl的社群非常活躍，產量豐富，幾年下來，累聚非常龐大的模組程式庫，稱為CPAN（<b>C</b>omprehensive <b>P</b>erl <b>A</b>rchive <b>N</b>etwork）。通常，如果我們想要解決某一方面的問題時，都會先到CPAN程式庫去溜溜，看看是否有前輩已經寫出相關的模組？若有，就不再重新發明輪子，直接套用，或繼承之，做局部修改，即可輕鬆解決您所遇到的問題。CPAN 可以說是目前全世界最豐富的模組函式庫之一，使用 Perl 的人就是這麼幸福!
+<br />Perl要錢嗎？不用，Perl不但免費而且跨平台，現今要找到一個平台不支援Perl的，恐怕很少了。Perl的主要站台：http://www.perl.com 目前由有名的書商 O'Reilly 大力支持。</p>
+      </div>
+      <hr />
+
+<!-- 使用環境 -->
+      <a name="使用環境"><h2>使用環境</h2>
+      <h3></h3>
+      <h3></h3>
+      <h3>command/指令</h3>
+      <div class="commands">Linux:~ # <span class="cmds">perl</span> -e 'print "Hello, Perl\n"'
+      <br />Hello, Perl</div>
+      <br />
+
+      <h3>script/指令稿</h3>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> hello.pl
+      <br />#!/usr/bin/perl
+      <br />
+      <br />print &quot;Hello, Perl&quot;;
+      <br />
+
+      <br /><span class="cmts">#第一種執行方式</span>
+      <br />Linux:~ # <span class="cmds">chmod</span> u+x hello.pl
+      <br />Linux:~ # ./hello.pl
+      <br />Hello, Perl
+      <br />
+
+      <br /><span class="cmts">#第二種執行方式</span>
+      <br />Linux:~ # <span class="cmds">perl</span> hello.pl
+      </div>
+      <hr />
+
+<!-- 基本控制 -->
+      <a name="基本控制"><h2>基本控制</h2>
+      <hr />
+
+<!-- 資料型態 -->
+      <a name="資料型態"><h2>資料型態</h2>
+      <h3>scalar/純量</h3>
+      <p class="h3">$是scalar，可存放是字串、數值</p>
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />$var0 = 1;
+      <span class="cmts">#宣告變數為整數</span>
+      <br />$var1 = 2.1;
+      <span class="cmts">#宣告變數為浮點數</span>
+      <br />$var2 = 01234;
+      <span class="cmts">#宣告變數為八進位數</span>
+      <br />$var3 = 0x2af;
+      <span class="cmts">#宣告變數為十六進位數</span>
+      <br />$var4 = 0b10110;
+      <span class="cmts">#宣告變數為二進位數</span>
+      <br />$var1 = 2.1;
+      <span class="cmts">#為動態型別語言，變數可重新使用不同型別</span>
+      <br />print &quot;$var0, $var1\n&quot;;
+      <span class="cmts">#算符方式</span>
+      <br />print(&quot;$var0, $var1\n&quot;);
+      <span class="cmts">#函式方式</span>
+      <br />
+
+      <br />$var5 = 1_234_000;
+      <span class="cmts">#使用底線最為千位數分隔</span>
+      <br />$var6 = 4.231256e2;
+      <span class="cmts">#使用科學記號</span>
+      <br />
+
+      <br />
+      <span class="cmts">#字串使用'和&quot;方式同Shell</span>
+      <br />$str = ABCDefgh;
+      <br />print '$str\n';
+      <span class="cmts">#單引號內跳脫字元和變數代換無效</span>
+      <br />print &quot;$str\n&quot;;
+      <span class="cmts">#雙引號內跳脫字元和變數代換有效</span>
+      <br />
+
+      <br />
+      <span class="cmts">#常用的字串函數</span>
+      <br />print substr($str, 0, -1);
+      <span class="cmts">#擷取字串，0為第一個，-1為最後一個</span>
+      <br />print substr($str, 3, 6)
+      <span class="cmts">#擷取字串</span>
+      <br />print length($str);
+      <span class="cmts">#字串長度</span>
+      <br />print lc($str);
+      <span class="cmts">#轉換小寫</span>
+      <br />print uc($str);
+      <span class="cmts">#轉換大寫</span>
+      <br />print index($str, &quot;D&quot;);
+      <span class="cmts">#尋找字串，從左到右</span>
+      <br />print rindex($str, &quot;D&quot;);
+      <span class="cmts">#尋找字串，從右到左</span>
+      <br />print ord('a');
+      <span class="cmts">#character轉ASCII</span>
+      <br />print chr(67);
+      <span class="cmts">#ASCII轉character</span>
+      <br />
+
+      <br />
+      <span class="cmts">#常用的字串算符</span>
+      <br />$str1 = $str . $str;
+      <span class="cmts">#字串結合</span>
+      <br />$str2 = $str x 3;
+      <span class="cmts">#字串重複</span>
+      </div>
+      <br />
+
+      <h3>list/串列</h3>
+      <p class="h3">()是list</h3>
+
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />print (123, 0.98, &quot;ABC&quot;, 'xyz')[2], &quot;\n&quot;;
+      <br />
+      <span class="cmts">#$l = (123, 0.98, &quot;ABC&quot;, 'xyz')[-1]</span>
+      <br />$l = (123, 0.98, &quot;ABC&quot;, 'xyz');
+      <br />print $l;
+      </div>
+      <br />
+
+      <h3>array/陣列</h3>
+      <p class="h3">@是array</h3>
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />@arr = (123, 0.98, &quot;ABC&quot;, 'xyz');
+      <br />print &quot;@arr\n&quot;;
+      <span class="cmts">#顯示array</span>
+      <br />print @arr[1], @arr[2], @arr[3], &quot;\n&quot;;
+      <span class="cmts">#顯示array第一，第二和但三個element</span>
+      <br />print @arr[1..3], &quot;\n&quot;;
+      <span class="cmts">#顯示array第一到第三個element</span>
+      <br />print $arr[1], $arr[2], $arr[3], &quot;\n&quot;;
+      <span class="cmts">#顯示array第一，第二和但三個element</span>
+      <br />print &quot;$#arr\n&quot;;
+      <span class="cmts">#顯示array最後一個element的index</span>
+      <br />print &quot;$arr[-1]\n&quot; ;
+      <span class="cmts">#顯示array的element</span>
+      <br />
+
+      <br />
+      <span class="cmts">#在array最後移除element</span>
+      <br />print pop(@arr), &quot;\n&quot;;
+      <br />print &quot;pop:  @arr\n&quot;;
+      <br />
+
+      <br />
+      <span class="cmts">#在array最後新增element</span>
+      <br />print push(@arr, 1..3), &quot;\n&quot;;
+      <br />print &quot;push: @arr\n&quot;;
+      <br />
+
+      <br />
+      <span class="cmts">#在array最前移除element</span>
+      <br />print shift(@arr), &quot;\n&quot;;
+      <br />print &quot;shift:   @arr\n&quot;;
+      <br />
+
+      <br />
+      <span class="cmts">#在array最前新增element</span>
+      <br />print unshift(@arr, 789), &quot;\n&quot;;
+      <br />print &quot;unshift: @arr\n&quot;;
+      <br />
+
+      <br />
+      <span class="cmts">#移除array中某一element</span>
+      <br />print delete(@arr, 2), &quot;\n&quot;;
+      <br />
+
+
+      <br />@arr = sort(@arr);
+      <span class="cmts">#array排序</span>
+      <br />@arr = reverse(@arr);
+      <span class="cmts">#array反向</span>
+      <br />
+
+      <br />
+      <span class="cmts">#顯示array</span>
+      <br />for ($i = 0; $i &lt;= $#arr;  $i++) { print &quot;arr[$i] = $arr[$i]\n&quot;; }
+      <br />foreach $i ( 0..$#arr ) { print &quot;arr[$i] = $arr[$i]\n&quot;; }
+      <br />foreach $a (@arr) { print &quot;$a\n&quot;; }
+      <br />while (@arr) { print shift(@arr), &quot;\n&quot;;}
+      <br />
+
+      <br />@week = split(/,/, 'Sun,Mon,Tue,Wed,Thu,Fri,Sat')
+      <span class="cmts">#String轉List</span>
+      <br />$week = join(&quot; &quot;, (Sun, Mon, Tue, Wed, Thu, Fri, Sat));
+      <span class="cmts">#List轉String</span>
+      <br />@weekday = map { $_ . 'day' } qw/Sun Mon Tues Wednes Thurs Fri Satur/;
+      <span class="cmts">#List內所有元素執行後存為List</span>
+      <br />@weekday = grep { $_ =~ /Fri/ } @weekday;
+      <span class="cmts">#List內所有元素符合條件存為List</span>
+      </div>
+      <br />
+
+      <div class="commands">#!/usr/bin/perl
+      <span class="cmts">#2D array的設定及操作</span>
+      <br />
+      <br />@arr = (
+      <br />&nbsp;&nbsp;[&quot;ABC&quot;, 'abc'],
+      <br />&nbsp;&nbsp;[&quot;xyz&quot;, 'XYZ']
+      <br />);
+      <br />print &quot;2D Array (addr) : &quot;, $arr[1], &quot;\n&quot;;
+      <br />print &quot;2D Array (value): &quot;, $arr[1][0], &quot;\n&quot;;
+      </div>
+      <br />
+
+      <h3>hash/湊雜</h3>
+      <p class="h3">%是array</h3>
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />%hsh = (&quot;1&quot;=>&quot;abc&quot;, &quot;a&quot;=>&quot;ABC&quot;);
+      <br />print %hsh, &quot;\n&quot;;
+      <span class="cmts">#顯示hash</span>
+      <br />print $hsh{'1'}, &quot;\n&quot;;
+      <span class="cmts">#顯示key對應的value</span>
+      <br />print keys(%hsh), &quot;\n&quot;;
+      <span class="cmts">#顯示hash所有的key</span>
+      <br />print values(%hsh), &quot;\n&quot;;
+      <span class="cmts">#顯示hash所有的value</span>
+      <br />
+      <br />$hsh{&quot;Z&quot;}=&quot;zyx&quot;;
+      <span class="cmts">#hash插入element</span>
+      <br />delete $hsh{&quot;1&quot;};
+      <span class="cmts">#hash移除element</span>
+      <br />
+      <br />unless ( exists $hsh{&quot;0&quot;} ) {
+      <span class="cmts">#使用exists配合if確認hash的key/value</span>
+      <br />&nbsp;&nbsp;print &quot;this key/value didn't exist\n&quot; ; }
+      <br />
+      <br />
+      <span class="cmts">#顯示hash的key/value</span>
+      <br />foreach $k (keys(%hsh)) { print &quot;$k => $hsh{$k}\n&quot;; }
+      <br />foreach $v (values(%hsh)) { print &quot;$v\n&quot;; }
+      <br />while (($k, $v) = each(%hsh)) { print &quot;$k => $v\n&quot;; }
+      </div>
+      <br />
+
+      <div class="commands">#!/usr/bin/perl
+      <span class="cmts">#2D hash的設定及操作</span>
+      <br />
+      <br />%hsh = (
+      <br />&nbsp;&nbsp;John => {id => &quot;43&quot;, &quot;Chn&quot; => &quot;20&quot;, 'Eng' => &quot;90&quot;}
+      <br />&nbsp;&nbsp;Mary => {id => &quot;12&quot;, &quot;Chn&quot; => &quot;80&quot;, 'Eng' => &quot;70&quot;}
+      <br />);
+      <br />print &quot;2D Hash (addr) : &quot;, $hsh{John}, &quot;\n&quot;;
+      <br />print &quot;2D Hash (value): &quot;, $hsh{John}{id}, &quot;\n&quot;;
+      </div>
+      <br />
+
+      <p class="h3">引號:
+      <br />這是使用另一種方式替代（'、&quot;...）常用的符號</p>
+      <table class="h3">
+        <tr>
+          <th>condition</th>
+          <th>mean</th>
+        </tr>
+        <tr>
+          <td>''</td>
+          <td>q//</td>
+        </tr>
+        <tr>
+          <td>&quot;&quot;</td>
+          <td>qq//</td>
+        </tr>
+        <tr>
+          <td>&quot;&quot;</td>
+          <td>qr//</td>
+        </tr>
+        <tr>
+          <td>``</td>
+          <td>qx//</td>
+        </tr>
+        <tr>
+          <td>()</td>
+          <td>qw//</td>
+        </tr>
+        <tr>
+          <td>//</td>
+          <td>m//</td>
+        </tr>
+        <tr>
+          <td>s///</td>
+          <td>s///</td>
+        </tr>
+        <tr>
+          <td>y///</td>
+          <td>tr///</td>
+        </tr>
+      </table>
+      <br />
+
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br /><span class="cmts">#print (Sun, Mon, Tue, Wed, Thu, Fri, Sat);</span>
+      <br />print qw/Sun Mon Tue Wed Thu Fri Sat/;
+      <br />
+      <br /><span class="cmts">#@weekArray = (Sun, Mon, Tue, Wed, Thu, Fri, Sat);</span>
+      <br />@weekArray = qw/Sun Mon Tue Wed Thu Fri Sat/;
+      <br />
+      <br /><span class="cmts">#%weekHash = (Sun =&gt; Sunday,
+      <br />#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mon =&gt; Monday,
+      <br />#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tue =&gt; Tuesday,
+      <br />#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Wed =&gt; Wednesday,
+      <br />#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thu =&gt; Thursday,
+      <br />#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fri =&gt; Friday,
+      <br />#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sat =&gt; Saturday);</span>
+      <br />%weekHash = qw/Sun Sunday
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mon Monday
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tue Tuesday
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Wed Wednesday
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thu Thursday
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fri Friday
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sat Saturday/;
+      <br />
+      <br />print qq/Who's or &quot;Perl&quot;\n/;
+      <br />print q/Who's or &quot;Perl&quot;\n/;
+      <br />
+
+      <br /><span class="cmts">#測試scalar, array, hash等是否已定義</span>
+      <br />if (defined(@weekArray)) {
+      <br />&nbsp;&nbsp;print &quot;array defined&quot;;}
+      <br />else {
+      <br />&nbsp;&nbsp;print &quot;array undefined&quot;;}
+      <br />
+
+      <br /><span class="cmts">#同上</span>
+      <br />if ((@weekArray)) {
+      <br />&nbsp;&nbsp;print &quot;array defined&quot;;}
+      <br />else {
+      <br />&nbsp;&nbsp;print &quot;array undefined&quot;;}
+      <br />
+
+      <br /><span class="cmts">#測試scalar, array, hash等是否未定義</span>
+      <br />if (undef(@weekArray)) {
+      <br />&nbsp;&nbsp;print &quot;array undefined&quot;;}
+      <br />else {
+      <br />&nbsp;&nbsp;print &quot;array defined&quot;;}
+      <br />
+
+      <br /><span class="cmts">#同上</span>
+      <br />if (! @weekArray) {
+      <br />&nbsp;&nbsp;print &quot;array undefined&quot;;}
+      <br />else {
+      <br />&nbsp;&nbsp;print &quot;array definedOA&quot;;}
+      <br />
+
+      </div>
+      <br />
+
+
+      <hr />
+
+<!-- 控制流程 -->
+      <a name="控制流程"><h2>控制流程</h2>
+
+      <p class="h2">為真判斷
+      <br />if (EXPR) BLOCK
+      <br />if (EXPR) BLOCK else BLOCK
+      <br />if (EXPR) BLOCK else BLOCK ...
+      <br />if (EXPR) BLOCK elsif BLOCK ... else BLOCK
+      <br />
+
+      <br />為否判斷
+      <br />unless (EXPR) BLOCK
+      <br />unless (EXPR) BLOCK else BLOCK
+      <br />unless (EXPR) BLOCK else BLOCK ...
+      <br />unless (EXPR) BLOCK elsif BLOCK ... else BLOCK
+      <br />
+
+      <br />個數迴圈
+      <br />LABEL for (EXPR; EXPR; EXPR) BLOCK
+      <br />LABEL foreach (LIST) BLOCK
+      <br />LABEL foreach VAR (LIST) BLOCK
+      <br />LABEL foreach VAR (LIST) BLOCK contiune BLOCK
+      <br />
+
+      <br />邏輯迴圈
+      <br />LABEL while (EXPR) BLOCK
+      <br />LABEL while (EXPR) BLOCK continue BLOCK
+      <br />LABEL until (EXPR) BLOCK
+      <br />LABEL until (EXPR) BLOCK continue BLOCK
+      <br />LABEL do BLOCK while (EXPR)
+      <br />LABEL do BLOCK until (EXPR)
+      <br />
+
+      <br />LABEL BLOCK
+      <br />LABEL BLOCK continue BLOCK
+      </p>
+      <br />
+
+      <h3>if|unless/elsif/else</h3>
+      <p class="h3">if/else是最基本的真假值判斷true/false，unless則是if not的寫法（也少用）。Perl 用以下方式來決定真假值：
+      <br />1. 0為假，其它數值皆為真。
+      <br />2. '0'、&quot;0&quot; 及空字串 ''、&quot;&quot; 為假，其它字串皆為真。
+      <br />3. 運算結果可以轉換成 &quot;0&quot; 者為假。
+      <br />4. undef 這個特別值為假。
+      <br />5. 任何未定義的值為假。
+      <br />6. 上述假值定義之外，其餘為真。
+      </p>
+
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />$f = '/etc/passwd';
+      <br />
+
+      <br />
+      <span class="cmts">#基本寫法要使用{}（block）</span>
+      <br />if (-f $f) { print &quot;1st method: $f exist\n&quot;; }
+      <br />unless (! -f $f) { print &quot;2nd method: $f exist\n&quot;; }
+      <br />
+
+      <br />
+      <span class="cmts">#若statement只有一行，使用倒裝寫法</span>
+      <br />print &quot;3rd method: $f exist\n&quot; if (-f $f);
+      <br />print &quot;4th method: $f exist\n&quot; unless(not -f $f);
+      <br />
+
+      <br />
+      <span class="cmts">#shell式的寫法</span>
+      <br />(-f $f) and print &quot;5th method: $f exist\n&quot;;
+      <br />(-f $f) &amp;&amp; print &quot;6th method: $f exist\n&quot;;
+      </div>
+      <br />
+
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />chomp($num = &lt;STDIN&gt;);
+      <br />if ($num eq 0) {
+      <br />&nbsp;&nbsp;print &quot;Num is zero\n&quot;; }
+      <br />elsif ($num ge 1) {
+      <br />&nbsp;&nbsp;print &quot;Num is positive\n&quot;;}
+      <br />else { 
+      <br />&nbsp;&nbsp;print &quot;Num is negative\n&quot;;}
+      <br />
+
+      <br />if (!defined($ARGV[0]) ) {$file = 'tmpfile'; }
+      <br />else { $file = $ARGV[0]; }
+      <br />
+      <br />$file = (!defined($ARGV[0]) ? 'tmpfile' : $ARGV[0]);
+      </div>
+      <br />
+
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />use File::Spec;
+      <br />
+      <br /><span class="cmts">#兩個condition同時判斷檔案是否存在</span>
+      <br />if ( -f File::Spec->catpath($ENV{'HOME'}, '.profile') || -f File::Spec->catpath($ENV{'HOME'}, '.bash_profile') ) {
+      <br />&nbsp;&nbsp;print '.profile or .bash_profile exist';
+      <br />}
+      </div>
+      <br />
+
+      <p class="h3">邏輯測試</p>
+      <table class="h3">
+        <tr>
+          <th>condition</th>
+          <th>mean</th>
+        </tr>
+        <tr>
+          <td>AND, &amp;&amp;</td>
+          <td>and</td>
+        </tr>
+        <tr>
+          <td>OR, ||</td>
+          <td>or</td>
+        </tr>
+        <tr>
+          <td>NOT, !</td>
+          <td>not</td>
+        </tr>
+        <tr>
+          <td>XOR</td>
+          <td>xor</td>
+        </tr>
+      </table>
+      <br />
+
+      <p class="h3">檔案測試</p>
+      <table class="h3">
+        <tr>
+          <th>condition</th>
+          <th>mean</th>
+        </tr>
+        <tr>
+          <td>-r/-R file</td>
+          <td>擁有file讀取的權限</td>
+        </tr>
+        <tr>
+          <td>-w/-W file</td>
+          <td>擁有file寫入的權限</td>
+        </tr>
+        <tr>
+          <td>-x/-X file</td>
+          <td>擁有file執行的權限</td>
+        </tr>
+        <tr>
+          <td>-o/-O file</td>
+          <td>file的擁有者</td>
+        </tr>
+        <tr>
+          <td>-e file</td>
+          <td>file存在</td>
+        </tr>
+        <tr>
+          <td>-z file</td>
+          <td>file大小為零</td>
+        </tr>
+        <tr>
+          <td>-s file</td>
+          <td>file大小不為零</td>
+        </tr>
+        <tr>
+          <td>-d file</td>
+          <td>file為directory</td>
+        </tr>
+        <tr>
+          <td>-f file</td>
+          <td>file為file</td>
+        </tr>
+        <tr>
+          <td>-l file</td>
+          <td>file為linker</td>
+        </tr>
+        <tr>
+          <td>-P file</td>
+          <td>file為FIFO</td>
+        </tr>
+        <tr>
+          <td>-S file</td>
+          <td>file為socket</td>
+        </tr>
+        <tr>
+          <td>-T file</td>
+          <td>file為text</td>
+        </tr>
+        <tr>
+          <td>-B file</td>
+          <td>file為binary</td>
+        </tr>
+        <tr>
+          <td>-u file</td>
+          <td>file設定setuid</td>
+        </tr>
+        <tr>
+          <td>-g file</td>
+          <td>file設定setgid</td>
+        </tr>
+        <tr>
+          <td>-k file</td>
+          <td>file設定sticky</td>
+        </tr>
+      </table>
+      <br />
+
+      <p class="h3">字串測試</p>
+      <table class="h3">
+        <tr>
+          <th>condition</th>
+          <th>mean</th>
+        </tr>
+        <tr>
+          <td>str1 eq str2</td>
+          <td>str1符合str2</td>
+        </tr>
+        <tr>
+          <td>str1 ne str2</td>
+          <td>str1不符合str2</td>
+        </tr>
+        <tr>
+          <td>str1 lt str2</td>
+          <td>str1小於str2</td>
+        </tr>
+        <tr>
+          <td>str1 gt str2</td>
+          <td>str1大於str2</td>
+        </tr>
+        <tr>
+          <td>str1 le str2</td>
+          <td>str1小於等於str2</td>
+        </tr>
+        <tr>
+          <td>str1 ge str2</td>
+          <td>str1大於等於str2</td>
+        </tr>
+        <tr>
+          <td>str1 cmp str2</td>
+          <td>str1和str2比較；str1較大回傳1；一樣則0；str2較大回傳-1</td>
+        </tr>
+      </table>
+      <br />
+
+      <p class="h3">數值測試</p>
+      <table class="h3">
+        <tr>
+          <th>condition</th>
+          <th>mean</th>
+        </tr>
+        <tr>
+          <td>var1 == var2</td>
+          <td>var1等於var2</td>
+        </tr>
+        <tr>
+          <td>var1 != var2</td>
+          <td>var1不等於var2</td>
+        </tr>
+        <tr>
+          <td>var1 &lt; var2</td>
+          <td>var1小於var2</td>
+        </tr>
+        <tr>
+          <td>var1 &gt; var2</td>
+          <td>var1大於var2</td>
+        </tr>
+        <tr>
+          <td>var1 &lt;= var2</td>
+          <td>var1小於等於var2</td>
+        </tr>
+        <tr>
+          <td>var1 &gt;= var2</td>
+          <td>var1大於等於var2</td>
+        </tr>
+        <tr>
+          <td>var1 &lt;=&gt; var2</td>
+          <td>var1和var2比較；var1較大回傳1；一樣則0；var2較大回傳-1</td>
+        </tr>
+      </table>
+      <br />
+
+      <h3>for/foreach</h3>
+      <p class="h3">for是延續C/C++的使用方式foreach則是從C Shell來的</p>
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />for ($i = 0; $i &lt;= 10; $i++) { printf(&quot;%2d\n&quot;, $i); }
+      <br />foreach $i (0..10) { printf(&quot;%2d\n&quot;, $i); }
+      </div>
+      <br />
+
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />$line = 3;
+      <br />for ( $i = 0; $i &lt; $line; $i++ ) {
+      <br />&nbsp;&nbsp;for ( $j = 0; $j &lt; $line - $i - 1; $j++ ) { print &quot; &quot;; }
+      <br />&nbsp;&nbsp;for ( $k = 0; $k &lt; 2 * $i + 1; $k++ ) { print &quot;#&quot;; }
+      <br />&nbsp;&nbsp;print &quot;\n&quot;;
+      <br />}
+      </div>
+      <br />
+
+      <h3>while/do-while/until/do-until</h3>
+      <p class="h3">while和until是用，可以配合do可以在進入loop中在</p>
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />
+      <span class="cmts">#顯示檔案</span>
+      <br />@f = `ls /etc/*.conf`
+      <br />while (@f) { print shift(@f); }
+      </div>
+      <br />
+
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />
+      <span class="cmts">#無限迴圈</span>
+      <br />for (;;) { print &quot;infinite loop\n&quot;; }
+      <br />while (1) { print &quot;infinite loop\n&quot;; }
+      <br />until (0) { print &quot;infinite loop\n&quot;; }
+      </div>
+      <br />
+
+      <h3>last/next/redo</h3>
+      <p class="h3">last相當於breack；而next對應到continue；</p>
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />%month = (Jan => 31, Feb => 27, Mar => 31, Apr => 30,
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;May => 31, Jun => 30, Jul => 31, Aug => 31,
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sep => 30, Oct => 31, Nov => 30, Dec => 31);
+      <br />
+      <br />@month = (Jan, Feb, Mar, Apr, May, Jun,
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jul, Aug, Sep, Oct, Nov, Dec);
+      <br />
+      <br /><span class="cmts">#猜月份天數遊戲</span>
+      <br />GAME: foreach $m (@month) {
+      <br />&nbsp;&nbsp;print &quot;How many days are in $m?\n&quot;;
+      <br />&nbsp;&nbsp;$day= &lt;STDIN&gt;;
+      <br />&nbsp;&nbsp;if ($day == $month{$m}) {
+      <span class="cmts">#猜對就往下一個月份</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print &quot;Good job\n&quot;;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;next GAME;
+      <span class="cmts">#到loop的下個element；繼續loop</span>
+      <br />&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;elsif ($day =~ m/^[Qq]$/) {
+      <span class="cmts">#輸入Q或q就直接離開遊戲</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print &quot;Quit the game\n&quot;;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;last GAME;
+      <span class="cmts">#到loop的最後一個element；離開loop</span>
+      <br />&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;else {
+      <span class="cmts">#猜錯就再猜一次</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print &quot;Error, try again.\n&quot;;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;redo GAME;
+      <span class="cmts">#從loop的該element；重新loop</span>
+      <br />&nbsp;&nbsp;}
+      <br />}
+      </div>
+      <br />
+
+      <h3>goto</h3>
+      <hr />
+
+<!-- 函式參數 -->
+      <a name="函式參數"><h2>函式參數</h2>
+      <p class="h2">宣告函數
+      <br />sub NAME
+      <br />sub NAME PROTO
+      <br />sub NAME       ATTRS
+      <br />sub NAME PROTO ATTRS
+      <br />
+
+      <br />定義函數
+      <br />sub NAME             BLOCK
+      <br />sub NAME PROTO       BLOCK
+      <br />sub NAME       ATTRS BLOCK
+      <br />sub NAME PROTO ATTRS BLOCK
+      <br />
+
+      <br />匿名函數
+      <br />sub                  BLOCK
+      <br />sub      PROTO       BLOCK
+      <br />sub            ATTRS BLOCK
+      <br />sub      PROTO ATTRS BLOCK
+      </p>
+
+      <p class="h3">&amp;是呼叫subroutine，sub是宣告subroutine</p>
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br /># Main Program
+      <br />&amp;po;
+      <span class="cmts">#呼叫function要用&amp;</span>
+      <br />
+      <br />sub po { print `ps o user,pid,%cpu,%mem,cmd k -%cpu`; }
+      <span class="cmts">#宣告function在前面需加上sub</span>
+      </div>
+      <br />
+      <p class="h3">也可以像sh script放在開頭</p>
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />sub Arg {
+      <span class="cmts">#@_是儲存引數陣列</span>
+      <br />&nbsp;&nbsp;foreach $i ( 0..$#_ ) { print &quot;ARG $i = $_[$i]\n&quot;; }
+      <br />&nbsp;&nbsp;foreach $i ( @_ ) { print &quot;ARG = $i\n&quot;; }
+      <br />}
+      <br />
+      <br /># Main Program
+      <br />
+      <br />Arg(ABC, xyz, 123);
+      <span class="cmts">#可省略&amp;，但需注意function name不可是perl的內建函式</span>
+      </div>
+      <br />
+
+      <table class="h3">
+      <tr><td>ARGV</td>
+          <td>命令列數陣列名 (用法：@ARGV)</td></tr>
+      <tr><td>STDIN</td>
+          <td>標準輸入</td></tr>
+      <tr><td>STDOUT</td>
+          <td>標準輸出</td></tr>
+      <tr><td>STDERR</td>
+          <td>標準錯誤</td></tr>
+      <tr><td>__DATA__</td>
+          <td>程式編譯至此，以下為資料，可用 DATA 檔案代碼讀取</td></tr>
+      <tr><td>__END__</td>
+          <td>標示程式結束</td></tr>
+      <tr><td>__FILE__</td>
+          <td>程式檔名</td></tr>
+      <tr><td>__LINE__</td>
+          <td>目前列數</td></tr>
+      <tr><td>__PACKAGE__</td>
+          <td>目前套件名稱</td></tr>
+      <tr><td>@ARGV</td>
+          <td>命令列引數陣列</td></tr>
+      <tr><td>@_</td>
+          <td>預設陣列，用在subroutine或function的預設引數陣列</td></tr>
+      <tr><td>%INC</td>
+          <td>已由 do/requrie 引入的檔案</td></tr>
+      <tr><td>%ENV</td>
+          <td>環境變數</td></tr>
+      <tr><td>%SIG</td>
+          <td>系統信號</td></tr>
+      <tr><td>$_</td>
+          <td>預設變數，用在loop或condition的預設變數</td></tr>
+      <tr><td>$!</td>
+          <td>錯誤訊息內容</td></tr>
+      <tr><td>$$</td>
+          <td>Perl script 執行時的行程代碼(PID)</td></tr>
+      <tr><td>$0</td>
+          <td>Perl script 程式本身的檔名</td></tr>
+      </table>
+      <br />
+
+      <h3>my，local</h3>
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />sub func {
+      <br />&nbsp;&nbsp;my $str0 = &quot;Sub&quot;;
+      <span class="cmts">#為全域變數</span>
+      <br />&nbsp;&nbsp;my $str1 = &quot;My_1&quot;;
+      <span class="cmts">#使用my，為區域變數</span>
+      <br />&nbsp;&nbsp;local $str2 = &quot;Loc&quot;;
+      <span class="cmts">#使用local，為區域變數</span>
+      <br />&nbsp;&nbsp;print &quot;str0: $str0, str1: $str1, str2: $str2 In Function \n&quot;;
+      <br />}
+      <br />
+      <br />$str0=&quot;STR0&quot;;
+      <br />$str1=&quot;STR1&quot;;
+      <br />$str2=&quot;STR2&quot;;
+      <br />print &quot;str0: $str0, str1: $str1, str2: $str2\n&quot;;
+      <br />&amp;func;
+      <br />print &quot;str1: $str1, str2: $str2\n&quot;;
+      </div>
+      <br />
+
+      <p class="h3">從上範例看來local和my是一樣的功能，但還是有稍微的不同處，my只會影響該block（區間）內變數；而local連nest block的變數也一並影響</p>
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />sub echo () { print &quot;str: $str, &quot;; }
+      <br />sub myecho { my $str = &quot;My&quot;; echo; }
+      <br />sub localecho { local $str = &quot;Local&quot;; echo; }
+      <br />
+      <br />$str = &quot;STR&quot;;
+      <br />echo; myecho; echo;
+      <span class="cmts">#str: STR, str: STR, str: STR,</span>
+      <br />print &quot;\n&quot;;
+      <br />echo; localecho; echo;
+      <span class="cmts">#str: STR, str: Local, str: STR,</span>
+      </div>
+      <br />
+
+      <h3>our</h3>
+      <br />
+
+      <h3>return</h3>
+      <br />
+
+      <h3>use、require、package</h3>
+      <div class="commands">Linux:~ $ <span class="cmds">cat</span> myPkg.pm
+      <br />package method;
+      <span class="cmts">#設定為module</span>
+      <br />
+      <br />sub shw {
+      <span class="cmts">#module內的function，類似class中的method</span>
+      <br />&nbsp;&nbsp;print @_, &quot;\n&quot;
+      <br />}
+      <br />
+      <br />1;
+      <span class="cmts">#module的結尾</span>
+      <br />
+      <br />package property;
+      <br />
+      <br />sub var {
+      <br />&nbsp;&nbsp;str = 'Perl';
+      <br />}
+      <br />
+      <br />1;
+      <br />
+
+      <br />Linux:~ $ <span class="cmds">cat</span> main.pl
+      <br />#!/usr/bin/perl
+      <br />
+
+      <br />
+      <span class="cmts">#指定module路徑，用use lib或定義@INC即可</span>
+      <br />use lib &quot;/module_path&quot;;
+      <br />use lib '/module_path';
+      <br />BEGIN { unshift(@INC, '/module/path'); }
+      <br />foreach $i (@INC) {print &quot;$i\n&quot;};
+      <br />
+
+      <br />use myPkg;
+      <span class="cmts">#載入module</span>
+      <br />method-&gt;shw(&quot;Hello Perl!&quot;);
+      <span class="cmts">#使用module中的function</span>
+      <br />property::str;
+      <span class="cmts">#另一使用module中的function的表示方式</span>
+      </div>
+      <br />
+
+      <h3>CPAN</h3>
+      <div class="commands"><span class="cmts">#CPAN使用指令安裝</span>
+      <br />Linux:~ $ <span class="cmds">perl</span> Makefile.PL prefix=<i>$HOME/owner</i> installdirs=<i>vendor</i>
+      <br />Linux:~ $ <span class="cmds">make</span>
+      <br />Linux:~ $ <span class="cmds">make</span> install
+      <span class="cmts">#安裝到$HOME/owner/lib/perl5/site_perl/<i>version</i>目錄下</span>
+      <br />
+      <br />Linux:~ $ <span class="cmds">perl</span> Makefile.PL
+      <br />Linux:~ $ <span class="cmds">make</span>
+      <br />Linux:~ $ <span class="cmds">make</span> install DESTDIR=<i>$HOME/owner</i>
+      <span class="cmts">#安裝到$HOME/owener/usr/lib/perl5/site_perl/<i>version</i>目錄下</span>
+      </div>
+      <hr />
+
+
+<!-- 參照算符 -->
+      <a name="參照算符"><h2>參照算符</h2>
+
+      <h3>reference/參照，參考</h3>
+      <p class="h3">\是reference，使用$來deference，當reference refer to array、hash或subroutine時，可用-&gt;來取值。在deference時，要注意產生symbol refernce的使用問題。在reference時，要注意同名稱的assignment的問題</p>
+
+      <div class="commands">#!/usr/bin/perl
+      <br />
+
+      <br />
+      <span class="cmts">#scalar refernece的設定及操作</span>
+      <br />$var=&quot;ABC&quot;;
+      <br />$var_ref = \$var;
+      <br />print &quot;var $var\n&quot;;
+      <br />print &quot;Ref of var (addr)  : $var_ref\n&quot;;
+      <br />print &quot;Ref of var (value) : $${var_ref}\n&quot;;
+      <br />print &quot;Ref of var (value) : $$var_ref\n&quot;;
+      <br />$var=&quot;xyz&quot;;
+      <br />print &quot;var : $var\n&quot;;
+      <br />print &quot;Ref of var (value) : $$var_ref\n&quot;;
+      <br />
+
+      <br />
+      <span class="cmts">#array refernece的設定及操作</span>
+      <br />@arr = (1..10);
+      <br />$arr_ref = \@arr;
+      <br />print &quot;arr : &quot;, join(&quot; &quot;, @arr), &quot;\n&quot;;
+      <br />print &quot;Ref of arr (addr) : $arr_ref\n&quot;;
+      <br />print &quot;Ref of arr (value): &quot;, join(&quot; &quot;, @{$arr_ref}), &quot;\n&quot;;
+      <br />print &quot;Ref of arr (value): &quot;, join(&quot; &quot;, @$arr_ref), &quot;\n&quot;;
+      <br />print &quot;Ref of arr (index): ${$arr_ref}[1]\n&quot;
+      <br />print &quot;Ref of arr (index): $$arr_ref[1]\n&quot;;
+      <br />print &quot;Ref of arr (index): $arr_ref->[1]\n&quot;;
+      <br />pop(@arr);
+      <br />print &quot;arr : &quot;, join(&quot; &quot;, @arr), &quot;\n&quot;;
+      <br />print &quot;Ref of arr (value): &quot;, join(&quot; &quot;, @$arr_ref), &quot;\n&quot;;
+      <br />
+
+      <br />
+      <span class="cmts">#hash refernece的設定及操作</span>
+      <br />%hsh = (&quot;Chn&quot; => &quot;20&quot;, 'Eng' => &quot;90&quot;);
+      <br />$hsh_ref = \%hsh;
+      <br />print &quot;hsh : &quot;, join(&quot; &quot;, %hsh), &quot;\n&quot;;
+      <br />print &quot;Ref of hsh (addr) : $hsh_ref\n&quot;;
+      <br />print &quot;Ref of hsh (k/v)  : &quot;, join(&quot; &quot;, %$hsh_ref), &quot;\n&quot;;
+      <br />print &quot;Ref of hsh (k/v)  : &quot;, join(&quot; &quot;, %{$hsh_ref}), &quot;\n&quot;;
+      <br />print &quot;Ref of hsh (element): &quot;, ${$hsh_ref}{&quot;Eng&quot;}, &quot;\n&quot;;
+      <br />print &quot;Ref of hsh (element): &quot;, $$hsh_ref{&quot;Eng&quot;}, &quot;\n&quot;;
+      <br />print &quot;Ref of hsh (element): &quot;, $hsh_ref->{&quot;Eng&quot;}, &quot;\n&quot;;
+      <br />$hsh{&quot;Twn&quot;}=&quot;60&quot;;
+      <br />print &quot;hsh : &quot;, join(&quot; &quot;, %hsh), &quot;\n&quot;;
+      <br />print &quot;Ref of hsh (k/v)  : &quot;, join(&quot; &quot;, %$hsh_ref), &quot;\n&quot;;
+      <br />
+
+      <br />
+      <span class="cmts">#subroutine refernece的設定及操作</span>
+      <br />sub func() { return @_[0]; }
+      <br />$sub_ref = \&func;
+      <br />print &quot;Ref of sub (addr)     : $sub_ref\n&quot;;
+      <br />print &quot;Ref of sub (function) : &quot;, &amp;{$sub_ref}(xyz, ABC), &quot;\n&quot;;
+      <br />print &quot;Ref of sub (function) : &quot;, &amp;$sub_ref(xyz, ABC), &quot;\n&quot;;
+      <br />print &quot;Ref of sub (function) : &quot;, $sub_ref->(xyz, ABC), &quot;\n&quot;;
+      <br />
+
+      <br />
+      <span class="cmts">#symbol reference的設定及操作</span>
+      <br />$sym_ref=John;
+      <br />$$sym_ref=20;
+      <br />print &quot;\$sym_ref $sym_ref\n&quot;;
+      <br />print &quot;\$\$sym_ref $$sym_ref\n&quot;;
+      <br />print &quot;\$\$sym_ref $John\n&quot;;
+      <br />
+
+      <br />
+      <span class="cmts">#混用assignment和reference</span>
+      <br />@ref = (Sun, Mon, Tue, Wed, Thu, Fri, Sat);
+      <br />@month = (Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec);
+      <br />$ref = \@month;
+      <br />print $ref[0];
+      <span class="cmts">#得到assignment中的第一個元素，Sun</span>
+      <br />print $ref->[0];
+      <span class="cmts">#得到reference中的的第一個元素，Jan</span>
+      <br />
+
+      <br />
+      <br />$RoA = [A, B, C, D];
+      <span class="cmts">#[]是reference給值</span>
+      <br />@RoH = ('a'=>'A', 'b'=>'B', 'c'=>'C');
+      <span class="cmts">#{}也是reference給值</span>
+      <br />print &quot;\$RoA: $RoA\n&quot;;
+      <br />print &quot;\$RoH: $RoH\n&quot;;
+      <br />foreach $i (@$RoA) { print &quot;$i\n&quot;;}
+      <br />foreach $k (keys %$RoH) { print &quot;$k => $RoH{$k}\n&quot;;}
+      </div>
+      <br />
+
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />
+      <span class="cmts">#使用reference操作2D array</span>
+      <br />@a1 = (12, 34);
+      <br />@a2 = (56, 78);
+      <br />@arr = (\@a1, \@a2);
+      <br />print &quot;Ref of arr (addr) : &quot;, $arr[0], &quot;\n&quot;;
+      <br />print &quot;Ref of arr (value): &quot;, $arr[0][1], &quot;\n&quot;;
+      <br />print &quot;Ref of arr (value): &quot;, $arr[0]->[1], &quot;\n&quot;;
+      <br />
+      <br />
+      <span class="cmts">#使用reference操作2D hash</span>
+      <br />%John = (id => &quot;32&quot;, &quot;Chn&quot; => &quot;20&quot;, 'Eng' => &quot;90&quot;);
+      <br />%Mary = (id => &quot;12&quot;, &quot;Chn&quot; => &quot;70&quot;, 'Eng' => &quot;60&quot;);
+      <br />%hsh2 = (John => \%John, Mary => \%Mary);
+      <br />print &quot;Ref of hsh (addr) : &quot;, $hsh{John}, &quot;\n&quot;;
+      <br />print &quot;Ref of hsh (k/v)  : &quot;, $hsh{John}{id}, &quot;\n&quot;;
+      <br />print &quot;Ref of hsh (k/v)  : &quot;, $hsh{John}->{id}, &quot;\n&quot;;
+      </div>
+      <br />
+
+      <p class="h3">Array of Hash</p>
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />@AoH = ( {husband => 'barney', wife => 'betty', son => 'bamm bamm'},
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{husband => 'george', wife => 'jane', son => 'elroy'},
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{husband => 'homer', wife => 'marge', son => 'bart'} );
+      <br />
+
+      <br />push @AoH, {husband => 'fred', wife => 'wilma', daughter => 'pebbles'};
+      <span class="cmts">#把hash加入array</span>
+      <br />$AoH[0]{pet} = 'dino';
+      <span class="cmts">#在hash中建立新的index</span>
+      <br />
+
+      <br />while ( &lt;&gt; ) {
+      <br />&nbsp;&nbsp;$rec = {};
+      <br />&nbsp;&nbsp;for $field ( split ) {
+     <br />&nbsp;&nbsp;&nbsp;&nbsp;($key, $value) = split /=/, $field;
+     <br />&nbsp;&nbsp;&nbsp;&nbsp;$rec->{$key} = $value;
+      <br />&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;push @AoH, $rec;
+      <br />}
+      <br />
+      <br />while ( &lt;&gt; ) {
+      <br />&nbsp;&nbsp;push @AoH, { split /[\s=]+/ };
+      <br />}
+      <br />
+
+      <br />for $href (@AoH) {
+      <br />&nbsp;&nbsp;print &quot;{ &quot;;
+      <br />&nbsp;&nbsp;for $role ( keys %$href ) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print &quot;$role=$href->{$role} &quot;;
+      <br />&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;print &quot;}\n&quot;;
+      <br />}
+      <br />
+
+      <br />for $i ( 0 .. $#AoH ) {
+      <br />&nbsp;&nbsp;print &quot;$i is { &quot;;
+      <br />&nbsp;&nbsp;for $role ( keys %{ $AoH[$i] } ) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print &quot;$role=$AoH[$i]{$role} &quot;;
+      <br />&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;print &quot;}\n&quot;;
+      <br />}
+      </div>
+      <br />
+
+      <p class="h3">Hash of Array</p>
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />%HoA = (flintstones => [ 'fred', 'barney' ],
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jetsons  => [ 'george', 'jane', 'elroy' ],
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;simpsons => [ 'homer', 'marge', 'bart' ]);
+      <br />
+
+      <br />$HoA{teletubbies} = [ 'tinky winky', 'dipsy', 'laa-laa', 'po' ];
+      <span class="cmts">#把array加入hash</span>
+      <br />$push @{$HoA{flintstones} }, 'wilma', 'pebbles';
+      <span class="cmts">#在array中</span>
+      <br />
+
+      <br />while ( &lt;&gt; ) {
+      <br />&nbsp;&nbsp;next unless s/^(.*?):\s*//;
+      <br />&nbsp;&nbsp;$HoA{$1} = [ split ];
+      <br />}
+      <br />
+      <br />while ( $line = &lt;&gt; ) {
+      <br />&nbsp;&nbsp;($who, $rest) = split /:\s*/, $line, 2;
+      <br />&nbsp;&nbsp;@fields = split ' ', $rest;
+      <br />&nbsp;&nbsp;$HoA{$who} = [ @fields ];
+      <br />}
+      <br />
+
+      <br />for $family ( keys %HoA ) {
+      <br />&nbsp;&nbsp;print &quot;$family: @{ $HoA{$family} }\n&quot;;
+      <br />}
+      <br />
+
+      <br />for $family ( keys %HoA ) {
+      <br />&nbsp;&nbsp;print &quot;$family: &quot;;
+      <br />&nbsp;&nbsp;for $i ( 0 .. $#{ $HoA{$family} } ) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print &quot; $i = $HoA{$family}[$i]&quot;;
+      <br />&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;print &quot;\n&quot;;
+      <br />}
+      </div>
+
+      <hr />
+
+<!-- 正規表示 -->
+      <a name="正規表示"><h2>正規表示</h2>
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />until ( ($input = &lt;&gt;) =~ m/^[Qq]uit$/ ) { print &quot;Your input $input\n&quot;; }
+      </div>
+
+      <p class="h3">在正規表示中用到的運算子有：=~是binding；!~是not binding；m/<i>patten</i>/是定義搜尋樣式</p>
+      <br />
+
+      <div class="commands"><span class="cmts">#Matching/比對</span>
+      <br />Linux:~ # <span class="cmds">grep</span> <i>pattern</i> file
+      <br />Linux:~ # <span class="cmds">sed</span> -n /<i>pattern</i>/p file
+      <br />Linux:~ # <span class="cmds">awk</span> '/<i>pattern</i>/{print $_}' file
+      <br />Linux:~ # <span class="cmds">perl</span> -ne 'if ($_ =~ m/<i>pattern</i>/) {print $_;}' file
+      <br />Linux:~ # <span class="cmds">perl</span> -ne 'if (m/<i>pattern</i>/) {print}' file
+      <br />Linux:~ # <span class="cmds">perl</span> -ne 'if (/<i>pattern</i>/) {print}' file
+      <br />Linux:~ # <span class="cmds">perl</span> -ne 'print $_  if ($_ =~ /m/<i>pattern</i>/); ' file
+      <br />Linux:~ # <span class="cmds">perl</span> -ne 'print if /<i>pattern</i>/' file
+      <br />
+
+      <br /><span class="cmts">#Union/聯集</span>
+      <br />Linux:~ # <span class="cmds">grep</span> -E '<i>pattern1</i>|<i>pattern2</i>' file
+      <br />Linux:~ # <span class="cmds">perl</span> -ne 'print if /<i>pattern1</i>/|/<i>pattern2</i>/' file
+      <br />
+
+      <br /><span class="cmts">#Intersection/交集</span>
+      <br />Linux:~ # <span class="cmds">grep</span> <i>pattern1</i> file | <span class="cmds">grep</span> <i>pattern2</i>
+      <br />Linux:~ # <span class="cmds">awk</span> '/<i>pattern1</i>/&amp;&amp;/<i>pattern2</i>/{print $_}' file
+      <br />Linux:~ # <span class="cmds">perl</span> -ne 'print if /<i>pattern1</i>/&amp;&amp;/<i>pattern2</i>/' file
+      <br />
+
+      <br /><span class="cmts">#Subsitution/替代</span>
+      <br />Linux:~ # <span class="cmds">sed</span> -n /<i>pattern</i>/<i>replace</i>/p file
+      <br />Linux:~ # <span class="cmds">perl</span> -ne 'print if s/<i>pattern</i>/<i>replace</i>/ ' file
+      <br />
+
+      <br /><span class="cmts">#Translation/轉換</span>
+      <br />Linux:~ # <span class="cmds">tr</span> '<i>pattern</i>' '<i>replace</i>' &lt; file
+      <br />Linux:~ # <span class="cmds">perl</span> -ne 'print if tr/<i>pattern</i>/<i>replace</i>/ ' file
+      </div>
+      <br />
+
+
+      <div class="commands">#!/usr/bin/env perl
+      <br />
+
+      <br />$STR = '/usr/lib/python2.6/site-packages/gtk-2.0/gconf.so';
+      <br />$STR =~ s'\.[^.]*$'';
+      <span class="cmts">#同sh ${STR%.*}</span>
+      <br />print &quot;$STR\n&quot;;
+      <br />
+
+      <br />$STR = '/usr/lib/python2.6/site-packages/gtk-2.0/gconf.so';
+      <br />$STR =~ s'\.(.*)'';
+      <span class="cmts">#同sh ${STR%%.*}</span>
+      <br />print &quot;$STR\n&quot;;
+      <br />
+
+      <br />$STR = '/usr/lib/python2.6/site-packages/gtk-2.0/gconf.so';
+      <br />$STR =~ s'(.*?)/'';
+      <span class="cmts">#同sh ${STR0#*/}</span>
+      <br />print &quot;$STR\n&quot;;
+      <br />
+
+      <br />$STR = '/usr/lib/python2.6/site-packages/gtk-2.0/gconf.so';
+      <br />$STR =~ s'(.*)/'';
+      <span class="cmts">#同sh ${STR0##*/}</span>
+      <br />print &quot;$STR\n&quot;;
+      <br />
+
+      <br /><span class="cmts">#使用capturing方法</span>
+      <br />$STR = '/usr/lib/python2.6/site-packages/gtk-2.0/gconf.so';
+      <br />
+
+      <br />$STR =~ m'(.*)\.(.*?)$';
+      <span class="cmts">#同sh ${STR%.*}</span>
+      <br />print &quot;$1 &lt;=&gt; $2\n&quot;;
+      <br />
+
+      <br />$STR =~ m'(.*?)\.(.*)';
+      <span class="cmts">#同sh ${STR%%.*}</span>
+      <br />print &quot;$1 &lt;=&gt; $2\n&quot;;
+      <br />
+
+      <br />$STR =~ m'(.*?)/(.*)';
+      <span class="cmts">#同sh ${STR0#*/}</span>
+      <br />print &quot;$1 &lt;=&gt; $2\n&quot;;
+      <br />
+
+      <br />$STR =~ m'(.*)/(.*)';
+      <span class="cmts">#同sh ${STR0##*/}</span>
+      <br />print &quot;$1 &lt;=&gt; $2\n&quot;;
+      </div>
+      <br />
+
+
+
+
+      <table class="h3">
+      <tr>
+         <th>operator</th>
+         <th></th>
+      </tr>
+      <tr>
+         <td>m/<i>pattern</i>/</td>
+         <td>matching，比對</td>
+      </tr>
+      <tr>
+         <td>s/<i>pattern</i>/<i>replacement</i>/</td>
+         <td>subsitution，替代</td>
+      </tr>
+      <tr>
+         <td>tr/<i>pattern</i>/<i>replacement</i>/</td>
+         <td>translation，轉換</td>
+      </tr>
+      </table>
+      <br />
+
+      <table class="h3">
+      <tr>
+         <th>meta symbol</th>
+         <th></th>
+      </tr>
+      <tr>
+         <td>\<i>...</i></td>
+         <td>跳脫字元</td>
+      </tr>
+      <tr>
+         <td><i>...</i>|<i>...</i></td>
+         <td>多重字元</td>
+      </tr>
+      <tr>
+         <td>(<i>...</i>)</td>
+         <td>字元組合，例如(ABC)在搜尋時就會找'ABC'</td>
+      </tr>
+      <tr>
+         <td>[<i>...</i>]</td>
+         <td>字元集合，例如[ABC]在搜尋時，只要有'A'、'B'、'C'就會被搜詢</td>
+      </tr>
+      <tr>
+         <td>[^<i>...</i>]</td>
+         <td>非字元集合，例如[^ABC]在搜尋時，只要有'A'、'B'、'C'就不會被搜詢</td>
+      </tr>
+
+      <tr>
+         <td>.</td>
+         <td>任一字元，除了換行（ newline ）之外</td>
+      </tr>
+      <tr>
+         <td>^</td>
+         <td>字串起始</td>
+      </tr>
+      <tr>
+         <td>$</td>
+         <td>字串結尾</td>
+      </tr>
+
+      </table>
+      <br />
+
+
+      <table class="h3">
+      <tr><th>backslash character</th>
+          <th>character set</th>
+          <th></th></tr>
+      <tr><td>\d</td>
+          <td>[0-9]</td>
+          <td>數字</td></tr>
+      <tr><td>\D</td>
+          <td>[^0-9]</td>
+          <td>非數字</td></tr>
+      <tr><td>\s</td>
+	  <td>[ \t\n\x0B\f\r]</td>
+          <td>空白字元</td></tr>
+      <tr><td>\S</td>
+          <td>[^ \t\n\x0B\f\r]</td>
+          <td>非空白字元</td></tr>
+      <tr><td>\w</td>
+          <td>[a-zA-Z_0-9]</td>
+          <td>數字或是英文字</td></tr>
+      <tr><td>\W</td>
+          <td>[^a-zA-Z_0-9]</td>
+          <td>非數字與英文字</td></tr>
+      </table>
+      <br />
+
+      <table class="h3">
+      <tr><th>backslash character</th>
+          <th></th></tr>
+      <tr><td>\b</td>
+          <td>文字邊界（word boundary），'where is this book'中\bis搜尋到的is</td></tr>
+      <tr><td>\B</td>
+          <td>非文字邊界（word boundary），'where is this book'中\bis搜尋到的this</td></tr>
+      <tr><td>\A</td>
+          <td>同^，字串起始</td></tr>
+      <tr><td>\Z</td>
+          <td>同$，字串結尾</td></tr>
+      <tr><td>\z</td>
+          <td>matches at end of subject</td></tr>
+      <tr><td>\G</td>
+          <td>matches at first matching position in subject</td></tr>
+
+      <tr><td>\0</td>
+          <td>空字元（NUL）</td></tr>
+      <tr><td>\a</td>
+          <td>鈴聲（BEL）</td></tr>
+      <tr><td>\e</td>
+          <td>跳脫（ESC）</td></tr>
+      <tr><td>\f</td>
+          <td>送紙（FF）</td></tr>
+      <tr><td>\n</td>
+          <td>換行（NL，Mac為CR）</td></tr>
+      <tr><td>\r</td>
+          <td>回行（CR，Mac為NL）</td></tr>
+      <tr><td>\t</td>
+          <td>跳格（HT）</td></tr>
+
+      <tr><td></td>
+          <td></td></tr>
+
+      </table>
+      <br />
+
+
+      <table class="h3">
+      <tr>
+         <th>modifier</th>
+         <th></th>
+      </tr>
+      <tr>
+         <td>i</td>
+         <td>忽略大小寫（m、s）</td>
+      </tr>
+      <tr>
+         <td>m</td>
+         <td>^之前的換行和$之後的換行可被忽略（m、s）</td>
+      </tr>
+      <tr>
+         <td>s</td>
+         <td>.可表示換行（ newline ）（m、s）</td>
+      </tr>
+      <tr>
+         <td>x</td>
+         <td>（m、s）</td>
+      </tr>
+      <tr>
+         <td>o</td>
+         <td>（m、s）</td>
+      </tr>
+
+      <tr>
+         <td>g</td>
+         <td>全域比對或替代（m、s）</td>
+      </tr>
+      <tr>
+         <td>cg</td>
+         <td>（m）</td>
+      </tr>
+
+      <tr>
+         <td>e</td>
+         <td>（s）</td>
+      </tr>
+
+      <tr>
+         <td>c</td>
+         <td>（tr）</td>
+      </tr>
+      <tr>
+         <td>d</td>
+         <td>（tr）</td>
+      </tr>
+      <tr>
+         <td>s</td>
+         <td>（tr）</td>
+      </tr>
+      </table>
+      <br />
+
+      <table class="h3">
+      <tr>
+         <th>quantifer</th>
+         <th></th>
+      </tr>
+      <tr>
+         <td>*（最大次數）、*?（最小次數）</td>
+         <td>重複零次或多次前一個字元</td>
+      </tr>
+      <tr>
+         <td>+（最大次數）、+?（最小次數）</td>
+         <td>至少重複一次或多次前一個字元</td>
+      </tr>
+      <tr>
+         <td>?（最大次數）、??（最小次數）</td>
+         <td>重複零次或一次前一個字元</td>
+      </tr>
+      <tr>
+         <td>{<i>count</i>}（最大次數）、{<i>count</i>}?（最小次數）</td>
+         <td>重複<i>count</i>次前一字元</td>
+      </tr>
+      <tr>
+         <td>{<i>min</i>,}（最大次數）、{<i>min</i>,}?（最小次數）</td>
+         <td>至少重複<i>min</i>次前一字元</td>
+      </tr>
+      <tr>
+         <td>{<i>min</i>, <i>max</i>}（最大次數）、{<i>min</i>, <i>max</i>}?（最小次數）</td>
+         <td>重複次數在<i>min</i>到<i>max</i>前一字元</td>
+      </tr>
+      </table>
+      <br />
+
+      <h3>capturing&amp;clustering（擷取和叢集）</h3>
+      <p class="h3">(?:pattern)</p>
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />&quot;exasperate&quot; =~ /e(.*)e/'
+      <span class="cmts">#找到的字串為exasperate</span>
+      <br />&quot;exasperate&quot; =~ /e(.*?)e/'
+      <span class="cmts">#找到的字串為exaspe</span>
+      <br />
+
+      <br />print &quot;$1, $2, $3\n&quot; if 'John Mary' =~ /^((\w+) (\w+))$/ ; #John Mary, John, Mary
+      <br /><span class="cmts">#將John Mary擷取到$1，John擷取到$2，Mary擷取到$3</span>
+      <br />
+
+      <br />print &quot;$1, $2, $3\n&quot; if 'John Mary =~ /^(?:(\w+) (\w+))$/ ; #John, Mary
+      <br /><span class="cmts">#因為John Mary本來會被擷取到$1，但是使用?:只會被叢集</span>
+      <br /><span class="cmts">#所以John擷取到$1，Mary擷取到$2</span>
+      </div>
+      <br />
+
+
+<!--       <table class="h3">
+      <tr>
+         <th></th>
+         <th></th>
+      </tr>
+      <tr>
+         <td></td>
+         <td></td>
+      </tr>
+      </table>
+      <br />
+
+      <table class="h3">
+      <tr>
+         <th></th>
+         <th></th>
+      </tr>
+      <tr>
+         <td></td>
+         <td></td>
+      </tr>
+      </table>
+      <br />
+ -->
+      <hr />
+
+<!-- 輸出輸入 -->
+      <a name="輸出輸入"><h2>輸出輸入</h2>
+      <br />
+
+      <h3>&lt;&gt;,@_</h3>
+      <br />
+
+      <h3>print, printf</h3>
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />$who = User
+      <br />&amp;time = 3
+      <br />print &lt;&lt;EOF x &amp;time;
+      <span class="cmts">#here document/即席文件</span>
+      <br />&nbsp;&nbsp;$who\'s &quot;Perl&quot;
+      <br />EOF
+      <br />
+      </div>
+      <hr />
+
+<!-- 檔案操作 -->
+      <a name="檔案操作"><h2>檔案操作</h2>
+      <h3>open &amp; close</h3>
+      <p class="h3">Perl讀檔案使用open開啟檔案，讀完檔案使用close關閉檔案，讀檔方式為一行一行的讀，常配合正規表示作搜尋用。在開啟檔案時，可用&lt;（讀取）、&gt;（寫入，覆蓋）、&gt;&gt;（寫入，附加）</p>
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />$file = &quot;a.txt&quot;;
+      <br />open(textFile, &quot;&lt;&quot;, $file) || die &quot;Can't open the current file: $!\n;&quot;
+      <span class="cmts">#開啟檔案，為讀取狀態</span>
+      <br />while ( &lt;textFile&gt; ) { print $_ ; }
+      <span class="cmts">#顯示檔案內容</span>
+      <br />close(textFile);
+      <span class="cmts">#關閉檔案</span>
+      <br />
+      <br />$file = &quot;b.txt&quot;;
+      <br />open(textFile, &quot;>&quot;, $file) || die &quot;Can't open the current file: $!\n;&quot;
+      <span class="cmts">#開啟檔案，為寫入狀態</span>
+      <br />until ( ($input = &lt;&gt;) =~ m/^[Qq]uit$/ ) { print textFile $input; }
+      <span class="cmts">#將內容寫入檔案</span>
+      <br />close(textFile);
+      <br />
+      <br />file = 'c.txt';
+      <br />open(f, '&lt;' ,$file) or die &quot;Can't open the current file: $!\n;&quot;
+      <br />@context = &lt;f&gt;;
+      <br />close(f);
+      <br />$firstLine = shift @context;
+      <br />foreach $line (@context) { print $line; }
+      </div>
+      <br />
+
+      <h3>opendir &amp; closedir</h3>
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />opendir(Dir, '.') or die &quot;Can't open the current directory: $!\n;&quot;
+      <span class="cmts">#開啟資料夾</span>
+      <br />@files = readdir(Dir) or die &quot;Unable to read current dir:$!\n;&quot;
+      <span class="cmts">#讀取資料夾</span>
+      <br />forearch (@files) { print &quot;$_\n&quot;; }
+      <br />closedir(Dir);
+      <span class="cmts">#關閉資料夾</span>
+      </div>
+      <br />
+
+      <h3>mkdir、rmdir</h3>
+      <div class="commands">Linux:~ # <span class="cmds">perl</span> -e 'mkdir &quot;dir&quot;'
+      <span class="cmts">#同mkdir dir</span>
+      <br />Linux:~ # <span class="cmds">perl</span> -e 'rmdir &quot;dir&quot;'
+      <span class="cmts">#同rmdir</span>
+      </div>
+      <br />
+
+      <h3>link、symlink、unlink、rename</h3>
+      <div class="commands">Linux:~ # <span class="cmds">perl</span> -e 'link &quot;a.txt&quot;, &quot;h.txt&quot;'
+      <span class="cmts">#同ln a.txt h.txt</span>
+      <br />Linux:~ # <span class="cmds">perl</span> -e 'symlink &quot;a.txt&quot;, &quot;s.txt&quot;'
+      <span class="cmts">#同ln -s a.txt s.txt</span>
+      <br />Linux:~ # <span class="cmds">perl</span> -e 'unlink &quot;s.txt&quot;'
+      <span class="cmts">#同rm s.txt</span>
+      <br />Linux:~ # <span class="cmds">perl</span> -e 'rename &quot;h.txt&quot;, &quot;H.txt&quot;'
+      <span class="cmts">#同mv h.txt H.txt</span>
+      </div>
+      <br />
+
+      <h3>chmod、chown</h3>
+      <div class="commands">Linux:~ # <span class="cmds">perl</span> -e 'chmod 0700 &quot;a.txt&quot;'
+      <span class="cmts">#同chmod 0700 a.txt</span>
+      <br />Linux:~ # <span class="cmds">perl</span> -e 'chown &quot;user&quot;, &quot;group&quot; &quot;a.txt&quot;'
+      <span class="cmts">#同chown user.group a.txt</span>
+      </div>
+      <hr />
+
+
+<!-- 例外處理 -->
+      <a name="例外處理"><h2>例外處理</h2>
+      <hr />
+
+<!-- 系統指令 -->
+      <a name="系統指令"><h2>系統指令</h2>
+      <div class="commands">#!/usr/bin/perl
+      <br />
+      <br />print `ls`;
+      <span class="cmts">#執行系統指令</span>
+      <br />print `echo \${GLITE_LOCATION:+\$GLITE_LOCATION/bin/}`;
+      <span class="cmts">#當有$時，需要使用\</span>
+      <br />
+      <br />$home = $ENV{'HOME'};
+      <span class="cmts">#取得系統環境變數</span>
+      </div>
+
+      <hr />
+
+<!-- 指令應用 -->
+      <a name="指令應用"><h2>指令應用</h2>
+      <div class="commands">Linux:~ $ cat file.txt
+      <br />Linux:~ $ perl -e 'print &lt;&gt;' file.txt
+      <br />
+      <br />Linux:~ $ head file.txt
+      <br />Linux:~ $ perl -e 'print ((&lt;&gt;)[0..10])' file.txt
+      <br />
+      <br />Linux:~ $ tail file.txt
+      <br />Linux:~ $ perl -e 'print ((&lt;&gt;)[-10..-1])' file.txt
+      <br />
+      <br />Linux:~ $ sed -n 5,9p file.txt
+      <br />Linux:~ $ perl -e 'print ((&lt;&gt;)[5,9])' file.txt
+      <br />
+      <br />Linux:~ $ tac file.txt
+      <br />Linux:~ $ perl -e 'print reverse &lt;&gt;' file.txtkam
+      </div>
+
+      <hr />
+
+
+<!-- reference -->
+     <a name="Reference"><h2>Reference</h2>

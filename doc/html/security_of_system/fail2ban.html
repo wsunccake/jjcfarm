@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>fail2ban</title>
+<link rel="stylesheet" href="../defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>fail2ban</h1>
+      <a href="#fail2ban installation"><li class="title">fail2ban 安裝</li></a>
+      <br /><a href="#fail2ban configuration"><li class="title">fail2ban 設定</li></a>
+      <br /><a href="#fail2ban testing"><li class="title">fail2ban 測試</li></a>
+      <div class="context">
+      <p class="h1">fail2ban是一套開放原始碼且以Python寫得系統安全性的軟體，它可以針對很多服務的登入錯誤予以即時阻擋。
+      <br />如:Apache、vsftpd、pureftp、sshd、postfix、mysqld亦或是自訂自己的需求，像是以PHP寫的網頁的登入錯誤可以將錯誤訊息導入至自訂log檔案，再將自己的需求寫入fail2ban的設定檔，按照Python的正規表示式即可簡單使用。
+	  <br />但fail2ban重新啟動後，阻擋的ip就會不見，在red hat上可以在/etc/init.d/fail2ban多增加iptables save指令。
+      <br />本文以SLES11 sp3和自己的環境為例，自訂阻擋ip的方式。
+      <br /><a href="http://www.fail2ban.org/wiki/index.php/Downloads">可以至官方網站下載對應distribution的fail2ban</a>
+      </p>
+      </div>
+      <hr />
+
+<!-- fail2ban 安裝 -->
+      <a name="fail2ban installation"><h2>fail2ban 安裝</h2>
+      <h3>1. download</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts"># download fail2ban for SLES11sp3</span>
+      <br />SLES:~ # <span class="cmds">wget</span> http://download.opensuse.org/repositories/home:/Peuserik/SLE-11_SP3/noarch/fail2ban-0.8.10-6.10.noarch.rpm
+      </div>
+      <br />
+
+      <h3>2. install</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts"># install fail2ban for SLES11 sp3</span>
+      <br />SLES:~ # <span class="cmds">rpm</span> -ivh fail2ban-0.8.10-6.10.noarch.rpm
+      </div>
+      <br />
+	  <hr />
+
+ <!-- fail2ban 設定 -->
+      <a name="fail2ban configuration"><h2>fail2ban 設定</h2>   
+      <h3>1. configuration</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts"># configuration</span>
+      <br />SLES:~ # <span class="cmds">cat</span> /etc/fail2ban/jail.conf
+      <br />[DEFAULT] <span class="cmts"># 此為全域變數</span>
+      <br />
+      <br />ignoreip = 127.0.0.1/8 <span class="vars">ignoreip</span>
+      <span class="cmts"># 自訂忽略IP 建議把本機的Public IP加入</span>
+      <br />bantime  = -1 <span class="cmts"># 阻擋秒數 -1表示永久</span>
+      <br />maxretry = 5 <span class="cmts"># 五次嘗試錯誤立即阻擋IP</span>
+      <br />
+      <br />[ssh-iptables] <span class="cmts"># 此為區域變數</span>
+      <br />
+      <br />enabled  = true <span class="cmts"># 更改為true</span>
+      <br />filter   = sshd 
+      <br />action   = iptables[name=SSH, port=ssh, protocol=tcp]
+      <br />#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sendmail-whois[name=SSH, dest=you@example.com, sender=fail2ban@localhost] 
+      <span class="cmts"># 不使用email通知 所以註解掉</span>
+      <br />logpath  = /var/log/messages <span class="cmts"># 更改log檔位置</span>
+      <br />maxretry = 5 <span class="cmts"># 五次嘗試錯誤立即阻擋IP</span>
+      <br />
+      <br />SLES:~ # <span class="cmds">cat</span> /etc/fail2ban/filter.d/sshd.conf
+      <br />[INCLUDES]
+      <br />
+      <br />before = common.conf
+      <br />
+      <br />[Definition]
+      <br />
+      <br />_daemon = sshd
+      <br />failregex = ^%(__prefix_line)s(?:error: PAM: )?[aA]uthentication (?:failure|error) for .* from &lt;HOST&gt;( via \S+)?\s*$
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^%(__prefix_line)s(?:error: PAM: )?User not known to the underlying authentication module for .* from &lt;HOST&gt;\s*$
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^%(__prefix_line)sFailed \S+ for .* from &lt;HOST&gt;(?: port \d*)?(?: ssh\d*)?\s*$
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^%(__prefix_line)sROOT LOGIN REFUSED.* FROM &lt;HOST&gt;\s*$
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^%(__prefix_line)s[iI](?:llegal|nvalid) user .* from &lt;HOST&gt;\s*$
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^%(__prefix_line)sUser .+ from &lt;HOST&gt; not allowed because not listed in AllowUsers\s*$
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^%(__prefix_line)sUser .+ from &lt;HOST&gt; not allowed because listed in DenyUsers\s*$
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^%(__prefix_line)sUser .+ from &lt;HOST&gt; not allowed because not in any group\s*$
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^%(__prefix_line)srefused connect from \S+ \(&lt;HOST&gt;\)\s*$
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^%(__prefix_line)sUser .+ from &lt;HOST&gt; not allowed because a group is listed in DenyGroups\s*$
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^%(__prefix_line)sUser .+ from &lt;HOST&gt; not allowed because none of user's groups are listed in AllowGroups\s*$
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^%(__prefix_line)sreverse mapping checking getaddrinfo for .* \[&lt;HOST&gt;\] failed - POSSIBLE BREAK-IN ATTEMPT\!$ 
+      <span class="cmts"># 新增SLES11 sp3 正規表示式</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^%(__prefix_line)s[iI](?:llegal|nvalid) user .* from &lt;HOST&gt;\s*$ 
+      <span class="cmts"># 新增SLES11 sp3 正規表示式</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^%(__prefix_line)sDid not receive identification string from &lt;HOST&gt;\s*$ 
+      <span class="cmts"># 新增SLES11 sp3 正規表示式</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^%(__prefix_line)sReceived disconnect from &lt;HOST&gt;: 11: .* \[preauth\]\s*$ 
+      <span class="cmts"># 新增SLES11 sp3 正規表示式</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^%(__prefix_line)sPostponed keyboard-interactive for .* from &lt;HOST&gt;(?: port \d*)?(?: ssh\d*)? \[preauth\]\s*$ 
+      <span class="cmts"># 新增SLES11 sp3 正規表示式</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^%(__prefix_line)sFailed keyboard-interactive/pam for .* from &lt;HOST&gt;(?: port \d*)?(?: ssh\d*)?\s*$ 
+      <span class="cmts"># 新增SLES11 sp3 正規表示式</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^%(__prefix_line)sReceived disconnect from &lt;HOST&gt;: 11: Bye Bye \[preauth\]\s*$ 
+      <span class="cmts"># 新增SLES11 sp3 正規表示式</span>
+      <br />ignoreregex =
+      <br />
+      <br />SLES:~ # <span class="cmds">cat</span> /usr/local/sbin/pick_ssh
+      <br />if [ -z $FAIL2BAN_MESSAGE_FILE ] ; then <span class="cmts"># 新增此行</span>
+      <br />&nbsp;&nbsp;FAIL2BAN_MESSAGE_FILE=/var/log/fail2ban.log <span class="cmts"># 新增此行</span>
+      <br />fi <span class="cmts"># 新增此行</span>
+      <br />
+      <br />if [ -z $TODAY_numerical ] ; then <span class="cmts"># 新增此行</span>
+      <br />&nbsp;&nbsp;TODAY_numerical=$(date "+%Y-%m-%d") <span class="cmts"># 新增此行</span>
+      <br />fi <span class="cmts"># 新增此行</span>
+      <br />
+      <br />if [ -z $MESSAGE_FILE ] ; then
+      <br />&nbsp;&nbsp;MESSAGE_FILE=/var/log/messages
+      <br />fi
+      <br /><span class="cmts"># &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
+      <br /><span class="cmts"># 中間省略很多行</span>
+      <br /><span class="cmts"># &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
+      <br />echo "#$TODAY" > $TMPFILE.ipdeny
+      <br />grep "$TODAY_numerical" $FAIL2BAN_MESSAGE_FILE | grep 'ssh-iptables' | grep 'Ban' | awk '{print $7}' >> $TMPFILE.ipdeny 
+      <span class="cmts"># 新增此行</span>
+      <br />#awk "{if (\$1 > $NUM) {print \$2}}" $TMPFILE.ssh.ipaccount >> $TMPFILE.ipdeny
+      <span class="cmts"># 註解此行</span>
+      <br />
+      <br />SLES:~ # <span class="cmds">crontab</span> -e
+      <br />0 0 * * * /etc/init.d/nat restart 
+      <br />1 0 * * * /etc/init.d/fail2ban restart <span class="cmts"># 新增此行</span>
+      <br /><span class="cmts"># 因nat重啟會使fail2ban的iptables消失 因此fail2ban也要跟著在nat後重啟</span>
+      <br />
+      <br />SLES:~ # <span class="cmds">chkconfig</span> fail2ban on
+      <span class="cmts"># 設定開機啟動</span>
+      <br />SLES:~ # /etc/init.d/fail2ban restart
+      </div>
+      <br />
+      <hr />
+
+<!-- fail2ban 測試 -->
+      <a name="fail2ban testing"><h2>fail2ban 測試</h2>
+      <h3>1. regex testing</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts"># regex testing</span>
+      <br />SLES:~ # <span class="cmds">fail2ban-regex</span> /var/log/messages /etc/fail2ban/filter.d/sshd.conf 
+      <span class="cmts"># 顯示Success 表示所有正規表示法match成功</span>
+	  <br />SLES:~ # <span class="cmds">fail2ban-regex</span> /var/log/messages "Received disconnect from &lt;HOST&gt;: 11: Bye Bye \[preauth\]\s*" 
+	  <span class="cmts"># 顯示Success 表示這個正規表示法match成功 建議使用一個一個測試再加入至/etc/fail2ban/filter.d/sshd.conf</span>
+	  </div>
+	  <br />
+      <hr />
+
+<!-- reference -->
+    <h2>Reference</h2>
+    <li class="reference"><a href="http://www.fail2ban.org/wiki/index.php/MANUAL_0_8">fail2ban manual website</a></li>
+    <br /><li class="reference"><a href="http://pulipuli.blogspot.tw/2011/07/centosfail2ban.html">CentOS安裝fail2ban記事</a></li>
+    <br /><li class="reference"><a href="http://net.nthu.edu.tw/2009/security:fail2ban">國立清華大學 計算機與通訊中心 網路系統組 Fail2ban</a></li>
+    <hr />
+
+<!-- changelog -->
+    <h2>Changelog</h2>
+    <li class="changelog">2013/12/06 第一次完成</li>
+
+</body>
+</html>

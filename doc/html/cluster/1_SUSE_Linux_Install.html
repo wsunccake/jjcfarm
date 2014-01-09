@@ -1,0 +1,247 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>SUSE Linux Install</title>
+<link rel="stylesheet" href="../defaults.css" type="text/css">
+</head><body>
+<h1>SUSE Linux Install</h1>
+ <a href="#bios"><li class="title">進入BIOS</li></a>
+      <br /><a href="#Install"><li class="title">Install</li></a>
+      <br /><a href="#partition"><li class="title">partition</li></a>
+      <br /><a href="#software"><li class="title">software</li></a>
+      <br />
+<hr/>
+
+<a name="bios"><h2>進入BIOS</h2>
+<p class="h2">Advanced --> CPU configuration --> hyperthreading --> 勾選[disabled] --> save&amp;exit</p>
+<hr/>
+
+
+<a name="Install"><h2>Install</h2>
+<p class="h3">1.Installation<br/>
+        <img src="./SUSE Linux Install/1.png"><br/><br/>
+        2.Agree to the License Terms<br/>
+        <img src="./SUSE Linux Install/3.png"><br/><br/>
+        3.New Installation<br/>
+        <img src="./SUSE Linux Install/4.png"><br/><br/>
+        4.Region=Asia Time Zone=Taipei<br/>
+        <img src="./SUSE Linux Install/5.png"><br/><br/>
+        5.Physical Machine<br/>
+        <img src="./SUSE Linux Install/6.png"><br/><br/>
+        6.此處要規劃Partitioning和Software<br/>
+        <img src="./SUSE Linux Install/7.png"><br/><br/>
+</p>
+<hr/>
+
+<a name="partition"><h2>partition</h2>
+<p class="h3">
+        7.點選Partitioning<br/><br/>
+        選擇Custom Partitioning(可自行分割所需空間)<br/>
+        各分割槽所需空間見下表<br/>
+        <img src="./SUSE Linux Install/8.png"><br/><br/>
+        8.Edit<br/>
+        <img src="./SUSE Linux Install/9.png"><br/><br/>
+        9.Add...<br/>
+        <img src="./SUSE Linux Install/10.png"><br/><br/>
+        10.前三個分割槽使用Primary，第四個則用Extended<br/>
+        <img src="./SUSE Linux Install/11.png"><br/><br/>
+        11.輸入分割槽的大小(見下表)<br/>
+        <img src="./SUSE Linux Install/12.png"><br/><br/>
+        12./boot 使用 Ext3；swap使用swap ；其餘使用BtrFS<br/>
+        <img src="./SUSE Linux Install/13.png"><br/><br/>
+        13.Extended之後需依圖中指示點選才能繼續作邏輯分割槽<br/>
+        <img src="./SUSE Linux Install/18.png"><br/><br/>
+        14.分割完畢如下:至少須分割出 / /boot swap /usr /tmp<br/>
+        <img src="./SUSE Linux Install/21.png"><br/><br/>
+<br/>
+<table class="h3" border=1>
+<td colspan=7 align=center>分割槽大小</td>
+<tr>
+<td></td>
+<td>k0 k1 k2</td>
+<td>fs1(home)</td>
+<td>fs2(work1)</td>
+<td>fs3(work2)</td>
+<td>i01~i25</td>
+<td>e01~e05</td>
+<tr>
+<td>/boot : Ext3 (Primary)</td>
+<td>512 MB</td>
+<td>512 MB</td>
+<td>512 MB</td>
+<td>512 MB</td>
+<td>512 MB</td>
+<td>512 MB</td>
+<tr>
+<td>swap : swap (Primary)</td>
+<td>2 GB</td>
+<td>16 GB</td>
+<td>16 GB</td>
+<td>4 GB</td>
+<td>24 GB</td>
+<td>192 GB</td>
+<tr>
+<td>/ : BtrFS (primary)</td>
+<td>95 GB</td>
+<td>50 GB</td>
+<td>50 GB</td>
+<td>50 GB</td>
+<td>30 GB</td>
+<td>30 GB</td>
+<tr>
+<td>/usr : BtrFS (logical)</td>
+<td>40 GB</td>
+<td>150 GB</td>
+<td>150 GB</td>
+<td>150 GB</td>
+<td>30 GB</td>
+<td>30 GB</td>
+<tr>
+<td>/tmp : BtrFS (logical)</td>
+<td>(none)</td>
+<td>(none)</td>
+<td>(none)</td>
+<td>(none)</td>
+<td>other</td>
+<td>other</td>
+<tr>
+<td>/home BtrFS (Primary)(dev_sdb)</td>
+<td>(none)</td>
+<td>maxi.</td>
+<td>(none)</td>
+<td>(none)</td>
+<td>(none)</td>
+<td>(none)</td>
+<tr>
+<td>/work BtrFS (Primary)(dev_sdb)</td>
+<td>(none)</td>
+<td>(none)</td>
+<td>maxi.</td>
+<td>maxi.</td>
+<td>(none)</td>
+<td>(none)</td>
+<tr>
+<td>/pkg(lustre) BtrFS (Primary)(dev_sdb)</td>
+<td>(none)</td>
+<td>(none)</td>
+<td>(none)</td>
+<td>(none)</td>
+<td>(none)</td>
+<td>maxi.</td>
+</table>
+
+  <p class="h3">
+	磁碟分割規畫<br/>
+	1. k0 k1 k2 : 割完/boot剩下的sda與sdb作LVM (vg00)<br/>
+	2. fs1 fs2 : 兩顆硬碟作RAID0 (md00)<br/>
+	3. fs3 : 8顆硬碟作RAID0 (md00)<br/>
+  </p>
+  <hr />
+
+<a name="software"><h2>software</h2>
+
+<p class="h3">15.Details...<br/>
+<img src="./SUSE Linux Install/22.png"><br/><br/>
+16.勾選C/C++...後，選擇Search<br/>
+<img src="./SUSE Linux Install/23.png"><br/><br/>
+
+17.搜尋下列軟體<br>
+<table class="h3" border="1">
+  <tr>
+    <td>搜尋字串</td>
+    <td>所需的程式</td>
+  </tr>
+  <tr style="height: 16.5pt">
+    <td>telnet</td>
+    <td>telnet、telnet-server</td>
+  </tr>
+  <tr>
+    <td>ssh</td>
+    <td>ssh-server</td>
+  </tr>
+<!--   <tr>
+    <td>rsh</td>
+    <td>rsh、rsh-server</td>
+  </tr>
+  <tr>
+    <td>ash</td>
+    <td>ash</td>
+  </tr> -->
+  <tr>
+    <td>ypbind</td>
+    <td>ypbind</td>
+  </tr>
+  <tr>
+    <td>ypserv</td>
+    <td>ypserv</td>
+  </tr>
+  <tr>
+    <td>nfs</td>
+    <td>nfsidmap、nfs-utils、yast2-nfs-client、yast2-nfs-server</td>
+  </tr>
+<!--   <tr>
+    <td>vsftpd</td>
+    <td>vsftpd</td>
+  </tr> -->
+  <tr>
+    <td>gcc</td>
+    <td>gcc、libgcc</td>
+  </tr>
+  <tr>
+    <td>nis</td>
+    <td>yast2-nis-client、yast2-nis-server</td>
+  </tr>
+</table>
+<br />
+
+全部裝完按Accept<br/><br/>
+<img src="./SUSE Linux Install/24.png"><br/><br/>
+
+<p class="h3">18. 按Install即可<br />
+<img src="./SUSE Linux Install/25.png"><br/><br/>
+
+19.安裝完畢後，設定root密碼<br/>
+<img src="./SUSE Linux Install/30.png"><br/><br/>
+
+20.此二選項不打勾<br/>
+<img src="./SUSE Linux Install/31.png"><br/><br/>
+
+21.網路設定跳過<br/>
+<img src="./SUSE Linux Install/32.png"><br/><br/>
+<img src="./SUSE Linux Install/33.png"><br/><br/>
+<img src="./SUSE Linux Install/34.png"><br/><br/>
+
+22.local<br/>
+<img src="./SUSE Linux Install/35.png"><br/><br/>
+
+23.新增使用者此處跳過，直接Next<br/>
+<img src="./SUSE Linux Install/37.png"><br/><br/>
+
+24.硬體設定也跳過<br/>
+<img src="./SUSE Linux Install/38.png"><br/><br/>
+
+25.Finish<br/>
+<img src="./SUSE Linux Install/39.png"><br/><br/>
+
+26.安裝後會直接開機，按[ctrl]+[alt]+[F2]進入文字介面<br/>
+<img src="./SUSE Linux Install/40.png"><br/><br/>
+<img src="./SUSE Linux Install/42.png"><br/><br/>
+
+27.修改runlevel:<br/>
+<img src="./SUSE Linux Install/44.png"><br/><br/>
+
+28.重新啟動<br/>
+<div class="commands">
+linux:~ # reboot
+</div>
+</p>
+
+<br/>
+<hr/>
+ <h2>Changelog</h2>
+    <li class="changelog">2013/10/04 第一次完成</li>
+    <li class="changelog">2013/11/04 修改Software</li>
+
+</body>
+</html>

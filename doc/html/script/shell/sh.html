@@ -1,0 +1,967 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>SH/BASH/DASH</title>
+<link rel="stylesheet" href="../../defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>SH/BASH/DASH</h1>
+      <a href="#使用環境"><li class="title">使用環境</li></a>
+      <br /><a href="#基本控制"><li class="title">基本控制</li></a>
+      <br /><a href="#變數型態"><li class="title">變數型態</li></a>
+      <br /><a href="#控制流程"><li class="title">控制流程</li></a>
+      <br /><a href="#函式參數"><li class="title">函式參數</li></a>
+      <br /><a href="#例外/其他處理"><li class="title">例外/其他處理</li></a>
+      <br /><a href="#正規表示"><li class="title">正規表示</li></a>
+      <br /><a href="#資料庫"><li class="title">資料庫</li></a>
+      <br /><a href="#Reference"><li class="title">Reference</li></a>
+      <div>
+      <p class="h1">Bourne shell，或sh，是Version 7 Unix默認的Unix shell，替代執行文件同為sh的Thompson shell。它由AT&amp;T貝爾實驗室的Stephen Bourne在1977年在Version 7 Unix中針對大學與學院發布的。It remains a popular default shell for Unix accounts. 它的二進制程序文件在大多數Unix系統上位於/bin/sh，在很多Unix版本中，它仍然是root的默認shell。
+      <br />bash 是一個為GNU項目編寫的Unix shell。它的名字是一系列縮寫：Bourne-Again SHell — 這是關於Bourne shell（sh）的一個雙關語（Bourne again / born again）。Bourne shell是一個早期的重要shell，由Stephen Bourne在1978年前後編寫，並同Version 7 Unix一起發布。bash則在1987年由Brian Fox創造。在1990年，Chet Ramey成為了主要的維護者。bash的命令語法是Bourne shell命令語法的超集。數量龐大的Bourne shell腳本大多不經修改即可以在bash中執行，只有那些引用了Bourne特殊變數或使用了Bourne的內置命令的腳本才需要修改。 bash的命令語法很多來自Korn shell (ksh) 和 C shell (csh)， 例如命令行編輯，命令歷史，目錄棧，$RANDOM 和 $PPID 變數，以及POSIX的命令置換語法： $(...)。作為一個互動式的shell，按下TAB鍵即可自動補全已部分輸入的程序名，文件名，變數名等等。
+      <br />dash，這是一個不同於bash shell，它主要是為了執行腳本而出現，而不是交互，它速度更快，但功能相比bash要少很多，語法嚴格遵守POSIX標準，下面簡要列舉下從bash遷移到dash一般需要注意的問題
+	</p>
+      </div>
+      <hr />
+
+<!-- 使用環境 -->
+      <a name="使用環境"></a><h2>使用環境</h2>
+      <h3></h3>
+      <h3></h3>
+      <h3></h3>
+      <hr />
+
+<!-- 基本控制 -->
+      <a name="基本控制"></a><h2>基本控制</h2>
+      <h3>wildcard/通配字元</h3>
+      <p class="h3">常用的特殊字元有?，*，{}，[]，\，&quot;，'，`，使用方式分別如下：</p>
+      <table class="h3">
+        <tr>
+          <th>wildcard</th>
+          <th>description</th>
+        </tr>
+        <tr>
+          <td>?</td>
+          <td>表示任何一個字元</td>
+        </tr>
+        <tr>
+          <td>*</td>
+          <td>表示任何一個字串</td>
+        </tr>
+        <tr>
+          <td>[]</td>
+          <td>表示字元的集合</td>
+        </tr>
+        <tr>
+          <td>{}</td>
+          <td>表示字串的集合</td>
+        </tr>
+        <tr>
+          <td>\</td>
+          <td>將特殊字元的視為一般字元</td>
+        </tr>
+        <tr>
+          <td>$</td>
+          <td>讀取環境變數的內容</td>
+        </tr>
+        <tr>
+          <td>&quot;</td>
+          <td>雙引號內的特殊字元保有其意義</td>
+        </tr>
+        <tr>
+          <td>'</td>
+          <td>單引號內的特殊字元視為一般字元</td>
+        </tr>
+        <tr>
+          <td>`</td>
+          <td>反引號內的指令結果直接視為輸入</td>
+        </tr>
+      </table>
+      <br />
+
+
+ 
+      <h3>pipeline/管線</h3>
+      <p class="h3">``、expr、$(())是sh內建指令（built-in），``是顯示指令輸出；expr是作四則運算；$(())也是作四則運算</p>
+      <div class="commands">Linux:~ # <span class="cmds">ls</span> -l `which who`
+      <span class="cmts">#顯示who指令資訊</span>
+      <br />Linux:~ # <span class="cmds">expr</span> 1 + 1
+      <span class="cmts">#1 + 1運算</span>
+      <br />Linux:~ # $((1 + 1))
+      <span class="cmts">#功能同上</span></div>
+      <br />
+
+      <p class="h3">&lt;、&gt;、&gt;&gt;、&amp;&gt;、2&gt;&amp;1
+      <br />|、|&amp;、&amp;&amp;、||、;、;;</p>
+      <div class="commands">Linux:~ # <span class="cmds">ls</span> /etc &gt; a.txt
+      <span class="cmts">#顯示結果 輸出到a.txt</span>
+      <br />Linux:~ # <span class="cmds">ls</span> /opt &gt;&gt; a.txt
+      <span class="cmts">#顯示結果 添加到a.txt</span>
+      <br />Linux:~ # <span class="cmds">ls</span> &lt; a.txt
+      <span class="cmts">#顯示a.txt內容結果</span>
+      <br />Linux:~ # <span class="cmds">ls</span> /123 1&gt; /dev/null 2&gt;&amp;1
+      <span class="cmts">#stderr輸出到stdout，而stdout輸出到/dev/null</span>
+      <br />Linux:~ # <span class="cmds">ls</span> /123 &amp;&gt; /dev/null
+      <span class="cmts">#功能同上</span>
+      <br />Linux:~ # <span class="cmds">ls</span> /etc | <span class="cmds">grep</span> conf
+      <span class="cmts">#搜尋/etc底下為檔名帶有conf的檔案</span>
+      <br />Linux:~ # <span class="cmds">ls</span> /123 |&amp; echo "file didn't exist"
+      <span class="cmts">#</span></div>
+
+      <table class="h3">
+        <tr>
+          <th>symol</th>
+          <th>descritopn</th>
+        </tr>
+
+        <tr>
+          <td>&gt;</td>
+          <td>stdout to file</td>
+        </tr>
+        <tr>
+          <td>2&gt;</td>
+          <td>stderr to file</td>
+        </tr>
+        <tr>
+          <td>1&gt;&amp;2</td>
+          <td>stdout to stderr</td>
+        </tr>
+        <tr>
+          <td>2&gt;&amp;1</td>
+          <td>stderr to stdout</td>
+        </tr>
+        <tr>
+          <td>&amp;&gt;</td>
+          <td>stdout and stderr to file</td>
+        </tr>
+
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+      <br />
+
+
+      <h3></h3>
+      <h3>script/指令稿</h3>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> <a href="./ex/hello.sh"><span class="vars">hello.sh</span></a>
+      <br />#!/usr/bin/env sh
+      <br />
+      <br />echo &quot;Hello, BASH&quot;
+      <br />Linux:~ # <span class="cmds">chmod</span> u+x <a href="./ex/hello.sh"><span class="vars">hello.sh</span></a>
+      <br />Linux:~ # ./<a href="./ex/hello.sh"><span class="vars">hello.sh</span></a>
+      <br />Hello, BASH</div>
+      <br />
+      <hr />
+  
+<!-- 變數型態 -->
+      <a name="變數型態"></a><h2>變數型態</h2>
+      <h3>string/字串</h3>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />STR0=&quot;ABcd&quot;
+      <span class="cmts">#給值，一般sh都習慣不宣告變數型態</span>
+      <br />declare -l STR1=&quot;ABcd&quot;
+      <span class="cmts">#宣告為小寫字串</span>
+      <br />declare -u STR2=&quot;ABcd&quot;
+      <span class="cmts">#宣告為大寫字串</span>
+      <br />declare -p STR0 STR1 STR2
+      <span class="cmts">#查看變數型態</span>
+      <br />echo $STR0
+      <span class="cmts">#顯示變數，記得前面要多加$</span>
+      <br />unset STR0
+      <span class="cmts">#不設置變數</span></div>
+      <br />
+
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />STR0=/usr/lib/python2.6/site-packages/gtk-2.0/gconf.so
+      <br />echo ${STR0%.*}, ${STR0%%.*}
+      <br />echo ${STR0#*/}, ${STR0##*/}
+      <br />echo ${STR0/g/G}, ${STR0//g/G}
+      <br />echo ${STR0/%g/G}, ${STR0/#g/G}
+      <br />echo $(dirname $STR0), $(basename $STR0)
+      <br />
+      <br />STR1=&quot;123ABCzyx&quot;
+      <br />echo ${STR1:2:6}
+      <span class="cmts">#取2~6</span>
+      <br />echo ${#STR1}
+      <span class="cmts">#顯示字串字元數</span>
+      <br />echo ${STR1/AB/ab}
+      <span class="cmts">#AB換成ab</span>
+      <br />echo ${STR1^^z}
+      <span class="cmts">#小寫換大寫</span>
+      <br />echo ${STR1,,A}
+      <span class="cmts">#大寫換小寫</span>
+      <br />
+      <br />STR0=abc; unset STR1
+      <br />echo &quot;inital: STR0=$STR0, STR1=$STR1&quot;
+      <br />echo &quot;assign: STR0=${STR0:-ABC}, STR1=${STR1:-ABC}&quot;
+      <br />echo &quot;final : STR0=$STR0, STR1=$STR1&quot;
+      <br /><span class="cmts">#if [ -z $STR ]; then</span>
+      <br /><span class="cmts">#&nbsp;&nbsp;echo &quot;ABC&quot;</span>
+      <br /><span class="cmts">#fi</span>
+      <br />
+      <br />STR0=abc; unset STR1
+      <br />echo &quot;inital: STR0=$STR0, STR1=$STR1&quot;
+      <br />echo &quot;assign: STR0=${STR0:=ABC}, STR1=${STR1:=ABC}&quot;
+      <br />echo &quot;final : STR0=$STR0, STR1=$STR1&quot;
+      <br /><span class="cmts">#if [ -z $STR ]; then</span>
+      <br /><span class="cmts">#&nbsp;&nbsp;STR=&quot;ABC&quot;</span>
+      <br /><span class="cmts">#fi</span>
+      <br />
+      <br />STR0=abc; unset STR1
+      <br />echo &quot;inital: STR0=$STR0, STR1=$STR1&quot;
+      <br />echo &quot;assign: STR0=${STR0:+ABC}, STR1=${STR1:+ABC}&quot;
+      <br />echo &quot;final : STR0=$STR0, STR1=$STR1&quot;
+      <br /><span class="cmts">#if [ ! -z $STR ]; then</span>
+      <br /><span class="cmts">#&nbsp;&nbsp;echo &quot;ABC&quot;</span>
+      <br /><span class="cmts">#fi</span>
+      </div>
+      <br />
+
+      <h3>integer/整數</h3>
+      <p class="h3">sh中並沒有明確定義（使用declare -i宣告時），若存入的數值帶有小數，則為字串：當明確定義為整數時，則無法設定浮點數。sh只支援整數運算</p>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />VAR0=12
+      <br />declare -i VAR1=34
+      <span class="cmts">#宣告為整數</span>
+      <br />declare -p VAR0 VAR1
+      <br />printf &quot;%i, %+i, %-i\n&quot; $VAR0 $VAR1 `expr $VAR0 \* $VAR1`
+      <span class="cmts">#格式化輸出，expr可以作四則運算</span>
+      <br />printf &quot;____, ____, ____\n&quot;
+      <br />printf &quot;%04i, %+04i, %-04i\n&quot; `expr $VAR0 + $VAR1` `expr $VAR0 - $VAR1` `expr $VAR0 / $VAR1`
+      </div>
+      <br />
+
+      <p class="h3">sh要作四則運算，可以使用expr、$(())和bc的方式</p>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <span class="cmts">#以下為sh作四則運算的操作方式，但只能作整數運算</span>
+      <br />expr 5 / 2
+      <br />echo $((5 / 2))
+      <br />echo &quot;5 / 2&quot; | bc
+      <br />
+      <br />
+      <span class="cmts">#宣告小數位數，可以作簡單浮點數運算</span>
+      <br />echo &quot;scale=2; 5 / 2&quot; | bc
+      <br />
+      <br />
+      <span class="cmts">#取一位亂數</span>
+      <br />tr -dc 0-9 &lt; /dev/urandom | head -c 1
+      <br />
+      </div>
+      <br />
+
+      <h3>array/陣列</h3>
+      <p class="h3">一般未宣告的陣列（declare -a）為indexed  array，index從是由零開始：但是使用declare -A宣告陣列為associative array（也就是hast table、dictionary）</p>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />ARR0[0]=&quot;a&quot;
+      <br />ARR0[1]=&quot;B&quot;
+      <br />declare -a ARR1=(&quot;a&quot;)
+      <br />ARR1[1]=&quot;B&quot;
+      <br />declare -A ARR2
+      <br />ARR2[&quot;A&quot;]=&quot;a&quot;
+      <br />declare -p ARR0 ARR1 ARR2
+      <br />echo $ARR0[0], ${ARR0[0]}
+      <br />echo ${#ARR0}, ${#ARR0[@]}, ${#ARR0[*]}
+      <span class="cmts">#顯示陣列的element個數</span>
+      <br />echo ${ARR0[@]}, ${ARR0[*]}
+      <span class="cmts">#顯示陣列的value</span>
+      <br />echo ${!ARR0[@]}, ${!ARR0[*]}
+      <span class="cmts">#顯示陣列的key</span></div>
+      <br />
+
+      <h3>dynamic variable</h3>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />myvar=&quot;VAR&quot;
+      <br />VAR=&quot;dynamic&quot;
+      <br />
+      <br />echo ${myvar}, ${!myvar}
+      </div>
+      <br />
+      <hr />
+
+<!-- 控制流程 -->
+      <a name="控制流程"></a><h2>控制流程</h2>
+      <h3>if/else</h3>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br /><i>FILE</i>=$1
+      <br />SINGAL=`ls $<i>FILE</i> &amp;&gt; /dev/null &amp;&amp; echo &quot;0&quot; || echo &quot;1&quot;`
+      <br />if [ $SINGAL == &quot;1&quot; ]; then
+      <br />&nbsp;&nbsp;echo &quot;didn't exist&quot;
+      <br />else
+      <br />&nbsp;&nbsp;ls -l $<i>FILE</i>
+      <br />fi</div>
+      <br />
+
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br /><i>NUM</i>=$1
+      <br />if [ $NUM -eq 0 ]; then
+      <br />&nbsp;&nbsp;echo &quot;Num is zero&quot;
+      <br />elif [ $NUM -ge 1 ]; then
+      <br />&nbsp;&nbsp;echo &quot;Num is positive&quot;
+      <br />else
+      <br />&nbsp;&nbsp;echo &quot;Num is negative&quot;
+      <br />fi</div>
+      <br />
+
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br /><span class="cmts">#兩個condition同時判斷檔案是否存在</span>
+      <br />if [ -f $HOME/.bash_profile ] || [ -f $HOME/.profile ]
+      <br />then
+      <br />&nbsp;&nbsp;echo &quot;$HOME/.bash_profile or $HOME/.profile&quot;
+      <br />fi</div>
+      <br />
+
+      <p class="h3">邏輯測試</p>
+      <table class="h3">
+        <tr>
+          <th>condition</th>
+          <th>mean</th>
+        </tr>
+        <tr>
+          <td>&amp;&amp;</td>
+          <td>and</td>
+        </tr>
+        <tr>
+          <td>||</td>
+          <td>or</td>
+        </tr>
+        <tr>
+          <td>!</td>
+          <td>not</td>
+        </tr>
+      </table>
+      <br />
+
+      <p class="h3">檔案測試</p>
+      <table class="h3">
+        <tr>
+          <th>condition</th>
+          <th>mean</th>
+        </tr>
+        <tr>
+          <td>-d file</td>
+          <td>file存在且為目錄</td>
+        </tr>
+        <tr>
+          <td>-e file</td>
+          <td>file存在</td>
+        </tr>
+        <tr>
+          <td>-f file</td>
+          <td>file存在且為檔案</td>
+        </tr>
+        <tr>
+          <td>-r file</td>
+          <td>擁有file的read的權限</td>
+        </tr>
+        <tr>
+          <td>-s file</td>
+          <td>file存在且不為空的</td>
+        </tr>
+        <tr>
+          <td>-w file</td>
+          <td>擁有file的write的權限</td>
+        </tr>
+        <tr>
+          <td>-x file</td>
+          <td>擁有file的execute的權限</td>
+        </tr>
+        <tr>
+          <td>-O file</td>
+          <td>擁有file的所有的權限</td>
+        </tr>
+        <tr>
+          <td>-G file</td>
+          <td>為file的群組</td>
+        </tr>
+        <tr>
+          <td>file1 -nt file2</td>
+          <td>file1修改時間比file2新</td>
+        </tr>
+        <tr>
+          <td>-file1 -ot file2</td>
+          <td>file1修改時間比file2舊</td>
+        </tr>
+      </table>
+      <br />
+
+      <p class="h3">字串測試</p>
+      <table class="h3">
+        <tr>
+          <th>condition</th>
+          <th>mean</th>
+        </tr>
+        <tr>
+          <td>str1 == str2</td>
+          <td>str1符合str2</td>
+        </tr>
+        <tr>
+          <td>str1 != str2</td>
+          <td>str1不符合str2</td>
+        </tr>
+        <tr>
+          <td>str1 &lt; str2</td>
+          <td>str1小於str2</td>
+        </tr>
+        <tr>
+          <td>str1 &gt; str2</td>
+          <td>str1大於str2</td>
+        </tr>
+        <tr>
+          <td>-n str</td>
+          <td>str不為空字串</td>
+        </tr>
+        <tr>
+          <td>-z str</td>
+          <td>str為空字串</td>
+        </tr>
+      </table>
+      <br />
+
+      <p class="h3">數值測試</p>
+      <table class="h3">
+        <tr>
+          <th>condition</th>
+          <th>mean</th>
+        </tr>
+        <tr>
+          <td>var1 -gt var2</td>
+          <td>var1大於var2</td>
+        </tr>
+        <tr>
+          <td>var1 -ge var2</td>
+          <td>var1大於等於var2</td>
+        </tr>
+        <tr>
+          <td>var1 -eq var2</td>
+          <td>var1等於var2</td>
+        </tr>
+        <tr>
+          <td>var1 -ne var2</td>
+          <td>var1不於var2</td>
+        </tr>
+        <tr>
+          <td>var1 -lt var2</td>
+          <td>var1小於var2</td>
+        </tr>
+        <tr>
+          <td>var1 -le var2</td>
+          <td>var1小於等於var2</td>
+        </tr>
+      </table>
+      <br />
+
+      <h3>test</h3>
+      <div class="commands">Linux:~ # <span class="cmds">test</span> x$UID == &quot;x0&quot; &amp;&amp; echo &quot;Root&quot; || echo &quot;User&quot;
+      </div>
+      <br />
+
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />if test x$UID == &quot;x0&quot;; then
+      <br />&nbsp;&nbsp;echo &quot;Root&quot;
+      <br />else
+      <br />&nbsp;&nbsp;echo &quot;User&quot;
+      <br />fi
+      </div>
+      <br />
+
+      <h3>for</h3>
+      <p class="h3">For loop基本的使用方式</p>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />for I in {0..10}; do
+      <span class="cmts">#dash不支援{i..j}的方式，須使用seq</span>
+      <br />&nbsp;&nbsp;for J in `seq 0 7`; do
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;for K in 0 1 4 5 7 8; do
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo -en &quot;\e[${K};3${I};4${J}m${K};3${I};4${J}m\e[m &quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;done
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;echo &quot;&quot;
+      <br />&nbsp;&nbsp;done
+      <br />&nbsp;&nbsp;echo &quot;&quot;
+      <br />done</div>
+      <br />
+
+      <p class="h3">For loop也可用數值方式寫法</p>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />for (( i=0; i&lt;5; i++ )); do
+      <br />&nbsp;&nbsp;echo $i
+      <br />done</div>
+      <br />
+
+      <p class="h3">One-liner（一行指令）式的For loop用法，適用於終端機模式下輸入</p>
+      <div class="commands">Linux:~ # <span class="cmds">for</span> LINE <span class="cmds">in</span> `cat /etc/passwd`; <span class="cmds">do</span> echo $LINE; <span class="cmds">done</span>
+      </div>
+      <br />
+
+      <h3>xargs</h3>
+      <p class="h3">xargs為一指令，並非是SH/BASH內的指令，使用方式可簡化for的使用</p>
+      <div class="commands">Linux:~ # cat /etc/passwd | <span class="cmds">xargs</span> -i echo {}
+      <br />Linux:~ # ls -d /var | <span class="cmds">xargs</span> -i sh -c &quot;tar zcf /backup/{}.tar.gz {}&quot;
+      </div>
+      <br />
+
+      <h3>case</h3>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />case $(basename $SHELL) in
+      <br />&nbsp;&nbsp;sh|bash)
+      <br />&nbsp;&nbsp;echo &quot;SH or BASH&quot;;;
+      <br />&nbsp;&nbsp;csh|tcsh)
+      <br />&nbsp;&nbsp;echo &quot;CSH or TCSH&quot;;;
+      <br />&nbsp;&nbsp;*)
+      <br />&nbsp;&nbsp;echo &quot;unknown shell&quot;
+      <br />esac</div>
+      <br />
+
+      <h3>select</h3>
+      <p class="h3">bash和ksh才有這東西，dash不支援select用法</p>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />select USER in `awk -F: '{print $1}' /etc/passwd`; do
+      <br />&nbsp;&nbsp;finger $USER
+      <br />done</div>
+      <br />
+
+      <h3>while/until</h3>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />while [ 0 ]; do
+      <br />&nbsp;&nbsp;echo &quot;`who|wc -l` user(s) login&quot;
+      <br />&nbsp;&nbsp;sleep 300
+      <br />done</div>
+      <br />
+
+      <br />
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />until [ $ANS == &quot;0&quot; ]; do
+      <br />&nbsp;&nbsp;dialog --yesno &quot;Do you want to exit?&quot; 5 25
+      <br />&nbsp;&nbsp;ANS=$?
+      <br />done</div>
+      <br />
+
+      <h3>break/continue</h3>
+      <hr />
+
+<!-- 函式參數 -->
+      <a name="函式參數"></a><h2>函式參數</h2>
+      <h3>function/subroutine</h3>
+      <p class="h3">一般的使用方式</p>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />function po() { ps o user,pid,%cpu,%mem,cmd k -%cpu; }
+      <span class="cmts">#dash中沒有function這個關鍵字，一般可以省略function</span>
+      <br />
+      <br /># Main Program
+      <br />po</div>
+      <br />
+
+      <p class="h3">像module載入使用</p>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> Load.sh
+      <br />#!/usr/bin/env sh
+      <br />
+      <br />mySOURCE() {
+      <br />&nbsp;&nbsp;$FILE=$1
+      <br />&nbsp;&nbsp;SOURCE_STATE=`source $FILE &amp;&amp; echo &quot;0&quot; || echo &quot;1&quot;`
+      <br />&nbsp;&nbsp;if [ $SOURCE_STATE == &quot;0&quot; ]; then
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;source $FILE
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;printf &quot;\e[33m%s\e[m load succes\n&quot; $FILE
+      <br />&nbsp;&nbsp;else
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;printf &quot;\e[33m%s\e[m load fail\n&quot; $FILE
+      <br />&nbsp;&nbsp;fi
+      <br />}
+      <br />
+      <br />Linux:~ # <span class="cmds">cat</span> Main.sh
+      <br />#!/usr/bin/env sh
+      <br />
+      <br /># Load Function
+      <br />. Load.sh
+      <br />
+      <br /># Main Program
+      <br />mySOURCE /etc/profile.d/mc.sh</div>
+      <br />
+
+      <h3>argument</h3>
+      <table class="h3">
+      <tr>
+        <th>variable</th>
+        <th>mean</th>
+      </tr>
+      <tr>
+        <td>$<i>N</i></td>
+        <td>N表示第幾個參數，$0是function名稱，$1為第一個參數，$2為第二個，依此類推</td>
+      </tr>
+      <tr>
+         <td>$#</td>
+         <td>輸入參數的總數，不包括$0</td>
+      </tr>
+      <tr>
+         <td>$?</td>
+         <td>判斷上個指令是否可執行，成功輸出0，失敗輸出非0</td>
+      </tr>
+      <tr>
+         <td>$@</td>
+         <td>所有參數的字串，例如./test.sh 123 abc XYZ，此時為$@為&quot;123&quot;, &quot;abc&quot;, &quot;XYZ&quot;</td>
+      </tr>
+      <tr>
+          <td>$*</td>
+          <td>所有參數的字串，例如./test.sh 123 abc XYZ，此時為$@為&quot;123 abc XYZ&quot;</td>
+      </tr>
+      <tr>
+          <td>$$</td>
+          <td>目前執行的shell的PID</td>
+      </tr>
+      </table>
+
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> arg.sh
+      <br />#!/usr/bin/env sh
+      <br />
+      <br />echo &quot;arg1: $1, all arg: $@, num of arg: $#&quot;
+      <br />Linux:~ # ./arg.sh ABC xyz 123</div>
+      <br />
+
+      <h3>read</h3>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />echo &quot;Input your name?&quot;
+      <br />read NAME
+      <br />echo &quot;Hi, $NAME&quot;</div>
+      <br />
+
+      <h3>local</h3>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />A() { local VAR=&quot;local A&quot;; echo $VAR; }
+      <br />B() { echo $VAR; }
+      <br />C() { VAR=&quot;global C&quot;; echo $VAR; }
+      <br />D() { echo $VAR; }
+      <br />
+      <br /># Main Program
+      <br />VAR=&quot;global&quot;
+      <br />echo $VAR
+      <br />A; B; C; D
+      <br />echo $VAR </div>
+      <br />
+
+      <h3>shift</h3>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />for ARG in $@; do
+      <br />&nbsp;&nbsp;ARGS=$@
+      <br />&nbsp;&nbsp;echo $ARGS, $ARG, $1
+      <br />&nbsp;&nbsp;shift
+      <br />&nbsp;&nbsp;printf &quot;%s, %s, %s\n\n&quot; $ARGS $ARG $1
+      <br />done</div>
+      <br />
+
+      <h3>getopts</h3>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />file_flag=&quot;false&quot;
+      <br />help_flag=&quot;false&quot;
+      <br />
+      <br />echo &quot;BEGIN $OPTIND&quot;
+      <br />while getopts :f:h opt; do
+      <br />&nbsp;&nbsp;case $opt in
+      <br />&nbsp;&nbsp;f)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;echo &quot;f $OPTIND&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;file_flag=&quot;true&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;FILENAME=$OPTARG;;
+      <br />&nbsp;&nbsp;h)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;echo &quot;h $OPTIND&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;help_flag=&quot;true&quot;;;
+      <br />&nbsp;&nbsp;esac
+      <br />done
+      <br />echo &quot;END $OPTIND&quot;
+      <br />shift $((OPTIND - 1))
+      <br />
+      <br />echo $file_flag, $help_flag
+      <br />
+      <br />if [ $help_flg == &quot;true&quot; ]; then
+      <br />&nbsp;&nbsp;echo &quot;HELP !!&quot;
+      <br />&nbsp;&nbsp;exit 0
+      <br />fi
+      <br />
+      <br />if [ $file_flag == &quot;true&quot; ]; then
+      <br />&nbsp;&nbsp;echo &quot;File: $FILENAME&quot;
+      <br />fi
+      </div>
+      <br />
+
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />while getopts m: opt; do
+      <br />&nbsp;&nbsp;case $opt in
+      <br />&nbsp;&nbsp;m)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;A=$OPTARG
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;L=${A%=*}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;R=${A#${L}=*}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;declare &quot;MY$L&quot;=$R
+      <br />&nbsp;&nbsp;eval &quot;echo \&quot;MY$L, \${MY$L}\&quot;&quot;;;
+      <br />&nbsp;&nbsp;esac
+      <br />done
+      <br />
+      <br />MYVar=${MYVar:=NoDefine}
+      <br />echo &quot;MYVar: $MYVar&quot;
+      <br />
+      <br />for p in SHELL PATH LD_LIBRARY_PATH; do
+      <br />eval &quot;v=\&quot;\${$p}\&quot;&quot;
+      <br />if [ -z $v ]; then
+      <br />&nbsp;&nbsp;echo &quot;$p ======> $v &quot;
+      <br />else
+      <br />&nbsp;&nbsp;echo &quot;ERROR: variable $p don't define&quot;
+      <br />fi
+      <br />done
+      </div>
+
+      <hr />
+
+<!-- 例外/其他處理 -->
+      <a name="例外/其他處理"></a><h2>例外/其他處理</h2>
+      <h3>eval</h3>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />LS=ls
+      <br />echo $LS
+      <span class="cmts">#只螢幕上顯示ls</span>
+
+      <br />eval $LS
+      <span class="cmts">#顯示該目錄下的檔案，就是執行ls</span>
+
+      <br />`echo $LS`
+      <span class="cmts">#顯示該目錄下的檔案，就是執行ls</span>
+      </div>
+      <br />
+
+      <h3>exec</h3>
+      <p class="h3">shell的內建命令exec很有意思，它並不啟動新的shell process，而是用要被執行命令替換當前的shell process，並且將舊的process清理掉，而且exec命令後的其它命令將不再執行。</p>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />if [ `id -u` == &quot;0&quot; ]; then
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;exec cat /etc/shadow
+      <span class="cmts">#當root執行時，只會執行到exec就停止</span>
+      <br />else
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;echo &quot;you aren't root&quot;
+      <br />fi
+      <br />cat /etc/passwd
+      </div>
+      <br />
+
+      <h3>trap</h3>
+      <p class="h3">捕捉訊號</p>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />ErrMeg() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;echo &quot;Interrupt process&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;exit 1
+      <br />}
+      <br />
+      <br />trap ErrMeg 2
+      <br />
+      <br />while [ 0 ]; do
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;echo &quot;Hi&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;sleep 3
+      <br />done
+      </div>
+      <p class="h3">在執行這script後，會進入無窮迴圈一直輸出&quot;Hi&quot;，當按下Ctrl C在結束時會出現&quot;Interrupt process&quot;然後結束程式</p>
+      <br />
+
+      <p class="h3">配合$!得到pid用來監控，當主程序結束時，也跟著結束子程序</p>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> <a href="./ex/exeMon.sh">exeMon.sh</a>
+      <br />#!/usr/bin/env sh
+      <br />
+      <br />exe_pidfile=exe.pid
+      <br />mon_pidfile=mon.pid
+      <br />
+      <br /><span class="cmts"># setup executable function</span>
+      <br />exe() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;echo &quot;exe begin: `date`&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;while true; do
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo &quot;exe.sh PID: $$. Hello, exe is still running&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sleep 10
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;done
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;echo &quot;exe finish: `date`&quot;
+      <br />}
+      <br />
+      <br /><span class="cmts"># setup monitor function</span>
+      <br />mon() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;echo &quot;mon begin: `date`&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;monPID=$1
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;monPeriod=$2
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;monPeriod=${monPeriod:=5}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;while true; do
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;status=`ps -p $monPID -o pid| grep $monPID`
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if [ -z $status ]; then
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo &quot;Don't find PID: $monPID&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fi
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo &quot;monitor $monPID&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ps -p $monPID
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sleep $monPeriod
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;done
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;echo &quot;mon finish: `date`&quot;
+      <br />}
+      <br />
+      <br /><span class="cmts"># setup kill mon and exe function</span>
+      <br />killproc() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;pid1=`head -n1 $exe_pidfile`
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;echo &quot;kill $pid1 prcoess&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;kill -9 $pid1
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;rm $exe_pidfile
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;pid2=`head -n1 $mon_pidfile`
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;echo &quot;kill $pid2 prcoess&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;kill -9 $pid2
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;rm $mon_pidfile
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;exit 1
+      <br />}
+      <br />
+      <br /><span class="cmts">#
+      <br />### main
+      <br />#</span>
+      <br />
+      <br /><span class="cmts"># run exe</span>
+      <br />exe&amp;
+      <br />exe_pid=$!
+      <br />echo $exe_pid > $exe_pidfile
+      <br />
+      <br /><span class="cmts"># run mon</span>
+      <br />mon $exe_pid&amp;
+      <br />mon_pid=$!
+      <br />echo $mon_pid &gt; $mon_pidfile
+      <br />
+      <br /><span class="cmts"># trap signal</span>
+      <br />trap killproc 2
+      <br />
+      <br />while [ 0 ]; do
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;echo &quot;run main program, PID: $$&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;sleep 1
+      <br />
+
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;status=`ps -p $mon_pid -o pid| grep $mon_pid`
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if [ -z $status ]; then
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo &quot;main program finish&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fi
+      <br />done
+      </div>
+      <br />
+
+      <h3>expect</h3>
+      <p class="h3">互動式/交談式程序處理，需要用到expect</p>
+      <div class="commands">#!/usr/bin/env expect
+      <br />
+      <br />set timeout 5
+      <span class="cmts">#</span>
+      <br />spawn ssh user -l myhost
+      <span class="cmts">#執行ssh指令</span>
+      <br />expect "password:"
+      <span class="cmts">#搜詢輸出有password</span>
+      <br />send "mypassword\r"
+      <span class="cmts">#輸入密碼\r為return</span>
+      <br />interact
+      <span class="cmts">#程式執行權送回</span>
+      <br />
+
+      <br />#/usr/bin/env sh
+      <br />
+      <br />expect -c '
+      <br />set timeout 5
+      <br />spawn ssh user -l myhost
+      <br />expect "password:"
+      <br />send "mypassword\r"
+      <br />interact
+      <br />'
+      </div>
+      <hr />
+
+
+<!-- 正規表示 -->
+      <a name="正規表示"></a><h2>正規表示</h2>
+      <p class="h2">GNU/Linux下有不少檔案，都是以文字模式儲存，有時候必須對這些檔案做些處理，像是字串的搜尋，替代；輸出格式的改變等...而在unix-like OS已有提供這類功能（大部分的文字處理器也提供類似的功能），最常使用的為grep，若要進階一點（也就是功能較多）有sed和awk。</p>
+
+      <h3>grep</h3>
+      <p class="h3">-P使用Perl正規語法、-E使用egrep</p>
+      <div class="commands">Linux:~ # <span class="commands">ifconfig</span> | <span class="commands">grep</span>  -P '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
+      <span class="cmts">#取出ip</span>
+      <br />
+
+      <br />Linux:~ # <span class="commands">grep</span> '^[^#][\w.()$]*(\s+)?:((.*\n\t)+.*|.*)' Makefile
+      <span class="cmts">#取出執行條件</span>
+      <br />
+
+      <br />Linux:~ # <span class="commands">grep</span> -P '^\w+(\s+)?=((.*\\\n.*)+|.*)' Makefile
+      <span class="cmts">#取出變數設定</span>
+      <br />
+
+      <br />Linux:~ # <span class="commands">grep</span> -P '&lt;!--(.*|(.*\n)+.*)--&gt;' index.html
+      <span class="cmts">#取出註解</span>
+      <br />
+
+      <br />Linux:~ #
+      <br />
+      </div>
+      <br />
+
+      <h3>sed</h3>
+      <p class="h3"></p>
+
+      <h3>awk</h3>
+      <p class="h3"></p>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />BE_E=`awk &quot;{if (\\$3 == $N) {print \\$4}}&quot; ${PREFIX}.tbl`
+      <br />awk &quot;{if (\$3 == $N) {print \$4}}&quot; ${PREFIX}.tbl
+      <br />
+      <br />for D in 3 4
+      <br />do
+      <br />&nbsp;&nbsp;awk &quot;{print \$$D}&quot; ${PREFIX}.tbl
+      <br />done
+      </div>
+      <hr />
+
+<!-- 資料庫 -->
+      <a name="資料庫"></a><h2>資料庫</h2>
+      <h3>MySQL</h3>
+      <p class="h3"></p>
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />mysql -u gvss -Pgvss@ASGC &lt;&lt; EOF
+      <br />use gvss_db;
+      <br />desc LigandRawData;
+      <br />select cd_id, LigandName from LigandRawData;
+      <br />select LigandInputID, LigandInputFile, LigandRawID from LigandInputData;
+      <br />EOF
+      </div>
+      <br />
+
+      <div class="commands">#!/usr/bin/env sh
+      <br />
+      <br />mysql --user=gvss --password=gvss@ASGC gvss_db &lt;&lt; EOF
+      <br />desc LigandRawData;
+      <br />select cd_id, LigandName from LigandRawData;
+      <br />select LigandInputID, LigandInputFile, LigandRawID from LigandInputData;
+      <br />EOF
+      </div>
+      <hr />
+
+
+<!-- reference -->
+    <a name="Reference"><h2>Reference</h2>
+    <li class="reference">Learning the bash shell <sup>2/e</sup>, <i>Cameron Newham &amp; Bill Rosenblatt</i>, <b>O'reilly</b></li>
+
+</body>
+</html>

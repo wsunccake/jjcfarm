@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>Ganglia</title>
+<link rel="stylesheet" href="../defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>Ganglia</h1>
+      <a href="#rpmbuild"><li class="title">編譯</li></a>
+      <br /><a href="#gmetad"><li class="title">gmetad 安裝設定</li></a>
+      <br /><a href="#gmond"><li class="title">gmond 安裝設定</li></a>
+      <br /><a href="#ganglia-web"><li class="title">ganglia-web 安裝設定</li></a>
+      <br />
+
+      <div class="context">
+      <p class="h1">Ganglia是一套具擴展能力的叢集監測軟體，也是open source的軟體，它包含了三個主要的元件：gmond(Ganglia monitoring daemon)、gmetad(Ganglia metadata collection daemon)及Ganglia-web。藉由這些元件的運作，提供多種項目的監測，包含開機時數、作業系統、CPU、記憶體、磁碟、網路及系統負載等資訊。此外，Ganglia也與其他軟體整合，例如：Hadoop及Nagios。以提供更多應用。
+      <br />Ganglia三個主要的元件，各自有不同的職掌，依照主機的角色，安裝Ganglia的元件。被監測主機，只需要安裝gmond即可，監測主機則需要安裝gmond、gmetad及ganglia-web
+      <br />ganglia monitoring daemon (gmond): 受監控端的 monitoring daemon，執行在每個要監視的 host 節點上。此 daemon 會以 XML 格式，發送該 host 系統資訊。
+      <br />ganglia meta daemon (gmetad): 監控各節點的 meta daemon，收集 monitoring daemon 所送來的 host 資訊，並利用 rrdtool 儲存系統資訊。通常執行在 grid 中的其中一台 host 即可。
+      <br />ganglia web-frontend: 提供動態的介面，讓主機管理員能即時得到各個 host 的資訊。通常會和 meta daemon 運行在同一台主機上。
+      </p>
+      </div>
+      <hr />
+
+<!-- rpmbuild -->
+      <a name="rpmbuild"><h2>編譯</h2>
+      <h3>1. Building package</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts"># build ganglia rpm for SLES11sp2</span>
+      <br />SLES:~ # <span class="cmds">rpmbuild</span> -ta ganglia-3.6.0.tar.gz
+      <br />SLES:~ # <span class="cmds">ls</span> /usr/src/packages/RPMS/x86_64/
+      <br />ganglia-devel-3.6.0-1.x86_64.rpm  ganglia-gmond-3.6.0-1.x86_64.rpm  libganglia-3.6.0-1.x86_64.rpm
+      <br />ganglia-gmetad-3.6.0-1.x86_64.rpm  ganglia-gmond-modules-python-3.6.0-1.x86_64.rpm
+      <br />
+
+      <br /><span class="cmts"># build ganglia-web rpm for SLES11sp2</span>
+      <br />SLES:~ # <span class="cmds">rpmbuild</span> -ta ganglia-web-3.5.10.tar.gz
+      <br />SLES:~ # <span class="cmds">ls</span> /usr/src/packages/RPMS/x86_64/
+      <br />ganglia-web-3.5.10-1.noarch.rpm 
+      </div>
+      <hr />
+
+<!-- gmetad 安裝設定 -->
+      <a name="gmetad"><h2>gmetad 安裝設定</h2>
+      <h3>1. Installation</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts"># install lustre utility</span>
+      <br />GMETAD:~ # <span class="cmds">rpm</span> ganglia-gmetad-3.6.0-1.x86_64.rpm libganglia-3.6.0-1.x86_64.rpm
+      </div>
+      <br />
+
+      <h3>2. Configuration</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts"># setup gmetad configure file</span>
+      <br />GMETAD:~ # <span class="cmds">cat</span> /etc/ganglia/gmetad.conf
+      <br />data_source &quot;<span class="vars">pc cluster</span>&quot; 10 <span class="vars">gmond1 gmond2 ...</span>
+      </div>
+      <br />
+
+      <h3>3. Start Server</h3>
+      <p class="h3"></p>
+      <div class="commands">gmetad:~ # /etc/init.d/gmetad restart
+      </div>
+   <hr />
+
+ <!-- gmond 安裝設定 -->
+      <a name="gmond"><h2>gmond 安裝設定</h2>
+      <h3>1. Installation</h3>
+      <p class="h3"></p>
+      <div class="commands">gmond:~ # <span class="cmds">rpm</span> -ivh libganglia-3.6.0-1.x86_64.rpm ganglia-gmond-3.6.0-1.x86_64.rpm
+      </div>
+      <br />
+
+      <h3>2. Configuration</h3>
+      <p class="h3"></p>
+      <div class="commands">gmond:~ # <span class="cmds">cat</span> /etc/ganglia/gmond.conf
+      <br />cluster {
+      <br />&nbsp;&nbsp;name = &quot;pc cluster&quot;
+      <br />&nbsp;&nbsp;owner = &quot;unspecified&quot;
+      <br />&nbsp;&nbsp;latlong = &quot;unspecified&quot;
+      <br />&nbsp;&nbsp;url = &quot;unspecified&quot;
+      <br />}
+      <br />
+
+      <br />host {
+      <br />&nbsp;&nbsp;location = &quot;<span class="vars">gmond1</span>&quot;
+      <span class="cmts"># 設定顯示名稱</span>
+      <br />}
+      <br />
+
+      <br />udp_send_channel {
+      <br />#&nbsp;&nbsp;mcast_join = 239.2.11.71
+      <span class="cmts"># 不使用 broadcast 方式所以註解起來</span>
+      <br />&nbsp;&nbsp;host = <span class="vars">gmetad</span>
+      <br />&nbsp;&nbsp;port = 8649
+      <br />&nbsp;&nbsp;ttl = 1
+      <br />}
+      <br />
+
+      <br />udp_recv_channel {
+      <br />#&nbsp;&nbsp;mcast_join = 239.2.11.71
+      <span class="cmts"># 不使用 broadcast 方式所以註解起來</span>
+      <br />&nbsp;&nbsp;port = 8649
+      <br />#&nbsp;&nbsp;bind = 239.2.11.71
+      <span class="cmts"># 不使用 broadcast 方式所以註解起來</span>
+      <br />&nbsp;&nbsp;retry_bind = true
+      <br />}
+
+      </div>
+      <br />
+
+      <h3>3. Start Server</h3>
+      <p class="h3"></p>
+      <div class="commands">gmond:~ # /etc/init.d/gmond start
+      <br />
+
+      <br />gmond:~ # <span class="cmds">netstat</span> -lntup | <span class="cmds">grep</span> 8649
+      <span class="cmts"># check port</span>
+      </div>
+      <hr />
+
+<!-- ganglia-web 安裝設定 -->
+      <a name="ganglia-web"><h2>ganglia-web 安裝設定</h2>
+
+      <h3>1. Installation</h3>
+      <p class="h3"></p>
+      <div class="commands">gmond:~ # <span class="cmds">rpm</span> -ivh ganglia-web-3.5.10-1.noarch
+      </div>
+      <br />
+
+      <h3>2. Configure</h3>
+      <p class="h3"></p>
+      <div class="commands">gmond:~ # <span class="cmds">chown</span> -R wwwrun:www /var/www/htmlganglia/ /var/lib/ganglia-web
+      <br />gmond:~ # <span class="cmds">cat</span> /etc/apache2/conf.d/ganglia.conf
+      <br />#
+      <br /># Ganglia monitoring system php web frontend
+      <br />#
+      <br />Alias /ganglia /var/www/html/ganglia
+      <br />&lt;Location /ganglia&gt;
+      <br />&nbsp;&nbsp;Order deny,allow
+      <br />&nbsp;&nbsp;Deny from all
+      <br />&nbsp;&nbsp;Allow from 127.0.0.1
+      <br />&nbsp;&nbsp;Allow from ::1
+      <br />&lt;/Location&gt;
+      </div>
+      <br />
+
+      <h3>3. Start Server</h3>
+      <div class="commands">gmond:~ # /etc/init.d/apache2 start
+      </div>
+      <hr />
+
+<!-- reference -->
+    <h2>Reference</h2>
+    <li class="reference"><a href="http://ganglia.sourceforge.net/">Ganglia official website</a></li>
+    <br /><li class="reference"><a href="https://ascc.sinica.edu.tw/iascc/articals.php?_section=2.4&_op=?articalID:5134">叢集監控軟體Ganglia簡介</a></li>
+    <br /><li class="reference"><a href="http://sourceforge.net/apps/trac/ganglia/wiki/ganglia_quick_start">Quick start guide</a></li>
+    <br /><li class="reference"><a href="http://www.krazyworks.com/installing-ganglia-on-rhel/">Installing Ganglia on RHEL</a>, <span class="author">Igor</span></li>
+    <br /><li class="reference"><a href="http://www.javacodegeeks.com/2013/04/ganglia-configuration-for-a-small-hadoop-cluster-and-some-troubleshooting.html">Ganglia configuration for a small Hadoop cluster and some troubleshooting</a>, <span class="author">Adam Kawa</span></li>
+    <hr />
+
+<!-- changelog -->
+    <h2>Changelog</h2>
+    <li class="changelog">2013/09/02 第一次完成</li>

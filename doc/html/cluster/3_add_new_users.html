@@ -1,0 +1,85 @@
+﻿
+<head>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<link rel="stylesheet" href="../defaults.css" type="text/css">
+<title>add_new_user</title>
+</head><body>
+
+<!-- headline -->
+      <h1>加入新的cluster使用者</h1>
+      <a href="#ip1">1.ip位址</a>
+      <br><a href="#command1">2.指令</a>
+      <br><a href="#fail">3.若mail沒有收到 id_dsa</a>
+      <hr />
+
+ <!-- ip位址 -->
+      <a name="ip1"><h2>1.ip位址</h2>
+      <div>
+      1. k0: 140.118.160.14<br/>
+      2. k1: 140.118.160.183<br/>
+      3. k2: 140.118.160.184<br/>
+      port=22
+      </div>
+      <hr/>
+
+<!-- 指令 -->
+      <a name="commad1"><h2>2.指令</h2>
+      <h3>1. 切換至superuser</h3>
+      <div class="commands">k0:~ # su -
+      <br />
+      <span class="cmts">#su= super user</span>
+      <br />k0:~ # adduser
+      <br /><span class="cmts">#加入新的cluster用戶
+      <br /># 系統會將key檔(id_dsa)寄至學生信箱，再自行轉成私鑰檔(.ppk)
+      </span>
+      </div>
+      <hr/>
+
+<!-- no mail -->
+      <a name="fail"><h2>3.若mail沒有收到 id_dsa</h2>
+      <div class="commands">
+      <br />
+      <span class="cmts">#/home/{username}/.ssh/id_dsa</span>
+      <br />k0:~ # cp id_dsa /home/{your account}
+      <br />k0:~ # chmod 777 id_dsa
+      <br /><span class="cmts">#改變權限讓任何人都可以下載key檔
+      <br /># 使用WinSCP下載key檔
+      </span>
+      </div>
+
+
+<!-- ftp useradd -->
+      <h1>加入新的ftp user</h1>
+      <a href="#ip">1.ip位址</a>
+      <br/><a href="#command">2.指令</a>
+      <hr />
+
+<!--ip-->
+      <a name="ip"><h2>ip位址</h2>
+      <h3>ftp: 140.118.160.174<br/>port=21</h3>
+      <hr/>
+
+<!--command-->
+      <a name="command"><h2>2.指令</h2><a/>
+      <h3>1. 加入一般使用者</h3>
+      <p class="h3"></p>
+      <div class="commands">k0:~ # addftpu.sh
+      <br />k0:~ # passwd {account name} 
+      </div>
+      <h3>2.加入管理員帳號</h3>
+      <p class="h3"></p>
+      <div class="commands">k0:~ # useradd -d /ftp {account name}<br/>
+      <span class="cmts">#管理帳號&一般帳號差別在於管理員可以使用putty登入</span>
+      </div>
+      <hr/>
+
+<!--changelog-->
+<h2>Changelog</h2>
+<li class="changelog">2013/09/10 第一次完成</li>
+<li class="changelog">2013/09/16 修改格式完成</li>
+<li class="changelog">2013/09/23 新增若mail沒有收到 id_dsa</li>
+<li class="changelog">2013/11/07 重新排版</li>
+</body>
+</html>

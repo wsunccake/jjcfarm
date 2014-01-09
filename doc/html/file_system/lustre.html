@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>Lustre</title>
+<link rel="stylesheet" href="../defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>Lustre</h1>
+      <a href="#MGS&amp;MDS"><li class="title">MGS &amp; MDS 安裝設定</li></a>
+      <br /><a href="#OSS"><li class="title">OSS 安裝設定</li></a>
+      <br /><a href="#client"><li class="title">client 安裝設定</li></a>
+      <div class="context">
+      <p class="h1">Lustre
+      </p>
+      </div>
+      <hr />
+
+<!-- MGS & MDS 安裝設定 -->
+      <a name="MGS&amp;MDS"><h2>MGS &amp; MDS 安裝設定</h2>
+      <h3>1. preparation</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts"># update kernel for SLES11sp2</span>
+      <br />MDS:~ # <span class="cmds">rpm</span> -ivh kernel-default-3.0.74-0.6.8.1.x86_64.rpm kernel-default-base-3.0.74-0.6.8.1.x86_64.rpm \
+      <br />kernel-default-devel-3.0.74-0.6.8.1.x86_64.rpm kernel-source-3.0.74-0.6.8.1.x86_64.rpm   
+      <br />
+
+      <br /><span class="cmts"># add reposity</span>
+      <br />MDS:~ # <span class="cmds">zypper</span> ar --refresh http://drivers.suse.com/lustre/2.1/Lustre Lustre
+      
+      <br />
+
+      <span class="cmts"># custom e2fsprogs package in SLES11sp2</span>
+      <br />MDS:~ # <span class="cmds">zypper</span> dup --from Lustre
+      </div>
+      <br />
+
+      <h3>2. utility</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts"># install lustre utility</span>
+      <br />MDS:~ # <span class="cmds">zypper</span> in lustre lustre-modules-kmp-default lustre-ldiskfs-kmp-default
+      </div>
+      <br />
+
+      <h3>3. module</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts"># check lent module </span>
+      <br />MDS:~ # <span class="cmds">lsmod</span> | <span class="cmds">grep</span> lnet 
+      <br />MDS:~ # <span class="cmds">modprobe</span> lnet 
+      <br />
+      <br /><span class="cmts"># setup module </span>
+      <br />MDS:~ # <span class="cmds">cat</span> /etc/modprobe.d/unsupported-modules 
+      <br />allow_unsupported_modules 0 -> allow_unsupported_modules 1 
+      <br />MDS:~ # <span class="cmds">cat</span> /etc/modprobe.d/lustre.conf 
+      <br />options lnet networks=tcp0(eth0) 
+      <br />
+      <br /><span class="cmts"># check nid status</span>
+      <br />MDS:~ # <span class="cmds">lctl</span> list_nids 
+      <br />MDS:~ # <span class="cmds">lctl</span> net up|down
+      </div>
+      <br />
+
+      <h3>4. mdt</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts"># format </span>
+      <br />MDS:~ # <span class="cmds">mkfs.lustre</span> --fsname <span class="vars">temp</span> --reformat --mdt --mgs <span class="vars">/dev/sda6</span>
+      <br />
+
+      <br /><span class="cmts"># mount mdt</span>
+      <br />MDS:~ # <span class="cmds">mount</span> -t lustre <span class="cmts">/dev/sda6</span> <span class="cmds">/mnt/mdt</span> 
+      <br />MDS:~ # <span class="cmds">mount.lsutre</span> <span class="cmts">/dev/sda6</span> <span class="cmds">/mnt/mdt</span>
+      </div>
+   <hr />
+
+ <!-- OSS 安裝設定 -->
+      <a name="OSS"><h2>OSS 安裝設定</h2>
+      <h3>1. preparation</h3>
+      <p class="h3">同 MDS preparation 步驟</p>
+      <br />
+
+      <h3>2. utility</h3>
+      <p class="h3">同 MDS utility 步驟</p>
+      <br />
+
+      <h3>3. module</h3>
+      <p class="h3">同 module 步驟</p>
+      <br />
+
+      <h3>4. ost</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts"># format</span>
+      <br />OSS:~ # <span class="cmds">mkfs.lustre</span> --fsname <span class="vars">temp</span> --reformat --ost --mgsnode=<class="span vars">MDS</span>@<span class="vars">tcp</span> <span class="vars">/dev/sda6</span>
+      <br />
+
+      <br /><span class="cmts"># mount ost</span>
+      <br />OSS:~ # <span class="cmds">mount</span> -t lustre <span class="vars">/dev/sda6</span> <span class="vars">/mnt/mdt</span>
+      <br />OSS:~ # <span class="cmds">mount.lsutre</span> <span class="vars">/dev/sda6</span> <span class="vars">/mnt/mdt</span>
+      </div>
+      <hr />
+
+<!-- reference -->
+    <h2>Reference</h2>
+    <li class="reference">http://www.proftpd.org</li>
+    <br /><li class="reference">http://vsftpd.beasts.org</li>
+    <hr />
+
+<!-- changelog -->
+    <h2>Changelog</h2>
+    <li class="changelog">2013/09/02 第一次完成</li>
+
+</body>
+</html>

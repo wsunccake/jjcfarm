@@ -1,0 +1,1216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>Python</title>
+<link rel="stylesheet" href="../../defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>Python</h1>
+      <a href="#使用環境"><li class="title">使用環境</li></a>
+      <br /><a href="#基本控制"><li class="title">基本控制</li></a>
+      <br /><a href="#資料型態"><li class="title">資料型態</li></a>
+      <br /><a href="#控制流程"><li class="title">控制流程</li></a>
+      <br /><a href="#函式參數"><li class="title">函式參數</li></a>
+      <br /><a href="#物件導向"><li class="title">物件導向</li></a>
+      <br /><a href="#輸入輸出"><li class="title">輸入輸出</li></a>
+      <br /><a href="#系統指令"><li class="title">系統指令</li></a>
+      <br /><a href="#正規表示"><li class="title">正規表示</li></a>
+
+      <br /><a href="#例外處理"><li class="title">例外處理</li></a>
+      <br /><a href="#說明安裝"><li class="title">說明安裝</li></a>
+      <br /><a href="#基本函式"><li class="title">基本函式</li></a>
+      <br /><a href="#Reference"><li class="title">Reference</li></a>
+
+      <div class="context">Python是物件導向(object-oriented)程式級高階程式語言，也是直譯式(shell script)程式語言。Python強調對程式語言的語句易讀、易懂、易學(簡潔和清晰的語法特點)及加快程式開發的時效，方便使用，可以完成各種難度的應用，並可在大多數的系統中運行，以減少開發及維護成本的觀念進行發展。Python 同時支援 modules 和 packages ，另外 Python 為跨平台程式語言也支援 unicode 字元。功能強大而完善的通用型語言，可以用於很多種軟體開發動態程式，使得 Python 非常有吸引力，發展至今已有十多年的歷史，成熟且穩定。Python具有腳本語言中最豐富和強大的類庫，足以支持大多數日常應用。它的名字來源於一個喜劇，也許最初設計Python這種語言的人並沒想到今天Python會在工業和科研上獲得如此廣泛的使用。著名的自由軟件作者Eric Raymond在他的文章《如何成為一名黑客》中，將Python列為黑客應當學習的四種程式語言之一，並建議人們從Python開始學習程式。這的確是一個中肯的建議，對於那些從來?有學習過程式或者並非計算機專業的程式學習者而言，Python是最好的選擇之一。
+      <br />創始人為Guido van Rossum。在1989年聖誕節期間的阿姆斯特丹，Guido為了打發聖誕節的無趣，決心開發一個新的腳本解釋程序，作為ABC語言的一種繼承。之所以選中Python大蟒蛇的意思）作為程序的名字，是因為他是一個Monty Python的飛行馬戲團的愛好者。ABC是由Guido參加設計的一種教學語言。Guido本人看來，ABC 這種語言非常優美和強大，是專門為非專業程序員設計的。但是ABC語言並沒有成功，究其原因，Guido認為是非開放造成的。Guido決心在Python中避免這一錯誤（的確如此，Python 與其它的語言如C、C++和Java結合的非常好）。同時，他還想實現在 ABC 中閃現過但未曾實現的東西。就這樣，Python在Guido手中誕生了。實際上，第一個實現是在Mac機上。可以說Python是從ABC發展起來，主要受到了Modula-3（另一種相當優美且強大的語言，為小型團體所設計的）的影響。並且結合了Unix shell和C的習慣。早期Python是以C語言為基底撰寫而成，目前則有以Java語言為基底的Jython及架構在.NET的IronPython版本，甚至有以Python語言為基底的PyPy實作品，可將 Python程式碼編譯成其他語言的執行檔，像是C、CLI(.Net)、JavaScript等。Guido van Rossum在2005年底成為Google公司雇員，該公司將Python列為程式員的三大官方語言之一，意指允許員工使用 Python 實作產品與服務。
+      </div>
+      <hr />
+
+<!-- 使用環境 -->
+      <a name="使用環境"><h2>使用環境</h2></a>
+      <h3></h3>
+      <p class="h3">windows環境:C:\Python<span class="vars">xy</span>;C:\Python<span class="vars">xy</span>\Lib\site-packages;C:\Python<span class="vars">xy</span>\Scripts
+      <br />Unix-Like環境:/usr/lib/python<span class="vars">x.y</span>/site-packages
+      </p>
+      <h3>command/指令</h3>
+      <div class="commands">Linux:~ # <span class="cmds">python</span> -c "print 'Hello, Python'"
+      <br />Hello, Python
+      </div>
+      <br />
+
+      <h3>environmental variable/環境變數</h3>
+      <p class="h3">引號</p>
+      <table class="h3">
+        <tr>
+          <th>variable</th>
+          <th>description</th>
+        </tr>
+        <tr><td>PYTHONPATH</td>
+            <td>設定module path，預設為/usr/lib/python&lt;<span class="vars">version</span>&gt;/site-packages</td>
+        </tr>
+        <tr><td>PYTHONHOME</td>
+            <td>設定模組搜尋路徑相關的變數，預設為/usr/lib/python&lt;<span class="vars">version</span>&gt;</td>
+        </tr>
+        <tr><td>PYTHONSTARTUP</td>
+        <td>設定進入interactive mode前所執行程式路徑</td>
+        </tr>
+      </table>
+      <br />
+      <div class="commands">Linux:~ # <span class="cmds">python</span> -c 'import sys, pprint; pprint(sys.path)'
+      <span class="cmts"># 顯示目前PYTHONPATH設定</span>
+      </div>
+      <br />
+
+      <h3>script/指令稿</h3>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> <span class="vars"><a href="./ex/hello.py">hello.py</a></span>
+      <br />#!/usr/bin/env python
+      <br />
+      <br />print "Hello, Python";
+      <br />
+      <br />
+      <span class="cmts">#第一種執行方式</span>
+      <br />Linux:~ # <span class="cmds">chmod</span> u+x <span class="vars"><a href="./ex/hello.py">hello.py</a></span>
+      <br />Linux:~ # ./hello.py
+      <br />Hello, Python
+      <br />
+      <br />
+      <span class="cmts">#第二種執行方式</span>
+      <br />Linux:~ # <span class="cmds">python</span> <span class="vars"><a href="./ex/hello.py">hello.py</a></span></div>
+      <br />
+
+      <h3>interactive mode/互動模式</h3>
+      <p class="h3">若要使用互動式，建議使用ipython或是其他IDE會是更好的選擇</h3>
+      <div class="commands">Linux:~ # <span class="cmds">python</span>
+      <br />Python 2.6.4
+      <br />Type "help", "copyright", "credits" or "license" for more information.
+      <br />&gt;&gt;&gt; print "Hello, Python"
+      <br />Hello, Python
+      <br />&gt;&gt;&gt; quit()</div>
+      <hr />
+
+<!-- 基本控制 -->
+      <a name="基本控制"><h2>基本控制</h2></a>
+      <hr />
+
+<!-- 資料型態 -->
+      <a name="資料型態"><h2>資料型態</h2></a>
+      <h3>built-in data type/內建資料型態</h3>
+      <h3>string/字串</h3>
+      <p class="h3"></p>
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />STR1 = 'ABC'
+      <br />STR2 = STR1
+      <br />print "STR1: ", STR1, ", type: ", type(STR1)
+      <span class="cmts">#顯示string型別及內容</span>
+      <br />print "STR2 = STR1"
+      <br />print "STR2: ", STR2, ", type: ", type(STR2)
+      <br />
+      <br />STR1 = "xyz"
+      <br />print 'STR1 = "xyz"'
+      <br />print "STR1: ", STR1, ", type: ", type(STR1)
+      <br />print "STR2: ", STR2, ", type: ", type(STR2)
+      <br />print "STR1 + STR2: ", STR1 + STR2
+      <span class="cmts">#字串相加</span>
+      <br />
+      <br />STR1 = "ABC xyz 123\n"
+      <span class="cmts">#字串切割（string slice）的使用方式</span>
+      <br />print 'STR1[0]: ', STR1[0], ', STR1[-1]: ', STR1[-1]
+      <br />print 'STR1[:3]: ', STR1[:3], ', STR1[5:-1]: ', STR1[5:-1]
+      <br />print 'STR1[2:3:1]: ', STR1[2:5:2]'
+      <br />
+      <br />print 'STR1.replace: ', STR1.replace('123','456'), ', STR1.find: ', STR1.find('xyz')
+      <br />print "STR1.split: ", STR1.split(' '), ", STR1.rstrip: ", STR1.rstrip()
+      <br />LIST1 = list(STR1)
+      <br />print "LIST1: ", LIST1
+      </div>
+      <br />
+
+      <h3>numeric/數值</h3>
+      <p class="h3">Python的數值型別有int（整數）、float（浮點數）、complex（複數），在Python2.6之前還支援long（長整數），整數還可使用16或8進位數值，數值型態當然支援基本加、減、乘、除</p>
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />print type(1), type(-2.1), type(1 + 1j), type(10L)
+      <br />print 0xff, 017
+      <br />print hex(255), oct(15)
+      <br />
+      <br />STR="123"
+      <br />VAR=int(STR)
+      <br />print "STR: ", STR, ", VAR: ", VAR
+      <br />print "STR type: ",type(STR), ", VAR type: ", type(VAR)
+      <br />STR="456"
+      <br />print "STR: ", STR, ", VAR: ", VAR
+      </div>
+      <p class="h3"></p>
+      <br />
+
+      <h3>container/容器</h3>
+      <h3>list/串列</h3>
+      <p class="h3">list像是其他一般語言的陣列（array）index都是從0開始，但和陣列不一樣的，list不需要宣告型別，list可以裝任何型別。list在assign時，是copy by reference而非copy by value</p>
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />LIST1 = []
+      <br />print "LIST : ", LIST1, ", LIST type: ", type(LIST1)
+      <br />LIST1 = ["ABC", 'xyz', 123]
+      <br />    
+      <br />LIST2 = LIST1
+      <br />LIST3 = LIST1[:]
+      <br />print "LIST1: ", LIST1, ", LIST2: ", LIST2, ", LIST3: ", LIST3
+      <br />LIST1.append(45.7)
+      <br />LIST1.remove('ABC')
+      <br />LIST1.sort()
+      <br />print "LIST1: ", LIST1, ", LIST2: ", LIST2, ", LIST3: ", LIST3
+      <br />
+      <br /><span class="cmts">#顯示list的方式</span>
+      <br />for i in range(len(LIST1)):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "index: ", i, ", value: ", LIST1[i]
+      <br />
+      <br /><span class="cmts">#更簡單，直觀的顯示方式</span>
+      <br />for l in LIST1
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "value: ", l
+      </div>
+      <br />
+
+      <p class="h3">字串轉串列，串列轉字串</p>
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />STR = "XYZ, abc, 123"
+      <br />print STR.split(", ")
+      <br />LST = ['123', "abc", 'XYZ']
+      <br />print '. '.join(LST)
+      </div>
+      <br />
+
+      <p class="h3">list dictionary class</p>
+      <div class="commands">#!/usr/bin/env python
+      <br />
+
+      <br />
+      <span class="cmts"># combine list and dict</span>
+      <br />l = []
+      <br />l.append({"type":"H", "number":3})
+      <br />l.append({"type":"O", "number":1})
+      <br />l.append({"type":"He", "number":5})
+      <br />print l[0]["type"]
+      <br />
+
+      <br />
+      <span class="cmts"># combine list and class</span>
+      <br />class CC():
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def __init__(self, a, b):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self._a_ = a
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self._b_ = b
+      <br />
+      <br />c1 = CC(1, 2)
+      <br />c2 = CC(3, 4)
+      <br />l = []
+      <br />l.append(c1)
+      <br />l.append(c2)
+      <br />print l[0]._a_, l[1]._b_
+
+      </div>
+      <br />
+
+      <h3>dictionary/字典</h3>
+      <p class="h3">dictionary可看成可自訂index的list（跟perl裡的hash table很類同）但dict再assign時是使用copy value</p>
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />DICT1 = {}
+      <br />print "DICTIONARY: ", DICT1, "DICTIONARY type: ",type(DICT1)
+      <br />    
+      <br />DICT1 = {'A':'ABC', "x":"xyz", "0";123}
+      <br />DICT2 = DICT1
+      <br />print "DICT1: ", DICT1, "DICT2: ", DICT2
+      <br />DICT1 = {'4':45.7}
+      <br />DICT1.pop('A')
+      <span class="cmts">#刪除key為A及對應value</span>
+      <br />print "DICT1: ", DICT1, "DICT2: ", DICT2
+      <br />DICT1['G'] = 'A2x'
+      <span class="cmts">#增加key為G及對應value</span>
+      <br />print "DICT1: ", DICT1, "DICT2: ", DICT2
+      <br />
+      <br />for key in DICT1.keys():
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "key: ", key, "value: ", DICT1[key]
+      </div>
+      <br />
+
+      <h3>tuple/元組</h3>
+      <p class="h3"></p>
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />
+      <span class="cmts">#tuple的顯示方式</span>
+      <br />TUPLE = (1, "xyz", 'ABC')
+      <br />for t in TUPLE:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print t
+      <br />
+      <br />
+      <span class="cmts">#net tuple的使用方式</span>
+      <br />H2O =((0,0), (0,1), (1,0))
+      <br />for atom in H2O:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print atom
+      <br />
+      <br />for x, y in H2O:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print x, y
+      </div>
+      <br />
+
+      <br />
+      <hr />
+
+<!-- 控制流程 -->
+      <a name="控制流程"><h2>控制流程</h2>
+      <h3>if/else</h3>
+      <p class="h3">python本身只提供if/else的判斷使用方式，如下，但有些時候會想使用switch/case的方式作條件式的判斷，但python本身無此功能，只能使用elif的方式或者使用dictionary去實做</p>
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />sex = "m"
+      <br />if sex == "m":
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "Male"
+      <br />elif sex == "f":
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "Female"
+      <br />else:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "Unknown"
+      <br />
+      <br /><span class="cmts">#使用dictionary方法替代switch/case</span>
+      <br />sex = {"m":"Male", "f":"Female"}
+      <br />print sex.get("m", 'Unknown')
+      </div>
+      <br />
+      
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />import platform
+      <br />
+      <br />if platform.system() == "Linux":
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;OS = "Linux"
+      <br />else:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;OS = "Unknown"
+      <br />print OS
+      <br />
+      <br /><span class="cmts">#另一種簡單方式的if/else使用方式</span>
+      <br />OS = "Linux" if platform.system() else "Unknown"
+      <br />print OS
+      </div>
+      <br />
+
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />import os
+      <br />
+      <br /><span class="cmts">#兩個condition同時判斷檔案是否存在</span>
+      <br />if os.path.exists(os.path.join(os.getenv('HOME'), '.profile') ) or os.path.exists(os.path.join(os.getenv('HOME'), '.bash_profile') ) :
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print ".profile or .bashrc_profile exist"
+      </div>
+      <br />
+
+      <h3>for</h3>
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />LIST = ["ABC", 'xyz', 123]
+      <br /><span class="cmts">#顯示list內容</span>
+      <br />for L in LIST:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print L
+      <br />
+      <br />DICTIONARY = {"A":"ABC", 'b':"xyz", "0":123}
+      <br /><span class="cmts">#顯示dictionary內容</span>
+      <br />for D in DICTIONARY.keys():
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print DICTIONARY[D]
+      <br />
+      <br /><span class="cmts">#數值迴圈的使用方式</span>
+      <br />for A in range (5):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print A
+      </div>
+      <br />
+
+      <p class="h3">list comprehension的使用方式</p>
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />f = open("/etc/passwd")
+      <br />lines1 = f.readlines()
+      <br />for line in lines1:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print lines.rstrip()
+      <br />f.close()
+      <br />
+      <br />lines2 = open("/etc/passwd")
+      <br />lines2 = [line.rstrip() for line in lines2]
+      <br />print lines2
+      <br />
+      <br />lines3 = [line.rstrip() for line in open("/etc/passwd")]
+      <br />print lines3
+      </div>
+      <br />
+
+      <h3>while</h3>
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />import sys
+      <br />
+      <br />print "Input the word, [Quit]"
+      <br />input = sys.stdin.readline().rstrip()
+      <br />
+      <br />while input != "Quit":
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "Your keyin: ", input
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;input = sys.stdin.readline().rstrip()
+      </div>
+      <br />
+
+      <h3>break、continue、pass</h3>
+      <hr />
+
+<!-- 函式參數 -->
+      <a name="函式參數"><h2>函式參數</h2>
+      <h3>def</h3>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> <a href="./ex/myswap01.py"><span class="vars">myswap01.py</span></a>
+      <br />#!/usr/bin/env python
+      <br />
+      <br />def change(arg1, arg2):
+      <span class="cmts">#定義function change</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "arg1: ", arg1, "arg2: ", arg2
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;(arg1, arg2) = (arg2 ,arg1)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "arg1: ", arg1, "arg2: ", arg2
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;return (arg1, arg2)
+      <span class="cmts">#設定回傳值，使用tuple回傳</span>
+      <br />
+      <br />if __name__ == "__main__":
+      <span class="cmts">#定義主程式，當使用python啟動會執行以下程式碼</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;change("A", "B")
+      <br />
+      <br />Linux:~ # <span class="cmds">python</span> swap.py
+      <br />
+      <br />Linux:~ # <span class="cmds">cat</span> <a href="./ex/mymain01.py"><span class="vars">mymain01.py</span></a>
+      <br />#!/usr/bin/env python
+      <br />
+      <br />import sys
+      <br />sys.path.append('modulepath')
+      <span class="cmts">#指定module路徑，定義sys.path即可</span>
+      <br />import myswap01
+      <span class="cmts">#載入myswap01.py，myswap01.py需和mymain01.py同資料夾或是定義在PYTHONPATH或sys.path</span>
+      <br />
+      <br />if __name__ == "__main__":
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;A = 3
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;B = 1
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "A: ", A, ", B: ", B
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;(C, D) = myswap01.change(A, B)
+      <span class="cmts">#使用myswap01.py裡的chnage函式</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "A: ", A, ", B: ", B
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "C: ", C, ", D: ", D
+      <br />
+      <br />Linux:~ # <span class="cmds">python</span> <a href="./ex/mymain01.py"><span class="vars">mymain01.py</span></a>
+      </div>
+      <br />
+
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />import sys
+      <br />
+      <br />input = sys.stdin.readline().rstrip()
+      <span class="cmts">#從stand in讀入參數</span>
+      <br />print "Your input: ", input
+      </div>
+      <br />
+
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> <a href="./ex/myswap02.py"><span class="vars">myswap02.py</span></a>
+      <br />#!/usr/bin/env python
+      <br />
+      <br />def change(arg1, arg2):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "arg1: ", arg1, "arg2: ", arg2
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;(arg1, arg2) = (arg2 ,arg1)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "arg1: ", arg1, "arg2: ", arg2
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;return (arg1, arg2)
+      <br />
+      <br />if __name__ == "__main__":
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;import sys
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;import getopt
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;for a in sys.argv:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print a
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def usage():
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print "Usage: swap -a 'A' -b 'b'"
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print "-h: help"
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;try:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;opt_list, args = getopt.getopt(sys.argv[1:], 'a:b:hv')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;except getopt.GetoptError, err:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print str(err)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;usage()
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.exit(2)
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;Aarg_flag = False
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;Barg_flag = False
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;help_flag = False
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;verbose_flag = False
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;for o, a in opt_list:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if o in ('-a'):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Aarg_flag = True
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Aarg = a
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elif o in ("-b"):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Barg_flag = True
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Barg = a
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elif o in ("-v"):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verbose_flag = True
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elif o in ("-h"):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;help_flag = True
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;if help_flag or not Aarg_flag or not Barg_flag:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;usage()
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.exit(2)
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;if verbose_flag: print ("Initial: Aarg: %s, Barg: %s" %(Aarg, Barg))
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;change(Aarg, Barg)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;if verbose_flag: print ("Final: Aarg: %s, Barg: %s" %(Aarg, Barg))
+      </div>
+      <br />
+
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />def person(name = "NoName", *desc , **data):
+      <span class="cmts">#name = "NoName"是設定預設變數值，*desc是傳入tuple，**data則是傳入dict</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print ("Name: %s" %name)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;for K in data.keys():
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print ("%s: %s" %(K, data[K]))
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;for S in desc:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print S
+      <br />
+      <br />if __name__ == "__main__":
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;myStory='''I'm student.
+      <br />I live in Taiei.'''.split('\n')
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;myData = {"sex":"female", "age":"15"}
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;person("May", *myStory ,**myData)
+      <span class="cmts">#參數使用方式</span>
+      </div>
+      <br />
+
+      <p class="h3">參數</p>
+      <table class="h3">
+        <tr>
+          <th>argument</th>
+          <th>description</th>
+        </tr>
+        <tr><td>arg</td>
+            <td>設定進入帶入的參數為vaule</td>
+        </tr>
+        <tr><td>*arg</td>
+            <td>設定進入帶入的參數為tuple</td>
+        </tr>
+        <tr><td>**arg</td>
+        <td>設定進入帶入的參數為dictionary</td>
+        </tr>
+      </table>
+      <br />
+
+      <h3>lambda</h3>
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />SUM = lambda x, y: x + y
+      <br />print SUM(1, 3)
+      <br />
+      <br />GT = lambda x, y: x if x &gt; y else y
+      <br />print GT(7, 3)
+      </div>
+      <br />
+
+      <h3>decorator/@</h3>
+      <div class="commands">#!/usr/bin/env python
+      <br />
+
+      <br />def helloSolarSystem(original_function):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def new_function():
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;original_function()
+      <span class="cmts"># the () after "original_function" causes original_function to be called</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print("Hello, solar system!")
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;return new_function
+      <br />
+
+      <br />def helloGalaxy(original_function):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def new_function():
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;original_function()
+      <span class="cmts"># the parentheses after "original_function" cause original_function to be called</span>     
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print("Hello, galaxy!")
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;return new_function
+      <br />
+
+      <br />@helloGalaxy
+      <br />@helloSolarSystem
+      <br />def hello():
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print ("Hello, world!")
+      <br />
+
+      <br /><span class="cmts"># 等同上面
+      <br />#def hello():
+      <br />#&nbsp;&nbsp;&nbsp;&nbsp;print ("Hello, world!")
+      <br />#hello = helloSolarSystem(hello)
+      <br />#hello = helloGalaxy(hello)</span>
+      <br />
+      
+      <br />hello()
+      </div>
+      <br />
+
+
+      <div class="commands">#!/usr/bin/env python
+      <br />
+
+      <br />def helloSolarSystem(original_function):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def new_function(*args, **kwargs):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;original_function(*args, **kwargs)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print("Hello, solar system!")
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;return new_function
+      <br />
+
+      <br />def helloGalaxy(original_function):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def new_function(*args, **kwargs):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;original_function(*args, **kwargs)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print("Hello, galaxy!")
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;return new_function
+      <br />
+
+      <br />@helloGalaxy
+      <br />@helloSolarSystem
+      <br />def hello(targetName=None):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;if targetName:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(&quot;Hello, &quot; +  targetName +&quot;!&quot;)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;else:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(&quot;Hello, world!&quot;)
+      <br />
+
+      <br />hello(&quot;Earth&quot;)
+      </div>
+      <br />
+
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />class Deco(object):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def __init__(self, func_name):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.func_name = func_name
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def __call__(self, *args):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print "This is a decorator class"
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return self.func_name(*args)
+      <br />
+      <br />@Deco
+      <br />def real_method():
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "This is real method"
+      <br />
+      
+      <br /><span class="cmts"># 等同上面
+      <br />#def real_method():
+      <br />#&nbsp;&nbsp;&nbsp;&nbsp;print "This is real method"
+      <br />#real_method = Deco(real_method)</span>
+      <br />
+      
+      <br />real_method()
+      </div>
+
+ 
+
+
+      <hr />
+
+<!-- 物件導向 -->
+      <a name="物件導向"><h2>物件導向</h2>
+      <h3>class/類別</h3>
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />class UserInfo:
+      <span class="cmts">#建立UserInfo類別</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def __init__(self, F = "/etc/passwd"):
+      <span class="cmts">#constructure/建構式/初始化</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.UID   = []
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.GID   = {}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.User  = {}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.Home  = {}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.Shell = {}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.file(F)
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def __len__(self):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return len(self.UID)
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def add(self, uid, gid, user, home, shell):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.UID.append(uid)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.GID[uid]   = gid
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.User[uid]  = user
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.Home[uid]  = home
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.Shell[uid] = shell
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def delete(self, uid):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.Shell.pop(uid)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.Home.pop(uid)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.User.pop(uid)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.GID.pop(uid)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.UID.remove(uid)
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def file(self, File = "/etc/passwd"):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f = open(File)
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for l in f.readlines():
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uid   = l.split(':')[2]
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gid   = l.split(':')[3]
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user  = l.split(':')[0]
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;home  = l.split(':')[5]
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shell = l.split(':')[6].rstrip()
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.add(uid, gid, user, home, shell)
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f.close()
+      <br />
+
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def __del__(self):
+      <span class="cmts">#deconstructure/解構式/結束化</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pass
+      <br />
+
+      <br />if __name__ == "__main__":
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;userInfo = UserInfo()
+      <span class="cmts">#產生一個UserInfo類別的物件</span>
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;User       = []
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;SystemUser = []
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;NoLogin    = []
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;for u in range(len(userInfo)):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id = userInfo.UID[u]
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if int(id) > 999:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;User.append(userInfo.User[id])
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SystemUser.append(userInfo.User[id])
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if userInfo.Shell[id] == '/bin/false':
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NoLogin.append(userInfo.User[id])
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "User         : " + ", ".join(User)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "System User  : " + ", ".join(SystemUser)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "No Login User: " + ", ".join(NoLogin)
+      </div>
+      <br />
+
+     <h3>inheritance/繼承</h3>
+     <p class="h3">python的類別沒有特別去分public和private，一般class宣告的method都為public，而名稱已__開頭的宣告method才為private。在python的繼承中，public method會被繼承，但是private method並不會。無論public或是private attribute，在使用上都可以任意指定（因為python是個動態宣告的程式語言），但這是不好的程式設計習慣。</p>
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />class Animal():
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def __init__(self, name = None):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.__NAME__ = name
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print "Construct Animal"
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def setAge(self, age):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.__AGE__ = age
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def setName(self, name):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.__NAME__ = name
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def getName(self):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return self.__NAME__
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def getAge(self):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return self.__AGE__
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def __getHello__(self):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print "Hello"
+      <br />
+      <br />class Felidae(Animal):
+      <span class="cmts">#Felidae繼承Animal</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def __init__(self):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Animal.__init__(self)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print "Construct Felidae, and inheritance Animal"
+      <br />
+      <br />class Cat(Felidae):
+      <span class="cmts">#Cat繼承Felidae</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def __init__(self):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print "Construct Cat"
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;getHello(self):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super(Felidae, self).__getHello__()
+      <span class="cmts">#取得Felidea父類別的method</span>
+      <br />
+      <br />if __name__ == '__main__':
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;c = Cat()
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;c.__NAME__ = 'kitten'
+      <span class="cmts">#python並不支援private attribute，所以就算不透過method也可存取</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print c.__NAME__
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print c.getName()
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;c.setAge(1)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print c.getAge()
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;c.__ABC__ = '123'
+      <span class="cmts">#動態產生變數</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print c.__ABC__
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;c.__getHello__()
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;f = Felidae()
+      </div>
+      <br />
+
+      <h3>multi-inheritance/多重繼承</h3>
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />class Animal():
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def __init__(self):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print "Construct Animal"
+      <br />
+      <br />class Felidae(Animal):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def __init__(self):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Animal.__init__(self)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print "Construct Felidae, and inheritance Animal"
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def walk(self):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print "Walking on land"
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def hello(self):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print "Felidae Hello"
+      <br />
+      <br />class Bird(Animal):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def __init__(self):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Animal.__init__(self)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print "Construct Bird, and inheritance Animal"
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def fly(self):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print "Flying in sky"
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def hello(self):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print "Felidae Hello"
+      <br />
+      <br />class Griffin(Felidae, Bird):
+      <span class="cmts">#Griffin多重繼承Felidae和Bird</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def __init__(self):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print "Construct Bird, and inheritance Animal"
+      <br />
+      <br />if __name__ == '__main__':
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;g = Griffin()
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;g.fly()
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;g.walk()
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;g.hello()
+      <span class="cmts">#Griffin中的有重複的method會先呼叫先繼承的類別，在此為Felidae</span>
+      </div>
+      <br />
+
+      <h3>abstract class/抽象類別</h3>
+      <p class="h3">python本身並沒有抽象類別定義</p>
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />def abstract():
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;import inspect
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;caller = inspect.getouterframes(inspect.currentframe())[1][3]
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;raise NotImplementedError(caller + ' must be implemented in subclass')
+      <br />
+      <br />class MyAbstractClass:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def method1(self): abstract()
+      <br />
+      <br />class MyClass(MyAbstractClass): 
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;pass
+      <br />
+      <br />if __name__ == "__main__":
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;c = MyClass()
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;c.method1()
+      </div>
+      <br />
+      <hr />
+
+
+<!-- 輸入輸出 -->
+      <a name="inout"><h2>輸入輸出</h2>
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />import sys
+      <br />import subprocess
+      <br />
+      <br /><span class="cmts"># read from stdin, format stdout</span>
+      <br />print "Input your name: "
+      <br />name = sys.stdin.readline().rstrip()
+      <br />print "Hello, %s" %(name)
+      <span class="cmts">#換行輸出</span>
+      <br />sys.stdout.write(name)
+      <span class="cmts">#不換行輸出</span>
+      <br />
+
+      <br /><span class="cmts"># read from stdin</span>
+      <br />input = raw_input("keyin any string")
+      <br />print input
+      <br />
+
+      <br /><span class="cmts"># read file</span>
+      <br />rf = open("/etc/passwd", "r")
+      <br />lines = rf.readlines()
+      <br />for l in lines:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print l
+      <br />rf.close()
+      <br />
+
+      <br /><span class="cmts"># write file</span>
+      <br />wf = open("/tmp/tmp.txt", 'w')
+      <br />c = subprocess.Popen(['date'], stdout = wf)
+      <br />wf.close()
+      <br />
+
+      <br /><span class="cmts"># append file</span>
+      <br />wf = open("/tmp/tmp.txt", 'a+')
+      <br />for l in lines:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;wf.write(l)
+      <br />wf.close()
+      <br />
+
+      <br /><span class="cmts"># format output</span>
+      <br />pbsScript = '''#!/bin/sh
+      <span class="cmts">here document/即席文件</span>
+      <br />#PBS -N %s
+      <br />#PBS -o %s.out
+      <br />#PBS -e %s.err
+      <br />#PBS -q %s
+      <br />#PBS -l nodes=%i:ppn=%i
+      <br />#PBS -V
+      <br />
+      <br />ulimit -s unlimited
+      <br />cd $PBS_O_WORKDIR
+      <br />
+      <br />echo "Job begin at `date`"
+      <br />%s
+      <br />echo "Job finish at `date`"
+      <br />'''
+      <br />
+      <br />jobName = "test"
+      <br />queueName = "workq"
+      <br />nproc = 1
+      <br />ncore = 8
+      <br />exe = "mpirun -np " + str(nproc * ncore) + " mpi.exe"
+      <br />print pbsScript %(jobName, jobName, jobName, queueName, nproc, ncore, exe)
+
+      </div>
+      <hr />
+
+<!-- 系統指令 -->
+      <a name="系統指令"><h2>系統指令</h2>
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />import subprocess
+      <br />
+      <br />subprocess.call(['ls', '-l'])
+      <br />
+      <br />c1 = subprocess.Popen(['grep', '^root', '/etc/passwd'], stdout = subprocess.PIPE)
+      <br />c2 = subprocess.Popen(["cut", "-d:", "-f1"], stdin = c1.stdout)
+      <br />c2.communicate()
+      </div>
+      <hr />
+
+<!-- 正規表示 -->
+      <a name="正規表示"><h2>正規表示</h2>
+      <div class="commands">#!/usr/bin/env python
+      <br />import sys
+      <br />import re
+      <br />
+      <br />pattern = re.compile(sys.argv[1])
+      <br />file = sys.argv[2]
+      <br />
+      <br />for l in open(file).readlines():
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;if pattern.search(l):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print l.strip()
+      </div>
+      <br />
+
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />import re
+      <br />
+      <br />str = '/usr/lib/python2.6/site-packages/gtk-2.0/gconf.so' 
+      <br />print str
+      <br />
+
+      <br />restr = re.compile('(.*)\.(.*?)$').match(str)
+      <span class="cmts">#同sh ${STR%.*}</span>
+      <br />print "%s &lt;=&gt; %s" %(restr.group(1), restr.group(2))
+      <br />print restr.group(1, 2)
+      <span class="cmts">#回傳list</span>
+      <br />print restr.groups()
+      <span class="cmts">#同上</span>
+      <br />print re.sub('.[^.]*$', '', str)
+      <br />
+
+      <br />restr = re.compile('(.*?)\.(.*)').match(str)
+      <span class="cmts">#同sh ${STR%%.*}</span>
+      <br />print "%s &lt;=&gt; %s" %(restr.group(1), restr.group(2))
+      <br />print re.sub('\.(.*)', '', str)
+      <br />
+
+      <br />restr = re.compile('(.*?)/(.*)').match(str)
+      <span class="cmts">#同sh ${STR0#*/}</span>
+      <br />print "%s &lt;=&gt; %s" %(restr.group(1), restr.group(2))
+      <br />print re.sub('^(.*?)/', '', str)
+      <br />
+
+      <br />restr = re.compile('(.*)/(.*)').match(str)
+      <span class="cmts">#同sh ${STR0##*/}</span>
+      <br />print "%s &lt;=&gt; %s" %(restr.group(1), restr.group(2))
+      <br />print re.sub('(.*)/', '', str)
+      </div>
+
+      <hr />
+
+
+<!-- 例外處理 -->
+      <a name="例外處理"><h2>例外處理</h2>
+      <h3>try/except/finally</h3>
+      <p class="h3">try/except會捕捉例外事件，try/finally會強制執行事件</p>
+
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />import re
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;a = int(raw_input('input an integer number '))
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;b = int(raw_input('input an integer number '))
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;if a > b:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print n
+      <br />except ValueError:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "Value Error, you don't input any character"
+      <br />except:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "Other Error"
+      <br />else:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "Normal finish"
+      <br />finally:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print "force action"
+      </div>
+      <br />
+
+      <h3>raise</h3>
+      <p class="h3">raise這關鍵字可以覆寫python已定義的Exception之外，也可以新增使用者自行定義的Exception</p>
+      <div class="commands">#!/usr/bin/env python
+      <br />
+      <br />class MyError(Exception):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def __init__(self, value):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.value = value
+      <br />
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def __str__(self):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return repr(self.value)
+      <br />
+      <br />try:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;raise MyError(raw_input("keyin any one"))
+      <br />except MyError as e:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;print 'My exception occurred, value:', e.value
+      </div>
+      <hr />
+
+<!-- 說明安裝 -->
+      <a name="說明安裝"><h2>說明安裝</h3>
+      <h3>PyDoc</h3>
+      <p class="h3">PyDoc（Python Document）</p>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> <span class="vars"><a href="./ex/mymod.py">mymod.py</a></span>
+      <br />#!/usr/bin/python
+      <br /><em>&quot;&quot;&quot;Show off features of [pydoc] module
+      <br />This is a silly module to
+      <br />demonstrate docstrings
+      <br />&quot;&quot;&quot;
+      <br />__author__ =  '<span class="vars">David Mertz</span>'
+      <br />__version__=  '<span class="vars">1.0</span>'
+      <br />__nonsense__ = '<span class="vars">jabberwocky</span>'</em>
+      <br />class MyClass:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;<em>&quot;&quot;&quot;Demonstrate class docstrings&quot;&quot;&quot;</em>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;def __init__ (self, spam=1, eggs=2):
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>&quot;&quot;&quot;Set default attribute values only
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Keyword arguments:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;spam --- a processed meat product
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eggs --- a fine breakfast for lumberjacks
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;&quot;</em>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.spam = spam
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.eggs = eggs
+      <br />Linux:~ # <span class="cmds">python</span> -m <span class="vars">mymod</span>
+      <br />Linux:~ # <span class="cmds">pydoc</span> <span class="vars">mymod</span>
+      <span class="cmts">#搜尋</span>
+      <br />Linux:~ # <span class="cmds">pydoc</span> -k <span class="vars">mymod</span>
+      <span class="cmts">#關鍵字搜尋</span>
+      <br />Linux:~ # <span class="cmds">pydoc</span> -w <span class="vars">mymod</span>
+      <span class="cmts">#輸出成html格式</span>
+      </div>
+      <br />
+
+      <h3>DistUtils</h3>
+      <p class="h3">DistUtils（Distrbution Utilities）</p>
+      <div class="commands">Linux:~ # <span class="cmds">python</span> setup.py [build/install] --help
+      <br />Linux:~ # <span class="cmds">python</span> setup.py build --help-compiler
+      <br />Linux:~ # <span class="cmds">python</span> setup.py build 
+      <br />Linux:~ # <span class="cmds">python</span> setup.py install --prefix=/usr/local --record install.log
+      </div>
+      <hr />
+
+<!-- 內建pwd函式 -->
+      <a name="內建函式"><h2>內建函式</h3>
+      <h3>Python Built-in Functions</h3>
+
+      <table class="h3">
+      <tr><th>function</th>
+          <th>description</th></tr>
+      <tr><td>__import__</td>
+          <td></td></tr>
+      <tr><td>abs</td>
+          <td>取數值絕對值</td></tr>
+      <tr><td>all</td>
+          <td></td></tr>
+      <tr><td>apply</td>
+          <td></td></tr>
+      <tr><td>basestring</td>
+          <td></td></tr>
+      <tr><td>bin</td>
+          <td>取二進位</td></tr>
+      <tr><td>bool</td>
+          <td>取布林值</td></tr>
+      <tr><td>buffer</td>
+          <td></td></tr>
+      <tr><td>bytearray</td>
+          <td></td></tr>
+      <tr><td>callable</td>
+          <td></td></tr>
+      <tr><td>chr</td>
+          <td></td></tr>
+      <tr><td>classmethod</td>
+          <td></td></tr>
+      <tr><td>cmp</td>
+          <td></td></tr>
+      <tr><td>coerce</td>
+          <td></td></tr>
+      <tr><td>compile</td>
+          <td></td></tr>
+      <tr><td>complex</td>
+          <td></td></tr>
+      <tr><td>delattr</td>
+          <td></td></tr>
+      <tr><td>dict</td>
+          <td></td></tr>
+      <tr><td>dir</td>
+          <td></td></tr>
+      <tr><td>divmod</td>
+          <td></td></tr>
+      <tr><td>enumerate</td>
+          <td></td></tr>
+      <tr><td>eval</td>
+          <td></td></tr>
+      <tr><td>execfile</td>
+          <td></td></tr>
+      <tr><td>file</td>
+          <td></td></tr>
+      <tr><td>filter</td>
+          <td></td></tr>
+      <tr><td>float</td>
+          <td></td></tr>
+      <tr><td>format</td>
+          <td></td></tr>
+      <tr><td>frozenset</td>
+          <td></td></tr>
+      <tr><td>getattr</td>
+          <td></td></tr>
+      <tr><td>globals</td>
+          <td></td></tr>
+      <tr><td>hasattr</td>
+          <td></td></tr>
+      <tr><td>hash</td>
+          <td></td></tr>
+      <tr><td>help</td>
+          <td></td></tr>
+      <tr><td>hex</td>
+          <td></td></tr>
+      <tr><td>id</td>
+          <td></td></tr>
+      <tr><td>input</td>
+          <td></td></tr>
+      <tr><td>int</td>
+          <td></td></tr>
+      <tr><td>intern</td>
+          <td></td></tr>
+      <tr><td>isinstance</td>
+          <td></td></tr>
+      <tr><td>issubclass</td>
+          <td></td></tr>
+      <tr><td>iter</td>
+          <td></td></tr>
+      <tr><td>len</td>
+          <td></td></tr>
+      <tr><td>list</td>
+          <td></td></tr>
+      <tr><td>lcoals</td>
+          <td></td></tr>
+      <tr><td>long</td>
+          <td></td></tr>
+      <tr><td>map</td>
+          <td></td></tr>
+      <tr><td>max</td>
+          <td>取最大值</td></tr>
+      <tr><td>memoryview</td>
+          <td></td></tr>
+      <tr><td>min</td>
+          <td>取最小值</td></tr>
+      <tr><td>next</td>
+          <td></td></tr>
+      <tr><td>object</td>
+          <td></td></tr>
+      <tr><td>oct</td>
+          <td>取八進位</td></tr>
+      <tr><td>open</td>
+          <td></td></tr>
+      <tr><td>ord</td>
+          <td></td></tr>
+      <tr><td>pow</td>
+          <td></td></tr>
+      <tr><td>print</td>
+          <td></td></tr>
+      <tr><td>property</td>
+          <td></td></tr>
+      <tr><td>range</td>
+          <td></td></tr>
+      <tr><td>raw_input</td>
+          <td></td></tr>
+      <tr><td>reduce</td>
+          <td></td></tr>
+      <tr><td>reload</td>
+          <td></td></tr>
+      <tr><td>repr</td>
+          <td></td></tr>
+      <tr><td>reversed</td>
+          <td></td></tr>
+      <tr><td>round</td>
+          <td></td></tr>
+      <tr><td>set</td>
+          <td></td></tr>
+      <tr><td>setattr</td>
+          <td></td></tr>
+      <tr><td>slice</td>
+          <td></td></tr>
+      <tr><td>sorted</td>
+          <td></td></tr>
+      <tr><td>staticmethod</td>
+          <td></td></tr>
+      <tr><td>str</td>
+          <td></td></tr>
+      <tr><td>sum</td>
+          <td></td></tr>
+      <tr><td>super</td>
+          <td></td></tr>
+      <tr><td>tuple</td>
+          <td></td></tr>
+      <tr><td>type</td>
+          <td></td></tr>
+      <tr><td>unichr</td>
+          <td></td></tr>
+      <tr><td>vars</td>
+          <td></td></tr>
+      <tr><td>xrange</td>
+          <td></td></tr>
+      <tr><td>zip</td>
+          <td></td></tr>
+      </table>
+
+      <p class="h3">Python Built-in Functions</p>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> mymod.py
+      <br />#!/usr/bin/python
+      <br />Show off features of [pydoc] module
+      </div>
+      <hr />
+
+
+<!-- reference -->
+     <a name="Reference"><h2>Reference</h2>
+
+<!-- changelog -->
+    <h2>Changelog</h2>
+
+</body>
+</html>

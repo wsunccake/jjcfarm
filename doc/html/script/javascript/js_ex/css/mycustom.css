@@ -1,0 +1,109 @@
+.sample {
+  border: 2px double Green;
+  background-color: Yellow;
+  color: Red;
+}
+
+.show-grid {
+  margin-bottom: 15px;
+}
+.show-grid [class^="col-"] {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #eee;
+  border: 1px solid #ddd;
+  background-color: rgba(86,61,124,.15);
+  border: 1px solid rgba(86,61,124,.2);
+}
+
+
+#list {
+  margin: 0px;
+  padding: 0px;
+}
+
+#list li {
+  margin: 2px;
+  height: 40px;
+  list-style: none;
+  float: left;
+}
+
+#list img {
+  width: 55px;
+  /*height: 40px;*/
+}
+
+#big {
+  /*width: 315px;*/
+  height: 235px;
+}
+
+.watermark {
+  color: #C0C0C0;
+}
+
+
+.webContext {
+  padding: 5px;
+  position: absolute;
+  display: none;
+  background-color: Silver;
+  font-size: smaller;
+}
+
+.webContext li {
+  list-style-type: none;
+  line-height: 150%;
+}
+
+.webContext li a {
+  text-decoration: none;
+  color: Black;
+}
+
+#error_summary {
+  color: #F00;
+  display: none;
+}
+
+.error_field {
+  background-color: #F9C;
+}
+
+.error_mark {
+  color: #F00;
+}
+
+
+.tiplink {
+  /*border-bottom: 1px dotted Black;*/
+  cursor: pointer;
+}
+
+.tip {
+  border: 1px solid Silver;
+  background-color:  #CfF;
+  font-size: smaller;
+  padding: 2px;
+  position: absolute;
+  display: none;
+}
+
+#panel {
+  width: 600px;
+}
+
+#panel dt {
+  background-color: Silver;
+  cursor: pointer;
+  color: White;
+  /*background-image: */
+  padding: 4px;
+}
+
+#padding dd {
+  border:  solid 1px Silver;
+  margin: 0px;
+  padding: 10px;
+}

@@ -1,0 +1,271 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>Python Library</title>
+<link rel="stylesheet" href="../../defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>Python Library</h1>
+
+      <br /><a href="#IDE"><li class="title">IDE</li></a>
+        <br /><a href="#ipython"><li class="subtitle">ipython</li>
+      
+      <br /><a href="#SSH"><li class="title">SSH</li></a>
+        <br /><a href="#paramiko"><li class="subtitle">paramiko</li>
+
+      <br /><a href="#NumSci"><li class="title">Num &amp; Sci</li></a>
+        <br /><a href="#NumPy"><li class="subtitle">NumPy</li>
+        <br /><a href="#matplotlib"><li class="subtitle">matplotlib</li>
+        <br /><a href="#SciPy"><li class="subtitle">SciPy</li>
+
+      <br /><a href="#GUI"><li class="title">GUI</li></a>
+        <br /><a href="#wxPython"><li class="subtitle">wxPython</li>
+
+      <br /><a href="#Package"><li class="title">Package Management</li></a>
+        <br /><a href="#distutils"><li class="subtitle">distutils</li>
+        <br /><a href="#setuptool"><li class="subtitle">setuptool</li>
+        <br /><a href="#pip"><li class="subtitle">pip</li>
+
+      <hr />
+
+<!-- IDE -->
+      <a name="IDE"><h2>IDE</h2></a>
+
+      <a name="ipython"><h3>ipython</h3></a>
+      <div class="commands"><span class="cmts">#安裝ipython</span>
+      <br /><span class="cmts">#使用distUtils安裝</span>
+      <br />Linux:~ # <span class="cmds">wget</span> <span class="vars">http://archive.ipython.org/release/0.10.1/ipython-0.10.1.tar.gz</span>
+      <br />Linux:~ # <span class="cmds">tar</span> <span class="vars">ipyton-0.10.1.tar.gz</span>
+      <br />Linux:~ # <span class="cmds">cd</span> ipython-0.10.1
+      <br />Linux:~/ipython-0.10.1 # <span class="cmds">python</span> setup.py build
+      <br />Linux:~/ipython-0.10.1 # <span class="cmds">python</span> setup.py install
+      <br />
+
+      <br /><span class="cmts">#使用pip安裝</span>
+      <br />Linux:~ # <span class="cmds">pip</span> install <span class="vars">ipython</span>
+      </div>
+      <br />
+
+      <h3>ipython helpful command</h3>
+      <table class="h3">
+      <colgroup>
+      <col width="15%">
+      <col width="85%">
+      </colgroup>
+      <thead valign="bottom">
+      <tr class="row-odd"><th class="head">command</th>
+      <th class="head">description</th>
+      </tr>
+      </thead>
+      <tbody valign="top">
+      <tr class="row-even"><td>?</td>
+      <td>Introduction and overview of IPython’s features.</td>
+      </tr>
+      <tr class="row-odd"><td>%quickref</td>
+      <td>Quick reference.</td>
+      </tr>
+      <tr class="row-even"><td>help</td>
+      <td>Python’s own help system.</td>
+      </tr>
+      <tr class="row-odd"><td>object?</td>
+      <td>Details about ‘object’, use ‘object??’ for extra details.</td>
+      </tr>
+      </tbody>
+      </table>
+      <br />
+
+      <h3>ipython usage</h3>
+      <p class="h3">ipython的環境變數IPYTHONDIR預設為~/.ipython</p>
+      <div class="commands">In : <span class="ftns">import</span> os
+      <br />In : <span class="ftns">print</span> os.path
+      <br />In : <span class="ftns">import</span> sys
+      <br />In : <span class="ftns">print</span> sys.path
+      <br />In : <span class="ftns">%hist</span>
+      <span class="cmts"># 預設寫入$IPYTHONDIR/history</span>
+      <br />In : <span class="ftns">%save</span> <span class="vars">tmp.py</span> <span class="vars">n</span>[-<span class="vars">m</span>]
+      <span class="cmts"># 將輸入過的指令寫入檔案n,m為行數</span>
+      <br />In : <span class="ftns">%run</span> <span class="vars">tmp.py</span>
+      <span class="cmts"># 執行python script</span>
+      <br />
+
+      <br />In : a = 1
+      <br />In : b = "XYZ"
+      <br />In : <span class="ftns">for</span> l <span class="ftns">in</span> lists:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ftns">print</span> l
+      <br />In : <span class="ftns">%macro</span> mymacro <span class="vars">n</span>[-<span class="vars">m</span>]
+      <span class="cmts"># 將輸入過的指令寫成巨集</span>
+      <br />In : lists = [1,2,3,4]
+      <br />In : mymacro
+      <br />
+
+      <br />In : <span class="ftns">%whos</span>
+      <span class="cmts"># 顯示目前變數/巨集</span>
+      <br />
+      
+      <br />In : <span class="ftns">%store</span> a
+      <span class="cmts"># 將變數寫入db, 重啟ipython仍會自動載入, 預設會存放$IPYTHONDIR/db</span>
+      <br />In : <span class="ftns">%store</span> mymacro
+      <span class="cmts"># 將巨集寫入db, 重啟ipython仍會自動載入, 預設會存放$IPYTHONDIR/db</span>
+      <br />In : <span class="ftns">%store</span>
+      <span class="cmts"># 顯示db中變數/巨集</span>
+      <br />In : <span class="ftns">%store</span> -d a
+      <span class="cmts"># 刪除db中變數/巨集</span>
+      <br />In : <span class="ftns">%store</span> -z
+      <span class="cmts"># 刪除db中所有變數/巨集</span>
+      <br />
+      <br />In : <span class="ftns">del</span> a
+      <span class="cmts"># 刪除變數/巨集</span>
+      <br />In : <span class="ftns">%reset</span>
+      <span class="cmts"># 刪除所有變數/巨集</span>
+      <br />
+
+      <br /> In : <span class="ftns">import</span> os
+      <br /> In : os<span class="ftns">?</span>
+      <br /> In : a<span class="ftns">?</span>
+      <br /> In : <span class="ftns">%pdoc</span> os
+      <span class="cmts"># 說明文件</span>
+      <br /> In : <span class="ftns">%psource</span> os
+      <span class="cmts"># 看source code</span>
+      <br /> In : <span class="ftns">%psearch</span> o*
+      <span class="cmts"># 搜尋</span>
+      <br /> 
+      <br /> In : <span class="ftns">%lsmagic</span>
+      <span class="cmts"># 列出magic function</span>
+      <br /> In : <span class="ftns">%quickref</span>
+      <br />
+
+      <br />In : <span class="ftns">%alias</span>
+      <span class="cmts"># IPYTHON/ipythonrc</span>
+      <br />In : <span class="ftns">%unalias</span>
+      </div>
+ 
+
+
+      <!-- http://damontallen.github.io/IPython-quick-ref-sheets/ -->
+      <hr />
+
+<!-- SSH -->
+      <a name="SSH"><h2>SSH</h2>
+
+      <a name="paramiko"><h3>paramiko</h3>
+      <p class="h3">SSH、SFTP連線已有適合的函式庫paramiko，在安裝paramiko之前有個相依pycrypto要先安裝，先到SlackBuilds下載pycrypto和paramiko</p>
+      <div class="commands"><span class="cmts">#安裝pycrypto</span>
+      </div>
+      <hr />
+
+<!-- NumSci -->
+      <a name="NumSci"><h2>Num &amp; Sci</h2>
+
+      <a name="NumPy"><h3>NumPy</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts">#安裝NumPy</span>
+      </div>
+      <br />
+
+      <a name="matplotlib"><h3>matplotlib</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts">#安裝pytz</span>
+      <br />
+
+      <br /><span class="cmts">#安裝pysetuptools</span>
+      <br />
+
+      <br /><span class="cmts">#安裝python-dateutil</span>
+
+      <br /><span class="cmts">#安裝</span>
+      </div>
+      <br />
+
+      <a name="SciPy"><h3>SciPy</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts">#安裝BLAS</span>
+      <br />
+
+      <br /><span class="cmts">#安裝LAPACK</span>
+      <br />
+
+      <br /><span class="cmts">#安裝SciPy</span>
+      </div>
+      <br />
+      <p class="h3">在一般windows系統上可以安裝Python(x,y)達到整合環境</p>
+      <hr />
+
+<!-- GUI -->
+      <a name="GUI"><h2>GUI</h2>
+
+      <a name="wxPython"><h3>wxPython</h3>
+      <p class="h3">wxPython是GUI API的一種（wxGTK和wxPython一樣，但wxGTK已經包含在wxPython裡面，所以裝wxPython就可以）</p>
+      <div class="commands"><span class="cmts">#安裝wxPython</span>
+      </div>
+      <br />
+
+      <p class="h3">wxPython內附有自己的IDE，如PyCrust.py等。另外還可以裝Boa Constructor（一種類似MVC模式的wxPython IDE）</p>
+      <div class="commands">Linux:~ $ <span class="cmds">alias</span> PyWrap="python /usr/lib/python2.6/site-packages/wx-2.8-gtk2-unicode/wx/py/PyWrap.py"
+      <br />Linux:~ $ <span class="cmds">PyWrap</span> xx.py
+      <span class="cmts">#使用PyCrust作debuger</span>
+      <br />
+
+      <br />Linux:~ $ <span class="cmds">alias</span> PyCrust='python /usr/lib/python2.6/site-packages/wx-2.8-gtk2-unicode/wx/py/PyCrust.py
+      <br />Linux:~ $ <span class="cmds">PyCrut</span>
+      <span class="cmts">#顯示如下</span>
+      </div>
+      <p class="h3"><img src="PyCrust.png"></p>
+      <hr />
+
+<!-- Package Management -->
+      <a name="Package"><h2>Package Management</h2>
+      <p class="h3"></p>
+      <table class="h3">
+        <tr>
+          <th></th>
+          <th>distutils</th>
+          <th>setuptool</th>
+          <th>pip</th>
+        </tr>
+        <tr>
+          <td>Install</td>
+
+          <td>python setup.py build
+          <br />python setup.pu install [--prefix=<span class="vars">/path</span>] [--record=<span class="vars">logfile</span>]
+          </td>
+          
+          <td>easy_install <span class="vars">pkg.egg</span>
+          <br />easy_install <span class="vars">pkg</span>[==<span class="vars">ver</span>] 
+          </td>
+          
+          <td>pip install <span class="vars">pkg.zip</span>
+          <br />pip install [--install-option=&quot;--prefix=<span class="vars">/path</span>&quot;] <span class="vars">pkg</span>[==<span class="vars">ver</span>] 
+          </td>
+        </tr>
+        <tr>
+          <td>remove</td>
+          <td>cat <span class="vars">logfile</span> | xargs rm -rf</td>
+          <td>easy_install -m <span class="vars">pkg</span></td>
+          <td>pip uninstall <span class="vars">pkg</span></td>
+        </tr>
+        <tr>
+          <td>help</td>
+          <td>python setup.py [<span class="vars">command</span>] --help</td>
+          <td>easy_intell --help</td>
+          <td>pip help</td>
+        </tr>
+        <tr>
+          <td>list</td>
+          <td></td>
+          <td>yolk -l</td>
+          <td>pip freeze</td>
+        </tr>
+        <tr>
+          <td>search</td>
+          <td></td>
+          <td></td>
+          <td>pip search <span class="vars">pkg</span></td>
+        </tr>
+      </table>
+      <p class="h3">==可以改用&gt;=、&lt;=、&gt;、&lt;</p>
+      <hr />
+
+<!-- reference -->
+     <a name="Reference"><h2>Reference</h2>

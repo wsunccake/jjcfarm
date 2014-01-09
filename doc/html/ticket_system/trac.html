@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>trac</title>
+<link rel="stylesheet" href="../defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>Trac</h1>
+      <a href="#Trac"><li class="title">Trac</li></a>
+      <br /><a href="#WebAdmin"><li class="title">WebAdmin</li></a>
+      <br /><a href="#IniAdmin"><li class="title">IniAdmin</li></a>
+      <br /><a href="#AccountManager"><li class="title">AccountManager</li></a>
+
+      <div class="context">
+      <p class="h1">Trac是Edgewall公司開發並維護的開放源碼網頁界面專案管理、尤其擅長軟體BUG跟蹤方面。Trac的靈感來自於CVSTrac，因為能夠與Subversion介面，所以最初叫做svntrac。Trac使用Python程式語言開發。在2005年中以前，Trac以GPL發行；版開始使用修改過的BSD許可證發布。基本上都是屬於自由軟體的許可證。該軟體集成了增強的Wiki功能和版本控制功能，並可通過插件擴展其功能。插件眾多、功能全面，甚至可以與很多商業的CMS系統媲美，安裝也不複雜，因此應用也日益廣泛。它的ticket管理及工作流插件使得它也可以很方便地進行簡單的業務協作及流程控制。</p>
+      </div>
+      <hr />
+
+<!-- Trac -->
+      <a name="Trac"><h2>Trac</h2>
+      <h3>安裝</h3>
+      <p class="h3"></p>
+
+      <h3></h3>
+      <div class="commands">SLES:~ # <span class="cmds">wget</span> http://download.edgewall.org/trac/Trac-1.0.1.tar.gz
+      <br />SLES:~ # <span class="cmds">tar</span> zxf Trac-1.0.1.tar.gz
+      <br />SLES:~ # <span class="cmds">cd</span> Trac-1.0.1
+      <br />SLES:~/Trac-1.0.1 # <span class="cmds">python</span> setup.py build
+      <br />SLES:~/Trac-1.0.1 # <span class="cmds">python</span> setup.py install [--prefix=/path]
+      <br />
+
+      <!-- <br />SLES:~ # <span class="cmds">pip</span> install Trac [--install-option=&quot;--prefix=/path&quot;] -->
+      </div>
+      <br />
+
+      <h3>測試</h3>
+      <div class="commands">SLES:~ # <span class="cmds">trac-admin</span> <span class="vars">/project_path</span> initenv
+      <span class="cmts"># initial env at 1st time</span>
+      <br />SLES:~ # <span class="cmds">tracd</span> --port <span class="vars">8000</span> <span class="vars">/project_path</span>
+      <span class="cmts"># start server by tracd</span>
+      </div>
+      <p class="h3">開啟瀏覽器, http://127.0.0.1:<span class="vars">8000</span>/project_path</p>
+      <br />
+
+      <p class="h3">在web server有3個選擇，直接使用Trac內建的Tracd、FastCGI及Mod_Python，執行速度是後者較前者快 。這部份可使用mod_wsgi或mod_python配合Apache2。</p>
+
+      <p class="h3"></p>
+      <div class="commands">SLES:~ # <span class="cmds">trac-admin</span> <span class="vars">/project_path</span> deploy <span class="vars">/project_path</span>
+      <span class="cmts"># create cgi, fcgi, wsgi at /project_path/cgi-bin</span>
+      <br />
+
+      <br /><span class="cmts"># setup for apache2 mod_python</span>
+      <br />SLES:~ # <span class="cmds">chown</span> -R wwwrun:www <span class="vars">/project_path</span>
+      <br />SLES:~ # <span class="cmds">cat</span> /etc/apache2/conf.d/trac.conf
+      <span class="cmts"># apache2 configuration</span>
+      <br />&lt;Location <span class="vars">/project_name</span>&gt;
+      <br />&nbsp;&nbsp;SetHandler mod_python
+      <br />&nbsp;&nbsp;PythonHandler trac.web.modpython_frontend
+      <br />&nbsp;&nbsp;PythonOption TracEnv &quot;<span class="vars">/project_path</span>&quot;
+      <br />&nbsp;&nbsp;PythonOption TracUriRoot &quot;<span class="vars">/project_name</span>&quot;
+      <br />&lt;/Location&gt;
+      <br />SLES:~ # /etc/init.d/apache2 restart
+<!-- 
+<Location /trac>
+  SetHandler mod_python
+  PythonHandler trac.web.modpython_frontend
+  PythonOption TracEnv "/srv/trac"
+  PythonOption TracUriRoot "/trac"
+</Location>
+-->
+
+<!--
+      <br /><span class="cmts"># setup for apache2 mod_wsgi</span>
+      <br />RHEL:~ # <span class="cmds">chown</span> -R wwwrun:www <span class="vars">/project_path</span>
+      <br />RHEL:~ # <span class="cmds">cat</span> /etc/apache2/conf.d/trac.conf
+WSGIScriptAlias /trac /project_path/cgi-bin/trac.wsgi
+<Directory /project_path>
+    WSGIApplicationGroup %{GLOBAL}
+    Order deny,allow
+    Allow from all
+</Directory>
+-->
+      </div>
+      <br />
+
+      <h3>簡易帳號密碼</h3>
+      <div class="commands">SLES:~ # <span class="cmds">htpasswd2</span> -c <span class="vars">/project_path/trac.htpasswd</span> <span class="vars">admin</span>
+      <span class="cmts"># initial htpasswd file and create user</span>
+      <br />SLES:~ # <span class="cmds">htpasswd2</span> <span class="vars">/project_path/trac.htpasswd</span> <span class="vars">user1</span>
+      <span class="cmts"># create user</span>
+      <br />SLES:~ # <span class="cmds">chown</span> wwwrun.www <span class="vars">/project_path/trac.htppaswd</span>
+      <br />SLES:~ # <span class="cmds">var</span> /etc/apache2/conf.d/trac.conf
+      <span class="cmts"># apache2 configuration</span>
+      <br />&lt;Location <span class="vars">/project_name</span>&gt;
+      <br />&nbsp;&nbsp;SetHandler mod_python
+      <br />&nbsp;&nbsp;PythonHandler trac.web.modpython_frontend
+      <br />&nbsp;&nbsp;PythonOption TracEnv &quot;<span class="vars">/project_path</span>&quot;
+      <br />&nbsp;&nbsp;PythonOption TracUriRoot &quot;<span class="vars">/project_name</span>&quot;
+      <br />  
+      <br />&nbsp;&nbsp;AuthType Basic
+      <br />&nbsp;&nbsp;AuthName &quot;Trac&quot;
+      <br />&nbsp;&nbsp;AuthUserFile &quot;<span class="vars">/project_path/trac.htppaswd</span>&quot;
+      <br />&nbsp;&nbsp;Require valid-user
+      <br />&lt;/Location&gt;
+      <br />SLES:~ # /etc/init.d/apache2 restart
+
+<!-- 
+<Location /trac>
+  SetHandler mod_python
+  PythonHandler trac.web.modpython_frontend
+  PythonOption TracEnv "/srv/trac"
+  PythonOption TracUriRoot "/trac"
+
+  AuthType Basic
+  AuthName "Trac"
+  AuthUserFile "/srv/trac/trac.htpasswd"
+  Require valid-user
+</Location>
+-->
+
+<!--
+<Location /trac>
+  SetHandler mod_python
+  PythonHandler trac.web.modpython_frontend
+  PythonOption TracEnv "/srv/trac"
+  PythonOption TracUriRoot "/trac"
+</Location>
+
+<LocationMatch "/trac/login"> # for single project
+#<LocationMatch "/trac/[^/]+/login"> #for multiple project
+  AuthType Basic
+  AuthName "Trac"
+  AuthUserFile "/srv/trac/trac.htpasswd"
+  Require valid-user
+</LocationMatch>
+-->
+
+<!--       
+http.conf
+WSGIScriptAlias /trac /var/www/trac/cgi-bin/trac.wsgi
+<Directory /var/www/trac>
+    WSGIApplicationGroup %{GLOBAL}
+    Order deny,allow
+    Allow from all
+
+    AuthType Basic
+    AuthName "Trac"
+    AuthUserFile /var/www/trac/trac.htpasswd
+    Require valid-user
+</Directory>
+ -->  
+
+      </div>
+      <hr />
+
+<!-- WebAdmin -->
+      <a name="WebAdmin"><h2>WebAdmin</h2>
+      <p class="h2">WebAdmin是管理Trac專案相關設定的套件，在1.x之後就被整合到core中，無須另外安裝</p>
+      <h3>設定</h3>
+
+      <div class="commands">SLES:~ # <span class="cmds">cat</span> <span class="vars">/project_path/conf/trac.ini</span>
+      <br />[components]
+      <br />webadmin.* = enabled
+      <span class="cmts"># 加入此行</span>
+      <br />SLES:~ # <span class="cmds">trac-admin</span> <span class="vars">/project_path</span> permission add <span class="vars">admin</span> TRAC_ADMIN
+      <br />SLES:~ # <span class="cmds">trac-admin</span> <span class="vars">/project_path</span> permission list
+      <br />SLES:~ # /etc/init.d/apache2 restart
+      <!-- trac-admin /proejct_path permission remove anonymous * -->
+      </div>
+      <hr />
+
+<!-- IniAdmin -->
+      <a name="IniAdmin"><h2>IniAdmin</h2>
+      <h3></h3>
+      <div class="commands"><span class="cmts"># Installation</span>
+      <br />SLES:~ # <span class="cmds">unzip</span> iniadminplugin_0.11-13432.zip
+      <br />SLES:~ # <span class="cmds">cd</span> iniadminplugin/0.11/
+      <br />SLES:~/iniadminplugin/0.11 # <span class="cmds">python</span> setup.py build
+      <br />SLES:~/iniadminplugin/0.11 # <span class="cmds">python</span> setup.py install
+      <br />
+
+      <br /><span class="cmts"># Configuration</span>
+      <br />SLES:~ # <span class="cmds">cat</span> <span class="vars">/project_path/conf/trac.ini</span>
+      <br />[components]
+      <br />iniadmin.* = enabled
+      <span class="cmts"># 加入此行</span>
+      </div>
+      <hr />
+
+<!-- AccountManager -->
+      <a name="AccountManager"><h2>AccountManager</h2>
+      <p class="h2">管理Trac專案的成員帳號</p>
+      <h3></h3>
+      <div class="commands"><span class="cmts"># Installation</span>
+      <br />SLES:~ # <span class="cmds">unzip</span> accountmanagerplugin_tags_acct_mgr-0.4.3-13432.zip
+      <br />SLES:~ # <span class="cmds">cd</span> accountmanagerplugin/tags/acct_mgr-0.4.3/
+      <br />SLES:~/accountmanagerplugin/tags/acct_mgr-0.4.3/ # <span class="cmds">python</span> setup.py build
+      <br />SLES:~/accountmanagerplugin/tags/acct_mgr-0.4.3/ # <span class="cmds">python</span> setup.py install
+      <br />
+
+      <br /><span class="cmts"># Configuration</span>
+      <br />SLES:~ # <span class="cmds">cat</span> <span class="vars">/project_path/conf/trac.ini</span>
+      <br />[components]
+      <span class="cmts"># 加入以下內容</span>
+      <br />acct_mgr.admin.accountmanageradminpage = enabled
+      <br />acct_mgr.admin.accountmanageradminpanel = enabled
+      <br />acct_mgr.api.accountmanager = enabled
+      <br />acct_mgr.htfile.htpasswdstore = enabled
+      <br />acct_mgr.web_ui.accountmodule = enabled
+      <br />acct_mgr.web_ui.loginmodule = enabled
+      <br />tickettemplate.* = enabled
+      <br />trac.web.auth.loginmodule = disabled
+      <br />tracsubtickets.api.* = enabled
+      <br />tracsubtickets.web_ui.* = enabled
+      <br />
+      <br />[account-manager]
+      <span class="cmts"># 加入以下內容</span>
+      <br />htpasswd_file = <span class="vars">/project_path/xxx.htpasswd</span>
+      <br />password_file = <span class="vars">/project_path/xxx.passwd</span>
+      <br />password_store = HtPasswdStore
+      </div>
+      <hr />
+ 
+<!-- reference -->
+    <h2>Reference</h2>
+    <li class="reference">http://trac.edgewall.org/</li>
+    <br /><li class="reference">http://trac-hacks.org/</li>
+<!--     http://trac.edgewall.org/wiki/TracOnSLES9
+    http://trac.edgewall.org/wiki/TracOnFedoraCore
+    http://trac.edgewall.org/wiki/TracOnUbuntu -->
+    <hr />
+
+<!-- changelog -->
+    <h2>Changelog</h2>
+    <li class="changelog">2013/11/06 第一次完成</li>
+
+</body>
+</html>

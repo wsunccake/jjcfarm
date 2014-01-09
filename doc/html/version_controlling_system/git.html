@@ -1,0 +1,576 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>Git</title>
+<link rel="stylesheet" href="../defaults.css" type="text/css">
+</head>
+<body>
+
+<!-- header -->
+      <h1>Git</h1>
+      <a href="#Server"><li class="title">Git Server</li></a>
+      <br /><a href="#Client"><li class="title">Git Client</li></a>
+      <br /><a href="#Github"><li class="title">GitHub</li></a>
+      <br /><a href="#Reference"><li class="title">Reference</li></a>
+      <div class="context">
+      </div>
+      <p class="h1">Git是個分散式的版本控制軟體。大部分的版本控制軟體都需要一個伺服端，在commit的同時，提交到伺服器上面。git當然也可以集中管理，但是也多了分散管理的方式。簡單來說，billy開個專案，tom覺得這個專案有意思，他想玩玩看，他可把整個repo(reoisitories) clone，並且在他那邊自己有一個repo。tom可自由的對這個repo做各種提交修改，直到他覺得滿意為止。這時候tom可以告訴billy，他改了一些什麼，若billy覺得不錯，可以從tom那邊fetch回去並merge。
+      <br />GitHub是一個大型程式專案平台，奠基於開放原始碼文化，供程式設計師協作與版本控制。由於repo可以綁在寫程式的人身上，不用一定要有中央伺服器的主從架構，因此就出現了類似GitHub的線上版本控制服務。
+      </p>
+      <hr />
+
+<!-- Git Server -->
+      <a name="Server"><h2>Git Server</h2>
+      <p class="h2">若多人共用的話, 要走 SSH 有下述幾種方法:
+      <br />使用 git(不使用其他套件)，建立新帳號(git), 由 git 帳號來統一管理(commit / push) 等
+      <br />使用 gitosis 來管理(gitosis 可以設定到 "誰" 可以存取此專案).
+      <br />使用 gitolite 來管理(gitolite 可以設定 "誰" 可以存取此專案, 而且, 可以設定只能存取哪個 branch 等路徑)
+      </p>
+
+      <h3>via SSH(onlt git-core package)</h3>
+      <div class="commands"><span class="cmts"># 設定帳號, 群組</span>
+      <br />Server:~ # <span class="cmds">groupadd</span> -g <span class="vars">115</span> <span class="vars">git</span>
+      <br />Server:~ # <span class="cmds">useradd</span> -g <span class="vars">115</span> -u <span class="vars">115</span> -d /srv/git -s /usr/bin/git-shell -m <span class="vars">git</span>
+      <br />Server:~ # <span class="cmds">mkdir</span> ~git/.ssh
+      <br />Server:~ # <span class="cmds">touch</span> ~git/.ssh/authorized_keys
+      <span class="cmts"># 之後使用者的public key導入此檔案內</span>
+      <!-- #cat ~kam/.ssh/id_rsa.pub >> ~git/.ssh/authorized_keys -->
+      <br />
+
+      <br /><span class="cmts"># 建立專案</span>
+      <br />Server:~ # <span class="cmds">mkdir</span> ~git/project.git
+      <br />Server:~ # <span class="cmds">git</span> init --bare --shared project.git/
+      <br />Server:~ # <span class="cmds">chown</span> -R git.git ~git/
+      </div>
+      <br />
+
+      <h3>Gitweb</h3>
+      <p class="h3">gitweb是一個git套件(用perl寫的cgi)</p>
+      <div class="commands">Server:~ # <span class="cmds">grep</span> projectroot /usr/share/gitweb/gitweb.cgi
+      <span class="cmts"># 預設讀取git目錄設定</span>
+      <br />our $projectroot = "/srv/git";
+      <br />
+
+      <br />Server:~ # <span class="cmds">cat</span> /etc/apache2/conf.d/gitweb.conf
+      <br />Alias /git &quot;/usr/share/gitweb/&quot;
+      <br />&lt;Directory &quot;/usr/share/gitweb&quot;&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;Options ExecCGI
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;AllowOverride None
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;AddHandler cgi-script .cgi
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;DirectoryIndex gitweb.cgi
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;Order allow,deny
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;Allow from all
+      <br />
+      <br /><span class="vars"># 以下設定HTTP Basic Authentication, 若要publish 給任何人可不需要</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;AuthType Basic
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;AuthName &quot;Git&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;AuthUserFile <span class="vars">/srv/git/git.htpasswd</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;Require valid-user
+      <br />&lt;/Directory&gt;
+      <br />
+
+      <br />Server:~ # <span class="cmds">htpasswd2</span> -c <span class="vars">/srv/git/git.htpasswd</span> <span class="vars">user1</span>
+      <span class="cmts"># 當檔案不存在時需要加上-c create file</span>
+      <br />Server:~ # <span class="cmds">htpasswd2</span> <span class="vars">/srv/git/git.htpasswd</span> <span class="vars">user2</span>
+      </div>
+
+      <hr />
+
+<!-- Git Client -->
+      <a name="Client"><h2>Git Client</h2>
+
+<!-- BASIC -->
+      <h3>Basic</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts"># Configration file</span>
+      <br />Client:~ $ <span class="cmds">git</span> config --system
+      <span class="cmts"># 使用/etc/gitconfig</span>
+      <br />Client:~ $ <span class="cmds">git</span> config --global
+      <span class="cmts"># 使用~/.gitconfig</span>
+      <br />Client:~ $ <span class="cmds">git</span> config --file <span class="vars">config</span>
+      <span class="cmts"># 指定git 預設使用.git/config</span>
+      <br />
+
+      <br /><span class="cmts"># Protocol</span>
+      <br />Client:~ $ <span class="cmds">git</span> clone git@github.com:<span class="vars">user</span>/<span class="com:span vars">repo.git</span>
+      <span class="cmts"># SSH protocol, 安全性最佳</span>
+
+      <br />Client:~ $ <span class="cmds">git</span> clone https://<span class="vars">user</span>@github.com/<span class="vars">user</span>/<span class="com:span vars">repo.git</span>
+      <span class="cmts"># HTTP/HTTPS protocol, 速度最差, 突破防火牆限制</span>
+
+      <br />Client:~ $ <span class="cmds">git</span> clone git://github.com/<span class="vars">user</span>/<span class="com:span vars">repo.git</span>
+      <span class="cmts"># Git protocol 速度最快, 但缺認證機制(只做唯讀)</span>
+
+      <br />Client:~ $ <span class="cmds">git</span> clone file://<span class="vars">path</span>/<span class="com:span vars">repo.git</span>
+      <span class="cmts"># File 本機目錄 (用 Dropbox 分享 git init –bare –shared 目錄!!)</span>
+      <br />
+
+      <br /><span class="cmts"># Environment variable</span>
+      <br />Client:~ $ <span class="cmds">git</span> config --global user.name '<span class="vars">owner</span>'
+      <span class="cmts"># 設定使用者名稱</span>
+      <br />Client:~ $ <span class="cmds">git</span> config --global user.email '<span class="vars">owner@localhost</span>'
+      <span class="cmts"># 設定email</span>
+      <br />Client:~ $ <span class="cmds">git</span> config --global core.editor <span class="vars">vim</span>
+      <span class="cmts"># 設定文字編輯器</span>
+      <br />Client:~ $ <span class="cmds">git</span> config --global merge.tool <span class="vars">vimdiff</span>
+      <span class="cmts"># 設定比較工具</span>
+      <br />Client:~ $ <span class="cmds">git</span> config --global color.ui <span class="vars">true</span>
+      <span class="cmts"># 設定顯示顏色</span>
+      <br />Client:~ $ <span class="cmds">git</span> config --global apply.whitespace <span class="vars">nowarn</span>
+      <span class="cmts"># 忽略空白的變化, 空白對有些語言是有影響的(像是Ruby)</span>
+      <br />Client:~ $ <span class="cmds">git</span> config --global alias <span class="vars">st status</span>
+      <span class="cmts"># 設定別名, 打 git st 就等同於打 git status</span>
+      <br />Client:~ $ <span class="cmds">git</span> config --list
+      <span class="cmts"># 顯示當前設定</span>
+      <br />
+
+      <br />Client:~ $ <span class="cmds">cat</span> ~/.gitconfig
+      <br />[user]
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;name = owner
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;email = owner@localhost
+      <br />[core]
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;editor = vim
+      <br />[merge]
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;tool = vimdiff
+      <br />[color]
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;ui = true
+      <br />[alias]
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;st = status
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;co = checkout
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;ci = commit
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;br = branch
+      </div>
+      <br />
+
+      <h3>Local</h3>
+      <div class="commands"><span class="cmts"># create new project</span>
+      <br />Client:~/project $ <span class="cmds">git</span> init
+      <span class="cmts"># 建立git repository, 在project目錄底下產生 .git, 只有第一次建立時需要</span>
+      <br />Client:~/project $ <span class="cmds">ls</span> .git
+      <br />HEAD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;config&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hooks&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objects
+      <br />branches&nbsp;&nbsp;&nbsp;&nbsp;description&nbsp;info&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;refs
+      <br />Client:~/project $ <span class="cmds">cat</span> .git/config
+      <span class="cmts"># project設定檔</span>
+      <br />Client:~/project $ <span class="cmds">cat</span> .gitignore
+      <span class="cmts"># project設定不控管檔案格式</span>
+      <br />
+  
+      <br /><span class="cmts">#download project from github/clone repository</span>
+      <br />Client:~ $ <span class="cmds">git</span> clone git@github.com:<span class="com:span vars">user/sandbox.git</span>
+      <span class="cmts"># 下載project</span>
+      <br />Client:~ $ <span class="cmds">git</span> clone git@github.com:<span class="com:span vars">user/sandbox.git</span> <span class="vars">newproejct</span>
+      <span class="cmts"># 下載project並改名為newproject</span>
+      <br />
+  
+      <br /><span class="cmts"># commit &amp; branch status:</span>
+      <br />Client:~/project $ <span class="cmds">git</span> add <span class="vars">file</span>
+      <span class="cmts"># 檔案納入控制系統</span>
+      <br />Client:~/project $ <span class="cmds">git</span> rm <span class="vars">file</span>
+      <span class="cmts"># 檔案移出制系統</span>
+      <br />Client:~/project $ <span class="cmds">git</span> commit -m '<span class="vars">initial project version</span>'
+      <span class="cmts"># 提交到控制系統</span>
+      <br />Client:~/project $ <span class="cmds">git</span> status
+      <span class="cmts"># version記錄</span>
+      <br />Client:~/project $ <span class="cmds">git</span> log
+      <span class="cmts"># commit記錄</span>
+      <br />Client:~/project $ <span class="cmds">git</span> log --stat
+      <br />Client:~/project $ <span class="cmds">git</span> log -p
+      <br />Client:~/project $ <span class="cmds">git</span> log --graph --oneline --all
+      <span class="cmts"># 圖式化顯示</span>
+      <!-- <br /># Client:~/project $ git tag 'v1' #       -->
+      <br />
+  
+      <br /><span class="cmts">#first time push</span>
+      <br />Client:~/project $ <span class="cmds">git</span> remote add origin git@github.com:<span class="vars">user/repo.git</span>
+      <br />Client:~/project $ <span class="cmds">git</span> push -u origin master
+      <span class="cmts"># origin是repository, master是branch</span>
+      <br />
+
+      <br /><span class="cmts"># push &amp; pull</span>
+      <br />Client:~/project $ <span class="cmds">git</span> push
+      <span class="cmts"># 提交到server</span>
+      <br />Client:~/project $ <span class="cmds">git</span> pull
+      <span class="cmts"># 從server更新</span>
+      <br />
+  
+      <br /><span class="cmts">#branch</span>
+      <br />Client:~/project $ <span class="cmds">git</span> branch
+      <span class="cmts"># 顯示分支</span>
+      <br />Client:~/project $ <span class="cmds">git</span> branch <span class="vars">b1</span>
+      <span class="cmts"># 新增分支</span>
+      <br />Client:~/project $ <span class="cmds">git</span> checkout -b <span class="vars">b1</span>
+      <span class="cmts"># 新增分支</span>
+      <br />Client:~/project $ <span class="cmds">git</span> branch -d <span class="vars">b1</span>
+      <span class="cmts"># 刪除分支</span>
+      <br />Client:~/project $ <span class="cmds">git</span> checkout <span class="vars">b1</span>
+      <span class="cmts"># 切換分支</span>
+      <br />Client:~/project $ <span class="cmds">git</span> fetch
+      <br />Client:~/project $ <span class="cmds">git</span> fetch --all
+      </div>
+      <br />
+
+      <h3>Remote</h3>
+      <div class="commands">Client:~/project $ <span class="cmds">git</span> remote show
+      <br />Client:~/project $ <span class="cmds">git</span> remote set-url origin git@github.com:<span class="vars">user/repo.git</span>
+      <br />Client:~/project $ <span class="cmds">git</span> branch -r
+      <br />Client:~/project $ <span class="cmds">git</span> checkout -t
+      <br />Client:~/project $ <span class="cmds">git</span> checkout origin/<span class="vars">b1</span>
+      <span class="cmts"># 切換到remote bracnh</span>
+      <br />Client:~/project $ <span class="cmds">git</span> push origin <span class="vars">b1</span>
+      <span class="cmts"># 新增branch到git server</span>
+      <br />Client:~/project $ <span class="cmds">git</span> push origin --delete <span class="vars">b1</span>
+      <span class="cmts"># 刪除git server上的branch</span>
+      <br />Client:~/project $ <span class="cmds">git</span> push origin :<span class="vars">b1</span>
+      <span class="cmts"># 刪除git server上的branch</span>
+      <br />Client:~/project $ <span class="cmds">git</span> fetch -p
+      <span class="cmts"># </span>
+
+<!-- 
+      git rev-parse HEAD
+      Git 建立 遠端 Branch
+
+git clone git@github.com:user/project.git
+cd project
+git checkout -b new_branch # 建立 local branch
+git push -u origin new_branch # 建立遠端 branch (將 new_branch 建立到遠端)
+git fetch
+vim index.html # 修改
+git commit -m 'test' -a # commit
+git push
+註: new_branch 要換成你要的 branch name, 以上所有 new_branch 都要對應著修改成同樣名稱.
+Git 使用 遠端 Branch
+
+git clone git@github.com:user/project.git
+cd project
+git branch -r # 看遠端有什麼 branch
+git checkout origin/new_branch -b new_branch # 建立 local new_branch 並與遠端連接
+vim index.html # 修改
+git commit -m 'test' -a # commit
+git push
+註: new_branch 要換成你要的 branch name, 以上所有 new_branch 都要對應著修改成同樣名稱.
+Git 刪除 遠端 Branch
+
+git push origin :new_branch # 刪除遠端的 branch
+Git Branch 的 Merge
+
+git branch new_branch # 建立 branch
+git checkout new_branch # 切到 new_branch, git checkout -b new_branch 可以同時建立 + 切換
+vim index.html # 修改
+git commit -m 'test' -a # commit
+git checkout master # 切回 master
+git merge new_branch # 將 new_branch merge 到 master
+git branch -d new_branch # 若砍不掉就用 -D
+更新所有 Repository branch
+
+git remote update
+ -->
+
+<!-- 
+      blob: Binary large objects  (file)
+      tree                          (dir)
+      commit
+      tags
+
+      git ls-files -s [file] 顯示檔案的SHA1
+      git hash-object file   顯示檔案的SHA1
+
+      git write-tree 顯示目前tree SHA1
+      ie.
+      git write-tree
+
+      git cat-file -p object  顯示object內容, tree包括哪些object  
+      git cat-file -p b8c1e6
+      100644 blob b8c1e6324ad7fa8dbdc68bafd8782588806faa00    ex.html
+
+      echo "commit message" | git commit-tree SHA1
+
+      git rev-parse HEAD
+
+
+      git show --pretty=fuller
+      git log --graph --oneline --all
+
+-->
+      
+      </div>
+      <br />
+
+      <!-- ADVANCE -->
+      <h3>Advance</h3>
+      <p class="h3">
+      <br />... - C^1 -\
+      <br />
+      <br />... - C^2--+ ...C
+      <br />
+      <br />... - C^3-/
+      <br />
+      <br />
+      
+      <br />C~2 - C~1 -\
+      <br />
+      <br />... - C^2--+ ...C
+      <br />
+      <br />... - C^3-/
+      <br />
+      </p>
+      <h4>diff</h4>
+      <p class="h3">working_directory(wd)&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;&nbsp;&nbsp;&nbsp;HEAD</p>
+      <div class="commands">Client:~ $ <span class="cmds">mkdir</span> <span class="vars">ex_project</span>; <span class="cmts">cd</span> <span class="vars">ex_project</span>
+      <br />Client:~/ex_project $ <span class="cmds">git</span> init
+      <br />Client:~/ex_project $ <span class="cmds">echo</span> &quot;<span class="vars">abc</span>&quot; &gt; <span class="vars">file1</span>
+      <br />Client:~/ex_project $ <span class="cmds">echo</span> &quot;<span class="vars">xyz</span>&quot; &gt; <span class="vars">file2</span>
+      <br />Client:~/ex_project $ <span class="cmds">git</span> add <span class="vars">file1 file2</span>
+      <br />Client:~/ex_project $ <span class="cmds">git</span> commit -m&quot;<span class="vars">add file1 and file2</span>&quot;
+      <br />Client:~/ex_project $ <span class="cmds">echo</span> &quot;<span class="vars">ABC</span>&quot; &gt; <span class="vars">file1</span>
+      <span class="cmts">#修改file但未add和commit</span>
+      <br />Client:~/ex_project $ <span class="cmds">git</span> diff
+      <span class="cmts"># wd vs. index</span>
+      <br />diff --git a/file1 b/file1
+      <br />index 8baef1b..5da849b 100644
+      <br />--- a/file1
+      <br />+++ b/file1
+      <br />@@ -1 +1 @@
+      <br />-abc
+      <br />+ABC
+      <br />Client:~/ex_project $ <span class="cmds">git</span> diff HEAD
+      <span class="cmts"># wd vs. HEAD</span>
+      <br />diff --git a/file1 b/file1
+      <br />index 8baef1b..5da849b 100644
+      <br />--- a/file1
+      <br />+++ b/file1
+      <br />@@ -1 +1 @@
+      <br />-abc
+      <br />+ABC
+      <br />Client:~/ex_project $ <span class="cmds">git</span> diff --cached
+      <span class="cmts"># index vs. HEAD</span>
+      <br />Client:~/ex_project $
+      <br />
+
+      <br />Client:~ $ <span class="cmds">mkdir</span> <span class="vars">ex_project</span>; <span class="cmts">cd</span> <span class="vars">ex_project</span>
+      <br />Client:~/ex_project $ <span class="cmds">git</span> init
+      <br />Client:~/ex_project $ <span class="cmds">echo</span> &quot;<span class="vars">abc</span>&quot; &gt; <span class="vars">file1</span>
+      <br />Client:~/ex_project $ <span class="cmds">echo</span> &quot;<span class="vars">xyz</span>&quot; &gt; <span class="vars">file2</span>
+      <br />Client:~/ex_project $ <span class="cmds">git</span> add <span class="vars">file1 file2</span>
+      <br />Client:~/ex_project $ <span class="cmds">git</span> commit -m&quot;<span class="vars">add file1 and file2</span>&quot;
+      <br />Client:~/ex_project $ <span class="cmds">echo</span> &quot;<span class="vars">ABC</span>&quot; &gt; <span class="vars">file1</span>
+      <br />Client:~/ex_project $ <span class="cmds">git</span> add <span class="vars">file1</span>
+      <span class="cmts">#修改file以add, 但未commit</span>
+      <br />Client:~/ex_project $ <span class="cmds">git</span> diff
+      <span class="cmts"># wd vs. index</span>
+      <br />Client:~/ex_project $
+      <br />Client:~/ex_project $ <span class="cmds">git</span> diff HEAD
+      <span class="cmts"># wd vs. HEAD</span>
+      <br />diff --git a/file1 b/file1
+      <br />index 8baef1b..5da849b 100644
+      <br />--- a/file1
+      <br />+++ b/file1
+      <br />@@ -1 +1 @@
+      <br />-abc
+      <br />+ABC
+      <br />Client:~/ex_project $ <span class="cmds">git</span> diff --cached
+      <span class="cmts"># index vs. HEAD</span>
+      <br />diff --git a/file1 b/file1
+      <br />index 8baef1b..5da849b 100644
+      <br />--- a/file1
+      <br />+++ b/file1
+      <br />@@ -1 +1 @@
+      <br />-abc
+      <br />+ABC
+      <br />
+
+      <br />
+      <br />Client:~ $ <span class="cmds">mkdir</span> <span class="vars">ex_project</span>; <span class="cmts">cd</span> <span class="vars">ex_project</span>
+      <br />Client:~/ex_project $ <span class="cmds">git</span> init
+      <br />Client:~/ex_project $ <span class="cmds">echo</span> &quot;<span class="vars">abc</span>&quot; &gt; <span class="vars">file1</span>
+      <br />Client:~/ex_project $ <span class="cmds">echo</span> &quot;<span class="vars">xyz</span>&quot; &gt; <span class="vars">file2</span>
+      <br />Client:~/ex_project $ <span class="cmds">git</span> add <span class="vars">file1 file2</span>
+      <br />Client:~/ex_project $ <span class="cmds">git</span> commit -m&quot;<span class="vars">add file1 and file2</span>&quot;
+      <br />Client:~/ex_project $ <span class="cmds">echo</span> &quot;<span class="vars">ABC</span>&quot; &gt; <span class="vars">file1</span>
+      <br />Client:~/ex_project $ <span class="cmds">git</span> add <span class="vars">file1</span>
+      <span class="cmts">#修改file以add, 但未commit</span>
+      <br />Client:~/ex_project $ <span class="cmds">git</span> diff
+      <span class="cmts"># wd vs. index</span>
+      <br />Client:~/ex_project $
+      <br />Client:~/ex_project $ <span class="cmds">git</span> diff HEAD
+      <span class="cmts"># wd vs. HEAD</span>
+      <br />diff --git a/file1 b/file1
+      <br />index 8baef1b..5da849b 100644
+      <br />--- a/file1
+      <br />+++ b/file1
+      <br />@@ -1 +1 @@
+      <br />-abc
+      <br />+ABC
+      <br />Client:~/ex_project $ <span class="cmds">git</span> diff --cached
+      <span class="cmts"># index vs. HEAD</span>
+      <br />diff --git a/file1 b/file1
+      <br />index 8baef1b..5da849b 100644
+      <br />--- a/file1
+      <br />+++ b/file1
+      <br />@@ -1 +1 @@
+      <br />-abc
+      <br />+ABC  
+      <br />
+
+      <br />
+      <br />Client:~ $ <span class="cmds">mkdir</span> <span class="vars">ex_project</span>; <span class="cmts">cd</span> <span class="vars">ex_project</span>
+      <br />Client:~/ex_project $ <span class="cmds">git</span> init
+      <br />Client:~/ex_project $ <span class="cmds">echo</span> &quot;<span class="vars">abc</span>&quot; &gt; <span class="vars">file1</span>
+      <br />Client:~/ex_project $ <span class="cmds">echo</span> &quot;<span class="vars">xyz</span>&quot; &gt; <span class="vars">file2</span>
+      <br />Client:~/ex_project $ <span class="cmds">git</span> add <span class="vars">file1 file2</span>
+      <br />Client:~/ex_project $ <span class="cmds">git</span> commit -m&quot;<span class="vars">add file1 and file2</span>&quot;
+      <br />Client:~/ex_project $ <span class="cmds">echo</span> &quot;<span class="vars">ABC</span>&quot; &gt; <span class="vars">file1</span>
+      <br />Client:~/ex_project $ <span class="cmds">git</span> add <span class="vars">file1</span>
+      <br />Client:~/ex_project $ <span class="cmds">echo</span> &quot;123&quot; <span class="vars">file1</span>
+      <span class="cmts">#修改file以add, 但未commit, 之後再修改file</span>        
+      <br />Client:~/ex_project $ <span class="cmds">git</span> diff
+      <span class="cmts"># wd vs. index</span>
+      <br />diff --git a/file1 b/file1
+      <br />index 5da849b..190a180 100644
+      <br />--- a/file1
+      <br />+++ b/file1
+      <br />@@ -1 +1 @@
+      <br />-ABC
+      <br />+123
+      <br />Client:~/ex_project $ <span class="cmds">git</span> diff HEAD
+      <span class="cmts"># wd vs. HEAD</span>
+      <br />diff --git a/file1 b/file1
+      <br />index 8baef1b..190a180 100644
+      <br />--- a/file1
+      <br />+++ b/file1
+      <br />@@ -1 +1 @@
+      <br />-abc
+      <br />+123
+      <br />Client:~/ex_project $ <span class="cmds">git</span> diff --cached
+      <span class="cmts"># index vs. HEAD</span>
+      <br />diff --git a/file1 b/file1
+      <br />index 8baef1b..5da849b 100644
+      <br />--- a/file1
+      <br />+++ b/file1
+      <br />@@ -1 +1 @@
+      <br />-abc
+      <br />+ABC
+
+      <!-- git diff HEAD^ HEAD -->
+
+      </div>
+      <br />
+
+      <h4>merge</h4>
+      <p class="h3">
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;b1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b1
+      <br />&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;\
+      <br />v1&nbsp;-&nbsp;v2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v1&nbsp;-&nbsp;v2&nbsp;-&nbsp;v3
+      </p>
+      <div class="commands">Client:~/project $ <span class="cmds">git</span> checkout v2
+      <br />Client:~/project $ <span class="cmds">git</span> merge <span class="vars">b1</span>
+      </div>
+      <br />
+
+      <h4>tag</h4>
+      <div class="commands">Client:~/project $ <span class="cmds">git</span> tag -l [<span class="vars">tar_name</span>]
+      <span class="cmts"># 顯示tag名稱</span>
+      <br />Client:~/project $ <span class="cmds">git</span> tag -a <span class="vars">tag_name</span> -m '<span class="vars">comment</span>' [<span class="vars">object</span>]
+      <span class="cmts"># 新增tag</span>
+      <br />Client:~/project $ <span class="cmds">git</span> show <span class="vars">tag_name</span>
+      <span class="cmts"># 顯示tag 內容</span>
+      <br />Client:~/project $ <span class="cmds">git</span> push origin <span class="vars">tar_name</span>
+      <span class="cmts"># 上傳tag</span>
+      <br />Client:~/project $ <span class="cmds">git</span> push origin --tags
+      <span class="cmts"># 上傳多個tag</span>
+      <br />Client:~/project $ <span class="cmds">git</span> tag -d <span class="vars">tag_name</span>
+      <span class="cmts"># 刪除tag</span>
+      <br />Client:~/project $ <span class="cmds">git</span> push origin :refs/tags/<span class="vars">tag_name</span>
+      <span class="cmts"># 刪除remote tag</span>
+      </div>
+    
+      <h4>rebase</h4>
+      <p class="h3">
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b1
+      <br />&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=>
+      <br />v1&nbsp;-&nbsp;v2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v1&nbsp;-&nbsp;v2&nbsp;-&nbsp;v3
+      </p>
+      <div class="commands">Client:~/project $ <span class="cmds">git</span> checkout v2
+      <br />Client:~/project $ <span class="cmds">git</span> rebase <span class="vars">b1</span>
+      </div>
+      <br />
+    
+      <h4>reset</h4>
+      <div class="commands">Client:~/project $ <span class="cmds">git</span> reset <span class="vars">HEAD</span>
+      <br />Client:~/project $ <span class="cmds">git</span> reset --hard <span class="vars">HEAD</span>
+      <br />Client:~/project $ <span class="cmds">git</span> reset --soft <span class="vars">HEAD</span>
+      </div>
+      <br />
+      <hr />
+
+<!-- GitHub -->
+      <a name="Github"></a><h2>GitHub</h2>
+      <p class="h3">首先，當然就是去<a href="https://github.com/">GitHub</a>申請一個帳號</p>
+      <br />
+
+      <h3>add SSH Key</h3>
+      <p class="h3">需要將repo/project從自己機器上傳時，需要認證。GitHub目前只提供SSH Key方式，所以需要將public key上傳。
+      進入網頁後，點選github setting，點選SSH Keys將public key上傳。流程如下:
+      <br />點選SSH Keys
+      <br /><img src="./github/github1.png" width="60%">
+      <br />
+
+      <br />把public key貼上
+      <br /><img src="./github/github2.png" width="60%">
+      <br />
+
+      <br />成功後會出現如下圖示
+      <br /><img src="./github/github3.png" width="50%">
+      </p>
+      <br />
+
+      <h3>create repository</h3>
+      <p class="h3">點選New repository
+      <br /><img src="./github/github5.png" alt="" />
+      <br />
+
+      <br />命名後點選create repository
+      <br /><img src="./github/github6.png" alt="" />
+      <br />
+
+      <br />建立好會出現如下畫面
+      <br /><img src="./github/github7.png" alt="" />
+      <br />
+
+      <br />在主畫面上就會出現新建的資料庫
+      <br /><img src="./github/github8.png" alt="" />
+      <br />
+      </p>
+      <br />
+
+      <h3>get protocol</h3>
+      <p class="h3">對哪個repository有興趣，可以在頁面上直接下載。目前GitHub提供SSH、HTTPS和Subversion方式下載。方式如下:
+      <br />網址下方的SSH clone URL &quot;You can clone with HTTPS, SSH, or Subversion&quot;點選SSH，複製URL中的文字(如圖)
+      <br /><img src="./github/github4.png" width="60%">
+      </p>
+      <br />
+
+      <h3>set collaborator</h3>
+      <p class="h3">欲設定collaborators在某個資料庫中，點進該資料庫中，選擇Collaborators
+      <br /><img src="./github/github10.png" width="60%">
+      <br />
+
+      <br />點選add a friend
+      <br /><img src="./github/github11.png" width="60%">
+      </p>
+      <hr />
+
+<!-- reference -->
+      <h2>Reference</h2>
+      <li class="reference"><a href="http://git-scm.com/book">Pro Git book</a></li>
+      <br /><li class="reference"><a href="http://ihower.tw/git/remote.html">版本控制系統 Git 精要</a></li>
+      <br /><li class="reference"><a href="http://gogojimmy.net/2012/01/17/how-to-use-git-1-git-basic/">Git 教學(1) : Git 的基本使用</a></li>
+      <br /><li class="reference"><a href="http://blog.gogojimmy.net/2012/01/21/how-to-use-git-2-basic-usage-and-worflow/">Git 教學(2)：Git Branch 的操作與基本工作流程</a></li>    <hr />
+
+<!-- changelog -->
+      <h2>Changelog</h2>
+      <li class="changlog">2013/12/13 新增GitHub</li>
+      <li class="changlog">2013/11/08 第一次完成</li>
+
+</body>
+</html>

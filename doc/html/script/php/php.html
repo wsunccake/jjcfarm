@@ -1,0 +1,931 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>PHP</title>
+<link rel="stylesheet" href="../../defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>PHP</h1>
+      <!-- basic -->
+      <a href="#使用環境"><li class="title">使用環境</li></a>
+      <br /><a href="#基本控制"><li class="title">基本控制</li></a>
+      <br /><a href="#變數型態"><li class="title">變數型態</li></a>
+      <br /><a href="#控制流程"><li class="title">控制流程</li></a>
+      <br /><a href="#函式參數"><li class="title">函式參數</li></a>
+      <br /><a href="#物件導向"><li class="title">物件導向</li></a>
+      <br /><a href="#正規表示"><li class="title">正規表示</li></a>
+      <br /><a href="#輸出輸入"><li class="title">輸出輸入</li></a>
+
+      <!-- system -->
+      <br /><a href="#檔案操作"><li class="title">檔案操作</li></a>
+      <br /><a href="#系統指令"><li class="title">系統指令</li></a>
+
+      <!-- newtork -->
+      <br /><a href="#form"><li class="title">form</li></a>
+      <br /><a href="#sqlite"><li class="title">SQlite3</li></a>
+      <br /><a href="#mysql"><li class="title">MySQL</li></a>
+      <br /><a href="#pdo"><li class="title">PDO</li></a>
+
+      <br /><a href="#upload"><li class="title">upload</li></a>
+      <br /><a href="#cookie"><li class="title">cookie</li></a>
+      <br /><a href="#session"><li class="title">session</li></a>
+      
+      <!-- other -->
+      <br /><a href="#openssl"><li class="title">openssl</li></a>
+
+      <br /><li class="title">Reference</li>
+      <div class="context">
+      <p class="h1">PHP原本的簡稱為Personal Home Page，是Rasmus Lerdorf為了要維護個人網頁，而用c語言開發的一些CGI工具程式集，來取代原先使用的Perl程式。最初這些工具程式用來顯示拉Rasmus Lerdorf的個人履歷，以及統計網頁流量。他將這些程式和一些表單直譯器整合起來，稱為PHP/FI。PHP/FI可以和資料庫連接，產生簡單的動態網頁程式。在1995年6月8日將PHP/FI公開釋出，希望透過社群來加速程式開發與尋找錯誤。這個釋出的版本命名為PHP 2。在1997年，任職於Technion IIT公司的兩個以色列程式設計師：Zeev Suraski和Andi Gutmans，重寫了PHP的剖析器，成為PHP 3的基礎，而PHP也在這個時候改稱為PHP: Hypertext Preprocessor.。經過幾個月測試，開發團隊在1997年11月釋出了PHP/FI 2，隨後就開始PHP 3的開放測試，最後在1998年6月正式釋出PHP 3
+      <br />PHP是一個應用範圍很廣的語言，特別是在網路程式開發方面。一般來說PHP大多在伺服器端執行，透過執行PHP的程式碼來產生網頁提供瀏覽器讀取，此外也可以用來開發命令列腳本程式和使用者端的GUI應用程式。PHP可以在許多的不同種的伺服器、作業系統、平台上執行，也可以和許多資料庫系統結合。使用PHP不需要任何費用，官方組織PHP Group提供了完整的程式原始碼，允許使用者修改、編譯、擴充來使用。</p>
+      </div>
+      <hr />
+
+<!-- 使用環境 -->
+      <a name="使用環境"><h2>使用環境</h2>
+      <h3>command/指令</h3>
+      <p class="h3"></p>
+      <div class="commands">Linux:~ # <span class="cmds">php</span> -r &quot;echo 'Hello PHP';&quot;
+      <br />Hello PHP
+      </div>
+      <br />
+
+      <h3>script/指令稿</h3>
+      <p class="h3"></p>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> hello.php
+      <br />&lt;?php
+      <br />echo 'Hello PHP';
+      <br />?&gt;
+
+      <br /><span class="cmts">#第一種執行方式</span>
+      <br />Linux:~ # <span class="cmds">php</span> -f hello.php
+      <br />Hello PHP
+      <br />
+
+      <br /><span class="cmts">#第二種執行方式</span>
+      <br /><span class="cmts">#將檔案放在web server上，直接使用browser</span>
+      <br />
+      </div>
+      <br />
+
+      <h3>php.ini/設定檔</h3>
+      <div class="commands">Linux下的預設
+      <br />/etc/php5/apache2/php.ini
+      <br />/etc/php5/cli/php.ini
+      <br />
+      <br />Windows下的預設
+      <br />C:\Program Files\PHP\php.ini
+      <br />
+      <br />error_reporting = E_ALL -&gt; error_reporting = E_ALL &amp; ~E_NOTICE
+      <span class="cmts">#因為錯誤訊息太詳細包括無害訊息，開發時可關閉</span>
+      <br />display_errors = Off =&gt; display_errors = On
+      <span class="cmts">#在開發時，將錯誤訊息直接秀在網頁上</span>
+      </div>
+
+      <hr />
+
+
+<!-- 基本控制 -->
+      <a name="基本控制"><h2>基本控制</h2>
+
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> info.php
+      <br />&lt;?php
+      <br /><span class="cmts">// 這是單行註解</span>
+      <br /><span class="cmts"># 這也是單行註解</span>
+      <br /><span class="cmts">/* 這是跨行註解 */</span>
+      <br />phpinfo();
+      <br />?&gt;
+      <br />
+
+      <br />Linux:~ # <span class="cmds">cat</span> html.php
+      <br />&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&nbsp;&nbsp;&lt;meta http-equiv=&quot;Content-type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+      <br />&nbsp;&nbsp;&lt;title&gt;Hello !&lt;/title&gt;
+      <br />&lt;/head&gt;
+      <br />
+      <br /><span class="cmts">&lt;!-- This is html comment --&gt;</span>
+      <br />&lt;body&gt;
+      <br />&nbsp;&nbsp;&lt;?php phpinfo(); ?&gt;
+      <span class="cmts">&lt;-- 在html中插入php --&gt;</span>
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      </div>
+      <p class="h3">php會執行的部分只有在<font color="#FF00FF">&lt;?php</font> <font color="#0000FF">...</font> <font color="#FF00FF">?&gt;</font>之間的內容，以<font color="#FF00FF">&lt;?php</font>作為開頭，以<font color="#FF00FF">?&gt;</font>作為結尾
+      <br />php程式碼可穿插在html文件中</p>
+      <br />
+      <hr />
+
+<!-- 變數型態 -->
+      <a name="變數型態"><h2>變數型態</h2>
+      <p class="h2">PHP中的變數分為scalar type和compound type，scalar type有boolean、integer、floating、string，compound type有array、object、resource、NULL
+      <br />PHP的變數要以$作為標籤，變數名稱的開頭必須是底線（_）或英文字母，英文字母的大小寫都可以，而且大小寫有別。要注意數字不可以作為變數的開頭</p>
+      
+      <h3>scalar</h3>
+      <p class="h3"></p>
+      <div class="commands">&lt;?php
+      <br />
+      
+      <br />$var0 = 1;
+      <span class="cmts">#宣告變數為整數</span>
+      <br />$var1 = 2.1;
+      <span class="cmts">#宣告變數為浮點數</span>
+      <br />$var2 = 01234;
+      <span class="cmts">#宣告變數為八進位數</span>
+      <br />$var3 = 0x2af;
+      <span class="cmts">#宣告變數為十六進位數</span>
+<!--
+      <br />$var4 = 0b10110;
+      <span class="cmts">#宣告變數為二進位數</span>
+-->
+      <br />$var4 = 4.231256E2;
+      <span class="cmts">#使用科學記號</span>
+      <br />$var1 = 2.1;
+      <span class="cmts">#為動態型別語言，變數可重新使用不同型別</span>
+      <br />echo &quot;$var0, $var1\n&quot;;
+      <br />echo &quot;${var0}, {$var1}\n&quot;;
+      <br />
+
+      <br />
+      <span class="cmts">#String使用'和&quot;方式同Shell</span>
+      <br />$str = ABCDefgh;
+      <br />echo '$str\n';
+      <span class="cmts">#單引號內跳脫字元和變數代換無效</span>
+      <br />echo &quot;$str\n&quot;;
+      <span class="cmts">#雙引號內跳脫字元和變數代換有效</span>
+      <br />
+
+      <br />
+      <span class="cmts">#常用的字串函數</span>
+      <br />echo substr($str, 0, -1);
+      <span class="cmts">#擷取字串，0為第一個，-1為最後一個</span>
+      <br />echo substr($str, 3, 6)
+      <span class="cmts">#擷取字串</span>
+      <br />echo strlen($str);
+      <span class="cmts">#字串長度</span>
+      <br />echo strtolower($str);
+      <span class="cmts">#轉換小寫</span>
+      <br />echo strtoupper($str);
+      <span class="cmts">#轉換大寫</span>
+      <br />echo strpos($str, &quot;D&quot;);
+      <span class="cmts">#尋找字串，從左到右</span>
+      <br />echo rstrpos($str, &quot;D&quot;);
+      <span class="cmts">#尋找字串，從右到左</span>
+      <br />echo ord('a');
+      <span class="cmts">#character轉ASCII</span>
+      <br />echo chr(67);
+      <span class="cmts">#ASCII轉character</span>
+      <br />
+
+      <br />?&gt;
+      </div>
+      <br />
+
+      <h3>array</h3>
+      <div class="commands">&lt;?php
+      <br /><span class="cmts">#宣告Array</span>
+      <br />$arr1[] = 100;
+      <br />$arr1[] = 200;
+      <br />$arr1[] = &quot;hello&quot;;
+      <br />$arr1[] = 99.5;
+      <br />for ( $i=0 ; $i&lt;4 ; $i++ ) { echo &quot;$arr1[$i] &lt;br /&gt;&quot;; }
+      <br />print_r($arr);
+      <span class="cmts">//顯示human-readable變數內容</span>
+      <br />
+
+      <br /><span class="cmts">#宣告Array</span>
+      <br />$arr2 = array(
+      <br />&nbsp;&nbsp;&quot;0&quot; =&gt; &quot;red&quot;,
+      <br />&nbsp;&nbsp;&quot;1&quot; =&gt; &quot;black&quot;,
+      <br />&nbsp;&nbsp;&quot;2&quot; =&gt; &quot;green&quot;,
+      <br />&nbsp;&nbsp;&quot;3&quot; =&gt; &quot;yellow&quot;
+      <br />);
+      <br />foreach ($arr2 as $k) { echo &quot;$k =&gt; $arr2[$k]\n&quot;;}
+      <br />foreach ($arr2 as $k =&gt; $v) { echo &quot;$k =&gt; $v\n&quot;;}
+      <br />
+
+      <br />$arr3 = array();
+      <span class="cmts">// 建立空array或hash</span>
+      <br />
+
+      <br />$weekArr = explode(',', 'Sun,Mon,Tue,Wed,Thu,Fri,Sat');
+      <span class="cmts">//String轉List</span>
+      <br />$weekStr = implode('&nbsp;', array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat') );
+      <span class="cmts">//List轉String </span>
+      <br />function f1($w) {return $w . 'day'; }
+      <br />print_r (array_map(&quot;f1&quot;, $weekArr) );
+      <span class="cmts">//List內所有元素執行後存為List</span>
+      <br />function f2($w) { return preg_match('/Fri/', $w); }
+      <br />print_r  (array_filter($weekArr, &quot;f2&quot;) );
+      <span class="cmts">//List內所有元素符合條件存為List</span>
+      <br />?&gt;
+      </div>
+      <br />
+
+      <h3>hash</h3>
+      <div class="commands">&lt;php?
+      <br />$hsh1 = array(&quot;a&quot;=&gt;1, &quot;b&quot;=&gt;2);
+      <br />$hsh1[&quot;e&quot;] = 5;
+      <span class="cmts">// add key/value</span>
+      <br />unset($hsh1[&quot;e&quot;]);
+      <span class="cmts">// del key/vaule</span>
+      <br />$hsh2 = array(&quot;b&quot;=&gt;3, &quot;c&quot;=&gt;4);
+      <br />$hsh3 = array_merge($hsh1, $hsh2);
+      <span class="cmts">// merge</span>
+      <br />$hsh4 = array_flip($hsh1);
+      <span class="cmts">// invert</span>
+      <br />asort($hsh1);
+      <span class="cmts">// sort by value</span>
+      <br />array_keys($hsh1);
+      <span class="cmts">//</span>
+      <br />array_values($hsh1);
+      <br />?&gt;
+      </div>
+<br />array:   建立一個陣列
+<br />sort:    排序
+<br />count:   計算陣列元素個數
+<br />current: 取得陣列目前元素
+<br />each:    取得目前指標的下一個元素的索引與值
+<br />end:     指到最後元素
+<br />key:     取得目前陣列指標的索引
+<br />next:    將陣列指標往後指一個元素
+<br />pos:     傳回目前元素
+<br />prev:    將陣列指標往前指一個元素
+<br />reset:   指回到第一個元素
+<br />sizeof:  陣列的大小
+<br />list:    列出陣列的元素
+<br />
+
+<br />array_key_exists
+<br />array_keys
+<br />array_values
+<br />
+
+<br />settype: 設定變數型態, gettype: 取得變數形態
+<br />setenv: 設定環境變數, getenv: 取得環境變數
+<br />define: 定義常數, undefine: 
+      <hr />
+
+
+<!-- 控制流程 -->
+      <a name="控制流程"><h2>控制流程</h2>
+
+      <p class="h2">為真判斷
+      <br />if (EXPR) STATE
+      <br />if (EXPR) STATE else STATE
+      <br />if (EXPR) STATE else STATE ...
+      <br />if (EXPR) STATE elseif STATE ... else STATE
+      <br />
+
+      
+      <br />個數迴圈
+      <br />for (EXPR; EXPR; EXPR) STATE
+      <br />foreach (LIST as VAR) STATE
+      <br />
+
+      <br />邏輯迴圈
+      <br />while (EXPR) BLOCK
+      <br />do BLOCK while (EXPR)
+      </p>
+      <br />
+
+      <h3>if/elseif/else</h3>
+      <p class="h3"></p>
+      <div class="commands">&lt;?php
+      <br />
+      <br />$f = '/etc/passwd';
+      <br />if (file_exists($f) ) echo &quot;$file exists&quot;;
+      <span class="cmts">//若statement只有一行，可省略{}</span>
+      <br />if (file_exists($f) ) { echo &quot;$file exists&quot;; }
+      <span class="cmts">//多行statement一定要使用{}</span>
+      <br />
+      <br />if (array_key_exists(1, $argv) ){ $file = $argv[1]; }
+      <br />else { $file = "tmpfile"; }
+      <br />
+      <br />$keyfile = (array_key_exists(2, $argv) ? $argv[2] : "tmpfile");
+      <span class="cmts">// 使用三元運算子/ternary operator，同上</span>
+
+      <br />?&gt;
+      </div>
+      <br />
+
+      <h3>for/foreach</h3>
+      <p class="h3"></p>
+      <div class="commands">&lt;?php
+      <br />
+      <br />for ($i = 1; $i &lg;= 10; $i++) echo &quot;$i&quot;;
+      <br />foreach (range(1, 10) as $i) echo&quot;$i&quot;;
+      <br />
+      <br />?&gt;
+      </div>
+      <br />
+
+      <h3>while/do-while</h3>
+      <div class="commands">&lt;?php
+      <br />
+      <br />for ($i = 1; $i &lt;= 10; $i++) echo &quot;$i&quot;;
+      <br />foreach (range(1, 10) as $i) echo&quot;$i&quot;;
+      <br />
+      <br />?&gt;
+      </div>
+
+      <hr />
+
+
+<!-- 函式參數 -->
+      <a name="函式參數"><h2>函式參數</h2>
+
+      <p class="h2">定義函數 
+      <br />function NAME BLOCK 
+      </p>
+
+      <h3>function、return</h3>
+      <p class="h3"></p>
+      <div class="commands">&lt;?php
+      <br />
+      <br />function po() { echo system('ls -l /etc'); }
+      <span class="cmts">//定義函式</span>
+      <br />// main
+      <br />po();
+      <span class="cmts">//呼叫函式</span>
+      <br />
+      <br />?&gt;
+      </div>
+      <br />
+
+      <div class="commands">&lt;?php
+      <br />function callByVal($x, $y) { $x = $y; } 
+      <span class="cmts">//不改變變數</span>
+      <br />function callByRef(&amp;$x, $y) { $x = $y; }
+      <span class="cmts">//改變變數</span>
+      <br />function defaultVal($v = 'user') { echo &quot;Hello, $v\n&quot;;}
+      <span class="cmts">//預設變數</span>
+      <br />function returnVal($v = 0) { return 2 * $v; }
+      <span class="cmts">//回傳值</span>
+      <br />
+
+      <br />$x = 1;
+      <br />$y = 2;
+      <br />echo &quot;$x, $y\n&quot;;
+      <br />
+      <br />callByVal($x, $y);
+      <br />echo &quot;$x, $y\n&quot;;
+      <br />
+      <br />callByRef($x, $y);
+      <br />echo &quot;$x, $y\n&quot;;
+      <br />
+      <br />defaultVal('PHP');
+      <br />defaultVal();
+      <br />
+      <br />echo returnVal(2);
+      <br />?&gt;
+      </div>
+      <br />
+
+      <h3>require、include</h3>
+      <p class="h3">require：將require的檔案內容讀入，並且把自己本身代換成這些讀入的內容，適合用來引入靜態的內容。
+      <br />include：用法和require很像，但當程式執行include的時候，才會將include 的檔案讀進來，適合引入動態的程式碼。
+      <br />require_once，include_once：會先檢查欲引入檔案的內容是不是在之前就已經引入過了；如果是的話，便不會再次重複引入同樣的內容。
+      <br />使用require或include引用某個檔案時，PHP以HTML格式讀入。若您要引用的檔案中含有 PHP script 的話，請以&lt;? ?&gt;將程式段落包起來。無論如何都要引用某個檔案，使用require或include 皆可。但是需經條件判斷之後，才能決定是否引用該檔案的話，則只能使用include。</p>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> menu.php
+      <br />&lt;a href=&quot;/default.php&quot;&gt;Home&lt;/a&gt;
+      <br />&lt;a href=&quot;/tutorials.php&quot;&gt;Tutorials&lt;/a&gt;
+      <br />&lt;a href=&quot;/references.php&quot;&gt;References&lt;/a&gt;
+      <br />&lt;a href=&quot;/examples.php&quot;&gt;Examples&lt;/a&gt; 
+      <br />&lt;a href=&quot;/about.php&quot;&gt;About Us&lt;/a&gt; 
+      <br />&lt;a href=&quot;/contact.php&quot;&gt;Contact Us&lt;/a&gt;
+      <br />
+      
+      <br />Linux:~ # <span class="cmds">cat</span>
+      <br />&lt;?php
+      <br />$color='red';
+      <br />$car='BMW';
+      <br />?&gt;
+      <br />
+
+      <br />Linux:~ # <span class="cmds">cat</span> main.php
+      <br />&lt;html&gt;
+      <br />&lt;body&gt;
+      <br />
+      <br />&lt;div class=&quot;leftmenu&quot;&gt;
+      <br />&lt;?php include 'menu.php'; ?&gt;
+      <br />&lt;/div&gt;
+      <br />
+      <br />&lt;h1&gt;Welcome to my home page.&lt;/h1&gt;
+      <br />&lt;?php
+      <br />include 'vars.php';
+      <br />echo &quot;I have a $color $car&quot;;
+      <span class="cmts">// I have a red BMW</span>
+      <br />?&gt;
+      <br />
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      <br />
+
+      </div>
+      <br />
+
+      <div class="commands">&lt;?php
+      <br />if (strtolower(substr(PHP_OS, 0, 3) ) == 'win') {
+      <br />&nbsp;&nbsp;$__main__ = preg_replace('/.*\\\\/', '', __FILE__);
+      <span class="cmts">// for windows, note backslash symbol</span>
+      <br />}
+      <br />else {
+      <br />&nbsp;&nbsp;$__main__ =  preg_replace('/.*\//', '', __FILE__);
+      <span class="cmts">// for unix-like</span>
+      <br />}
+      <br />
+
+      <br />echo $__maiin__;
+      <br />echo basemain(__FILE__);
+      <br />echo $argv[0];
+      <br />echo $_SERVER['argv'][0];
+      <br />?&gt;
+      </div>
+      <hr />      
+
+
+<!-- 物件導向 -->
+      <a name="物件導向"><h2>物件導向</h2>
+      <h3></h3>
+      <p class="h3"></p>
+      <div class="commands">&lt;?php
+
+      <br />class Person
+      <br />{
+      <br />&nbsp;&nbsp;public $first_name;
+      <br />&nbsp;&nbsp;public $last_name;
+      <br />&nbsp;&nbsp;public static $count = 0;
+      <br />
+      <br />&nbsp;&nbsp;public function __construct($fname, $lname)
+      <br />&nbsp;&nbsp;{
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;first_name = $fname;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;last_name = $lname;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;self::$count++;
+      <br />&nbsp;&nbsp;}
+      <br />
+      <br />&nbsp;&nbsp;public function getName() { return sprintf(&quot;%s %s&quot;, $this-&gt;first_name, $this-&gt;last_name); }
+      <br />
+      <br />&nbsp;&nbsp;public static function getCount() { return self::$count; }
+      <br />
+      <br />}
+      <br />
+      
+      <br />interface Job{ public function job(); }
+      <br />
+      
+      <br />class Programmer extends Person implements Job
+      <br />{
+      <br />&nbsp;&nbsp;public function job() { return &quot;Job is programer&quot;; }
+      <br />
+      <br />&nbsp;&nbsp;const STAT = 'STAT';
+      <br />&nbsp;&nbsp;static $stat = 'Static';
+      <br />&nbsp;&nbsp;public $publ = 'Public';
+      <br />&nbsp;&nbsp;private $priv = 'Private';
+      <br />&nbsp;&nbsp;protected $prot = 'Protected';
+      <br />
+      <br />&nbsp;&nbsp;public function showMe( )
+      <br />&nbsp;&nbsp;{
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;echo ' self::STAT: '  . self::STAT  . &quot;\n&quot;;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;echo ' self::$stat: ' . self::$stat . &quot;\n&quot;;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;echo '$this-&gt;stat: '  . $this-&gt;stat . &quot;\n&quot;;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;echo '$this-&gt;publ: '  . $this-&gt;publ . &quot;\n&quot;;
+      <br />&nbsp;&nbsp;}
+      <br />}
+      <br />
+      
+      <br />
+      <span class="cmts">// main</span>
+      <br />
+
+      <br />$p = new Programmer('php', 'PHP');
+      <span class="cmts">// initial</span>
+      <br />echo $p-&gt;getName() . &quot;\n&quot;;
+      <span class="cmts">// call method</span>
+      <br />echo $p-&gt;first_name . &quot;\n&quot;;
+      <span class="cmts">// call member</span>
+      <br />echo $p-&gt;count . &quot;\n&quot;;
+      <span class="cmts">// undefine</span>
+      <br />echo $p::$count . &quot;\n&quot;;
+      <span class="cmts">// call static member</span>
+      <br />echo $p-&gt;getCount() . &quot;\n&quot;;
+      <span class="cmts">// call static method</span>
+      <br />echo $p-&gt;job() . &quot;\n&quot;;
+      <span class="cmts">// call interface</span>
+      <br />
+
+      <br />echo Person::$count . &quot;\n&quot;;
+      <span class="cmts">// call static method</span>
+      <br />echo Person::getCount() . &quot;\n&quot;;
+      <span class="cmts">// call static method</span>
+      <br />
+
+      <br />echo Programmer::$count . &quot;\n&quot;;
+      <span class="cmts">// call static method</span>
+      <br />echo Programmer::getCount() . &quot;\n&quot;;
+      <span class="cmts">// call static method</span>
+      
+      <br />?&gt;
+      </div>
+      <p class="h3">= assignment
+      <br />== equal
+      <br />=== identical</p>
+      <hr />
+
+<!-- 正規表示 -->
+      <a name="正規表示"><h2>正規表示</h2>
+      <h3>PRCE/Perl Compatible Regular Expressions</h3>
+      <p class="h3"></p>
+      <div class="commands">&lt;?php
+      <br />$str = '/usr/lib/python2.6/site-packages/gtk-2.0/gconf.so'; 
+      <br />echo $str . &quot;\n&quot;;
+      <br />$replace = '';
+      <br />
+
+      <br />echo preg_replace('/\.[^.]*$/', $replace, $str) . &quot;\n&quot;;
+      <br />
+
+      <br />echo preg_replace('/\.(.*)/', $replace, $str) . &quot;\n&quot;;
+      <br />
+
+      <br />echo preg_replace('/^(.*?)\//', $replace, $str) . &quot;\n&quot;;
+      <br />
+
+      <br />echo preg_replace('/(.*)\//', $replace, $str) . &quot;\n&quot;;
+      <br />
+      
+      <br />preg_match('/(\/.*)\.(.*?)/', $str, $match);
+      <br />foreach ($match as $key =&gt; $value) { echo &quot;$key =&gt; $value \n&quot;; }
+      <br />
+
+      <br />preg_match('/(\/.*?)\.(.*)/', $str, $match);
+      <br />foreach ($match as $key =&gt; $value) { echo &quot;$key =&gt; $value \n&quot;; }
+      <br />
+
+      <br />preg_match('/(.*?)\/(.*)/', $str, $match);
+      <br />foreach ($match as $key =&gt; $value) { echo &quot;$key =&gt; $value \n&quot;; }
+      <br />
+
+      <br />preg_match('/(.*)\/(.*)/', $str, $match);
+      <br />foreach ($match as $key =&gt; $value) { echo &quot;$key =&gt; $value \n&quot;; }
+      <br />?&gt;
+      </div>
+      <br />
+ 
+
+ 
+
+      <hr /> 
+
+<!-- 輸出輸入 -->
+      <a name="輸出輸入"><h2>輸出輸入</h2>
+      <h3></h3>
+      <p class="h3"></p>
+      <div class="commands">&lt;?php
+      <br />echo &quot;Name: &quot;;
+      <br />$user = trim(fgets(STDIN) );
+      <span class="cmts">//讀取標準輸入</span>
+      <br />echo &quot;Hi $user\n&quot;;
+
+      <br />?&gt;
+      </div>
+      <hr />      
+
+<!-- 檔案操作 -->
+      <a name="檔案操作"><h2>檔案操作</h2>
+      <h3></h3>
+      <p class="h3"></p>
+      <div class="commands">&lt;?php
+      <br />$fname = &quot;/etc/passwd&quot;;
+      <br />
+
+      <br />$contents = file_get_contents($fname);
+      <span class="cmts">//讀入檔案內容存為string</span>
+      <br />echo $contents;
+      <br />
+
+      <br />$lines = file($fname);
+      <span class="cmts">//讀入檔案內容存為array</span>
+      <br />foreach ($lines as $k =&gt; $v) { echo &quot;$k =&gt; $v&quot;; }
+      <br />
+
+      <br />$f = fopen($fname, 'r');
+      <span class="cmts">//讀入檔案內容存為file descriptor</span>
+      <br />while (!feof($f) ) { echo fgets($f); }
+      <span class="cmts">//fgets一次讀入一行</span>
+      <br />fclose($f);
+      <br />?&gt;
+      </div>
+      <hr />
+
+<!-- 系統指令 -->
+      <a name="系統指令"><h2>系統指令</h2>
+      <h3></h3>
+      <p class="h3"></p>
+      <div class="commands">&lt;?php
+      <br />system(&quot;ls -l&quot;);
+      <span class="cmts">//system直接將結果輸出</span>
+      <br />
+      <br />exec(&quot;ls -l&quot;, $result, $status);
+      <span class="cmts">//exec把結果導出一個array</span>
+      <br />foreach ($result as $line) { echo &quot;$line\n&quot;; }
+      <br />
+      
+      <br />echo `ls -l`;
+      <span class="cmts">//類似shell直接執行</span>
+      <br />
+      
+      <br />$pd = popen(&quot;ls -l&quot;, &quot;r&quot;);
+      <span class="cmts">//以file descriptor操作，stdout example</span>
+      <br />echo $pd;
+      <br />while (!feof($pd) ) {
+      <br />&nbsp;&nbsp;$line = fgets($pd);
+      <br />&nbsp;&nbsp;echo "$line";
+      <br />}
+      <br />pclose($pd);
+      <br />
+
+      <br /><span class="cmts">// linux:~ # cat &gt;&gt; EOF</span>
+      <br /><span class="cmts">// &gt; ABC</span>
+      <br /><span class="cmts">// &gt; EOF</span>
+      <br />
+
+      <br />$pd = popen(&quot;cat&quot;, &quot;w&quot;);
+      <span class="cmts">// stdin example</span>
+      <br />$ret = fwrite($pd, &quot;ABC&quot;);
+      <br />pclose($pd);
+      <br />
+
+      <br />$descriptors = array(
+      <br /> 0 =&gt; array(&quot;pipe&quot;, &quot;r&quot;),
+      <span class="cmts">// stdin</span>
+      <br /> 1 =&gt; array(&quot;pipe&quot;, &quot;w&quot;),
+      <span class="cmts">// stdout</span>
+      <br /> 2 =&gt; array(&quot;pipe&quot;, &quot;w&quot;) );
+      <span class="cmts">// stderr</span>
+      <br />$cmd = &quot;cat&quot;;
+      <br />$pd = proc_open($cmd, $descriptors, $pipes);
+      <br />
+      <br /><span class="cmts">// stdin:</span>
+      <br />fwrite($pipes[0], &quot;ABC&quot;);
+      <br />fclose($pipes[0]);
+      <br />
+      <br /><span class="cmts">// stdout:</span>
+      <br />while(!feof($pipes[1]) ) {
+      <br />  echo fgets($pipes[1], 1024);
+      <br />}
+      <br />echo &quot;\n&quot;;
+      <br />fclose($pipes[1]);
+      <br />
+      <br /><span class="cmts">// stderr:</span>
+      <br />while(!feof($pipes[2]) ) {
+      <br />  echo fgets($pipes[2], 1024);
+      <br />}
+      <br />echo &quot;\n&quot;;
+      <br />fclose($pipes[2]);
+
+
+      <br />
+      <br />?&gt;
+      </div>
+      <hr />     
+
+<!-- form -->
+      <a name="form"><h2>form</h2>
+      <h3></h3>
+      <p class="h3"></p>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> <a href="code/hello_html.php">hello_html.php</a>
+      <span class="cmts">//在html插入php</span>
+      <br />Linux:~ # <span class="cmds">cat</span> <a href="code/hello_php.php">hello_php.php</a>
+      <span class="cmts">//在php顯示html</span>
+      </div>
+      <hr />
+
+<!-- sqlite -->
+      <a name="sqlite"><h2>SQLite3</h2>
+      <h3></h3>
+      <p class="h3"></p>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> <a href="code/sqlite3.php">sqlite3.php</a>
+      </div>
+      <hr />
+
+<!--  mysql -->
+      <a name="mysql"><h2>MySQL</h2>
+      <h3></h3>
+      <p class="h3"></p>
+      <div class="commands">&lt;?php
+      <br />$host = 'localhost';
+      <br />$user = 'php-user';
+      <br />$password = 'php-password';
+      <br />$db = 'php-database';
+      <br />
+
+      <br />$connect = mysql_connect($host, $user, $password);
+      <br />if (!$connect) die('Could not connect: ' . mysql_error() );
+      <br />
+
+      <br />$selectd_db = mysql_select_db($db, $connect);
+      <br />if (!$selectd_db) die('Select database error: ' . mysql_error() );
+      <br />
+
+      <br />$result = mysql_query(&quot;SELECT max(id) FROM host&quot;);
+      <br />if (!$result) die('Query statement error: ' . mysql_error() );
+      <br />
+
+      <br />$row = mysql_fetch_array($result);
+      <br />foreach ($row as $k =&gt; $v ) { echo &quot;$k =&gt; $v&quot;; }
+      <br />mysql_close($connect);
+      <br />?&gt;
+      </div>
+      <hr />
+
+<!--  pdo -->
+      <a name="pdo"><h2>PDO</h2>
+      <h3></h3>
+      <p class="h3">PHP Data Object</p>
+      <div class="commands">&lt;?php
+      <br />// mysql
+      <br />// $dbn = 'mysql:host=localhost;dbname=zoo';
+      <br />// $user = 'php-user';
+      <br />// $password = 'php-password';
+      <br />// $dbh = new PDO($dbn, $userm $password);
+      <br />
+      <br />// sqlite
+      <br />$dbn = 'sqlite:zoo.db';
+      <br />$dbh = new PDO($dbn);
+      <br />
+
+      <br /><span class="cmts">// list query 1</span>
+      <br />echo &quot;list query 1\n&quot;;
+      <br />$sql = &quot;SELECT name, animal FROM Animals&quot;;
+      <br />foreach ($dbh-&gt;query($sql) as $row) { print_r($row); }
+      <br />echo &quot;&lt;br /&gt;&quot;;
+      <br />
+      
+      <br />
+      <br /><span class="cmts">// list query 2</span>
+      <br />echo &quot;list query 2\n&quot;;
+      <br />$sql = &quot;SELECT name, animal FROM Animals&quot;;
+      <br />$stm = $dbh-&gt;query($sql);
+      <br />while ($row = $stm-&gt;fetch() ) { print_r($row); }
+      <br />echo &quot;&lt;br /&gt;&quot;;
+      <br />
+
+      <br /><span class="cmts">// prepare query 1</span>
+      <br />echo &quot;prepare query 1\n&quot;;
+      <br />$sql = &quot;SELECT name, animal FROM Animals WHERE id = :animals_id&quot;;
+      <br />$stm = $dbh-&gt;prepare($sql);
+      <br />$stm-&gt;execute(array(&quot;animals_id&quot; =&gt; 1) );
+      <br />$result = $stm-&gt;fetch();
+      <br />print_r($result);
+      <br />echo &quot;&lt;br /&gt;&quot;;
+      <br />
+
+      <br /><span class="cmts">// prepare query 2</span>
+      <br />echo &quot;prepare query 2\n&quot;;
+      <br />$sql = &quot;SELECT name, animal FROM Animals WHERE id = ?&quot;;
+      <br />$stm = $dbh-&gt;prepare($sql);
+      <br />$stm-&gt;execute(array(1) );
+      <br />$result = $stm-&gt;fetch();
+      <br />echo &quot;&lt;br /&gt;&quot;;
+      <br />print_r($result);
+      <br />
+
+      <br /><span class="cmts">// binding value</span>
+      <br />echo &quot;binding value\n&quot;;
+      <br />$sql = &quot;SELECT name, animal FROM Animals WHERE id = :animals_id OR birthyear = :year&quot;;
+      <br />$stm = $dbh->prepare($sql);
+      <br />$stm->bindValue(':animals_id', 1);
+      <br />
+      <br />$stm-&gt;bindValue(':year', 2);
+      <br />$stm-&gt;execute();
+      <br />$result = $stm-&gt;fetch();
+      <br />print_r($result);
+      <br />echo &quot;&lt;br /&gt;&quot;;
+      <br />      
+      <br />$stm-&gt;bindValue(':year', 3);
+      <br />$stm-&gt;execute();
+      <br />$result = $stm-&gt;fetch();
+      <br />print_r($result);
+      <br />echo &quot;&lt;br /&gt;&quot;;
+      <br />
+
+      <br /><span class="cmts">// binding paramerter</span>
+      <br />echo &quot;binding paramerter\n&quot;
+      <br />$sql = &quot;SELECT name, animal FROM Animals WHERE id = :animals_id&quot;;
+      <br />$stm = $dbh-&gt;prepare($sql);
+      <br />$stm-&gt;bindParam(':animals_id', $id);
+      <br />
+      <br />$id = 1;
+      <br />$stm-&gt;execute();
+      <br />$result = $stm-&gt;efetchAll();
+      <br />print_r($result);
+      <br />echo &quot;&lt;br /&gt;&quot;;
+
+      <br />?&gt;
+      </div>
+      <hr />
+
+
+<!-- upload -->
+      <a name="upload"><h2>upload</h2>
+      <h3></h3>
+      <p class="h3"></p>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> <a href="code/upload.php">upload.php</a>
+      </div>
+      <hr />
+
+
+<!-- cookie -->
+      <a name="cookie"><h2>cookie</h2>
+      <h3></h3>
+      <p class="h3"></p>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> <a href="code/cookie.php">cookie.php</a>
+      </div>
+      <hr />
+
+
+<!-- session -->
+      <a name="session"><h2>session</h2>
+      <h3></h3>
+      <p class="h3"></p>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> <a href="code/session.php">session.php</a>
+      </div>
+      <hr />
+
+<!-- openssl -->
+      <a name="openssl"><h2>openssl</h2>
+      <h3></h3>
+      <p class="h3"></p>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> <a href="code/getKey.html">getKey.html</a>
+      <br />&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&lt;/head&gt;
+      <br />&lt;body&gt;
+      <br />&lt;form action=&quot;getKey.php&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;
+      <span class="cmts">&lt;!-- upload file, must use post method --&gt;</span>
+      <br />&nbsp;&lt;label for=&quot;file&quot;&gt;Upload your PKCS12 file:&lt;/label&gt;
+      <br />&nbsp;&lt;input type=&quot;file&quot; name=&quot;p12file&quot; id=&quot;file&quot; /&gt;
+      <br />&nbsp;&lt;br /&gt;
+      <br />&nbsp;&lt;label for=&quot;pass&quot;&gt;Input your passphase:&lt;label&gt;
+      <br />&nbsp;&lt;input type=&quot;password&quot; name=&quot;passphase&quot; /&gt;
+      <span class="cmts">&lt;!-- passphase --&gt;</span>
+      <br />&nbsp;&lt;br /&gt;
+      <br />&nbsp;&lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Upload&quot; /&gt;
+      <br />&lt;/form&gt;
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      <br />
+
+      <br />Linux:~ # <span class="cmds">cat</span> <a href="code/getKey.php">getKey.php</a>
+      <br />&lt;?php
+      <br />$tmpPath = getcwd();
+      <span class="cmts">// tmp path</span>
+      <br />$host = $_SERVER[&quot;HTTP_HOST&quot;];
+      <span class="cmts">// host name</span>
+      <br />$htdoc = '/srv/www/htdocs';
+      <span class="cmts">// http document location</span>
+      <br />$passphase = $_REQUEST['passphase'];
+      <br />
+      <br />if (strtolower(substr(PHP_OS, 0, 3) ) == &quot;win&quot;) { define(&quot;PathSep&quot;, &quot;\\&quot;); }
+      <br />else { define(&quot;PathSep&quot;, &quot;/&quot;); }
+      <br />
+      <br />$uuid = uniqid();
+      <br />$tmpDir = $tmpPath . PathSep . $uuid;
+      <br />mkdir($tmpDir);
+      <br />
+      <br /><span class="cmts">// read upload pkcs12 file</span>
+      <br />$p12file = $_FILES['p12file']['tmp_name'];
+      <br />$results = array();
+      <br />$keyFile = $tmpDir . PathSep . 'userkey.pem';
+      <br />$certFile = $tmpDir . PathSep . 'usercert.pem';
+      <br />
+      <br />if(openssl_pkcs12_read(file_get_contents($p12file), $results, $passphase) ) {
+      <br />&nbsp;&nbsp;<span class="cmts">// generate private key</span>
+      <br />&nbsp;&nbsp;if(!openssl_pkey_export_to_file($results['pkey'], $keyFile, $passphase) ) { echo openssl_error_string(); }
+      <br />&nbsp;&nbsp;chmod($keyFile, 0400);
+      <br />&nbsp;&nbsp;<span class="cmts">// generate public key</span>
+      <br />&nbsp;&nbsp;if(!openssl_x509_export_to_file($results['cert'], $certFile) ) { echo openssl_error_string(); }
+      <br />&nbsp;&nbsp;chmod($certFile, 0644);
+      <br />
+      <br />&nbsp;&nbsp;echo &quot;&lt;br /&gt;&quot;;
+      <br />&nbsp;&nbsp;echo '&lt;a href=&quot;http://' . str_replace($htdoc, $host, $certFile) . '&quot;&gt;usercert.pem&lt;/a&gt;&lt;br /&gt;';
+      <br />&nbsp;&nbsp;echo '&lt;a href=&quot;http://' . str_replace($htdoc, $host, $keyFile) . '&quot;&gt;usercert.pem&lt;/a&gt;';
+      <br />}
+      <br />else { echo openssl_error_string(); }
+      <br />?&gt;
+      </div>
+
+<!-- reference -->
+    <h2>Reference</h2>
+    <li class="reference">http://www.proftpd.org</li>
+    <br /><li class="reference">http://linux.vbird.org</li>
+    <br /><li class="reference">http://freebsd.lab.mlc.edu.tw/proftpd.htm</li>
+    http://blog.jsdan.com/1979
+
+<!-- changelog -->
+    <h2>Changelog</h2>
+
+</body>
+</html>

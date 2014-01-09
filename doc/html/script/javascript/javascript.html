@@ -1,0 +1,2124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>JavaScript</title>
+<link rel="stylesheet" href="../../defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>JavaScript</h1>
+      <!-- basic -->
+      <a href="#使用環境"><li class="title">使用環境</li></a>
+      <br /><a href="#基本控制"><li class="title">基本控制</li></a>
+      <br /><a href="#變數型態"><li class="title">變數型態</li></a>
+      <br /><a href="#控制流程"><li class="title">控制流程</li></a>
+      <br /><a href="#函式參數"><li class="title">函式參數</li></a>
+      <br /><a href="#物件導向"><li class="title">物件導向</li></a>
+      <br /><a href="#正規表示"><li class="title">正規表示</li></a>
+      <br /><a href="#輸出輸入"><li class="title">輸出輸入</li></a>
+
+      <!-- Browser -->
+      <br /><a href="#Event"><li class="title">Event</li></a>
+      <br /><a href="#BOM"><li class="title">BOM</li></a>
+      <br /><a href="#DOM"><li class="title">DOM</li></a>
+      <br /><a href="#AJAX"><li class="title">AJAX</li></a>
+      <br /><a href="#jQuery"><li class="title">jQuery</li></a>
+
+
+      <br /><li class="title">Reference</li>
+      <div class="context">
+      <p class="h1">1995年Netscape的Brendan Eich設計出JavaScript語言(原名為 LiveScript，為了與昇陽合作，搭上 Java 的順風車，改名為 JavaScript)，加入到 Netscape 2.0 瀏覽器中，因而成為瀏覽器的共通語言。JavaScript是一種原型導向的語言，具有動態與弱型別等特性，後來各家瀏覽器紛紛支援，但是由於實作方式和語法都不統一(JavaScript同時存在：Netscape Navigator 3.0的JavaScript、IE 中的JScript以及CEnvi中的ScriptEase)，因此造成了混亂的狀況，於是在 1998 年提交到 ECMA 組織制訂成 ECMA Script 的標準，以便統一 JavaScript 的語法。
+      <br />Web 2.0的風潮進一步刺激了JavaScript的廣泛使用，許多網站利用AJAX的JavaScript技術達成了高度的網頁互動性，像是Google Map 就是其中最著名的網站。在HTML5.0的草案提出之後，JavaScript更受到高度的重視，由於HTML5的強大功能，讓大家對JavaScript的發展充滿了信心，很多人認為JavaScript將會是繼C之後最重要的程式語言。</p>
+      </div>
+      <hr />
+
+<!-- 使用環境 -->
+      <a name="使用環境"><h2>使用環境</h2>
+      <h3>command/指令</h3>
+      <p class="h3">可以Mozilla開發Rhino js.jar執行JavaScript</p>
+      <div class="commands">Linux:~ # <span class="cmds">java</span> -jar js.jar
+      <br />js&gt; print('Hello JavaScript');
+      </div>
+      <br />
+
+      <h3>script/指令稿</h3>
+      <p class="h3">
+</p>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> hello.js
+      <br />print ('Hello JavaScript');
+      <br />
+
+      <br /><span class="cmts">#第一種執行方式</span>
+      <br />Linux:~ # <span class="cmds">java</span> -jar js.jar hello.js
+      <br />Hello JavaScript
+      <br />
+
+      <br /><span class="cmts">#第二種執行方式</span>
+      <br /><span class="cmts">#將檔案放在web server上，直接使用browser</span>
+      <br />
+      </div>
+      <hr />
+
+
+<!-- 基本控制 -->
+      <a name="基本控制"><h2>基本控制</h2>
+
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> hello.html
+      <br />&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&nbsp;&nbsp;&lt;script type="text/javascript"&gt;
+      <br />&nbsp;&nbsp;var user = <span class="ftns">prompt</span>(&quot;Keyin your name&quot;, &quot;Anonymous&quot;);
+      <br />&nbsp;&nbsp;<span class="ftns">alert</span>(&quot;Hello &quot; + user);
+      <br />&nbsp;&nbsp;&lt;/script&gt;
+      <br />&lt;/head&gt;
+      
+      <br />&lt;body&gt;
+      <br />&nbsp;&nbsp;&lt;script language="text/javascript"&gt;
+      <span class="cmts">// 在html中呼叫javascript，這是舊版browser支援方式，在HTML4不建議使用</span>
+      <br /><span class="cmts">// 這是單行註解</span>
+      <br /><span class="cmts">/* 這是跨行註解 */</span>
+      <br />&nbsp;&nbsp;//&lt;![CDATA[
+      <span class="cmts">//CDATA內部的所有東西都會被解析器忽略，例如&lt;, &amp;等字符在html中的意義會變成像程式碼出現情況一樣</span>
+
+      <br />&nbsp;&nbsp;document.write('Hello JavaScript' + &lt;br /&gt;);
+      <br />&nbsp;&nbsp;//]]&gt;
+      <br />&nbsp;&nbsp;&lt;/script&gt;
+      <br />
+
+      <br />&nbsp;&nbsp;&lt;script type="text/javascript"&gt;
+      <span class="cmts">// 建議使用此方法</span>
+      <br />&nbsp;&nbsp;document.write('Hello JavaScript');
+      <br />&nbsp;&nbsp;&lt;/script&gt;
+      <br />
+
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      <br />?&gt;
+      <br />
+      </div>
+      <p class="h3">JavaScript會執行的部分只有在<font color="#FF00FF">&lt;script&gt;</font> <font color="#0000FF">...</font> <font color="#FF00FF">&lt;/script&gt;</font>之間的內容
+      <br />JavaScript程式碼可穿插在html文件中</p>
+      <br />
+      <hr />
+
+<!-- 變數型態 -->
+      <a name="變數型態"><h2>變數型態</h2>
+      <p class="h2">JavaScript中的變數分為numerical、string、boolean和object type有array、object、resource、NULL
+      <br />JavaScript的變數宣告要使用var，變數名稱的開頭必須是底線（_）或英文字母，英文字母的大小寫都可以，而且大小寫有別。要注意數字不可以作為變數的開頭</p>
+      
+      <h3>scalar</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts">// Numerical</span>
+      <br />var num1 = 1;
+      <span class="cmts">// 十進位</span>
+      <br />var num2 = 0xff;
+      <span class="cmts">// 十六進位</span>
+      <br />var num3 = 033;
+      <span class="cmts">// 八進位</span>
+      <br />var num4 = 1234.5678;
+      <span class="cmts">// 浮點數</span>
+      <br />var num5 = 6.02e23;
+      <span class="cmts">// 使用科學記號 6.02 x 10 <sup>23</sup></span>
+      <br />
+
+      <br /><span class="cmts">// 四捨五入</span>
+      <br />num4.toFixed(0);
+      <br />num4.toExponential(1);
+      <br />num4.toPrecision(3);
+      <br />
+      
+      <br /><span class="cmts">// Numerical轉String</span>
+      <br />var str0 = num1 + "";
+      <span class="cmts">// 第一種方法</span>
+      <br />var str0 = String(num1);
+      <span class="cmts">// 第二種方法</span>
+      <br />var str0 = num1.toString;
+      <span class="cmts">// 第三種方法</span>
+      <br />
+
+      <br /><span class="cmts">// String</span>
+      <br />var str1 = 'ABC';
+      <br />var str2 = 'xyz';
+      <br />var str3 = '123';
+      <br />document.write(str1 + str2);
+      <br />
+
+      <br /><span class="cmts">// String轉Numerical</span>
+      <br />Number(str3);
+      <br />parseInt(str3);
+      <br />parseFloat(str3);
+      <br />
+
+      <br /><span class="cmts">// String處理</span>
+      <br />str1.toLowerCase();
+      <br />str2.toUpperCase();
+      <br />&quot; lorem &quot;.trim();
+      <br />&quot; lorem&quot;.trimLeft();
+      <br />&quot;lorem &quot;.trimRight();
+      <br />&quot;lorem ipsum&quot;.substr(6, 5);
+      <br />&quot;value: &quot; + 8;
+      <br />
+
+      <br />[&quot;do&quot;, &quot;re&quot;, &quot;mi&quot;].join(&quot; &quot;);
+      <span class="cmts">// array轉string</span>
+      <br />&quot;do re mi&quot;.split(&quot; &quot;);
+      <span class="cmts">// string轉array</span>
+      <br />
+
+      <br /><span class="cmts">// Boolean，0或Nan為false、1為true</span>
+      <br />var bl1 = true;
+      <br />
+
+      <br /><span class="cmts">// 轉Boolean</span>
+      <br />Boolean(str3);
+      <br />!!num1;
+      <br />
+
+      <br /><span class="cmts">// 定義全域變數</span>
+      <br />var MYGLOBAL = {} || MYGLOBAL;
+      <br />MYGLOBAL.var1 = &quot;xyz&quot;;
+      <br />MYGLOBAL.var2 = 123;
+      </div>
+      <br />
+
+      <table class="h3">
+      <tr>
+        <th>CONSTANT</th>
+        <th>DESCRIPTION</th>
+      </tr>
+      <tr>
+        <td>Infinity</td>
+        <td>無限大的特殊值</td>
+      </tr>
+      <tr>
+        <td>NaN</td>
+        <td>非數值</td>
+      </tr>
+      <tr>
+        <td>Number.MAX_VALUE</td>
+        <td>最大值</td>
+      </tr>
+      <tr>
+        <td>Number.MIN_VALUE</td>
+        <td>最小值</td>
+      </tr>
+      <tr>
+        <td>Number.Nan</td>
+        <td>非數值</td>
+      </tr>
+      <tr>
+        <td>Number.POSITIVE_INFINITY</td>
+        <td>正無限大數值</td>
+      </tr>
+      <tr>
+        <td>Number.NEGATIVE_INFINITY</td>
+        <td>負無限大數值</td>
+      </tr>
+      </table>
+      <br />
+
+      <h3>array</h3>
+      <div class="commands">var arr1 = [1, 2, 3];
+      <span class="cmts">// literal method</span>
+      <br />var arr2 = new Array(1, 2, 3);
+      <span class="cmts">// object method</span>
+      <br />
+
+      <br /><span class="cmts">// 顯示array</span>
+      <br />for (var i = 0; i &lt; arr.length; i++) { document.<span class="ftns">write</span>(arr[i] + '&lt;br /&gt;'); }
+      <span class="cmts">// 使用for</span>
+      <br />for (var i in arr) { document.<span class="ftns">writeln</span>(arr[i] + '&lt;br /&gt;'); }
+      <span class="cmts">// 使用for in，類似foreach</span>
+      <br />
+      
+      <br />arr1.unshift(0);
+      <span class="cmts">// 在array最後新增element</span>
+      <br />arr2.shift();
+      <span class="cmts">// 在array最前移除element</span>
+      <br />arr1.push(4);
+      <span class="cmts">// 在array最後新增element</span>
+      <br />arr2.pop();
+      <span class="cmts">// 在array最後移除element</span>
+      </div>
+
+      <h3>hash</h3>
+      <div class="commands">var hsh1 = {'one':1, 'two':2};
+      <span class="cmts">// literal method</span>
+      <br />var hsh2 = new object;
+      <span class="cmts">// object method</span>
+      <br />hsh2['one'] = 1;
+      <br />hsh2.two = 2;
+      <br />
+
+      <br />for (var i in hsh) { document.write(hsh[i] + '&lt;br /&gt;'); }
+      <br />
+
+      <br />delete hsh1.one;
+      <span class="cmts">// 刪除element</span>
+      <br />delete hsh2['one'];
+      <span class="cmts">// 刪除element</span>
+      </div>
+
+      <p class="h3">JSON JavaScript Object Notation
+      <br />scalar: string, numbers
+      <br />sequence: array, list
+      <br />mapping: key/value, hash, dictionary
+      <br />
+      <br />1） sequence數據之間用逗號（&quot;，&quot;）分隔。
+      <br />2） sequence數據集合（數組）用中括號(&quot;[]&quot;)表示。
+      <br />3） mapping數據用冒號（&quot;：&quot;）表示用逗號（&quot;，&quot;）分隔。。
+      <br />4） mapping數據集合（對象）用大括號（&quot;{}&quot;）表示。</p>
+      <hr />
+
+
+<!-- 控制流程 -->
+      <a name="控制流程"><h2>控制流程</h2>
+
+      <p class="h2">為真判斷
+      <br />if (EXPR) STATE
+      <br />if (EXPR) STATE else STATE
+      <br />if (EXPR) STATE else STATE ...
+      <br />if (EXPR) STATE else if(EXPR) STATE ... else STATE
+      <br />
+
+      <br />條件判斷
+      <br />switch(n) {
+      <br />case x:
+      <br />&nbsp;&nbsp;STATE
+      <br />&nbsp;&nbsp;break;
+      <br />defalut:
+      <br />&nbsp;&nbsp;STATE
+      <br />}
+      <br />
+
+      <br />個數迴圈
+      <br />for (EXPR; EXPR; EXPR) STATE
+      <br />for (VAR in LIST) STATE
+      <br />
+
+      <br />邏輯迴圈
+      <br />while (EXPR) BLOCK
+      <br />do BLOCK while (EXPR)
+      </p>
+      <br />
+
+      <div class="commands">Linux:~ # <span class="commands">cat</span> demo.js
+      <br />function pressSubmit() {
+      <span class="cmts">// 設定pressSubmit function</span>
+      <br />&nbsp;&nbsp;var mail = document.getElementById('txt_email').value;
+      <br />&nbsp;&nbsp;mail = mail.replace(/^\s+|\s+$/g, '');
+      <span class="cmts">// 正規表示</span>
+      <br />
+      <br />&nbsp;&nbsp;var email_pattern=/^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+      <br />
+      <br />&nbsp;&nbsp;if (email_pattern.test(mail) )
+      <span class="cmts">// 單行statement可省略{}</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;message += mail + &quot;\n&quot;;
+      <br />&nbsp;&nbsp;else
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;message += &quot;Your mail form error\n&quot;;
+      <br />
+      <br />&nbsp;&nbsp;var inputs = document.getElementsByTagName('input');
+      <br />&nbsp;&nbsp;for (var i = 0; i &lt; inputs.length; i++)
+      <span class="cmts">// 單行statement可省略{}</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;message += &quot;tag: &quot; + inputs[i].tagName + &quot;, id: &quot; + inputs[i].getAttribute('id') + &quot;\n&quot;;
+      <br />&nbsp;&nbsp;alert(message);
+      <br />}
+      <br />&lt;/script&gt;
+      <br />
+
+      <br />Linux:~ # <span class="commands">cat</span> demo.html
+      <br />&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&nbsp;&nbsp;&lt;title&gt;demo&lt;/title&gt;
+      <br />&nbsp;&nbsp;&lt;script type=&quot;text/javascript&quot; src=&quot;demo.js&quot;&gt;
+      <span class="cmts">&lt;!-- 載入demo.js --&gt;</span>
+      <br />&lt;/head&gt;
+
+      <br />&lt;body&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;#&quot;&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;label for=&quot;email&quot;&gt;Check E-mail form&lt;/label&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;br /&gt;&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;txt_email&quot;&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;br /&gt;&lt;input type=&quot;submit&quot; onclick=&quot;pressSubmit();&quot;&gt;
+      <span class="cmts">&lt;!-- 設定event, 執行click使用pressSubmit function --&gt;</span>
+      <br />&nbsp;&nbsp;&lt;/form&gt;
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      </div>
+      <hr />
+
+<!-- 函式參數 -->
+      <a name="函式參數"><h2>函式參數</h2>
+      <p class="h3">function funcname(PARAM1, PARAM2, ..., PARAM<i>n</i>) {STATE}
+      <br />var varfunc = function(PARAM1, PARAM2, ..., PARAM<i>n</i>) {STATE}
+      <br />var varfunc = Function(&quot;PARAM1&quot;, &quot;PARAM2&quot;, ..., &quot;param<i>n</i>&quot;, &quot;STATE&quot;);
+      <br />(function (PARAM1, PARAM2, ..., PARAM<i>n</i>) {STATE} (arg, ...) );
+      <br />(function (PARAM1, PARAM2, ..., PARAM<i>n</i>) {STATE} )(arg, ...); 
+      </p>
+
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> <span class="vars">myapp.js</span>
+      <br />function sayHi(arg) { return &quot;Hi &quot; + arg; }
+      <span class="cmts">// function declaration or named function</span>
+      <br />var sayGood = function(arg) { return &quot;Good &quot; + arg; }
+      <span class="cmts">// function expression or anonymous function</span>
+      <br />var sayHello = new Function(&quot;arg&quot;, &quot;return \&quot;Hello \&quot;+ arg;&quot;);
+      <span class="cmts">// function constructor</span>
+      <br />var countNumber = function () {
+      <span class="cmts">// closure</span>
+      <br />&nbsp;&nbsp;var count = 0; 
+      <span class="cmts">// count在countNumber裡的區域變數</span>
+      <br />&nbsp;&nbsp;return function () {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;return count += 1;
+      <br />&nbsp;&nbsp;}
+      <br />}
+      <br />
+
+      <br />Linux:~ # <span class="cmds">cat</span> <span class="vars">myapp.html</span>
+      <br />&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&nbsp;&nbsp;&lt;script type=&quot;text/javascript&quot; src=&quot;myapp.js&quot;&gt;&lt;/script&gt;
+      <br />&lt;/head&gt;
+
+      <br />&lt;body&gt;
+      <br />&nbsp;&nbsp;&lt;script type=&quot;text/javascript&quot;&gt;
+      <br />&nbsp;&nbsp;document.write(sayHi('xxx') );
+      <br />&nbsp;&nbsp;document.writeln('&lt;br /&gt;');
+      <br />
+
+      <br />&nbsp;&nbsp;document.write(sayGood('yyy') );
+      <br />&nbsp;&nbsp;document.writeln('&lt;br /&gt;');
+      <br />
+
+      <br />&nbsp;&nbsp;document.write(sayHello('zzz') );
+      <br />&nbsp;&nbsp;document.writeln('&lt;br /&gt;');
+      <br />
+
+      <br />&nbsp;&nbsp;var next = countNumber();
+      <br />&nbsp;&nbsp;document.writeln(next() );
+      <br />&nbsp;&nbsp;document.writeln(next() );
+      <br />&nbsp;&nbsp;document.writeln('&lt;br /&gt;');
+      <br />
+
+      <br />&nbsp;&nbsp;(function (arg) {
+      <span class="cmts">// immediate function</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;alert(arg + &quot; watch out!&quot;);
+      <br />&nbsp;&nbsp;} (&quot;JS&quot;) );
+      <br />
+
+      <br />&nbsp;&nbsp;(function (arg) {
+      <span class="cmts">// immediate function</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;alert(arg + &quot; be careful!&quot;);
+      <br />&nbsp;&nbsp;})(&quot;Javascript&quot;);
+      <br />
+
+      <br />&nbsp;&nbsp;&lt;/script&gt;
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      </div>
+      <br />
+
+      <h3>callback funtion</h3>
+      <div class="commands">&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&nbsp;&nbsp;&lt;script type=&quot;text/javascript&quot;&gt;
+      <br />&nbsp;&nbsp;function function do_a(){
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;console.log( '`do_a`: 這會先出現');
+      <br />&nbsp;&nbsp;}
+      <br />
+
+      <br />&nbsp;&nbsp;function do_b(){
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;console.log( '`do_b`: 跟著才是這個' );
+      <br />&nbsp;&nbsp;}
+      <br />
+
+      <br />&nbsp;&nbsp;do_a();
+      <br />&nbsp;&nbsp;do_b();
+
+      <br />&nbsp;&nbsp;&lt;/script&gt;
+      <br />&lt;/head&gt;
+
+      <br />&lt;body&gt;
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      </div>
+      <br />
+
+
+      <div class="commands">&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&nbsp;&nbsp;&lt;script type=&quot;text/javascript&quot;&gt;
+      <br />&nbsp;&nbsp;function do_a(){
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;setTimeout( function(){
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log( '`do_a`: 這個需要的時間比 `do_b` 長' );
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;}, 1000 );
+      <br />&nbsp;&nbsp;}
+      <br />
+
+      <br />&nbsp;&nbsp;function do_b(){
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;console.log( '`do_b`: 跟著才是這個' );
+      <br />&nbsp;&nbsp;}
+      <br />
+
+      <br />&nbsp;&nbsp;do_a();
+      <br />&nbsp;&nbsp;do_b();
+
+      <br />&nbsp;&nbsp;&lt;/script&gt;
+      <br />&lt;/head&gt;
+
+      <br />&lt;body&gt;
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      </div>
+      <br />
+
+      <div class="commands">&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&nbsp;&nbsp;&lt;script type=&quot;text/javascript&quot;&gt;
+      <br />&nbsp;&nbsp;function do_a(callback){
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;setTimeout( function(){
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log( '`do_a`: 這個需要的時間比 `do_b` 長' );
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(callback &amp;&amp; typeof(callback) === &quot;function&quot;) &amp;&amp; callback();
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;}, 1000 );
+      <br />&nbsp;&nbsp;}
+      <br />
+
+      <br />&nbsp;&nbsp;function do_b(){
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;console.log( '`do_b`: 跟著才是這個' );
+      <br />&nbsp;&nbsp;}
+      <br />
+
+      <br />&nbsp;&nbsp;do_a( function(){
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;do_b();
+      <br />&nbsp;&nbsp;});
+
+      <br />&nbsp;&nbsp;&lt;/script&gt;
+      <br />&lt;/head&gt;
+
+      <br />&lt;body&gt;
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      </div>
+
+
+      <hr />
+
+<!-- 物件導向 -->
+      <a name="物件導向"><h2>物件導向</h2>
+      <div class="commands">&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&nbsp;&nbsp;&lt;script type=&quot;text/javascript&quot;&gt;
+      <br />&nbsp;&nbsp;function Woman(name) {
+      <span class="cmts">// function declaration去產生object</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.name = name;
+      <span class="cmts">// public attribute</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;};
+      <br />&nbsp;&nbsp;Woman.prototype.getName = function() {
+      <span class="cmts">// public method</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;return this.name;
+      <br />&nbsp;&nbsp;};
+      <br />
+<!-- 
+  var Man = function(name, age) { // function expression去產生object, 
+    this.name = name;             // public attribute 
+    this.getName = function() {   // public method 
+      return this.name;
+    };
+    var mage = age;               // private attribute
+    this.getAge = function() {
+      return mage;
+    };
+  };
+-->  
+      <br />&nbsp;&nbsp;var Man = <span class="ftns">function(<span class="vars">name, nickname</span>) {</span>
+      <span class="cmts">// function expression去產生object</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;if ( typeof Man.count == 'undefined' ) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Man.count = 0;
+      <span class="cmts">// static attribute</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;Man.count++;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;Man.getCount = <span class="ftns">function() {</span>
+      <span class="cmts">// static method</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return Man.count;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;<span class="ftns">};</span>
+      <br />
+
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var _nickName_;
+      <span class="cmts">// private attribute</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var _setNickName_ = <span class="ftnc">function(<span class="vars">nk</span>) {</span>
+      <span class="cmts">// private method</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _nickName_ = nk;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;<span class="ftns">}</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;_setNickName_(nickname);
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;this.getNickName = <span class="ftns">function() {</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return _nickName_;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;<span class="ftns">}</span>
+      <br />
+
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;this.name = name;
+      <span class="cmts">// public attribute</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;this.getName = <span class="ftns">function() {</span>
+      <span class="cmts">// public method</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return this.name;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;<span class="ftns">};</span>
+      <br />&nbsp;&nbsp;<span class="ftns">};</span>
+      <br />
+      <br />&nbsp;&nbsp;Man.prototype.setAge = <span class="ftns">function(<span class="vars">age</span>) {</span>
+      <span class="cmts">// public method</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;this.age = age;
+      <br />&nbsp;&nbsp;<span class="ftns">};</span>
+      <br />&nbsp;&nbsp;Man.prototype.getAge = <span class="ftns">function() {</span>
+      <span class="cmts">// public method</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;return this.age;
+      <br />&nbsp;&nbsp;<span class="ftns">};</span>
+      <br />&nbsp;&nbsp;&lt;/script&gt;
+      <br />&lt;/head&gt;
+
+      <br />&lt;body&gt;
+      <br />&nbsp;&nbsp;&lt;script type=&quot;text/javascript&quot;&gt;
+      <br />&nbsp;&nbsp;p1 = new Woman('Mary');
+      <br />&nbsp;&nbsp;console.log(p1.name);
+      <br />
+      <br />&nbsp;&nbsp;p2 = new Man('John', 'Johnny');
+      <br />&nbsp;&nbsp;alert(p2.getName() );
+      <br />&nbsp;&nbsp;&lt;/script&gt;
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;            
+      </div>
+      <hr />
+
+<!-- 正規表示 -->
+      <a name="正規表示"><h2>正規表示</h2>
+      <div class="commands">&lt;html&gt;
+      <br />&lt;head&gt;&lt;/head&gt;
+      <br />&lt;script type=&quot;text/javascript&quot;&gt;
+      <br />&lt;body&gt;
+      <br />&lt;script type=&quot;text/javascript&quot;&gt;
+      <br />var str = '/usr/lib/python2.6/site-packages/gtk-2.0/gconf.so';
+      <br />document.write( str + &quot;&lt;br /&gt;&lt;br /&gt;&quot;);
+      <br />
+      <br /><span class="cmts">// match進行比對，回傳匹配字串array
+      <br />// search進行比對，回傳匹配字串position；indexOF不能用於RE
+      <br />// replace進行比對，將匹配字串修改且回傳
+      <br />// 將要匹配字串放入/pattern/之中</span>
+      <br />
+      <br />var re = <span class="ftns">/</span>(.*)\.(.*?)$<span class="ftns">/</span>;
+      <span class="cmts">// RE宣告，將pattern夾在//之中但不適用於變數</span>
+      <br />var restr = str.<span class="ftns">match</span>(re); 
+      <br />document.writeln(restr[1] + &quot;&lt;=&gt;&quot; + restr[2] + &quot;&lt;br /&gt;&quot;);
+      <br />document.writeln(str.<span class="ftns">search</span>(re) + &quot;&lt;br /&gt;&quot;);
+      <br />document.writeln(str.<span class="ftns">replace</span>(/.[^.]*$/, '') + &quot;&lt;br /&gt;&lt;br /&gt;&quot;);
+      <span class="cmts">// 不修改str內容，但修改回傳值</span>
+      <br />
+      <br />var re = new <span class="ftns">RegExp</span>(<span class="ftns">/</span>(.*?)\.(.*)$<span class="ftns">/</span>);
+      <span class="cmts">// 另一種RE宣告，適用於變數</span>
+      <br />var restr = str.match(re); 
+      <br />document.writeln(restr[1] + &quot;&lt;=&gt;&quot; + restr[2] + &quot;&lt;br /&gt;&quot;);
+      <br />document.writeln(str.search(re) + &quot;&lt;br /&gt;&quot;);
+      <br />document.writeln(str.replace(/\.(.*)$/, '') + &quot;&lt;br /&gt;&lt;br /&gt;&quot;);
+      <br />
+      <br />var re = /(.*?)\/(.*)$/;
+      <br />var restr = str.match(re); 
+      <br />document.writeln(restr[1] + &quot;&lt;=&gt;&quot; + restr[2] + &quot;&lt;br /&gt;&quot;);
+      <br />document.writeln(str.search(re) + &quot;&lt;br /&gt;&quot;);
+      <br />document.writeln(str.replace(/(.*?)\//, '') + &quot;&lt;br /&gt;&lt;br /&gt;&quot;);
+      <br />
+      <br />var re = /(.*)\/(.*)$/;
+      <br />var restr = str.match(re); 
+      <br />document.writeln(restr[1] + &quot;&lt;=&gt;&quot; + restr[2] + &quot;&lt;br /&gt;&quot;);
+      <br />document.writeln(str.search(re) + &quot;&lt;br /&gt;&quot;);
+      <br />document.writeln(str.replace(/(.*)\//, '') + &quot;&lt;br /&gt;&lt;br /&gt;&quot;);
+      <br />&lt;/script&gt;
+      <br />&lt;/body&gt;
+      </div>
+      <hr />
+
+<!-- 輸出輸入   -->
+      <a name="輸出輸入"><h2>輸出輸入</h2>
+      <div class="commands">
+      
+      </div>
+      <hr />
+
+<!-- Event -->
+
+      <a name="Event"><h2>Event</h2>
+      <p class="h3">
+      </p>
+
+      <div class="commands">&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&lt;script type=&quot;text/javascript&quot;&gt;
+      <br />function sayHi() { document.getElementById('ans').<span class="ftns">innerHTML</span> = &quot;Hi, &quot; + document.getElementById('name').value;}
+      <br />&lt;/script&gt;
+      <br />&lt;/head&gt;
+      <br />&lt;body&gt;
+      <br />&lt;form action=&quot;&quot;&gt;
+      <br />&nbsp;&nbsp;&lt;label&gt;Name:&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;name&quot; onblur=&quot;sayHi();&quot;&gt;
+      <br />&lt;/form&gt;
+      <br />&lt;p id=&quot;ans&quot;&gt;&lt;/p&gt;
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      </div>
+      <br />
+
+      <table class="h3">
+        <tr>
+          <th>Event</th>
+          <th>Descritpion</th>
+        </tr>
+        <tr>
+          <td>abort</td>
+          <td>圖像加載被中斷</td>
+        </tr>
+        <tr>
+          <td>blur</td>
+          <td>元素失去焦點</td>
+        </tr>
+        <tr>
+          <td>change</td>
+          <td>用戶改變域的內容</td>
+        </tr>
+        <tr>
+          <td>click</td>
+          <td>滑鼠點擊某個對象</td>
+        </tr>
+        <tr>
+          <td>dblclick</td>
+          <td>滑鼠雙擊某個對象</td>
+        </tr>
+        <tr>
+          <td>error</td>
+          <td>當加載文檔或圖像時發生某個錯誤</td>
+        </tr>
+        <tr>
+          <td>focus</td>
+          <td>元素獲得焦點</td>
+        </tr>
+        <tr>
+          <td>keydown</td>
+          <td>某個鍵盤的鍵被按下</td>
+        </tr>
+        <tr>
+          <td>keypress</td>
+          <td>某個鍵盤的鍵被按下或按住</td>
+        </tr>
+        <tr>
+          <td>keyup</td>
+          <td>某個鍵盤的鍵被鬆開</td>
+        </tr>
+        <tr>
+          <td>load</td>
+          <td>某個頁面或圖像被完成加載</td>
+        </tr>
+        <tr>
+          <td>mousedown</td>
+          <td>某個滑鼠按鍵被按下</td>
+        </tr>
+        <tr>
+          <td>mousemove</td>
+          <td>滑鼠移動</td>
+        </tr>
+        <tr>
+          <td>mouseout</td>
+          <td>滑鼠從某元素移開</td>
+        </tr>
+        <tr>
+          <td>mouseover</td>
+          <td>滑鼠被移到某元素之上</td>
+        </tr>
+        <tr>
+          <td>mouseup</td>
+          <td>某個滑鼠按鍵被鬆開</td>
+        </tr>
+        <tr>
+          <td>reset</td>
+          <td>重置按鈕被點擊</td>
+        </tr>
+        <tr>
+          <td>resize</td>
+          <td>窗口或框架被調整尺寸</td>
+        </tr>
+        <tr>
+          <td>select</td>
+          <td>文本被選定</td>
+        </tr>
+        <tr>
+          <td>submit</td>
+          <td>提交按鈕被點擊</td>
+        </tr>
+        <tr>
+          <td>unload</td>
+          <td>用戶退出頁面</td>
+        </tr>
+      </table>
+
+      <p class="h3">Level 0 DOM Event又稱Traditional registration model(傳統註冊模型), 事件處理以&quot;on-&quot;以開頭，語法為onevent。在event handler(事件處理器)後面直接實作Javascript，
+      <br />&lt;body onload=&quot;var i = 1; i = i * 2; alert(i);&quot;&gt;
+      <br />然而常用方式是直接呼叫函式
+      <br />&lt;body onload=&quot;calcNum();&quot;&gt;
+      <br />移除此函式則是在事件處理器呼叫null
+      <br />&lt;body onload=&quot;null;&quot;&gt;
+      <br />
+      <br />Level 2 DOM Event是使用在event listener(事件監聽器)去控制，語法如下：
+      <br />addEventListener('event', eventFunction, boolean);
+      <br />event:為事件如load, click等
+      <br />eventFunction:控制事件函式
+      <br />boolean:事件補獲機制，true為上到下的Capture phase(Netscape)，false為下到上的Bubbling phase(Internet Explorer)
+      </p>
+      addEventListener 增加
+removeEventListener 刪除
+dispatchEvent 分派
+      <hr />
+<!-- BOM -->
+
+      <a name="BOM"><h2>BOM</h2>
+      <p class="h3">在瀏覽器開始支援JavaScript時，存在一組物件提供有限的功能，在當時Netscape Navigator與Internet Explorer大戰的年代，兩個瀏覽器在這組物件上有些交集的部份，這些交集的部份被留存到現在，並在一些主流的瀏覽器中仍有支援。這組物件稱為BOM（Browser Object Model、瀏覽器物件模型）或非正式地稱為Level 0 DOM，因為它在DOM（Document Object Model）標準化前就已存在，而不是真有有文件規範Level 0 DOM。這組物件從全域物件window開始，具有以下的特性階層關係：
+      <br />window|
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|navigator
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|location
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|frames
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|screen
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|history
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|document
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|forms
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|links
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|anchors
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|images
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|all
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|cookie</p>
+      <br />
+
+      <div class="commands">&lt;html&gt;
+      <span class="cmts">&lt;!-- browser object model example--&gt;</span>
+      <br />&lt;head&gt;
+      <br />&lt;script type=&quot;text/javascript&quot;&gt;
+      <br />&nbsp;&nbsp;function myCh() {
+      <br /><span class="cmts">&nbsp;&nbsp;&nbsp;&nbsp;// get object d1, d2 ,d3</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var d1 = document.forms[0];
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var d2 = document.forms['login'];
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var d3 = document.forms.login;
+      <br />
+      <br /><span class="cmts">&nbsp;&nbsp;&nbsp;&nbsp;// get value v1, v2, v3 ,v4</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var v1 = d1.elements[1].value;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var v2 = d1.elements['passwd'].value;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var v3 = d1.elements.passwd.value;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;var v4 = document.login.passwd.value;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;alert(&quot;Your password: &quot;+ v4);
+      <br />&nbsp;&nbsp;}
+      <br />&lt;/script&gt;
+      <br />&lt;/head&gt;
+      <br />&lt;body&gt;
+      <br />&lt;form name=&quot;login&quot;&gt;
+      <br />&nbsp;&nbsp;User: &lt;input type=&quot;text&quot; name=&quot;user&quot; value=&quot;guest&quot; onchange=&quot;myCh();&quot;&gt;
+      <br />&nbsp;&nbsp;&lt;br /&gt;Password: &lt;input type=&quot;password&quot; name=&quot;passwd&quot; value=&quot;guest&quot;&gt;
+      <br />&nbsp;&nbsp;&lt;button type=&quot;submit&quot;&gt;Submit&lt;button/&gt;
+      <br />&lt;/form&gt;
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      </div>
+      <hr />
+
+<!-- DOM -->
+
+      <a name="DOM"><h2>DOM</h2>
+      <p class="h3">W3C聯合各瀏覽器廠商制訂了標準物件模型，試圖讓各瀏覽器廠商遵合此一模式進行實作，以解決各瀏覽器間物件模型不一致的問題，在新的物件模型中，也對文件操作的功能加以擴充。簡單來說，在DOM的標準下，一份文件中所有的標籤定義，包括文字，都是一個物件，這些物件以文件定義的結構，形成了一個樹狀結構。例如：
+      <br />&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&nbsp;&nbsp;&lt;title&gt;首頁&lt;/title&gt;
+      <br />&lt;/head&gt;
+      <br />&lt;body&gt;
+      <br />&nbsp;&nbsp;&lt;h1&gt;Hello JavaScript!&lt;/h1&gt;
+      <br />&nbsp;&nbsp;&lt;a href=&quot;index.html&quot;&gt;xxx&lt;/a&gt;
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      <br />
+      <br />這份HTML文件，會形成以下樹狀的物件結構：
+      <br />document
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Document)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-html
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(HTMLHtmlElement)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-head
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(HTMLHeadElement)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-title
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(HTMLTitleElement)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-首頁
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Text）
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-body
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(HTMLBodyElement)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-h1
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(HTMLHeadingElement
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|-Hello JavaScript
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Text)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-a
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(HTMLAnchorElement)
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-xxx
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Text)
+&nbsp;&nbsp;
+      </p>
+      <br />
+      <div class="commands">&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&lt;script&gt;
+      <br />function myCh() {
+      <br />// getElementById
+      <br />var text1 = document.getElementById('text1');
+      <br />var text2Value = document.getElementById('text2').getAttribute(&quot;value&quot;);
+      <br />
+      <br />// getElementsByTagName
+      <br />var form1 = document.getElementById(&quot;form1&quot;);
+      <br />var form1_inputs = form1.getElementsByTagName(&quot;input&quot;);
+      <br />
+      <br />var message = '';
+      <br />message += &quot;getElementById example&quot;;
+      <br />message += &quot;&lt;br /&gt;&quot;;
+      <br />message += &quot;object type: &quot; + text1;
+      <br />message += &quot;&lt;br /&gt;&quot;;
+      <br />message += &quot;text1 value: &quot; + text1.value;
+      <br />message += &quot;&lt;br /&gt;&quot;;
+      <br />message += &quot;text2 value: &quot; + text2Value;
+      <br />message += &quot;&lt;br /&gt;&lt;br /&gt;&quot;;
+      <br />
+      <br />message += &quot;getElementsByTagName example&quot;;
+      <br />message += &quot;&lt;br /&gt;&quot;;
+      <br />message += &quot;object type: &quot; + form1_inputs;
+      <br />message += &quot;&lt;br /&gt;&quot;;
+      <br />message += &quot;list length: &quot; + form1_inputs.length;
+      <br />message += &quot;&lt;br /&gt;&quot;;
+      <br />message += &quot;object type: &quot; + form1_inputs[0];
+      <br />message += &quot;&lt;br /&gt;&quot;;
+      <br />message += &quot;text1 id: &quot; + form1_inputs[0].getAttribute(&quot;id&quot;);
+      <br />message += &quot;&lt;br /&gt;&quot;;
+      <br />message += &quot;childnodes: &quot; + form1_inputs[0].childNodes;
+      <br />message += &quot;&lt;br /&gt;&quot;;
+      <br />message += &quot;childnodes length: &quot; + form1_inputs[0].childNodes.length;
+      <br />message += &quot;&lt;br /&gt;&quot;;
+      <br />
+      <br />var p2 = document.getElementById(&quot;content2&quot;);
+      <br />p2.innerHTML = message;
+      <br />&lt;/script&gt;
+      <br />&lt;/head&gt;
+      <br />&lt;body&gt;
+      <br />&nbsp;&nbsp;&lt;form id=&quot;form1&quot; action=&quot;javascript:myCh();&quot;&gt;
+      <br />&nbsp;&nbsp;&lt;input type=&quot;text&quot; id=&quot;text1&quot; value=&quot;TEST&quot;&gt;
+      <br />&nbsp;&nbsp;&lt;input type=&quot;submit&quot; id=&quot;submit1&quot;&gt;
+      <br />&lt;/form&gt;
+      <br />
+      <br />&lt;form id=&quot;form2&quot; action=&quot;#&quot;&gt;
+      <br />&nbsp;&nbsp;&lt;input type=&quot;text&quot; id=&quot;text2&quot; onchange=&quot;myCh();&quot; value=&quot;test&quot;&gt;
+      <br />&nbsp;&nbsp;&lt;input type=&quot;submit&quot; id=&quot;submit2&quot;&gt;
+      <br />&lt;/form&gt;
+      <br />&lt;div&gt;
+      <br />&nbsp;&nbsp;&lt;p id=&quot;content1&quot;&gt;Your keyin:&lt;/p&gt;
+      <br />&nbsp;&nbsp;&lt;p id=&quot;content2&quot;&gt;&lt;/p&gt;
+      <br />&lt;/div&gt;
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      </div>
+      <p class="h3">
+      <br />getElementsByTagName是依tag名稱取得Node，回傳NodeList
+      <br />getElementsByName是依name名稱取得Node，回傳NodeList
+      <br />getElementById是依id名稱取得Node，回傳Node；但文件中出現重複的id，取得的，會是文件中第一個符合的元素
+      <br />parentNode可取得父節點
+      <br />previousSibling前鄰接節點
+      <br />nextSibling後鄰接節點
+      <br />firstChild首個子節點
+      <br />lastChild最後一個子節點
+      <br />childNodes所有直接子節點
+      </p>
+      <hr />
+
+<!-- AJAX -->
+      <a name="AJAX"><h2>AJAX</h2>
+      <p class="h3"></p>
+
+      <p class="h3">XMLHttpRequest method</p>
+      <table class="h3">
+        <tr>
+          <th>Method</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>open</td>
+          <td>開啟URL連結</td>
+        </tr>
+        <tr>
+          <td>send</td>
+          <td>將request和data送出</td>
+        </tr>
+        <tr>
+          <td>abort</td>
+          <td>終止當前request</td>
+        </tr>
+        <tr>
+          <td>setRequestHeader</td>
+          <td>設定request header</td>
+        </tr>
+        <tr>
+          <td>getResponseHeader</td>
+          <td>取得指定reponse header</td>
+        </tr>
+        <tr>
+          <td>getAllResponseHeaders</td>
+          <td>取得所有reponse header</td>
+        </tr>
+      </table>
+      <br />
+
+      <p class="h3">XMLHttpRequest attribute</p>
+      <table class="h3">
+        <tr>
+          <th>Attribute</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>onreadystatechange</td>
+          <td>在send狀態時，呼叫函式/所執行的動作</td>
+        </tr>
+        <tr>
+          <td>readyState</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>responseText</td>
+          <td>文字格式的response</td>
+        </tr>
+        <tr>
+          <td>responseXML</td>
+          <td>XML格式的response</td>
+        </tr>
+        <tr>
+          <td>status</td>
+          <td>回傳server狀態</td>
+        </tr>
+        <tr>
+          <td>statusText</td>
+          <td></td>
+        </tr>
+      </table>
+      <br />      
+
+      <p class="h3">AJAX reutrn TEXT</p>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> <a href="code/ajax1.php">ajax1.php</a>
+      <br />&lt;?php
+      <br />if (empty( $_REQUEST['state']) ) {
+      <span class="cmts">// parameter from URL by GET/POST method</span>
+      <br />&nbsp;&nbsp;$result = &quot;No State Sent&quot;;
+      <br />}
+      <br />else {
+      <br />&nbsp;&nbsp;$search = trim( $_REQUEST['state']);
+      <br />&nbsp;&nbsp;switch ($search) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;case 'MO':
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$result = &quot;&lt;option value='St. Louis'&gt;St. Louis&lt;/option&gt;&quot; .
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&lt;option value='Kansas City'&gt;Kansas City&lt;/option&gt;&quot;;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;case 'WA':
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$result = &quot;&lt;option value='Seattle'&gt;Seattle&lt;/option&gt;&quot; .
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&lt;option value='Spokane'&gt;Spokane&lt;/option&gt;&quot; .
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&lt;option value='Olympia'&gt;Olympia&lt;/option&gt;&quot;;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;case 'CA':
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$result = &quot;&lt;option value='San Francisco'&gt;San Francisco&lt;/option&gt;&quot; .
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&lt;option value='Log Angeles'&gt;Los Angeles&lt;/option&gt;&quot; .
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&lt;option value='Web 2.0 City'&gt;Web 2.0 City&lt;/option&gt;&quot; .
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&lt;option value='barcamp'&gt;BarCamp&lt;/option&gt;&quot;;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;case 'ID':
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$result = &quot;&lt;option value='Boise'&gt;Boise&lt;/option&gt;&quot;;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;default:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$result = &quot;No Cities Found&quot;;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+      <br />&nbsp;&nbsp; }
+      <br />}
+      <br />echo $result;
+      <br />?&gt;
+      <br />
+
+      <br />Linux:~ # <span class="cmds">cat</span> <a href="code/ajax1.html">ajax1.html</a>
+      <br />&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&lt;script type=&quot;text/javascript&quot;&gt;
+      <br />function populateList() { 
+      <br />&nbsp;&nbsp;var state = document.forms[0].elements[0].value; 
+      <br />&nbsp;&nbsp;if (window.XMLHttpRequest) { 
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;xmlhttp = new XMLHttpRequest();
+      <span class="cmts">// code for IE7+, Firefox, Chrome, Opera, Safari</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;xmlhttp.overrideMimeType('text/xml');
+      <br />&nbsp;&nbsp;} 
+      <br />&nbsp;&nbsp;else { 
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;try { xmlhttp = new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;); }
+      <span class="cmts">// code for IE6, IE5</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;catch (e) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try { xmlhttp = new ActiveXObject(&quot;Msxml2.XMLHTTP&quot;); }
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;catch (e) { xmlhttp = false; }
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;} 
+      <br />
+      <br />&nbsp;&nbsp;xmlhttp.onreadystatechange =&nbsp;&nbsp;function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;if (xmlhttp.readyState == 4 &amp;&amp; xmlhttp.status == 200) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">// readyState: The state of the request
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;// 0 - UNSENT, 1 -OPENED, 2 - HEADERS_RECEIVED, 3 - LOADING, 4 - DONE
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;// status: The status of the response to the request
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;// 1xx - Informational, 2xx - OK, 3xx - Redirection, 4xx - Client Error, 5xx - Server Error</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;document.getElementById(&quot;cities&quot;).innerHTML = &quot;&lt;select&gt;&quot; + xmlhttp.responseText +&nbsp;&nbsp;&quot;&lt;/select&gt;&quot;; }
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;else { document.getElementById(&quot;cities&quot;).innerHTML = &quot;Error: preSearch Failed!&quot;; }
+      <span class="cmts">// responseText, responseXML</span>
+      <br />
+      <br />&nbsp;&nbsp;<span class="cmts">// get method</span> 
+      <br />&nbsp;&nbsp;xmlhttp.open(&quot;GET&quot;, 'ajax1.php?state=' + state, true); 
+      <br />&nbsp;&nbsp;xmlhttp.send(); 
+      <br />
+      <br />&nbsp;&nbsp;<span class="cmts">// post method</span> 
+      <br />&nbsp;&nbsp;// xmlhttp.open(&quot;POST&quot;, &quot;ajax1.php&quot;, true); 
+      <br />&nbsp;&nbsp;// xmlhttp.setRequestHeader(&quot;Content-type&quot;, &quot;application/x-www-form-urlencoded&quot;);
+      <span class="cmts">// post需多引入header</span>
+      <br />&nbsp;&nbsp;// xmlhttp.send(&quot;state=&quot; + state);
+      <br />} 
+      <br />&lt;/script&gt;
+      <br />&lt;/head&gt;
+      <br />&lt;body&gt;
+      <br />&lt;form action=&quot;ajax1.php&quot; method=&quot;GET&quot;&gt;
+      <br />&nbsp;&nbsp;&lt;h3&gt;Select State:&lt;/h3&gt;
+      <br />&nbsp;&nbsp;&lt;div class=&quot;elem&quot;&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;select onchange=&quot;populateList();&quot;&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=&quot;CA&quot;&gt;California&lt;/option&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=&quot;MO&quot;&gt;Missouri&lt;/option&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=&quot;WA&quot;&gt;Washington&lt;/option&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=&quot;ID&quot;&gt;Idaho&lt;/option&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;/select&gt;
+      <br />&nbsp;&nbsp;&lt;/div&gt;
+      <br />&nbsp;&nbsp;&lt;h3&gt;Cities:&lt;/h3&gt;
+      <br />&nbsp;&nbsp;&lt;div class=&quot;elem&quot; id=&quot;cities&quot;&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;select&gt;&lt;/select&gt;
+      <br />&nbsp;&nbsp;&lt;/div&gt;
+      <br />&lt;/form&gt;
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      </div>
+      <br />
+
+      <p class="h3">AJAX return XML</p>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> <a href="code/ajax2.php">ajax2.php</a>
+      <br />&lt;?php
+      <br />if (empty( $_REQUEST['state']) ) {
+      <br />&nbsp;&nbsp;$result = &quot;&lt;city&gt;No State Sent&lt;/city&gt;&quot;;
+      <br />}
+      <br />else {
+      <br />&nbsp;&nbsp;$search = trim($_REQUEST['state']);
+      <br />&nbsp;&nbsp;switch ($search) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;case 'MO':
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$result = &quot;&lt;city&gt;&lt;value&gt;stlou&lt;/value&gt;&lt;title&gt;St. Louis&lt;/title&gt;&lt;/city&gt;&quot; . 
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&lt;city&gt;&lt;value&gt;kc&lt;/value&gt;&lt;title&gt;Kansas City&lt;/title&gt;&lt;/city&gt;&quot;;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;case 'WA':
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$result = &quot;&lt;city&gt;&lt;value&gt;seattle&lt;/value&gt;&lt;title&gt;Seattle&lt;/title&gt;&lt;/city&gt;&quot; .
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&lt;city&gt;&lt;value&gt;spokane&lt;/value&gt;&lt;title&gt;Spokane&lt;/title&gt;&lt;/city&gt;&quot; .
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&lt;city&gt;&lt;value&gt;olympia&lt;/value&gt;&lt;title&gt;Olympia&lt;/title&gt;&lt;/city&gt;&quot;;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;case 'CA':
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$result = &quot;&lt;city&gt;&lt;value&gt;sanfran&lt;/value&gt;&lt;title&gt;San Francisco&lt;/title&gt;&lt;/city&gt;&quot; .
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&lt;city&gt;&lt;value&gt;la&lt;/value&gt;&lt;title&gt;Los Angeles&lt;/title&gt;&lt;/city&gt;&quot; .
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&lt;city&gt;&lt;value&gt;web2&lt;/value&gt;&lt;title&gt;Web 2.0 City&lt;/title&gt;&lt;/city&gt;&quot; .
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&lt;city&gt;&lt;value&gt;barcamp&lt;/value&gt;&lt;title&gt;BarCamp&lt;/title&gt;&lt;/city&gt;&quot;;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;case 'ID':
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$result = &quot;&lt;city&gt;&lt;value&gt;boise&lt;/value&gt;&lt;title&gt;Boise&lt;/title&gt;&lt;/city&gt;&quot;;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;default:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$result = &quot;&lt;city&gt;&lt;value&gt;&lt;/value&gt;&lt;title&gt;No Cities Found&lt;/title&gt;&lt;/city&gt;&quot;;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+      <br />&nbsp;&nbsp; }
+      <br />}
+      <br />$result = '&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;' .
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&lt;cities&gt;&quot; . $result . &quot;&lt;/cities&gt;&quot;;
+      <br />header(&quot;Content-Type: text/xml; charset=utf-8&quot;);
+      <br />echo $result;
+      <br />?&gt;
+      <br />
+
+      <br />Linux:~ # <span class="cmds">cat</span> <a href="code/ajax2.html">ajax2.html</a>
+      <br />&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&lt;script type=&quot;text/javascript&quot;&gt;
+      <br />function populateList() { 
+      <br />&nbsp;&nbsp;var state = document.forms[0].elements[0].value; 
+      <br />&nbsp;&nbsp;if (window.XMLHttpRequest) { 
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;xmlhttp = new XMLHttpRequest();
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;xmlhttp.overrideMimeType('text/xml');
+      <br />&nbsp;&nbsp;} 
+      <br />&nbsp;&nbsp;else { 
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;try { xmlhttp = new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;); }
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;catch (e) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try { xmlhttp = new ActiveXObject(&quot;Msxml2.XMLHTTP&quot;); }
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;catch (e) { xmlhttp = false; }
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;} 
+      <br />
+      <br />&nbsp;&nbsp;xmlhttp.onreadystatechange =&nbsp;&nbsp;function() {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;if (xmlhttp.readyState == 4 &amp;&amp; xmlhttp.status == 200) { 
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var citynodes = xmlhttp.responseXML.getElementsByTagName('city');
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (var i = 0; i &lt; citynodes.length; i++) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var name = value = null;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (var j = 0; j &lt; citynodes[i].childNodes.length ; j++) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var elem = citynodes[i].childNodes[j].nodeName;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var nodeValue = citynodes[i].childNodes[j].firstChild.nodeValue;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (elem == 'value') { value = nodeValue; } 
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else { name = nodeValue; }
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;document.forms[0].elements[1].options[i] = new Option(name, value);
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;catch (e) { alert(e.message); }
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;else { document.getElementById(&quot;cities&quot;).innerHTML = &quot;Error: preSearch Failed!&quot;; }
+      <br />&nbsp;&nbsp;}
+      <br />
+      <br />&nbsp;&nbsp;// get method 
+      <br />&nbsp;&nbsp;xmlhttp.open(&quot;GET&quot;, 'ajax2.php?state=' + state, true); 
+      <br />&nbsp;&nbsp;xmlhttp.send(); 
+      <br />
+      <br />&nbsp;&nbsp;// post method 
+      <br />&nbsp;&nbsp;// xmlhttp.open(&quot;POST&quot;, &quot;ajax1.php&quot;, true); 
+      <br />&nbsp;&nbsp;// xmlhttp.setRequestHeader(&quot;Content-type&quot;, &quot;application/x-www-form-urlencoded&quot;); 
+      <br />&nbsp;&nbsp;// xmlhttp.send(&quot;state=&quot; + state);
+      <br />} 
+      <br />&lt;/script&gt;
+      <br />&lt;/head&gt;
+      <br />&lt;body&gt;
+      <br />&lt;form action=&quot;ajax2.php&quot; method=&quot;GET&quot;&gt;
+      <br />&nbsp;&nbsp;&lt;h3&gt;Select State:&lt;/h3&gt;
+      <br />&nbsp;&nbsp;&lt;div class=&quot;elem&quot;&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;select onchange=&quot;populateList();&quot;&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=&quot;CA&quot;&gt;California&lt;/option&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=&quot;MO&quot;&gt;Missouri&lt;/option&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=&quot;WA&quot;&gt;Washington&lt;/option&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=&quot;ID&quot;&gt;Idaho&lt;/option&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;/select&gt;
+      <br />&nbsp;&nbsp;&lt;/div&gt;
+      <br />&nbsp;&nbsp;&lt;h3&gt;Cities:&lt;/h3&gt;
+      <br />&nbsp;&nbsp;&lt;div class=&quot;elem&quot;&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;select id=&quot;cities&quot;&gt;&lt;/select&gt;
+      <br />&nbsp;&nbsp;&lt;/div&gt;
+      <br />&lt;/form&gt;
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      </div>
+      <br />
+
+      <p class="h3">AJAX return JSON</p>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> <a href="code/json1.php">json1.php</a>
+      <br />&lt;?php
+      <br />if&nbsp;(empty($_REQUEST['state']) ) {
+      <br />&nbsp;&nbsp;echo &quot;&lt;city&gt;No Sate Send&lt;/city&gt;&quot;;
+      <br />}
+      <br />else {
+      <br />&nbsp;&nbsp;$search = trim($_REQUEST['state']);
+      <br />&nbsp;&nbsp;switch ($search) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;case 'MO':
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$result = '[ {&quot;value&quot;: &quot;stlou&quot;, &quot;title&quot;: &quot;St. Louis&quot;}, {&quot;value&quot;: &quot;kc&quot;,    &quot;title&quot;: &quot;Kansas city&quot;} ]';
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;case 'WA':
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$result = '[ {&quot;value&quot;: &quot;seattle&quot;, &quot;title&quot;: &quot;Seattle&quot;}, {&quot;value&quot;: &quot;spokane&quot;, &quot;title&quot;: &quot;Spokane&quot;}, {&quot;value&quot;: &quot;olympia&quot;, &quot;title&quot;: &quot;Olympia&quot;} ]';
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;case 'CA':
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$result = '[ {&quot;value&quot;: &quot;sanfran&quot;, &quot;title&quot;: &quot;San Francisco&quot;}, {&quot;value&quot;: &quot;la&quot;,      &quot;title&quot;: &quot;Los Angeles&quot;}, {&quot;value&quot;: &quot;web2&quot;,    &quot;title&quot;: &quot;Web 2.0 City&quot;}, {&quot;value&quot;: &quot;barcamp&quot;, &quot;title&quot;: &quot;BarCamp&quot;} ]';
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;case 'ID':
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$result = '[ {&quot;value&quot;:&quot;boise&quot;, &quot;title&quot;:&quot;Boise&quot;} ]';
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;default:
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$result = '[ {&quot;value&quot;: &quot;&quot;, &quot;title&quot;: No Cities Found&quot;} ]';
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+      <br />&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;echo $result;
+      <br />}
+      <br />?&gt;
+
+      <br />Linux:~ # <span class="cmds">cat</span> <a href="code/ajax3.html">ajax3.html</a>
+      <br />&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&lt;script type=&quot;text/javascript&quot;&gt;
+      <br />var xmlhttp = false;
+      <br />if (window.XMLHttpRequest) {
+      <br />&nbsp;&nbsp;xmlhttp = new XMLHttpRequest();
+      <br />&nbsp;&nbsp;xmlhttp.overrideMimeType('text/xml');
+      <br />}
+      <br />else if (window.ActiveXObject) { xmlhttp = new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;); }
+      <br />
+      <br />function populateList() {
+      <br />&nbsp;&nbsp;var state = document.forms[0].elements[0].value;
+      <br />&nbsp;&nbsp;var url = 'ajax3.php?state=' + state;
+      <br />&nbsp;&nbsp;xmlhttp.open('GET', url, true);
+      <br />&nbsp;&nbsp;xmlhttp.send();
+      <br />&nbsp;&nbsp;xmlhttp.onreadystatechange = getCities;
+      <br />}
+      <br />
+      <br />function getCities() {
+      <br />&nbsp;&nbsp;if (xmlhttp.readyState == 4 &amp;&amp; xmlhttp.status == 200) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;try {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// var response = eval(xmlhttp.responseText);
+      <span class="cmts">// eval: 直接解譯字串</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var response = JSON.parse(xmlhttp.responseText);
+      <span class="cmts">// JSON.parse: 將字串轉成JSON物件</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var sel = document.getElementById(&quot;cities&quot;);
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var name = value = null;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (var i = 0; i &lt; response.length; i++) {
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name = response[i].title;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value = response[i].value;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;document.forms[0].elements[1].options[i] = new Option(name, value);
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;catch (e) { alert(e.message); }
+      <br />&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;else { document.getElementById('cities').innerHTML = &quot;Error: No Cities&quot;; }
+      <br />}
+      <br />&lt;/script&gt;
+      <br />&lt;/head&gt;
+      <br />
+      <br />&lt;body&gt;
+      <br />&lt;form action=&quot;json1.php&quot; method=&quot;get&quot;&gt;
+      <br />&nbsp;&nbsp;&lt;div class=&quot;elem&quot;&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;h3&gt;Select State:&lt;/h3&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;select onchange=&quot;populateList()&quot;&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=&quot;CA&quot;&gt;Califonia&lt;/option&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=&quot;MO&quot;&gt;Missouri&lt;/option&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=&quot;WA&quot;&gt;Washington&lt;/option&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=&quot;ID&quot;&gt;Idaho&lt;/option&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;/select&gt;
+      <br />&nbsp;&nbsp;&lt;/div&gt;
+      <br />&nbsp;&nbsp;&lt;div class=&quot;elem&quot;&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;h3&gt;Cities:&lt;/h3&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;select id=&quot;cities&quot;&gt;&lt;/select&gt;
+      <br />&nbsp;&nbsp;&lt;/div&gt;
+      <br />&lt;/form&gt;
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      </div>
+
+      <hr />
+
+<!-- jQuery -->
+      <a name="jQuery"><h2>jQuery</h2>
+      <!-- <h3>command/指令</h3> -->
+
+      <p class="h3">basic selector</p>
+      <table class="h3">
+        <tr>
+          <th>Selector</th>
+          <th>jQuery</th>
+          <th>DOM</th>
+          <th>CSS</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>Elements</td>
+          <td>$('a')</td>
+          <td>document.getElementsByTagName('a')</td>
+          <td>a {}</td>
+          <td>選擇所有符合標籤名稱(Tag name)的元素</td>
+        </tr>
+        <tr>
+          <td>ID</td>
+          <td>$('#myID')</td>
+          <td>document.getElementById('myID')</td>
+          <td>#myID {}</td>
+          <td>選擇一個符合id屬性</td>
+        </tr>
+        <tr>
+          <td>Class</td>
+          <td>$('.myClass')</td>
+          <td>document.getElementsByClassName('myClass')不一定有支援</td>
+          <td>.myClass {}</td>
+          <td>選擇所有符合class的元素</td>
+        </tr>
+      </table>
+      <br />
+
+      <p class="h3">advanced seletor</p>
+      <table class="h3">
+        <tr>
+          <th>Selector</th>
+          <th>jQuery</th>
+          <th>CSS</th>
+          <th>Description</th> 
+        </tr>
+        <tr>
+          <td>descendant</td>
+          <td>$(‘#container div’)
+          <br />$(‘form input’)
+          </td>
+          <td>#cotainer div {}
+          <br />form input {}</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>child</td>
+          <td>$('ul.myClass &gt; li')</td>
+          <td>ui.myClass &gt; li {}</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>adjacent sibling</td>
+          <td>$('.myClass p')
+          <br />$('h2 p')</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>attribute</td>
+          <td>$(&quot;input[name])
+          <br />$(&quot;input[name='newsletter']&quot;)
+          <br />$(&quot;a[href^='http://']&quot;)
+          <br />$(&quot;a[href$='.tw']&quot;)
+          <br />$(&quot;a[href*='google']&quot;)</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+      <br />
+      
+      <p class="h3">$('tr:even'), $('.striped tr:even')</p>
+      <table class="h3">
+        <tr>
+          <th>Filter</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>:even, :odd</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>:first, :last</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>:not</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>:has</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>:contains</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>:hidden, :visible</td>
+          <td></td>
+        </tr>
+      </table>
+      <br />
+
+      <p class="h3">Content</p>
+      <table class="h3">
+        <tr>
+          <th>Function</th>
+          <th>Description</th>
+          <th>Example</th>
+        </tr>
+        <tr>
+          <td>html</td>
+          <td>html用為讀取和修改元素的HTML標籤</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p&gt;&lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">html</span>('&lt;b&gt;Hello jQuery&lt;/b&gt;');
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;p&gt;&lt;b&gt;Hello jQuery&lt;/b&gt;&lt;/p&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>text</td>
+          <td>用來讀取或修改元素的純文本內容</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p&gt;&lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">text</span>('&lt;b&gt;Hello jQuery&lt;/b&gt;');
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;p&gt;&amp;lt;b&amp;gt;Hello jQuery&amp;lt;/b&amp;gt;&lt;/p&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>append</td>
+          <td>在匹配的元素內部最後面加入(內部插入)</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p&gt;jQuery&lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">append</span>('&lt;b&gt;Hello&lt;/b&gt;');
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;p&gt;jQuery&lt;b&gt;Hello&lt;/b&gt;&lt;/p&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>prepend</td>
+          <td>在匹配的元素內部最前面加入(內部插入)</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p&gt;jQuery&lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">prepend</span>('&lt;b&gt;Hello&lt;/b&gt;');
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;p&gt;&lt;b&gt;Hello&lt;/b&gt;jQuery&lt;/p&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>after</td>
+          <td>在匹配的元素外部後面加入(外部插入)</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p&gt;jQuery&lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">after</span>('&lt;b&gt;Hello&lt;/b&gt;');
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;p&gt;jQuery&lt;/p&gt;&lt;b&gt;Hello&lt;/b&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>before</td>
+          <td>在匹配的元素外部前面加入(外部插入)</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p&gt;jQuery&lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">before</span>('&lt;b&gt;Hello&lt;/b&gt;');
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;b&gt;Hello&lt;/b&gt;&lt;p&gt;jQuery&lt;/p&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>remove</td>
+          <td>從DOM中刪除所有匹配到的元素
+          <br />(但此函式不會將匹配的元素從jQuery物件中刪除)</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;div&gt;&lt;p&gt;Hello&lt;/p&gt;jQuery&lt;/div&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">remove</span>();
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;div&gt;jQuery&lt;/div&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>empty</td>
+          <td>刪除匹配到的元素其所有子節點</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;div&gt;&lt;p&gt;Hello&lt;/p&gt;jQuery&lt;/div&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">empty</span>();
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;div&gt;&lt;p&gt;&lt;/p&gt;jQuery&lt;/div&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>clone</td>
+          <td>複製匹配元素的副本</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;b&gt;Hello&lt;/b&gt;&lt;i&gt;jQuery&lt;/i&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('b').<span class="ftns">clone</span>().<span class="ftns">prependTo</span>('i');
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;b&gt;Hello&lt;/b&gt;&lt;i&gt;&lt;b&gt;Hello&lt;/b&gt;jQuery&lt;/i&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>replaceWith</td>
+          <td>替代匹配的元素</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;b&gt;Hello&lt;/b&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('b').<span class="ftns">replaceWith</span>('&lt;i&gt;jQuery&lt;/i&gt;')
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;i&gt;jQuery&lt;/i&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>addClass</td>
+          <td>增加class</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p&gt;Hello jQuery&lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">addClass</span>(&quot;myClass&quot;)
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;p class=&quot;myClass&quot;&gt;Hello jQuery&lt;/p&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>removeClass</td>
+          <td>移除class</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p class=&quot;myClass&quot;&gt;Hello jQuery&lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">removeClass</span>(&quot;myClass&quot;)
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;p class=&quot;&quot;&gt;Hello jQuery&lt;/p&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>toggleClass</td>
+          <td>切換class</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p class=&quot;newClass&quot;&gt;Hello&lt;/p&gt;
+          <br />&lt;p class=&quot;myClass&quot;&gt;jQuery&lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">click</span>(function() { $(<span class="ftns">this</span>).<span class="ftns">toggleClass</span>(&quot;newClass&quot;); });
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;p class=&quot;newClass myClass&quot;&gt;Hello&lt;/p&gt;
+          <br />&lt;p class=&quot;myClass myClass&quot;&gt;jQuery&lt;/p&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>css</td>
+          <td>設定css</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p&gt;Hello jQuery&lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">css</span>('color', 'red');
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;p style=&quot;color: red;&quot;&gt;Hello jQuery&lt;/p&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>atrr</td>
+          <td>設定atrribute</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;a href=&quot;http://google.com&quot;&gt;Google&lt;/a&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('a').<span class="ftns">attr</span>('href', &quot;http://www.google.com&quot;);
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;a href=&quot;http://www.google.com/&quot;&gt;Google&lt;/a&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>removeAtrr</td>
+          <td>移除atrribute</td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;a href=&quot;http://google.com&quot;&gt;Google&lt;/a&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('a').<span class="ftns">removeAttr</span>('href');
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;a&gt;Google&lt;/a&gt;
+          </td>
+        </tr>
+        <tr>
+          <td>each</td>
+          <td></td>
+          <td><span class="cmts">/* HTML */</span>
+          <br />&lt;p&gt; jQuery &lt;/p&gt;
+          <br />
+          <br /><span class="cmts">/* jQuery */</span>
+          <br />$('p').<span class="ftns">each</span>(function() {
+          <br />&nbsp;&nbsp;$(<span class="ftns">this</span>).<span class="ftns">prepend</span>('Hello');
+          <br />&nbsp;&nbsp;$(<span class="ftns">this</span>).<span class="ftns">append</span>('!');
+          <br />});
+          <br />
+          <br /><span class="cmts">/* Result */</span>
+          <br />&lt;p&gt;HellojQuery!&lt;/p&gt;
+          </td>
+        </tr>
+      </table>
+      <br />
+
+      <table class="h3">
+        <div class="commands">&lt;html&gt;
+        <br />&lt;head&gt;
+        <br /><span class="cmts">&lt;!-- 使用 CDN static linker --&gt;</span>
+        <br />&lt;script type=&quot;text/javascript&quot; src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js&quot;&gt;&lt;/script&gt;
+        <br />&lt;script type=&quot;text/javascript&quot; src=&quot;http://ajax.googleapis.com/ajax/libs/jqueryui/1.5.2/jquery-ui.min.js&quot;&gt;&lt;/script&gt;
+        <br />
+
+        <br /><span class="cmts">&lt;!-- 使用 CDN dynamic linker --&gt;
+        <br />&lt;!--
+        <br />&lt;script type=&quot;text/javascript&quot; src=&quot;http://www.google.com/jsapi&quot;&gt;&lt;/script&gt;
+        <br />&lt;script type=&quot;text/javascript&quot;&gt;
+        <br />google.load(&quot;jquery&quot;, &quot;1.2&quot;);
+        <br />google.load(&quot;jqueryui&quot;, &quot;1.5.2&quot;);
+        <br />&lt;/script&gt;
+        <br />--&gt;</span>
+        <br />
+
+        <br />&lt;script type=&quot;text/javascript&quot;&gt;
+        <br />$(document).ready(function() {
+        <span class="cmts">// 可略$(document).ready寫成$(function() {</span>
+        <br />&nbsp;&nbsp;$('#errors').<span class="ftns">html</span>('&lt;p&gt;There are some errors.&lt;/p&gt;');
+        <span class="cmts">// 取代選取內容，可使用text代替html，這樣解析&lt;, &gt;等特殊符號表示為文字</span>
+
+        <br />&nbsp;&nbsp;$('#errors').<span class="ftns">append</span>('&lt;b&gt;There are some errors.&lt;/b&gt;');
+        <br />&nbsp;&nbsp;$('#errors').<span class="ftns">prepend</span>('&lt;i&gt;There are some errors.&lt;/i&gt;');
+        <br />
+
+        <br />&nbsp;&nbsp;$('#myHighLight').<span class="ftns">css</span>('back-ground-color', &quot;FF0000&quot;);
+        <br />&nbsp;&nbsp;$('#myHighLight').<span class="ftns">css</span>('border', '2px solid #FE0037');
+        <br />
+        <br />&nbsp;&nbsp;<span class="cmts">// $('#myHighLight').<span class="ftns">css</span>('back-ground-color', &quot;FF0000&quot;)
+        // 簡略的寫法
+        <br />&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<span class="ftns">css</span>('border', '2px solid #FE0037');</span>
+        <br />
+        <br />&nbsp;&nbsp;<span class="cmts">// $('#myHighLight').<span class="ftns">css</span>({
+        // 更簡略的寫法，效率比較好。+=和-=的用法
+        <br />&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;&nbsp;'back-ground-color': &quot;FF0000&quot;,
+        <br />&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;&nbsp;'border': '2px solid #FE0037'
+        <br />&nbsp;&nbsp;// });</span>
+
+        <br />});
+        <br />&lt;/script&gt;
+        <br />&lt;/head&gt;
+        <br />
+        <br />&lt;body&gt;
+        <br />&lt;div id=&quot;container&quot;&gt;
+        <br />&nbsp;&nbsp;&lt;div id=&quot;errors&quot;&gt;
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;h2&gt;Error:&lt;/h2&gt;
+        <br />&nbsp;&nbsp;&lt;/div&gt;
+        <br />&lt;/div&gt;
+        <br />&lt;div id="myHighLight"&gt;XXXX&lt;/div&gt;
+        <br />&lt;/body&gt;
+        <br />&lt;/html&gt;
+        </div>
+      </table>
+      <br />
+
+      <p class="h3">Event</p>
+      <table class="h3">
+        <tr>
+          <th>Event Function</th>
+          <th>Description</th>
+        </tr>
+
+        <!-- mouse event -->
+        <tr>
+          <td>click</td>
+          <td>滑鼠點擊物件</td>
+        </tr>
+        <tr>
+          <td>dblclick</td>
+          <td>滑鼠雙擊物件</td>
+        </tr>
+        <tr>
+          <td>mousedown</td>
+          <td>按下滑鼠按鍵</td>
+        </tr>
+        <tr>
+          <td>mouseup</td>
+          <td>放開滑鼠按鍵</td>
+        </tr>
+        <tr>
+          <td>mouseover</td>
+          <td>滑鼠移動到物件</td>
+        </tr>
+        <tr>
+          <td>mouseout</td>
+          <td>滑鼠從物件移開</td>
+        </tr>
+
+        <!-- document/window event -->
+        <tr>
+          <td>load</td>
+          <td>網頁或圖片載入下載完成</td>
+        </tr>
+        <tr>
+          <td>resize</td>
+          <td>視窗或框架大小改變</td>
+        </tr>
+        <tr>
+          <td>scroll</td>
+          <td>拉動捲軸</td>
+        </tr>
+        <tr>
+          <td>unload</td>
+          <td>關閉網頁</td>
+        </tr>
+
+        <!-- form event -->
+        <tr>
+          <td>submit</td>
+          <td>點擊submit</td>
+        </tr>
+        <tr>
+          <td>reset</td>
+          <td>點擊reset</td>
+        </tr>
+        <tr>
+          <td>change</td>
+          <td>改變物件內容</td>
+        </tr>
+        <tr>
+          <td>focus</td>
+          <td>物件取得焦點</td>
+        </tr>
+        <tr>
+          <td>blur</td>
+          <td>物件失去焦點</td>
+        </tr>
+
+        <!-- keyboard event -->
+        <tr>
+          <td>keypress</td>
+          <td>按住鍵盤按鍵</td>
+        </tr>
+        <tr>
+          <td>keydown</td>
+          <td>按下鍵盤按鍵</td>
+        </tr>
+        <tr>
+          <td>keyup</td>
+          <td>鬆開鍵盤按鍵</td>
+        </tr>
+
+      <!-- swtich event -->
+        <tr>
+          <td>hover</td>
+          <td>滑鼠停留在物件上或滑鼠移開物件
+          <br />mouserover &amp; mouserout</td>
+        </tr>
+        <tr>
+          <td>toggle</td>
+          <td>按下滑鼠切換事件
+          <br />click</td>
+        </tr>
+
+      <!-- other event -->
+        <tr>
+          <td>bind</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>unbind</td>
+          <td></td>
+        </tr>
+      </table>
+      <br />
+
+      <p class="h3"></p>
+      <table class="h3">
+        <tr>
+          <th>Event Object</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>pageX/pageY
+          <br />offsetX/offsetY</td>
+          <td>滑鼠在網頁的座標</td>
+        </tr>
+        <tr>
+          <td>clientX/clientY</td>
+          <td>滑鼠在網頁的座標
+          <br />(只限可視範圍)</td>
+        </tr>
+        <tr>
+          <td>screenX/screenY</td>
+          <td>滑鼠在螢幕上的座標</td>
+        </tr>
+        <tr>
+          <td>which</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>shiftKey</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>target</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>data</td>
+          <td></td>
+        </tr>
+      </table>
+      <br />
+
+      <p class="h3">Effect</p>
+      <p class="h3">AJAX</p>
+      <p class="h3">AJAX return TEXT</p>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> <a href="code/jquery_ajax1.html">jquery_ajax1.html</a>
+      <br />&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&lt;script type=&quot;text/javascript&quot; src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js&quot;&gt;&lt;/script&gt;
+      <br />&lt;/head&gt;
+      <br />
+      <br />&lt;body&gt;
+      <br />&lt;form action=&quot;ajax1.php&quot; method=&quot;GET&quot;&gt;
+      <br />&nbsp;&nbsp;&lt;h3&gt;Select State:&lt;/h3&gt;
+      <br />&nbsp;&nbsp;&lt;div class=&quot;elem&quot;&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;select id=&quot;stateList&quot;&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=&quot;CA&quot;&gt;California&lt;/option&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=&quot;MO&quot;&gt;Missouri&lt;/option&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=&quot;WA&quot;&gt;Washington&lt;/option&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=&quot;ID&quot;&gt;Idaho&lt;/option&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;/select&gt;
+      <br />&nbsp;&nbsp;&lt;/div&gt;
+      <br />&nbsp;&nbsp;&lt;h3&gt;Cities:&lt;/h3&gt;
+      <br />&nbsp;&nbsp;&lt;div class=&quot;elem&quot; id=&quot;cities&quot;&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;select&gt;&lt;/select&gt;
+      <br />&nbsp;&nbsp;&lt;/div&gt;
+      <br />&nbsp;&nbsp;&lt;p&gt;&lt;/p&gt;
+      <br />&lt;/form&gt;
+      <br />
+      <br />&lt;script type=&quot;text/javascript&quot;&gt;
+      <br />function viewSelected() {
+      <br />&nbsp;&nbsp;var v1 = $('#stateList').val();
+      <br />&nbsp;&nbsp;var v2 = $('#stateList :selected').text();
+      <br />&nbsp;&nbsp;var queryString = 'state=' + encodeURIComponent(v1);
+      <br />&nbsp;&nbsp;$<span class="ftns">.get</span>('ajax1.php', queryString, processResponse, &quot;text&quot;).error(errorResponse);
+      <span class="cmts">// 使用get method</span>
+      <br />//$<span class="ftns">.post</span>('ajax1.php', queryString, processResponse, &quot;text&quot;).error(errorResponse);
+      <span class="cmts">// 使用post method</span>
+      <br />
+      <br />&nbsp;&nbsp;function processResponse(data, status) { $('#cities').find('select').html(data); }
+      <br />&nbsp;&nbsp;function errorResponse() { alert('connect server to error'); }
+      <br />}
+      <br />
+      <br />$('#stateList').change(viewSelected);
+      <br />&lt;/script&gt;
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      </div>
+
+      <hr />
+
+
+
+
+
+
+
+      <h3>Document object</h3>
+      <div class="commands"><span class="cmts">&lt;!-- 使用document object範例--&gt;</span>
+      <br />&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&lt;/head&gt;
+      <br />&lt;body&gt;
+      <br />
+
+      <br />&lt;p&gt;Note that write() does NOT add a new line after each statement:&lt;/p&gt;
+      <br />&lt;pre&gt;
+      <br />&lt;script&gt;
+      <br />document.write(&quot;Hello World!&quot;);
+      <br />document.write(&quot;Have a nice day!&quot;);
+      <br />&lt;/script&gt;
+      <br />&lt;/pre&gt;
+      <br />
+
+      <br />&lt;p&gt;Note that writeln() add a new line after each statement:&lt;/p&gt;
+      <br />&lt;pre&gt;
+      <br />&lt;script&gt;
+      <br />document.writeln(&quot;Hello World!&quot;);
+      <br />document.writeln(&quot;Have a nice day!&quot;);
+      <br />&lt;/script&gt;
+      <br />&lt;/pre&gt;
+      <br />
+
+      <br />&lt;a name=&quot;html&quot;&gt;HTML Tutorial&lt;/a&gt;&lt;br&gt;
+      <br />&lt;a name=&quot;css&quot;&gt;CSS Tutorial&lt;/a&gt;&lt;br&gt;
+      <br />&lt;a name=&quot;xml&quot;&gt;XML Tutorial&lt;/a&gt;&lt;br&gt;
+      <br />&lt;a href=&quot;/js/&quot;&gt;JavaScript Tutorial&lt;/a&gt;
+      <br />&lt;p&gt;Number of anchors:
+      <br />&lt;script&gt;document.write(document.anchors.length);&lt;/script&gt;
+      <br />&lt;/p&gt;
+      <br />
+
+      <br />&lt;form name=&quot;Form1&quot;&gt;&lt;/form&gt;
+      <br />&lt;form name=&quot;Form2&quot;&gt;&lt;/form&gt;
+      <br />&lt;form&gt;&lt;/form&gt;
+      <br />&lt;p&gt;Number of forms:
+      <br />&lt;script&gt;document.write(document.forms.length);&lt;/script&gt;
+      <br />&lt;/p&gt;
+      <br />
+
+      <br />&lt;img id=&quot;klematis lilac&quot; border=&quot;0&quot; src=&quot;klematis.jpg&quot; width=&quot;150&quot; height=&quot;113&quot;&gt;
+      <br />&lt;img id=&quot;klematis pink&quot; border=&quot;0&quot; src=&quot;klematis2.jpg&quot; width=&quot;152&quot; height=&quot;128&quot;&gt;
+      <br />&lt;p&gt;Id of first image:
+      <br />&lt;script&gt;document.write(document.images[0].id);&lt;/script&gt;
+      <br />&lt;/p&gt;
+      <br />
+
+      <br />Cookies associated with this document: 
+      <br />&lt;script&gt;document.write(document.cookie);&lt;/script&gt;
+
+      <br />&lt;html&gt;
+      </div>
+      <br />
+
+      <div class="commands">&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&lt;/head&gt;
+      <br />&lt;body&gt;
+      <br />
+
+      <br />&lt;script&gt;
+      <br />function getValue(){
+      <br />&nbsp;&nbsp;var x=document.getElementById(&quot;myHeader&quot;);
+      <span class="cmts">// 取得id method</span>
+      <br />&nbsp;&nbsp;alert(x.innerHTML);
+      <br />}
+      <br />
+
+      <br />function getElements() {
+      <br />&nbsp;&nbsp;var x=document.getElementsByName(&quot;x&quot;);
+      <span class="cmts">// 取得name method</span>
+      <br />&nbsp;&nbsp;alert(x.length);
+      <br />}
+      <br />
+
+      <br />function getElements() {
+      <br />&nbsp;&nbsp;var x=document.getElementsByTagName(&quot;input&quot;);
+      <span class="cmts">// 取得tag method</span>
+      <br />&nbsp;&nbsp;alert(x.length);
+      <br />}
+      <br />&lt;/script&gt;
+      <br />
+
+      <br />&lt;body&gt;
+      <br />
+
+      <br />&lt;h1 id=&quot;myHeader&quot; onclick=&quot;getValue()&quot;&gt;Click me!&lt;/h1&gt;
+      <br />
+
+      <br />Cats: &lt;input name=&quot;x&quot; type=&quot;radio&quot; value=&quot;Cats&quot;&gt;
+      <br />Dogs: &lt;input name=&quot;x&quot; type=&quot;radio&quot; value=&quot;Dogs&quot;&gt;
+      <br />&lt;input type=&quot;button&quot; onclick=&quot;getElements()&quot; value=&quot;How many elements named 'x'?&quot;&gt;
+      <br />
+
+      <br />&lt;input type=&quot;text&quot; size=&quot;20&quot;&gt;&lt;br&gt;
+      <br />&lt;input type=&quot;text&quot; size=&quot;20&quot;&gt;&lt;br&gt;
+      <br />&lt;input type=&quot;text&quot; size=&quot;20&quot;&gt;&lt;br&gt;&lt;br&gt;
+      <br />&lt;input type=&quot;button&quot; onclick=&quot;getElements()&quot; value=&quot;How many input elements?&quot;&gt;
+      <br />&lt;/body&gt;
+      </div>
+      <br />
+
+      <h3>Event Object</h3>
+      <div class="commands">&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />function myFunction1() {
+      <br />&nbsp;&nbsp;var x=document.getElementById(&quot;fname1&quot;);
+      <br />&nbsp;&nbsp;x.value=x.value.toUpperCase();
+      <br />}
+      <br />
+
+      <br />function myFunction2() {
+      <br />&nbsp;&nbsp;var x=document.getElementById(&quot;fname2&quot;);
+      <br />&nbsp;&nbsp;x.value=x.value.toUpperCase();
+      <br />}
+      <br />
+
+      <br />function myFunction3() {
+      <br />&nbsp;&nbsp;document.getElementById(&quot;demo1&quot;).innerHTML=&quot;Hello World&quot;;
+      <br />}
+      <br />
+
+      <br />function myFunction4() {
+      <br />&nbsp;&nbsp;document.getElementById(&quot;demo2&quot;).innerHTML=&quot;Hello World&quot;;
+      <br />}
+      <br />
+
+      <br />function imgError() {
+      <br />&nbsp;&nbsp;alert('The image could not be loaded.');
+      <br />}
+      <br />
+
+      <br />function myFunction5(x) {
+      <br />&nbsp;&nbsp;x.style.background=&quot;yellow&quot;;
+      <br />}
+      <br />
+
+      <br />function myFunction6() {
+      <br />&nbsp;&nbsp;alert(&quot;You pressed a key inside the input field&quot;);
+      <br />}
+      <br />
+
+      <br />function myFunction7() {
+      <br />&nbsp;&nbsp;alert(&quot;You pressed a key inside the input field&quot;);
+      <br />}
+      <br />
+
+      <br />function myFunction8() {
+      <br />&nbsp;&nbsp;var x=document.getElementById(&quot;fname&quot;);
+      <br />&nbsp;&nbsp;x.value=x.value.toUpperCase();
+      <br />}
+      <br />
+
+      <br />function loadImage() {
+      <br />&nbsp;&nbsp;alert(&quot;Image is loaded&quot;);
+      <br />}
+      <br />
+
+      <br />function myFunction9(elmnt,clr) {
+      <br />&nbsp;&nbsp;elmnt.style.color=clr;
+      <br />}
+      <br />&lt;/head&gt;
+
+      <br />&lt;body&gt;
+      <br />&lt;p&gt;Enter your name: &lt;input type=&quot;text&quot; id=&quot;fname1&quot; onblur=&quot;myFunction1()&quot;&gt;
+      <br />&lt;br /&gt;When you leave the input field, a function is triggered which transforms the input text to upper case.&lt;/p&gt;
+      <br />
+      <br />&lt;p&gt;Enter your name: &lt;input type=&quot;text&quot; id=&quot;fname2&quot; onchange=&quot;myFunction2()&quot;&gt;
+      <br />&lt;br /&gt;When you leave the input field, a function is triggered which transforms the input text to upper case.&lt;/p&gt;
+      <br />
+      <br />&lt;p&gt;Click the button to trigger a function.&lt;/p&gt;
+      <br />&lt;button onclick=&quot;myFunction3()&quot;&gt;Click me&lt;/button&gt;
+      <br />&lt;p id=&quot;demo1&quot;&gt;&lt;/p&gt;
+      <br />
+      <br />&lt;p ondblclick=&quot;myFunction4()&quot;&gt;Doubleclick this paragraph to trigger a function.&lt;/p&gt;
+      <br />&lt;p id=&quot;demo2&quot;&gt;&lt;/p&gt;
+      <br />
+      <br />&lt;img src=&quot;image.gif&quot; onerror=&quot;imgError()&quot;&gt;
+      <br />&lt;p&gt;A function is triggered if an error occurs when loading the image. The function shows an alert box with a text. In this example we refer to an image that does not exist, therefore the onerror event occurs.&lt;/p&gt;
+      <br />
+      <br />&lt;p&gt;Enter your name: &lt;input type=&quot;text&quot; onfocus=&quot;myFunction5(this)&quot;&gt;
+      <br />&lt;br /&gt;When the input field gets focus, a function is triggered which changes the background-color.&lt;/p&gt;
+      <br />
+      <br />
+      <br />&lt;p&gt;A function is triggered when the user is pressing a key in the input field.
+      <br />&lt;br /&gt;&lt;input type=&quot;text&quot; onkeydown=&quot;myFunction6()&quot;&gt;&lt;/p&gt;
+      <br />
+      <br />&lt;p&gt;A function is triggered when the user is pressing a key in the input field.
+      <br />&lt;br /&gt;&lt;input type=&quot;text&quot; onkeypress=&quot;myFunction7()&quot;&gt;&lt;/p&gt;
+      <br />
+      <br />&lt;p&gt;A function is triggered when the user releases a key in the input field. The function transforms the character to upper case.
+      <br />&lt;br /&gt;Enter your name: &lt;input type=&quot;text&quot; id=&quot;fname&quot; onkeyup=&quot;myFunction()&quot;&gt;&lt;/p&gt;
+      <br />
+      <br />&lt;img src=&quot;w3javascript.gif&quot; onload=&quot;loadImage()&quot; width=&quot;100&quot; height=&quot;132&quot;&gt;
+      <br />
+      <br />&lt;p onmousedown=&quot;myFunction9(this,'red')&quot; onmouseup=&quot;myFunction9(this,'green')&quot;&gt;
+      <br />Click the text to change the color. A function, with parameters, is triggered when the mouse button is pressed down, and again, with other parameters, when the mouse button is released.&lt;/p&gt;
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      </div>
+
+
+<!-- reference -->
+    <h2>Reference</h2>
+    <li class="reference"></li>
+    <br /><li class="reference"></li>
