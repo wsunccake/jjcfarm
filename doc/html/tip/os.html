@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>FTP</title>
+<link rel="stylesheet" href="defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>Python</h1>
+      <a href="#使用環境"><li class="title">使用環境</li></a>
+      <br /><a href="#基本控制"><li class="title">基本控制</li></a>
+      <br /><a href="#reference"><li class="title">Reference</li></a>
+      <div class="context">Python是物件導向(object-oriented)程式級高階程式語言，也是直譯式(shell script)程式語言。Python強調對程式語言的語句易讀、易懂、易學(
+      </div>
+      <hr />
+
+<!-- 使用環境 -->
+      <a name="使用環境"><h2>使用環境</h2>
+      <h3></h3>
+      <p class="h3">windows環境:C:\Python<i>xy</i>;C:\Python<i>xy</i>\Lib\site-packages;C:\Python<i>xy</i>\Scripts
+      <br />Unix-Like環境:/usr/lib/python<i>x</i>.<i>y</i>/site-packages
+      </p>
+      <h3>command/指令</h3>
+      <div class="commands">slackware:~ # <span class="cmds">python</span> -c "print 'Hello, Python'"
+      <br />Hello, Python
+      </div>
+      <br />
+
+      <h3>environmental variable/環境變數</h3>
+      <p class="h3">引號</p>
+      <table class="h3">
+        <tr>
+          <th>variable</th>
+          <th>description</th>
+        </tr>
+        <tr><td>PYTHONPATH</td>
+            <td>設定module path，預設為/usr/lib/python&lt;<i>version</i>&gt;/site-packages</td>
+        </tr>
+        <tr><td>PYTHONHOME</td>
+            <td>設定模組搜尋路徑相關的變數，預設為/usr/lib/python&lt;<i>version</i>&gt;</td>
+        </tr>
+        <tr><td>PYTHONSTARTUP</td>
+        <td>設定進入interactive mode前所執行程式路徑</td>
+        </tr>
+      </table>
+      <br />
+      <div class="commands">slackware:~ # <span class="cmds">python</span> -c 'import sys, pprint; pprint(sys.path)'
+      <span class="cmts"># 顯示目前PYTHONPATH設定</span>
+      </div>
+      <hr />
+
+ 
+<!-- reference -->
+    <h2>Reference</h2>
+    <li class="reference">http://www.proftpd.org</li>
+    <br /><li class="reference">http://vsftpd.beasts.org</li>
+    <br /><li class="reference">http://linux.vbird.org</li>
+    <hr />
+
+<!-- changelog -->
+    <h2>Changelog</h2>
+</body>
+</html>
