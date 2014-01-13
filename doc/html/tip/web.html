@@ -21,6 +21,39 @@
       <a name="HTML"></a><h2>HTML</h2>
       <h3>form</h3>
       <p class="h3"></p>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> /htdocs/<span class="vars">ex.html</span>
+      <br />&lt;html&gt;
+      <br />&lt;body&gt;
+      <br /><span class="cmts">&lt;!-- Hello example --&gt;</span>
+      <br />&nbsp;&nbsp;&lt;p&gt;Hello example&lt;/p&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;cgi-bin/hello.sh&quot;&gt;Hello SH CGI&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;cgi-bin/hello.pl&quot;&gt;Hello Perl CGI&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;cgi-bin/hello.py&quot;&gt;Hello Python CGI&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;br /&gt;
+      <br />
+      <br /><span class="cmts">&lt;! -- GET example --&gt;</span>
+      <br />&nbsp;&nbsp;&lt;p&gt;GET method example&lt;/p&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;cgi-bin/get.sh&quot; method=&quot;get&quot;&gt;SH CGI: name &lt;input type=&quot;text&quot; name=&quot;name_sh&quot;/&gt; age&lt;input type=&quot;text&quot; name=&quot;age_sh&quot;/&gt;&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;cgi-bin/get.pl&quot; method=&quot;get&quot;&gt;Perl CGI: name &lt;input type=&quot;text&quot; name=&quot;name_pl&quot;/&gt; age&lt;input type=&quot;text&quot; name=&quot;age_pl&quot;/&gt;&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;cgi-bin/get.py&quot; method=&quot;get&quot;&gt;Python CGI: name &lt;input type=&quot;text&quot; name=&quot;name_py&quot;/&gt; age&lt;input type=&quot;text&quot; name=&quot;age_py&quot;/&gt;&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;br /&gt;
+      <br />
+      <br /><span class="cmts">&lt;! -- POST example --&gt;</span>
+      <br />&nbsp;&nbsp;&lt;p&gt;POST method example&lt;/p&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;cgi-bin/post.sh&quot; method=&quot;post&quot;&gt;SH CGI: name &lt;input type=&quot;text&quot; name=&quot;NAME_SH&quot;/&gt; age&lt;input type=&quot;text&quot; name=&quot;AGE_SH&quot;/&gt;&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;cgi-bin/post.pl&quot; method=&quot;post&quot;&gt;Perl CGI: name &lt;input type=&quot;text&quot; name=&quot;NAME_PL&quot;/&gt; age&lt;input type=&quot;text&quot; name=&quot;AGE_PL&quot;/&gt;&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;cgi-bin/post.py&quot; method=&quot;post&quot;&gt;Python CGI: name &lt;input type=&quot;text&quot; name=&quot;NAME_PY&quot;/&gt; age&lt;input type=&quot;text&quot; name=&quot;AGE_PY&quot;/&gt;&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;br /&gt;
+      <br />
+      <br /><span class="cmts">&lt;! -- PHP example --&gt;</span>
+      <br />&nbsp;&nbsp;&lt;form action=&quot;./get.php&quot; method=&quot;get&quot;&gt;PHP: name &lt;input type=&quot;text&quot; name=&quot;name_php&quot;/&gt; age&lt;input type=&quot;text&quot; name=&quot;age_php&quot;/&gt;&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;./post.php&quot; method=&quot;post&quot;&gt;PHP: name &lt;input type=&quot;text&quot; name=&quot;NAME_PHP&quot;/&gt; age&lt;input type=&quot;text&quot; name=&quot;AGE_PHP&quot;/&gt;&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;br /&gt;
+      <br />
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+
+      </div>
       <hr />
 
 <!-- CGI -->
@@ -252,6 +285,33 @@
       <br />
       <br />cgi.test() # test cgi
 
+      </div>
+      <br />
+
+      <h3>php</h3>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> /htdocs/<span class="vars">get.php</span>
+      <br />&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&nbsp;&nbsp;&lt;title&gt;TEST&lt;/title&gt;
+      <br />&lt;/head&gt;
+      <br />&lt;body&gt;
+      <br />&nbsp;&nbsp;Hi, &lt;?php echo $_GET['name_php']; ?&gt;
+      <br />&nbsp;&nbsp;&lt;br /&gt;You are &lt;?php echo $_GET['age_php']; ?&gt; years old.
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      <br />
+      <br />
+
+      <br />Linux:~ # <span class="vars">cat</span> /htdocs/<span class="vars">post.php</span>
+      <br />&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&nbsp;&nbsp;&lt;title&gt;TEST&lt;/title&gt;
+      <br />&lt;/head&gt;
+      <br />&lt;body&gt;
+      <br />&nbsp;&nbsp;Hi, &lt;?php echo $_POST['NAME_PHP']; ?&gt;
+      <br />&nbsp;&nbsp;&lt;br /&gt;You are &lt;?php echo $_POST['AGE_PHP']; ?&gt; years old.
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
       </div>
 
       <hr />
