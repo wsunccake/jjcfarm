@@ -393,46 +393,92 @@
 
       <tr>
             <td>descendant</td>
-            <td></td>
-            <td></td>
+            <td>a { color:black;}
+            <br /><span class="vars">h1 a</span> { color:red;}
+            <br /><span class="vars">#wrapper a</span> { color:green;}
+            </td>
+            <td><br />&lt;a&gt; 只設定a標籤會套用黑色&lt;/a&gt;
+            <br />
+            <br />&lt;<span class="vars">h1</span>&gt;
+            <br />&lt;<span class="vars">a</span>&gt;在h1裡的a標籤會套用紅色&lt;/a&gt;
+            <br />&lt;/h1&gt;
+            <br />
+            <br />&lt;div id=&quot;<span class="vars">wrapper</span>&quot;&gt;
+            <br />&lt;<span class="vars">a</span>&gt;</span>在ID=wrapper裡的a標籤會套用綠色&lt;/a&gt;
+            <br />&lt;/div&gt;
+            </td>
             <td>E F, 利用空白鍵區隔兩個元素, 表示在 E 元素內的 F 元素才會套用</td>
       </tr>
       <tr>
             <td>child</td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td><span class="vars">#wrapper <em>&gt;</em> p</span>{ color:red;}
+            <br />#wrapper p { color:black;}
+            </td>
+            <td>&lt;div id=&quot;<span class="vars">wrapper</span>&quot;&gt;
+            <br />&lt;<span class="vars">p</span>&gt;在id=wrapper區塊裡的段落會套用紅色&lt;/p&gt;
+            <br />&lt;/div&gt;
+            <br />
+            <br />&lt;div id=&quot;wrapper&quot;&gt;
+            <br />&lt;span&gt;
+            <br />&lt;p&gt;中間多了span就只會套用黑色&lt;/p&gt;
+            <br />&lt;/span&gt;
+            <br />&lt;/div&gt;
+            </td>
+            <td>E <em>&gt;</em> F, 利用<em>&gt;</em>區隔兩個元素, 表示在有父子關係的元素才會套用. 與descendant不同的是 E 及 F 元素之間不能再插入其它的元素, 否則就不是父子關係</td>
       </tr>
       <tr>
             <td>adjacent sibling</td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>h1 { color:red;}
+            <br /><span class="vars">h1 <em>+</em> p</span> { color:green;}</td>
+            <td>&lt;<span class="vars">h1</span>&gt;標題1會套用紅色&lt;/h1&gt;
+            <br />&lt;<span class="vars">p</span>&gt;跟h1相鄰的p會套用綠色&lt;/p&gt;
+            <br />&lt;p&gt;沒有跟h1相鄰的p會套用預設值&lt;/p&gt;
+            </td>
+            <td>E <em>+</em> F, 利用<em>+</em>區隔兩個元素, 表示在與 E 同一層關係的相鄰 F 元素才會套用</td>
       </tr>
       <tr>
             <td>general sibling</td>
-            <td></td>
-            <td></td>
-            <td>E ~ F, 利用<em>~</em>區隔兩個元素，表示在與 E 同一層關係的 F 元素全部都會套用</td>
+            <td>h1 { color:red;}
+            <br /><span class="vars">h1 <em>~</em> p</span> { color:green;} 
+            </td>
+            <td>&lt;<span class="vars">h1</span>&gt;標題1會套用紅色&lt;/h1&gt;
+            <br />&lt;<span class="vars">p</span>&gt;h1接下來p都會套用綠色&lt;/p&gt;
+            <br />&lt;<span class="vars">p</span>&gt;h1接下來p都會套用綠色&lt;/p&gt;      
+            </td>
+            <td>E <em>~</em> F, 利用<em>~</em>區隔兩個元素，表示在與 E 同一層關係的 F 元素全部都會套用</td>
       </tr>
       <tr>
             <td>groups</td>
-            <td></td>
-            <td></td>
+            <td><span class="vars">h1<em>,</em> h2<em>,</em> p</span> {color:red;}
+            </td>
+            <td>&lt;<span class="vars">h1</span>&gt;群組內的元素都套用紅色&lt;/h1&gt;
+            <br />&lt;<span class="vars">h2</span>&gt;群組內的元素都套用紅色&lt;/h2&gt;
+            <br />&lt;<span class="vars">p</span>&gt;群組內的元素都套用紅色&lt;/p&gt;
+            <br />&lt;a&gt;群組沒定義的元素不會變色&lt;/a&gt;
+            </td>
             <td>以<em>,</em>區隔, 同時對多個選擇器定義樣式
-            <br />E, F, G，同時針對E、F、G元素設定樣式</td>
+            <br />E<em>,</em> F<em>,</em> G，同時針對E、F、G元素設定樣式</td>
       </tr>
 
       </tdoby>
       </table>
       <hr />
 
+<!-- XPath -->
+      <h2>XPath</h2>
+      <p class="h3">XPath (<b>X</b>ML <b>Path</b> Language, XML 路徑語言) 是一種用來確定XML文檔中某部分位置的語言
+      <br />XPath 基於 XML 樹狀結構, 提供在資料結構樹中找尋節點的能力. 起初XPath的提出的初衷是將其作為一個通用的, 介於XPointer與XSL間的語法模型. 但是XPath很快的被開發者採用來當作小型查詢語言.
+</p>
+      <hr />
+
  
 <!-- reference -->
     <h2>Reference</h2>
-    <li class="reference">http://www.proftpd.org</li>
-    <br /><li class="reference">http://vsftpd.beasts.org</li>
-    <br /><li class="reference">http://linux.vbird.org</li>
+    <li class="reference"><a href="http://www.w3schools.com/">W3CSchools.com</a></li>
+    <br /><li class="reference"><a href="http://zh.wikipedia.org/wiki/Css">層疊樣式表</a></li>
+    <br /><li class="reference"><a href="http://zh.wikipedia.org/wiki/XPath">XPath</a></li>
+    <br /><li class="reference"><a href="http://net.tutsplus.com/">net tuts+</a></li>
+    <br /><li class="reference"><a href="http://webdesign.tutsplus.com/">weddesign tuts+</a></li>
     <hr />
 
 <!-- changelog -->
