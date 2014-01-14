@@ -316,6 +316,117 @@
 
       <hr />
 
+<!-- CSS selector -->
+      <a name="CSS selector"></a><h2>CSS selector</h2>
+      <table class="h3">
+      <tdoby>
+      <tr>
+            <th>selector</th>
+            <th>CSS</th>
+            <th>HTML</th>
+            <th>Description</th>
+      </tr>
+
+      <!-- basic -->
+      <tr>
+            <td>class </td>
+            <td><span class="vars">.emText</span> { color: red;}</td>
+            <td>&lt;p class=&quot;<span class="vars">emText</span>&quot;&gt;此段會套用紅色&lt;/p&gt;</td>
+            <td>以<em>.</em>開頭, 名稱可自訂, 一個網頁可有多個class屬性值</td>
+      </tr>
+      <tr>
+            <td>id</td>
+            <td><span class="vars">#emText</span> { color: red;}</td>
+            <td>&lt;p id=&quot;<span class="vars">emText</span>&quot;&gt;此段會套用紅色&lt;/p&gt;</td>
+            <td>以<em>#</em>開頭, 名稱可自訂, 一個網頁只能有一個ID屬性值</td>
+      </tr>
+      <tr>
+            <td>element</td>
+            <td><span class="vars">h1</span> {color: red;}
+            <br /><span class="vars">p</span> {color: black;}
+            </td>
+            <td>&lt;h1&gt;標題會套用紅色&lt;/h1&gt;
+            <br />&lt;p&gt;段落會套用黑色&lt;/p&gt;
+            </td>
+            <td>設定於HTML的標籤上, 網頁上所有的標籤都會套用</td>
+      </tr>
+      <tr>
+            <td>universal</td>
+            <td><span class="vars">*</span> {color:red;}</td>
+            <td>&lt;h1&gt;標題會套用紅色&lt;/h1&gt;
+            <br />&lt;p&gt;段落會套用黑色&lt;/p&gt;</td>
+            <td>使用字元<em>*</em>, 整個網頁下的所有元素都會套用設定</td>
+      </tr>
+
+      <!-- attribute -->
+      <tr>
+            <td rowspan="6">attribute</td>
+            <td>p[<span class="vars">name</span>] {color:red;}</td>
+            <td></td>
+            <td>擁有特定attribute做CSS設定</td>
+      </tr>
+      <tr>
+            <td>p[<span class="vars">name <em>=</em> &quot;other&quot;</span>] {color: green;}</td>
+            <td></td>
+            <td>attribute等於特定條件</td>
+      </tr>
+      <tr>
+            <td>'p[<span class="vars">name <em>!=</em> &quot;other&quot;</span>]</td>
+            <td></td>
+            <td>attribute不等於特定條件</td>
+      </tr>
+      <tr>
+            <td>li[<span class="vars">id <em>^=</em> &quot;per&quot;</span>]</td>
+            <td></td>
+            <td>attribute值開頭符合特定條件</td>
+      </tr>
+      <tr>
+            <td>a[<span class="vars">href <em>$=</em> &quot;.org/&quot;</span>]</td>
+            <td></td>
+            <td>attribute值結尾符合特定條件</td>
+      </tr>
+      <tr>
+            <td>a[<span class="vars">href <em>*=</em> &quot;Java&quot;</span>] {color: yellow;}</td>
+            <td></td>
+            <td>attribute值內容符合特定條件</td>
+      </tr>
+
+      <tr>
+            <td>descendant</td>
+            <td></td>
+            <td></td>
+            <td>E F, 利用空白鍵區隔兩個元素, 表示在 E 元素內的 F 元素才會套用</td>
+      </tr>
+      <tr>
+            <td>child</td>
+            <td></td>
+            <td></td>
+            <td></td>
+      </tr>
+      <tr>
+            <td>adjacent sibling</td>
+            <td></td>
+            <td></td>
+            <td></td>
+      </tr>
+      <tr>
+            <td>general sibling</td>
+            <td></td>
+            <td></td>
+            <td>E ~ F, 利用<em>~</em>區隔兩個元素，表示在與 E 同一層關係的 F 元素全部都會套用</td>
+      </tr>
+      <tr>
+            <td>groups</td>
+            <td></td>
+            <td></td>
+            <td>以<em>,</em>區隔, 同時對多個選擇器定義樣式
+            <br />E, F, G，同時針對E、F、G元素設定樣式</td>
+      </tr>
+
+      </tdoby>
+      </table>
+      <hr />
+
  
 <!-- reference -->
     <h2>Reference</h2>
