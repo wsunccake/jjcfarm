@@ -1,5 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<!DOCTYPE HTML>
+<html><head>
 
 <meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
 <title>Sublime text</title>
@@ -13,7 +13,14 @@
       <br /><a href="#常用快捷"><li class="title">常用快捷</li></a>
       <br /><a href="#Reference"><li class="title">Reference</li></a>
       <div class="context" xml:lang="en" lang="en">
-      <p class="h1"></p>
+      <p class="h1">Sublime Text 是款強大的跨平台文字編輯器, 可支援 Windows、OS X、Linux 多個系統, 他的開發者是前 Google 軟體工程師 Jon Skinner, 據說受到 Vim 的種種啟發, 決定打造一個更好的文字編輯器. 他秉持著三項基本原則來開發 Sublime Text:</p>
+      <ul class="h1">
+        <li>專注在文字與程式碼上, 而不是讓人眼花撩亂的工具列</li>
+        <li>對話框訊息不使用晦澀難懂的文字</li>
+        <li>善用螢幕的每個空間, 使全螢幕、多螢幕模式一起編輯檔案, 儘可能很容易</li>
+      </ul>
+      <p class="h1">Sublime Text 可以減少撰寫程式碼許多重複性的工作，讓開發者們可以更專注在程式身上，而且過程是讓人感到輕鬆、愉悅、超爽的！
+      </p>
       </div>
       <hr />
 
@@ -40,103 +47,116 @@
           </tr>
           <tr>
             <td>column mode</td>
-            <td>[Ctrl] ^ [Alt]</td>
-            <td></td>
-            <td>[shift] ^ [control]</td>
+            <td>[Ctrl] ^ [Alt] + ↑、↓</td>
+            <td>[Shift] ^ [Alt] + ↑、↓</td>
+            <td>[shift] ^ [control] + ↑、↓</td>
           </tr>
           <tr>
             <td>command palette</td>
-            <td>[Ctrl] ^ [Shift] + p</td>
-            <td></td>
+            <td colspan="2">[Ctrl] ^ [Shift] + p</td>
             <td>[shift] ^ [command] + p</td>
           </tr>
           <tr>
             <td>show/hide side</td>
-            <td>[Ctrl] + k, [Ctrl] + b</td>
-            <td></td>
+            <td colspan="2">[Ctrl] + k, [Ctrl] + b</td>
             <td>[command] + k, [command] + b</td>
           </tr>
           <tr>
             <td>show console</td>
-            <td>[Ctrl] + `</td>
-            <td></td>
+            <td colspan="2">[Ctrl] + `</td>
             <td>[control] + `</td>
           </tr>
 
           <!-- goto -->
           <tr>
             <td>goto anything/file</td>
-            <td>[Ctrl] + p</td>
-            <td></td>
+            <td colspan="2">[Ctrl] + p</td>
             <td>[command] + p</td>
           </tr>
           <tr>
             <td>goto symbol/function</td>
-            <td>[Ctrl] + r</td>
-            <td></td>
+            <td colspan="2">[Ctrl] + r</td>
             <td>[command] + r</td>
           </tr>
           <tr>
             <td>goto line</td>
-            <td>[Ctrl] + g</td>
-            <td></td>
+            <td colspan="2">[Ctrl] + g</td>
             <td>[control] + g</td>
           </tr>
           <tr>
             <td>goto next find</td>
-            <td>[Ctrl] + i</td>
-            <td></td>
+            <td colspan="2">[Ctrl] + i</td>
             <td>[command] + i</td>
           </tr>
           <tr>
             <td>goto prev find</td>
-            <td>[Ctrl] ^ [Shift] + i</td>
-            <td></td>
+            <td colspan="2">[Ctrl] ^ [Shift] + i</td>
             <td>[command] ^ [shift] + i</td>
           </tr>
           <tr>
             <td>goto next file</td>
-            <td>[Ctrl] + PageDown</td>
-            <td></td>
+            <td colspan="2">[Ctrl] + PageDown</td>
             <td>[command] ^ [shift] + ]</td>
           </tr>
           <tr>
             <td>goto prev file</td>
-            <td>[Ctrl] + PageDown</td>
-            <td></td>
+            <td colspan="2">[Ctrl] + PageUp</td>
             <td>[command] ^ [shift] + [</td>
           </tr>
           <tr>
             <td>goto next in stack</td>
-            <td>[Ctrl] + [Tab]</td>
-            <td></td>
-            <td></td>
+            <td colspan="2">[Ctrl] + [Tab]</td>
+            <td>[control] + [tab]</td>
           </tr>
           <tr>
             <td>goto prev in stack</td>
-            <td>[Ctrl] ^ [Shift] + [Tab]</td>
-            <td></td>
-            <td></td>
+            <td colspan="2">[Ctrl] ^ [Shift] + [Tab]</td>
+            <td>[control] ^ [shift] +[tab]</td>
           </tr>
 
         <!-- folding -->
         <tr>
           <td>folding close</td>
-          <td>[Ctrl] ^ [Shift] + [</td>
-          <td></td>
+          <td colspan="2">[Ctrl] ^ [Shift] + [</td>
           <td>[command] ^ [option] + [</td>
         </tr>
         <tr>
           <td>folding open</td>
-          <td>[Ctrl] ^ [Shift] + ]</td>
-          <td></td>
+          <td colspan="2">[Ctrl] ^ [Shift] + ]</td>
           <td>[command] ^ [option] + ]</td>
         </tr>
         <tr>
           <td>folding level <span class="vars">n</span> (<span class="vars">n</span> = 1 ~ 9)</td>
           <td>[Ctrl] + k, [Ctrl] + <span class="vars">n</span></td>
           <td></td>
-          <td></td>
+          <td>[command] + k, [commans] + <span class="vars">n</span></td>
+        </tr>
+
+        <!-- selection -->
+        <tr>
+          <td>selection line</td>
+          <td colspan="2">[Ctrl] + l</td>
+          <td>[commands] + l</td>
+        </tr>
+        <tr>
+          <td>selection word</td>
+          <td colspan="2">[Ctrl] + d</td>
+          <td>[command] + d</td>
+        </tr>
+        <tr>
+          <td>selection bracket</td>
+          <td colspan="2">[Ctrl] ^ [Shift] + m</td>
+          <td>[commads] ^ [shift] + m</td>
+        </tr>
+        <tr>
+          <td>selection indentation</td>
+          <td colspan="2">[Ctrl] ^ [Shift] + j</td>
+          <td>[commads] ^ [shift] + j</td>
+        </tr>
+        <tr>
+          <td>selection tag</td>
+          <td colspan="2">[Ctrl] ^ [Shift] + a</td>
+          <td>[commads] ^ [shift] + a</td>
         </tr>
         </tbody>
       </table>
@@ -144,19 +164,58 @@
 
 <!-- plugin -->
       <a name="plugin"></a><h2>plugin</h2>
-      plugin:
-   Sublime Text 套件名稱：Emmet
-        Emmet for Sublime 擴充套件 ( 參見 http://emmet.io 官網 )
-   Sublime Text 套件名稱：LiveStyle
-        Emmet LiveStyle 擴充套件 ( 參見 http://livestyle.emmet.io 官網 )
-   Sublime Text 套件名稱：HTML-CSS-JS Prettify
+      <h3>Packag Control</h3>
+      <p class="h3">Package Control 由 Will Bond 所開發, 是功能相當完整的 package manager, 讓搜尋, 安裝跟移除 Sublime Text package 變得相當方便, 協助自動更新外掛, 也因此幾乎所有的外掛開發者, 都會將自己的作品提交到 Package Control 上. 因為是太方便了, 所以幾乎與 Sublime Text 緊密結合在一起, 成為安裝 Sublime Text 時第一個必裝的 package.
+      <br />
+      <img src="http://docs.sublimetext.tw/images/sublime-package-control-install.gif" alt="" />
+      <br />
+      <br />ref: <a href="https://sublime.wbond.net">Pacakge Control</a></p>
+      <br />
+
+      <h3>Emmet</h3>
+      <p class="h3">Emmet前身為Zen Coding, 其作用是利用已有的技術, 高速的架構出HTML, CSS, XML, XSL或HAML. 什麼是已有的技術, 簡單說, 它是CSS Selector (CSS選擇器) 的再利用. 就算只是簡單拿來產出HTML5或CSS3的程式碼, 也可非常有效率的加速寫HTML5與CSS3的速度.
+      <br /><iframe width="854" height="510" src="http://www.youtube.com/embed/WEIdPb8hAjo" frameborder="0" allowfullscreen></iframe>
+      <br />
+      <br />ref <a href="http://emmet.io">Emmet</a></p>
+      <br />
+
+      <h3>Emmet LiveStyle</h3>
+      <p class="h3">LiveStyle 可幫 developer 邊 coding 邊在 browser 預覽效果, 但不只這樣而已, 最大的特點包含:
+      </p>
+      <ul class="h3">
+      <li>完全不用存檔 (在 web developer 寫 code，他也會幫你寫回檔案)</li>
+      <li>不用重新整理葉面</li>
+      <li>完全做到雙向互通</li>
+      <li>跨平台</li>
+      <li>創新的 CSS patchin</li>
+      <li>即時更新<strong>多</strong>視覺 &amp; <strong>多</strong>裝置</li>
+      </ul>
+      <p class="h3"><iframe width="640" height="360" src="http://www.youtube.com/embed/iQLhGbkupS4?feature=player_embedded" frameborder="0" allowfullscreen></iframe>
+      <br />
+      <br />ref <a href="http://livestyle.emmet.io">Emmet LiveStyle</a>
+      </p>
+      <br />
+
+      <h3>Convert​To​UTF8</h3>
+      <p class="h3">ConvertToUTF8 套件，可解決 Sublime Text 預設不支援 Big5 與其他 CJK 編碼的問題
+      <br />
+      <img src="http://dl.dropbox.com/u/31937639/ConvertToUTF8/ConvertToUTF8.gif" alt="ConvertToUTF8">
+      <br />
+      <br />ref <a href="https://github.com/seanliang/ConvertToUTF8">ConvertToUTF8</a>
+      </p>
+      <br />
+
+      <h3>sublime-text-git</h3>
+      <p class="h3">
+      <br />ref <a href="sublime-text-git">sublime-text-git</a>
+      </p>
+
+<!--    Sublime Text 套件名稱：HTML-CSS-JS Prettify
         HTML-CSS-JS Prettify 擴充套件 ( 參見 Sublime-HTMLPrettify 官網 )
 
    Sublime Text 套件名稱：AngularJS
-         AngularJS 擴充套件 ( 參見 AngularJS-sublime-package 官網 )
+         AngularJS 擴充套件 ( 參見 AngularJS-sublime-package 官網 ) -->
 
-   Sublime Text 套件名稱：Git
-        Git 擴充套件 ( 參見 https://github.com/kemayo/sublime-text-git 官網 )
       <hr />
 
 
@@ -164,5 +223,7 @@
 <!-- reference -->
      <a name="Reference"></a><h2>Reference</h2>
      <li class="reference"><a href="http://www.sublimetext.com">Sublime Text</a></li>
-     <br /><li class="reference"><a href="http://docs.sublimetext.tw"></a>Sublime Text 手冊</li>
+     <br /><li class="reference"><a href="http://docs.sublimetext.tw">Sublime Text 手冊</a>
+     <br /><li class="reference"><a href="http://kevintsengtw.blogspot.tw">mrkt 的程式學習筆記</a>
+   </li></li>
      

@@ -56,6 +56,14 @@ h4 {
   padding: 0;
 }
 
+ul.h1 {
+  margin-left: 2em;
+}
+
+ul.h3 {
+  margin-left: 3em;
+}
+
 li.title {
   font-size: medium;
   color: #000000;
