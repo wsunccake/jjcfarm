@@ -85,10 +85,15 @@
 	  <br />
 
 	  <br /><span class="cmts"># 直接使用指令</span>
-	  <br />Server:~ # <span class="cmds">qmgr</span> -c &quot;create node i02&quot; 
-	  <br />Server:~ # <span class="cmds">qmgr</span> -c &quot;set node i02 np=2&quot;
-	  <br />Server:~ # <span class="cmds">qmgr</span> -c &quot;list node i02&quot;
-	  <br />Server:~ # <span class="cmds">qmgr</span> -c &quot;delete node i03&quot;
+	  <br />Server:~ # <span class="cmds">qmgr</span> -c &quot;create node <span class="vars">i02</span>&quot;
+	  <span class="cmts"># 建立 node</span> 
+	  <br />Server:~ # <span class="cmds">qmgr</span> -c &quot;set node <span class="vars">i02</span> np=2&quot;
+	  <span class="cmts"># 設定 node 屬性</span>
+	  <br />Server:~ # <span class="cmds">qmgr</span> -c &quot;list node <span class="vars">i02</span>&quot;
+	  <span class="cmts"># 顯示 node 狀態</span>
+	  <br />Server:~ # <span class="cmds">qmgr</span> -c &quot;print node <span class="vars">i02</span>&quot;
+	  <span class="cmts"># 顯示 node 設定</span>
+	  <br />Server:~ # <span class="cmds">qmgr</span> -c &quot;delete node <span class="vars">i03</span>&quot;
 	  <span class="cmts"># 使用qmgr設定</span>
 	  </div>
 	  <p class="h3">直接編輯nodes時, 需要重新啟動pbs_server服務才會生效; 使用qmgr指令時, 就直接寫入記憶體, 無須重啟服務</p>
