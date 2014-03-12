@@ -79,6 +79,7 @@
 .tiplink {
   /*border-bottom: 1px dotted Black;*/
   cursor: pointer;
+  font-color: Yellow;
 }
 
 .tip {
@@ -107,3 +108,4 @@
   margin: 0px;
   padding: 10px;
 }
+
