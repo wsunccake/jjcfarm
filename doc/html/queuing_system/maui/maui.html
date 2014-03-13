@@ -144,10 +144,12 @@
 
     <div class="commands">Server:~ # <span class="cmds">showq</span> [-r|-i|-b]
     <span class="cmts"># -r為run state; -i為idle state; -b為block state; 不加參數則全顯示</span>
-    <br />Server:~ <span class="cmds">mjobctl</span> [-s|-r] <span class="vars">10</span>
+    <br />Server:~ # <span class="cmds">mjobctl</span> [-s|-r] <span class="vars">10</span>
     <span class="cmts"># -s為run -&gt; suspend; -r: suspend -&gt; run</span>
-    <br />Server:~ <span class="cmds">sethold</span> <span class="vars">11</span>
-    <br />Server:~ <span class="cmds">releasehold</span> <span class="vars">11</span>
+    <br />Server:~ # <span class="cmds">sethold</span> <span class="vars">11</span>
+    <br />Server:~ # <span class="cmds">releasehold</span> <span class="vars">11</span>
+    <br />Server:~ # <span class="cmds">setspri</span> -r <span class="vars">1000</span> <span class="vars">11</span>
+    <span class="cmts"># 將 jobid 11 的 priority 設為1000</span>
     </div>
 
     <hr />
@@ -170,7 +172,7 @@
         <td>檢查job</td>
       </tr>
       <tr>
-        <td>cancel</td>
+        <td>canceljob</td>
         <td>刪除job</td>
       </tr>
 
@@ -187,7 +189,7 @@
     <div class="commands"><span class="cmts"># job</span>
     <br />Server:~ # <span class="cmds">runjob</span> <span class="vars">12</span>
     <br />Server:~ # <span class="cmds">checkjob</span> <span class="vars">12</span>
-    <br />Server:~ # <span class="cmds">checkjob</span> <span class="vars">12</span>
+    <br />Server:~ # <span class="cmds">canceljob</span> <span class="vars">12</span>
     </div>
     <br />
 
@@ -198,21 +200,25 @@
     <br />
 
     <br /><span class="cmts">#</span>
-    <br />Sever:~ # <span class="cmds">mdiag</span> -u 
+    <br />Sever:~ # <span class="cmds">mdiag</span> -u
+    <span class="cmts"># 顯示 user 設定</span>
+    <br />Sever:~ # <span class="cmds">mdiag</span> -g 
+    <span class="cmts"># 顯示 group 設定</span>
+    <br />Sever:~ # <span class="cmds">mdiag</span> -c
+    <span class="cmts"># 顯示 class/queue 設定</span>
+    <br />Sever:~ # <span class="cmds">mdiag</span> -p
+    <span class="cmts"># 顯示 priority 設定</span>
+    <br />Sever:~ # <span class="cmds">mdiag</span> -f
+    <span class="cmts"># 顯示 fairshare 設定</span>
+    <br />Sever:~ # <span class="cmds">mdiag</span> -Q
+    <span class="cmts"># 顯示 QoS 設定</span>
+    <br />
+
     <br />Sever:~ # <span class="cmds">changeparam</span> USERCFG[<span class="vars">user</span>] MAXJOB=3,5 MAXPROC=20 
-    <br />Sever:~ # <span class="cmds">mdiag</span> -u 
-    <br />
-
-    <br /><span class="cmts">#</span>
-    <br />Sever:~ # <span class="cmds">diagnose</span> -g 
-    <br />Sever:~ # <span class="cmds">changeparam</span> GROUPCFG[<span class="vars">group</span>] MAXJOB=5,8 MAXPROC=32 
-    <br />Sever:~ # <span class="cmds">diagnose</span> -g 
-    <br />
-
-    <br /><span class="cmts">#</span>
-    <br />Sever:~ # <span class="cmds">diagnose</span> -c 
+    <span class="cmts"># 限制最多 5 個 job(會調度 3 或 5), 每個 job 最多 20 processor core</span>
+    <br />Sever:~ # <span class="cmds">changeparam</span> GROUPCFG[<span class="vars">group</span>] MAXJOB=5,8 MAXNODE=32 
+    <span class="cmts"># 限制最多 8 個 job, 每個 job 最多 20 node</span>
     <br />Sever:~ # <span class="cmds">changeparam</span> CLASSCFG[<span class="vars">queue</span>] MAXJOB[USER:<span class="vars">user</span>]=1,2 MAXJOB[GROUP:<span class="vars">group</span>]=10 
-    <br />Sever:~ # <span class="cmds">diagnose</span> -c 
     <br />
 
     <br /><span class="cmts">#</span>
@@ -227,6 +233,37 @@
     <br />Sever:~ # <span class="cmds">changeparam</span> SRCFG[debug] USERLIST=helpdesk 
     <br />Sever:~ # <span class="cmds">changeparam</span> SRCFG[debug] GROUPLIST=operations,sysadmin 
     <br />Sever:~ # <span class="cmds">changeparam</span> SRCFG[debug] PERIOD=INFINITY 
+    <br />
+
+    <br /><span class="cmts">#</span>
+    <br />Server:~ # <span class="cmds">cat</span> maui.cfg
+    <br /><span class="cmts"># 設定 job credentials -> priority </span>
+    <br />CREDWEIGHT&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>
+    <br />USERWEIGHT&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>
+    <br />GROUPWEIGHT&nbsp;&nbsp;&nbsp;<span class="vars">1</span>
+    <br />ACCOUNTWEIGHT&nbsp;<span class="vars">1</span>
+    <br />QOSWEIGHT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">5</span>
+    <br />CLASSWEIGHT&nbsp;&nbsp;&nbsp;<span class="vars">1</span>
+    <br />
+    <br /># fairshare usage
+    <br />FSWEIGHT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>
+    <br />FSUSERWEIGHT&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>
+    <br />FSGROUPWEIGHT&nbsp;&nbsp;&nbsp;<span class="vars">1</span>
+    <br />FSACCOUNTWEIGHT&nbsp;<span class="vars">1</span>
+    <br />FSQOSWEIGHT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>
+    <br />FSCLASSWEIGHT&nbsp;&nbsp;&nbsp;<span class="vars">1</span>
+    <br />
+    <br /># queue time
+    <br />QOSQTWEIGHT&nbsp;&nbsp;<span class="vars">3</span>
+    <br />
+    <br />QOSCFG[<span class="vars">high</span>]&nbsp;&nbsp;&nbsp;FLAGS=<span class="ftns">PREEMPTOR</span>&nbsp;&nbsp;&nbsp;&nbsp;PRIORITY=<span class="vars">100</span>&nbsp;&nbsp;&nbsp;&nbsp;QTWEIGHT=<span class="vars">10</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XFTARGET=<span class="vars">10</span>&nbsp;FSTARGET=<span class="vars">25.0</span>
+    <br />QOSCFG[<span class="vars">normal</span>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRIORITY=<span class="vars">10</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;QTWEIGHT=<span class="vars">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XFTARGET=<span class="vars">10</span>&nbsp;FSTARGET=<span class="vars">10.0</span>
+    <br />QOSCFG[<span class="vars">low</span>]&nbsp;&nbsp;&nbsp;&nbsp;FLAGS=<span class="ftns">PREEMPTEE</span>&nbsp;&nbsp;&nbsp;&nbsp;PRIORITY=<span class="vars">0</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;QTWEIGHT=<span class="vars">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XFTARGET=<span class="vars">1</span>&nbsp;&nbsp;FSTARGET=<span class="vars">1.0</span>
+    <br />
+    <br />USERCFG[<span class="vars">user1</span>] MAXJOB=<span class="vars">2,4</span> QDEF=<span class="vars">low</span>
+    <br />USERCFG[<span class="vars">user2</span>] PRIORITY=<span class="vars">800</span> DQEF=<span class="vars">high</span>
+
+
     </div>
     <p class="h3">mdiag和diagnose是一樣的指令，因為maui得設定是動態載入到記憶體，所以在已經啟動maui的情況下，需要變更設定要使用changeparam指令，但是只要重新啟動時，該設定就會被刪除，建議在maui.cfg也作同樣的設定
     </p>

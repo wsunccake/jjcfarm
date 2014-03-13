@@ -158,8 +158,79 @@
           <td colspan="2">[Ctrl] ^ [Shift] + a</td>
           <td>[commads] ^ [shift] + a</td>
         </tr>
+
+        <!-- project -->
+        <tr>
+          <td>switch project</td>
+          <td colspan="2">[Ctrl] ^ [Alt] + p</td>
+          <td></td>
+        </tr>
         </tbody>
       </table>
+      <hr />
+
+<!-- project -->
+      <p class="h3">專案群組是以工作需求為單位, 將檔案、資料夾加入到一個專案群組中, 儲存它然後命名. 選擇 Project &gt;&gt; Save Project As... 或是透過 command palette (如下圖) , 便可在 Sublime Text 建立專案群組. 可使用 swithch project 在不同專案群組之間快速切換.
+      <br /><img src="http://cdn.tutsplus.com/net/uploads/legacy/2127_projectBliss/images/add-folder.jpg" alt="" width="30%">
+      &nbsp;&nbsp;&nbsp;<img src="http://cdn.tutsplus.com/net/uploads/legacy/2127_projectBliss/images/save-project.jpg" alt="" width="30%">
+      <br />
+      <br />建立專案群組時, 專案資料會以 JSON 格式儲存在 .sublime-project 檔案裡, 同時 Sublime Text 也會自動生成一個附檔名為 .sublime-workspace 的檔案, 用來儲存當下的使用環境. 例如哪些檔案被開啟, 修改, 甚至連視窗捲動到哪都會被記錄起來.
+      <br />.sublime-project 是可以自己修改的, 可支援三個頂層節點, 分別是:</p>
+      <ul class="h3">
+      <li><em>folders</em>: 每個資料夾都必須要有路徑 (path), 選擇性地可以加上 folder_exclude_patterns 或 file_exclude_patterns 設定來排除特定的目錄或檔案. 路徑可以是此專案的箱端路徑, 也可以是絕對路徑. 或許你還會想要替他們取個名字, 這將會顯示在側邊欄</li>
+      <li><em>settings</em>: 用來覆寫個人的偏好設定, 如設置縮進的空格數, 好讓編輯這個專案的人都可以保持統一的程式碼風格</li>
+      <li><em>build_systems</em>: 給專案指定的 Build System 設定, 每一項設定都必須指定名稱 (name)</li>
+      </ul>
+      <br />
+      <div class="commands"><span class="vars">.sublime-project</span>
+      <br />{
+      <br />&nbsp;&nbsp;&quot;folders&quot;:
+      <br />&nbsp;&nbsp;[
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="cmts">// theme</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;path&quot;: &quot;/C/wamp/www/wordpress/wp-content/themes/twentyeleven&quot;,
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;: &quot;Twenty Eleven Theme&quot;,
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;file_exclude_patterns&quot;:[
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;._*&quot;,
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;*.ico&quot;,
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;*.swf&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;folder_exclude_patterns&quot;: [
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;images&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;},
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="cmts">// plugins folder</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;path&quot;: &quot;/C/wamp/www/wordpress/wp-content/plugins&quot;,
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;: &quot;Plugins Folder&quot;,
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;file_exclude_patterns&quot;:[
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;._*&quot;, <span class="cmts">// you need to specify this *again*</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;*.bak&quot;,
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;*.sample&quot;,
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;*.tar&quot;,
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;*.tgz&quot;,
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;*.zip&quot;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;folder_exclude_patterns&quot;: [
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;akismet&quot;//,
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">// add any other plugins you wish to exclude</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;],
+      <br />&nbsp;&nbsp;&quot;settings&quot;:
+      <br />&nbsp;&nbsp;{
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&quot;tab_size&quot;: 4
+      <br />&nbsp;&nbsp;}
+      <br />&nbsp;&nbsp;&quot;build_systems&quot;:
+      <br />&nbsp;&nbsp;[{
+      <br />&nbsp;&nbsp;&quot;name&quot;: &quot;Run with args&quot;,
+      <br />&nbsp;&nbsp;&quot;cmd&quot;: [&quot;python&quot;, &quot;-u&quot;, &quot;$file&quot;],
+      <span class="cmts">// python -u $file</span>
+      <br />&nbsp;&nbsp;&quot;selector&quot;: &quot;source.python&quot;
+      <br />&nbsp;&nbsp;}]
+      <br />}
+      </div>
+      <br />
+      <p class="h3"><img src="http://cdn.tutsplus.com/net/uploads/legacy/2127_projectBliss/images/our-two-folders.jpg" alt="" width="30%"></p>
+      <p class="h3">而 .sublime-workspace 是由編輯器自己產生，不應該去動它</p>
       <hr />
 
 <!-- plugin -->
@@ -205,6 +276,13 @@
       </p>
       <br />
 
+      <h3>Clipboard History</h3>
+      <p class="h3">剪貼簿工具, 自動記錄多筆複製的內容. 使用[Ctrl] ^ [Alt] + v, 可貼上複製記錄.
+      <img src="http://www.webdevdoor.com/wp-content/uploads/2013/11/plugin-clipboard-history.jpg" alt="">
+      <br />
+      <br />ref <a href="https://github.com/kemayo/sublime-text-2-clipboard-history">Clipboard History</a>
+      </p>
+
       <h3>sublime-text-git</h3>
       <p class="h3">
       <br />ref <a href="sublime-text-git">sublime-text-git</a>
@@ -224,6 +302,7 @@
      <a name="Reference"></a><h2>Reference</h2>
      <li class="reference"><a href="http://www.sublimetext.com">Sublime Text</a></li>
      <br /><li class="reference"><a href="http://docs.sublimetext.tw">Sublime Text 手冊</a>
-     <br /><li class="reference"><a href="http://kevintsengtw.blogspot.tw">mrkt 的程式學習筆記</a>
+     <br /><li class="reference"><a href="http://kevintsengtw.blogspot.tw/p/sublime-text-2.html">mrkt 的程式學習筆記</a>
+     <br><li class="reference"><a href="http://net.tutsplus.com/articles/news/perfect-workflow-in-sublime-text-free-course/">Perfect Workflow in Sublime Text: Free Course!</a></li>
    </li></li>
      
