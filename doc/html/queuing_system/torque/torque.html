@@ -340,7 +340,17 @@
 
       <br />Server:~ # <span class="cmds">qhold</span> <span class="vars">10.k0</span>
       <br />Server:~ # <span class="cmds">qrls</span> <span class="vars">10.k0</span>
+      <span class="cmts"># 被 hold job 若被 release, priority 會被重設(歸零) </span>
+      <br />
+
       <br />Server:~ # <span class="cmds">qalter</span> -l nodes=<span class="vars">1</span>:ppn=<span class="vars">1</span>  <span class="vars">10.k0</span>
+      <br />Server:~ # <span class="cmds">qalter</span> -p 1023 <span class="vars">10.k0</span>
+	  <span class="cmts"># 重設定 jobid 10.k0 的 priority, 範圍為-1024~1023</span>
+	  <br />
+
+	  <br />Server:~ # <span class="cmds">qorder</span> <span class="vars">10.k0</span> <span class="vars">13.k0</span>
+	  <span class="cmts"># 將 10.k0 和 13.k0 執行順序對調</span>
+
       <br />Server:~ # <span class="cmds">qrun</span> <span class="vars">10.k0</span>
       </div>
       <hr />
