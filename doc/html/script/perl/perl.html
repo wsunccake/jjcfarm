@@ -1157,6 +1157,9 @@
       <br /><span class="cmts">#Union/聯集</span>
       <br />Linux:~ # <span class="cmds">grep</span> -E '<i>pattern1</i>|<i>pattern2</i>' file
       <br />Linux:~ # <span class="cmds">perl</span> -ne 'print if /<i>pattern1</i>/|/<i>pattern2</i>/' file
+      <br />Linux:~ # <span class="cmds">grep</span> -E -v '<i>^$</i>|<i>^#</i>' file
+      <span class="cmts"># 移除空白行和註解</span>
+      <br />Linux:~ # <span class="cmds">grep</span> -P '~[<i>^$#</i>]' file
       <br />
 
       <br /><span class="cmts">#Intersection/交集</span>
