@@ -51,3 +51,20 @@ span.name {
 	color: #000000;
 }
 
+@media (min-width: 768px) {
+  #container1, #container2{
+    width: 750px;
+  }
+}
+
+@media (min-width: 992px) {
+  #container1, #container2{
+    width: 750px;
+  }
+}
+
+@media (min-width: 1200px) {
+  #container1, #container2{
+    width: 750px;
+  }
+}
