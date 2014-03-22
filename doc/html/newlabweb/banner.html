@@ -1,0 +1,71 @@
+<script type="text/javascript"> 
+  $(document).ready(function(){
+    $("#flip1").mouseover(function(){
+        $("#panel1").slideDown(0);
+      });
+    $("#flip1").mouseout(function(){
+        $("#panel1").slideUp(0);
+      });
+      $("#flip2").mouseover(function(){
+        $("#panel2").slideDown(0);
+      });
+    $("#flip2").mouseout(function(){
+        $("#panel2").slideUp(0);
+      });
+  });
+</script>
+<div class="container">
+  <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">理論與計算化學研究室</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="index.html">首頁</a></li>
+          <li class="dropdown" id="flip1">
+            <a href="member.html" class="dropdown-toggle">成員簡介<b class="caret"></b></a>
+            <ul id="panel1" class="dropdown-menu">
+              <li><a href="#">教授</a></li>
+              <li><a href="#">博士後研究員</a></li>
+              <li><a href="#">博士班</a></li>
+              <li><a href="#">碩士班</a></li>
+              <li><a href="#">專題生</a></li>
+            </ul></li>
+          </li>
+          <li class="dropdown" id="flip2">
+            <a href="research.html" class="dropdown-toggle">研究方向<b class="caret"></b></a>
+            <ul id="panel2" class="dropdown-menu">
+              <li><a href="#">從頁岩氣出發之催化反應</a></li>
+              <li><a href="#">敏化太陽能電池染料的設計</a></li>
+              <li><a href="#">鋰電池相關化學反應的探討</a></li>
+              <li><a href="#">光起始劑的設計</a></li>
+            </ul>
+          </li>
+          <li><a href="#gallery">相簿</a></li>
+          <li><a href="#contact">論文發表</a></li>
+          <li><a href="../T2513/index.html">English</a></li>
+          <!--下拉式選單範例-->
+          <!--<li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Nav header</li>
+              <li><a href="#">Separated link</a></li>
+              <li><a href="#">One more separated link</a></li>
+            </ul>
+          </li>-->
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

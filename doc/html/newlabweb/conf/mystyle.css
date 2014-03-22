@@ -1,0 +1,53 @@
+h1 {
+  font-size: 60px;
+  text-align: center;
+  color: #33333;
+}
+
+a {
+  color: #000000;
+}
+
+.word {
+  color: #000000;
+  font-size: 20px;
+  padding: 0.5em 1em 0.5em 1em ;
+  margin: 0.5em 1em 0em 2.5em ;
+}
+
+img.pic{
+  align: center;
+  
+}
+
+div.paper {
+/*  background-color: #e5e5e5; */
+/*  border: 1px solid #050505; */
+  color: #101310;
+  font-family: Times New Roman;
+  font-size: 20px;
+  padding: 0.5em 1em 0.5em 1em ;
+  margin: 0.5em 1em 0em 2.5em ;
+}
+
+span.ch {
+	font-family: 標楷體;
+	color: #000000;
+}
+
+span.year {
+	font-weight: bold;
+	color: #000000;
+}
+
+span.vars {
+	font-weight: italic;
+	color: #000000;
+}
+
+span.name {
+	text-decoration: underline;
+	font-weight: bold;
+	color: #000000;
+}
+
