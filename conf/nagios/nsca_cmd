@@ -1,0 +1,1 @@
+* * * * * root /bin/bash /etc/nagios/nsca_cmd_backend.sh >& /etc/nagios/nsca_cmd.log
