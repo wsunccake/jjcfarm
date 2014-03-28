@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
 
 <meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
@@ -12,6 +12,7 @@
       <br /><a href="#CGI"><li class="title">CGI</li></a>
       <br /><a href="#CSS selector"><li class="title">CSS selector</li></a>
       <br /><a href="#XPath"><li class="title">XPath</li></a>
+      <br /><a href="#XSS"><li class="title">XSS</li></a>
       <br /><a href="#reference"><li class="title">Reference</li></a>
       <div class="context">
       </div>
@@ -21,6 +22,39 @@
       <a name="HTML"></a><h2>HTML</h2>
       <h3>form</h3>
       <p class="h3"></p>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> /htdocs/<span class="vars">ex.html</span>
+      <br />&lt;html&gt;
+      <br />&lt;body&gt;
+      <br /><span class="cmts">&lt;!-- Hello example --&gt;</span>
+      <br />&nbsp;&nbsp;&lt;p&gt;Hello example&lt;/p&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;cgi-bin/hello.sh&quot;&gt;Hello SH CGI&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;cgi-bin/hello.pl&quot;&gt;Hello Perl CGI&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;cgi-bin/hello.py&quot;&gt;Hello Python CGI&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;br /&gt;
+      <br />
+      <br /><span class="cmts">&lt;! -- GET example --&gt;</span>
+      <br />&nbsp;&nbsp;&lt;p&gt;GET method example&lt;/p&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;cgi-bin/get.sh&quot; method=&quot;get&quot;&gt;SH CGI: name &lt;input type=&quot;text&quot; name=&quot;name_sh&quot;/&gt; age&lt;input type=&quot;text&quot; name=&quot;age_sh&quot;/&gt;&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;cgi-bin/get.pl&quot; method=&quot;get&quot;&gt;Perl CGI: name &lt;input type=&quot;text&quot; name=&quot;name_pl&quot;/&gt; age&lt;input type=&quot;text&quot; name=&quot;age_pl&quot;/&gt;&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;cgi-bin/get.py&quot; method=&quot;get&quot;&gt;Python CGI: name &lt;input type=&quot;text&quot; name=&quot;name_py&quot;/&gt; age&lt;input type=&quot;text&quot; name=&quot;age_py&quot;/&gt;&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;br /&gt;
+      <br />
+      <br /><span class="cmts">&lt;! -- POST example --&gt;</span>
+      <br />&nbsp;&nbsp;&lt;p&gt;POST method example&lt;/p&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;cgi-bin/post.sh&quot; method=&quot;post&quot;&gt;SH CGI: name &lt;input type=&quot;text&quot; name=&quot;NAME_SH&quot;/&gt; age&lt;input type=&quot;text&quot; name=&quot;AGE_SH&quot;/&gt;&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;cgi-bin/post.pl&quot; method=&quot;post&quot;&gt;Perl CGI: name &lt;input type=&quot;text&quot; name=&quot;NAME_PL&quot;/&gt; age&lt;input type=&quot;text&quot; name=&quot;AGE_PL&quot;/&gt;&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;cgi-bin/post.py&quot; method=&quot;post&quot;&gt;Python CGI: name &lt;input type=&quot;text&quot; name=&quot;NAME_PY&quot;/&gt; age&lt;input type=&quot;text&quot; name=&quot;AGE_PY&quot;/&gt;&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;br /&gt;
+      <br />
+      <br /><span class="cmts">&lt;! -- PHP example --&gt;</span>
+      <br />&nbsp;&nbsp;&lt;form action=&quot;./get.php&quot; method=&quot;get&quot;&gt;PHP: name &lt;input type=&quot;text&quot; name=&quot;name_php&quot;/&gt; age&lt;input type=&quot;text&quot; name=&quot;age_php&quot;/&gt;&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;form action=&quot;./post.php&quot; method=&quot;post&quot;&gt;PHP: name &lt;input type=&quot;text&quot; name=&quot;NAME_PHP&quot;/&gt; age&lt;input type=&quot;text&quot; name=&quot;AGE_PHP&quot;/&gt;&lt;input type=&quot;submit&quot;/&gt;&lt;/form&gt;
+      <br />&nbsp;&nbsp;&lt;br /&gt;
+      <br />
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+
+      </div>
       <hr />
 
 <!-- CGI -->
@@ -203,7 +237,6 @@
       <br />FORMH = {}
       <br />if os.getenv('REQUEST_METHOD') == 'POST':
       <br />&nbsp;&nbsp;&nbsp;&nbsp;data = sys.stdin.readline()
-      <br />&nbsp;&nbsp;&nbsp;&nbsp;print data
       <br />&nbsp;&nbsp;&nbsp;&nbsp;datas = data.split('&amp;')
       <br />&nbsp;&nbsp;&nbsp;&nbsp;for d in datas:
       <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmp = d.split('=')
@@ -254,15 +287,261 @@
       <br />cgi.test() # test cgi
 
       </div>
+      <br />
+
+      <h3>php</h3>
+      <div class="commands">Linux:~ # <span class="cmds">cat</span> /htdocs/<span class="vars">get.php</span>
+      <br />&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&nbsp;&nbsp;&lt;title&gt;TEST&lt;/title&gt;
+      <br />&lt;/head&gt;
+      <br />&lt;body&gt;
+      <br />&nbsp;&nbsp;Hi, &lt;?php echo $_GET['name_php']; ?&gt;
+      <br />&nbsp;&nbsp;&lt;br /&gt;You are &lt;?php echo $_GET['age_php']; ?&gt; years old.
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      <br />
+      <br />
+
+      <br />Linux:~ # <span class="vars">cat</span> /htdocs/<span class="vars">post.php</span>
+      <br />&lt;html&gt;
+      <br />&lt;head&gt;
+      <br />&nbsp;&nbsp;&lt;title&gt;TEST&lt;/title&gt;
+      <br />&lt;/head&gt;
+      <br />&lt;body&gt;
+      <br />&nbsp;&nbsp;Hi, &lt;?php echo $_POST['NAME_PHP']; ?&gt;
+      <br />&nbsp;&nbsp;&lt;br /&gt;You are &lt;?php echo $_POST['AGE_PHP']; ?&gt; years old.
+      <br />&lt;/body&gt;
+      <br />&lt;/html&gt;
+      </div>
 
       <hr />
 
+<!-- CSS selector -->
+      <a name="CSS selector"></a><h2>CSS selector</h2>
+      <table class="h3">
+      <tdoby>
+      <tr>
+            <th>selector</th>
+            <th>CSS</th>
+            <th>HTML</th>
+            <th>Description</th>
+      </tr>
+
+      <!-- basic -->
+      <tr>
+            <td>class </td>
+            <td><span class="vars">.emText</span> { color: red;}</td>
+            <td>&lt;p class=&quot;<span class="vars">emText</span>&quot;&gt;此段會套用紅色&lt;/p&gt;</td>
+            <td>以<em>.</em>開頭, 名稱可自訂, 一個網頁可有多個class屬性值</td>
+      </tr>
+      <tr>
+            <td>id</td>
+            <td><span class="vars">#emText</span> { color: red;}</td>
+            <td>&lt;p id=&quot;<span class="vars">emText</span>&quot;&gt;此段會套用紅色&lt;/p&gt;</td>
+            <td>以<em>#</em>開頭, 名稱可自訂, 一個網頁只能有一個ID屬性值</td>
+      </tr>
+      <tr>
+            <td>element</td>
+            <td><span class="vars">h1</span> {color: red;}
+            <br /><span class="vars">p</span> {color: black;}
+            </td>
+            <td>&lt;h1&gt;標題會套用紅色&lt;/h1&gt;
+            <br />&lt;p&gt;段落會套用黑色&lt;/p&gt;
+            </td>
+            <td>設定於HTML的標籤上, 網頁上所有的標籤都會套用</td>
+      </tr>
+      <tr>
+            <td>universal</td>
+            <td><span class="vars">*</span> {color:red;}</td>
+            <td>&lt;h1&gt;標題會套用紅色&lt;/h1&gt;
+            <br />&lt;p&gt;段落會套用黑色&lt;/p&gt;</td>
+            <td>使用字元<em>*</em>, 整個網頁下的所有元素都會套用設定</td>
+      </tr>
+
+      <!-- attribute -->
+      <tr>
+            <td rowspan="6">attribute</td>
+            <td>p[<span class="vars">name</span>] {color:red;}</td>
+            <td></td>
+            <td>擁有特定attribute做CSS設定</td>
+      </tr>
+      <tr>
+            <td>p[<span class="vars">name <em>=</em> &quot;other&quot;</span>] {color: green;}</td>
+            <td></td>
+            <td>attribute等於特定條件</td>
+      </tr>
+      <tr>
+            <td>'p[<span class="vars">name <em>!=</em> &quot;other&quot;</span>]</td>
+            <td></td>
+            <td>attribute不等於特定條件</td>
+      </tr>
+      <tr>
+            <td>li[<span class="vars">id <em>^=</em> &quot;per&quot;</span>]</td>
+            <td></td>
+            <td>attribute值開頭符合特定條件</td>
+      </tr>
+      <tr>
+            <td>a[<span class="vars">href <em>$=</em> &quot;.org/&quot;</span>]</td>
+            <td></td>
+            <td>attribute值結尾符合特定條件</td>
+      </tr>
+      <tr>
+            <td>a[<span class="vars">href <em>*=</em> &quot;Java&quot;</span>] {color: yellow;}</td>
+            <td></td>
+            <td>attribute值內容符合特定條件</td>
+      </tr>
+
+      <tr>
+            <td>descendant</td>
+            <td>a { color:black;}
+            <br /><span class="vars">h1 a</span> { color:red;}
+            <br /><span class="vars">#wrapper a</span> { color:green;}
+            </td>
+            <td><br />&lt;a&gt; 只設定a標籤會套用黑色&lt;/a&gt;
+            <br />
+            <br />&lt;<span class="vars">h1</span>&gt;
+            <br />&lt;<span class="vars">a</span>&gt;在h1裡的a標籤會套用紅色&lt;/a&gt;
+            <br />&lt;/h1&gt;
+            <br />
+            <br />&lt;div id=&quot;<span class="vars">wrapper</span>&quot;&gt;
+            <br />&lt;<span class="vars">a</span>&gt;</span>在ID=wrapper裡的a標籤會套用綠色&lt;/a&gt;
+            <br />&lt;/div&gt;
+            </td>
+            <td>E F, 利用空白鍵區隔兩個元素, 表示在 E 元素內的 F 元素才會套用</td>
+      </tr>
+      <tr>
+            <td>child</td>
+            <td><span class="vars">#wrapper <em>&gt;</em> p</span>{ color:red;}
+            <br />#wrapper p { color:black;}
+            </td>
+            <td>&lt;div id=&quot;<span class="vars">wrapper</span>&quot;&gt;
+            <br />&lt;<span class="vars">p</span>&gt;在id=wrapper區塊裡的段落會套用紅色&lt;/p&gt;
+            <br />&lt;/div&gt;
+            <br />
+            <br />&lt;div id=&quot;wrapper&quot;&gt;
+            <br />&lt;span&gt;
+            <br />&lt;p&gt;中間多了span就只會套用黑色&lt;/p&gt;
+            <br />&lt;/span&gt;
+            <br />&lt;/div&gt;
+            </td>
+            <td>E <em>&gt;</em> F, 利用<em>&gt;</em>區隔兩個元素, 表示在有父子關係的元素才會套用. 與descendant不同的是 E 及 F 元素之間不能再插入其它的元素, 否則就不是父子關係</td>
+      </tr>
+      <tr>
+            <td>adjacent sibling</td>
+            <td>h1 { color:red;}
+            <br /><span class="vars">h1 <em>+</em> p</span> { color:green;}</td>
+            <td>&lt;<span class="vars">h1</span>&gt;標題1會套用紅色&lt;/h1&gt;
+            <br />&lt;<span class="vars">p</span>&gt;跟h1相鄰的p會套用綠色&lt;/p&gt;
+            <br />&lt;p&gt;沒有跟h1相鄰的p會套用預設值&lt;/p&gt;
+            </td>
+            <td>E <em>+</em> F, 利用<em>+</em>區隔兩個元素, 表示在與 E 同一層關係的相鄰 F 元素才會套用</td>
+      </tr>
+      <tr>
+            <td>general sibling</td>
+            <td>h1 { color:red;}
+            <br /><span class="vars">h1 <em>~</em> p</span> { color:green;} 
+            </td>
+            <td>&lt;<span class="vars">h1</span>&gt;標題1會套用紅色&lt;/h1&gt;
+            <br />&lt;<span class="vars">p</span>&gt;h1接下來p都會套用綠色&lt;/p&gt;
+            <br />&lt;<span class="vars">p</span>&gt;h1接下來p都會套用綠色&lt;/p&gt;      
+            </td>
+            <td>E <em>~</em> F, 利用<em>~</em>區隔兩個元素，表示在與 E 同一層關係的 F 元素全部都會套用</td>
+      </tr>
+      <tr>
+            <td>groups</td>
+            <td><span class="vars">h1<em>,</em> h2<em>,</em> p</span> {color:red;}
+            </td>
+            <td>&lt;<span class="vars">h1</span>&gt;群組內的元素都套用紅色&lt;/h1&gt;
+            <br />&lt;<span class="vars">h2</span>&gt;群組內的元素都套用紅色&lt;/h2&gt;
+            <br />&lt;<span class="vars">p</span>&gt;群組內的元素都套用紅色&lt;/p&gt;
+            <br />&lt;a&gt;群組沒定義的元素不會變色&lt;/a&gt;
+            </td>
+            <td>以<em>,</em>區隔, 同時對多個選擇器定義樣式
+            <br />E<em>,</em> F<em>,</em> G，同時針對E、F、G元素設定樣式</td>
+      </tr>
+
+      </tdoby>
+      </table>
+      <hr />
+
+<!-- XPath -->
+      <h2>XPath</h2>
+      <p class="h3">XPath (<b>X</b>ML <b>Path</b> Language, XML 路徑語言) 是一種用來確定XML文檔中某部分位置的語言
+      <br />XPath 基於 XML 樹狀結構, 提供在資料結構樹中找尋節點的能力. 起初XPath的提出的初衷是將其作為一個通用的, 介於XPointer與XSL間的語法模型. 但是XPath很快的被開發者採用來當作小型查詢語言.
+      有東西嗎
+      </p>
+
+      <table class="h3">
+      <tbody>
+            <tr>
+                  <th>Expression</th>
+                  <th>Description</th>
+                  <th>Example</th>
+            </tr>
+
+            <tr>
+                  <td><span class="vars">nodename</span></td>
+                  <td>Selects all nodes with the name &quot;nodename&quot;</td>
+                  <td></td>
+            </tr>
+            <tr>
+                  <td>/</td>
+                  <td>Selects from the root node</td>
+                  <td></td>
+            </tr>
+            <tr>
+                  <td>//</td>
+                  <td>Selects nodes in the document from the current node that match the selection no matter where they are</td>
+                  <td></td>
+            </tr>
+            <tr>
+                  <td>.</td>
+                  <td>Selects the current node</td>
+                  <td></td>
+            </tr>
+            <tr>
+                  <td>..</td>
+                  <td>Selects the parent of the current node</td>
+                  <td></td>
+            </tr>
+            <tr>
+                  <td>@</td>
+                  <td>Selects attributes</td>
+                  <td></td>
+            </tr>
+                  
+      </tbody>
+      </table>
+      <hr />
+
+<!-- HTML -->
+      <a name="XSS"></a><h2>XSS</h2>
+      <p class="h3">XSS (Cross Site Script, 跨站腳本攻擊), 指的是惡意攻擊者往 網頁面裏插入惡意 html 代碼, 當使用者瀏覽網頁時, 嵌入其中Web裏面的 html 代碼被執行, 而達到攻擊者的特殊目的. XSS 屬於被動式的攻擊, 因為其被動且不好利用, 所以許多人常呼略其危害性.</p>
  
+      <div class="commands">Linux:~ # <span class="cmds">curl</span> http://127.0.0.1/get.php?name_php=&lt;a href=&quot;http://www.google.com&quot;>Google&lt;/a&gt;&amp;age_php=10
+      <br />
+      <br />
+
+      <br />Linux:~ # <span class="cmds">curl</span> http://127.0.0.1/get.php?name_php=&lt;a href=&quot;http://www.google.com&quot;&gt;Google&lt;/a&gt;&amp;age_php=10&lt;script&gt;document.getElementsByTagName('a')[0].innerHTML = 'Yahoo' &lt;/script&gt;
+      <br />
+      <br />
+
+      <br />Linux:~ # <span class="cmds">curl</span> http://127.0.0.1/get.php?name_php=&lt;a href=&quot;http://www.google.com&quot;&gt;Google&lt;/a&gt;&amp;lage_php=10&lt;script&gt;document.getElementsByTagName('a')[0].setAttribute('href', 'http://www.yahoo.com') &lt;/script&gt;
+      <br />
+      <br />
+
+      <br /><span class="cmts">ASCII characters to hex</span>
+      <br />Linux:~ # <span class="cmds">curl</span> http://127.0.0.1/get.php?name_php=&lt;a href=&quot;http://www.google.com&quot;&gt;Google&lt;/a&gt;&amp;age_php=10%3c%73%63%72%69%70%74%3e%64%6f%63%75%6d%65%6e%74%2e%67%65%74%45%6c%65%6d%65%6e%74%73%42%79%54%61%67%4e%61%6d%65%28%27%61%27%29%5b%30%5d%2e%73%65%74%41%74%74%72%69%62%75%74%65%28%27%68%72%65%66%27%2c%20%27%68%74%74%70%3a%2f%2f%77%77%77%2e%79%61%68%6f%6f%2e%63%6f%6d%27%29%20%3c%2f%73%63%72%69%70%74%3e
+      </div>
+
 <!-- reference -->
     <h2>Reference</h2>
-    <li class="reference">http://www.proftpd.org</li>
-    <br /><li class="reference">http://vsftpd.beasts.org</li>
-    <br /><li class="reference">http://linux.vbird.org</li>
+    <li class="reference"><a href="http://www.w3schools.com/">W3CSchools.com</a></li>
+    <br /><li class="reference"><a href="http://zh.wikipedia.org/wiki/Css">層疊樣式表</a></li>
+    <br /><li class="reference"><a href="http://zh.wikipedia.org/wiki/XPath">XPath</a></li>
+    <br /><li class="reference"><a href="http://net.tutsplus.com/">net tuts+</a></li>
+    <br /><li class="reference"><a href="http://webdesign.tutsplus.com/">weddesign tuts+</a></li>
     <hr />
 
 <!-- changelog -->

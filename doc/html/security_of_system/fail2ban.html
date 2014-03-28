@@ -42,8 +42,21 @@
       <a name="fail2ban configuration"><h2>fail2ban 設定</h2>   
       <h3>1. configuration</h3>
       <p class="h3"></p>
+
       <div class="commands"><span class="cmts"># configuration</span>
+      <br />SLES:~ # <span class="cmds">ls</span> /etc/fail2ban
+      <br />fail2ban.conf
+      <span class="cmts"># 設定fail2ban global variable</span>
+      <br />jail.conf
+      <span class="cmts"># 設定jail rule</span>
+      <br />filter.d
+      <span class="cmts"># 過濾符合條件的設定檔目錄</span>
+      <br />action.d
+      <span class="cmts"># 指定執行方式的設定檔目錄</span>
+      <br />
+
       <br />SLES:~ # <span class="cmds">cat</span> /etc/fail2ban/jail.conf
+      
       <br />[DEFAULT] <span class="cmts"># 此為全域變數</span>
       <br />
       <br />ignoreip = 127.0.0.1/8 <span class="vars">ignoreip</span>
@@ -138,8 +151,20 @@
       <span class="cmts"># 顯示Success 表示所有正規表示法match成功</span>
 	  <br />SLES:~ # <span class="cmds">fail2ban-regex</span> /var/log/messages "Received disconnect from &lt;HOST&gt;: 11: Bye Bye \[preauth\]\s*" 
 	  <span class="cmts"># 顯示Success 表示這個正規表示法match成功 建議使用一個一個測試再加入至/etc/fail2ban/filter.d/sshd.conf</span>
-	  </div>
-	  <br />
+	</div>
+	<br />
+
+      <h3>2. fail2ban-client</h3>
+      <div class="commands">SLES:~ # <span class="cmds">fail2ban-client</span> status
+      <span class="cmts"># 顯示目前的啟動的jail</span>
+      <br />Status
+      <br />|- Number of jail:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1
+      <br />`- Jail list:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ssh-iptables
+      <br />
+
+      <br />SLES:~ # <span class="cmds">fail2ban-client</span> status <span class="vars">ssh-iptables</span>
+      <span class="cmts"># 顯示該jail rule的狀態</span>
+      </div>
       <hr />
 
 <!-- reference -->

@@ -51,7 +51,9 @@
         </tr>
         <tr>
           <td>Elements</td>
-          <td><span class="ftns">$('<span class="vars">a</span>')</span></td>
+          <td><span class="ftns">$('<span class="vars">a</span>')</span>
+          <br /><span class="ftns">$(document.getElementsTagName('<span class="vars">a</span>) )
+        </span></td>
           <td>選擇所有符合標籤名稱(Tag name)的元素</td>
         </tr>
         <tr>
@@ -83,8 +85,9 @@
 
         <tr>
           <td>descendant</td>
-          <td><span class="ftns">$('<span class="vars">#web</span> <span class="vars">a</span>')</span></td>
-          <td>底下所有層數之element</td>
+          <td><span class="ftns">$('<span class="vars">#web</span> <span class="vars">a</span>')</span>
+          <br /><span class="ftns">$('<span class="vars">a</span>', '<span class="vars">#web</span>')</span></td>
+          <td>web底下所有層數之a element</td>
         </tr>
         <tr>
           <td>child</td>
@@ -653,9 +656,15 @@
 
         <!-- other -->
         <tr>
-          <td>find, filter</td>
+          <td>filter</td>
           <td></td>
+          <td>對當前元素做選取</td>
+        </tr>
+
+        <tr>
+          <td>find</td>
           <td></td>
+          <td>對當前子元素做選取</td>
         </tr>
 
         <tr>

@@ -1,0 +1,650 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="zh_TW.UTF-8">
+<title>Nagios</title>
+<link rel="stylesheet" href="../defaults.css" type="text/css">
+</head><body>
+
+<!-- header -->
+      <h1>Nagios</h1>
+      <a href="#nagios"><li class="title">Nagios</li></a>
+      <br /><a href="#nrpe"><li class="title">NRPE</li></a>
+      <br /><a href="#nsca"><li class="title">NSCA</li></a>
+      <br /><a href="#pnp4nagios"><li class="title">PNP4Nagios</li></a>
+      <!-- PNP4Nagios -->
+      <!-- nagiostats -->
+      <!-- nagiosgraph -->
+      <br /><a href="#reference"><li class="title">Reference</li></a>
+      <br />
+
+      <div class="context">
+      <p class="h1">Nagios 是一款遵循 GPLv2 的開源網路監控軟體. 可運行在 Linux/Unix 主機上, 用來監控指定的多種系統的主機、服務, 並可在它們的工作狀態發生變化時通知管理員, 同時提供一個 WEB 界面, 方便查各種狀態.
+      </p>
+      
+      <ul class="h1">
+        <li>監控網路服務 (SMTP, POP3, HTTP, NNTP, PING MySQL 等)</li>
+        <li>監控主機資源 (processor load, disk usage 等)</li>
+        <li>簡潔的插件設計接口, 使用者輕鬆開發所需的檢測腳本 (script)</li>
+        <li>平行各服務檢查</li>
+        <li>描述網絡結構，並且能夠區辨主機狀態是 &quot;down&quot; 或 &quot;unreachable&quot; </li>
+        <li>當服務或主機問題產生與解決時將告警發送給管理員 (通過 email, 簡訊等)</li>
+        <li>自動日誌輪替</li>
+        <li>支援冗餘監控主機 (redundant monitoring hosts)</li>
+        <li>可透通過 web 方式直觀查看當前網路狀態, 通知, 日誌等</li>
+      </ul>
+
+      <p class="h1">Nagios 通常由主程序(Nagios), 插件程序(Nagios-plugins)和四個可選附件(ADDON, NRPE, NSCA, NSClient++ 和 NDOUtils)組成. Nagios 的監控工作都是通過插件實現的, 因此 Nagios 和 Nagios-plugins 是服務器端工作所必須的組件.</p>
+
+      <ul class="h1">
+        <li>NRPE(Nagios Remote Plugin Executor): 用來在監控的遠程 Linux/Unix 主機上執行腳本插件以實現對這些主機資源的監控</li>
+        <li>NSCA(Nagios Service Check Acceptor): 用來讓被監控的遠程 Linux/Unix 主機主動將監控信息發送给 Nagios 服務器(這在冗餘監控模式中特別要用到)</li>
+        <li>NSClient++: 用來監控 Windows 主機時安裝在 Windows 主機上的組件</li>
+        <li>NDOUtils: 則用來將Nagios的配置信息和各event產生的數據存入數據庫，以實現 這些數據的快速檢索和處理</li>
+      </ul>
+      <p class="h1">這四個 ADDON 中, NRPE 和 NSClient++ 用於客戶端, NDOUtils工作於服務器端, 而 NSCA 則需要同時安裝在服務器端和客戶端
+      </p>
+
+
+      </div>
+      <hr />
+
+<!-- Nagios -->
+      <a name="nagios"><h2>Nagios</h2>
+      <h3>安裝</h3>
+      <p class="h3">SuSE Linux Eneterprise Server 已經有提供套件, 可直接使用 zypper 安裝
+      </p>
+      <div class="commands"><span class="cmts"># nagios 是主程式; nagios-www 是 nagios 的 apache 設定; nagios-plugins 和 nagios-plugins-extras 常用的套件</span>
+      <br />SLES:~ # <span class="cmds">zypper</span> install nagios nagios-plugins nagios-plugins-extras nagios-www
+      
+      </div>
+      <br />
+
+
+<!--
+      <h3>source code installation</h3>
+      <div class="commands"><span class="cmts"># 建立使用 nagios 的帳號群組</span>
+      <br />SLES:/usr/src # <span class="cmds">groupadd</span> <span class="vars">nagios</span>
+      <br />SLES:/usr/src # <span class="cmds">useradd</span> -g <span class="vars">nagios</span> -d <span class="vars">/usr/local/nagios</span> -u <span class="vars">110</span> <span class="vars">nagios</span>
+      <br />SLES:/usr/src # <span class="span">mkdir</span> <span class="vars">/usr/local/nagios</span>
+      <br />SLES:/usr/src # <span class="span">chown</span> -R <span class="vars">nagios</span>.<span class="vars">nagios</span> <span class="vars">/usr/local/nagios</span>
+      <br />
+
+      <br /><span class="cmts"># 安裝 nagios</span>
+      <br />SLES:/usr/src # <span class="cmds">tar</span> zxf <span class="vars">nagios-2.7.tar.gz</span>
+      <br />SLES:/usr/src # <span class="cmds">cd</span> <span class="vars">nagios-2.7</span>
+      <br />SLES:/usr/src/nagios-2.7 # ./configure --prefix=<span class="vars">/usr/local/nagios</span>
+      <span class="cmts"># cgi 顯示部分會用到gd, 建議安裝 gd 和 gd-devel</span>
+      <br />SLES:/usr/src/nagios-2.7 # <span class="cmds">make</span> all 
+      <br />SLES:/usr/src/nagios-2.7 # <span class="cmds">make</span> install 
+      <br />SLES:/usr/src/nagios-2.7 # <span class="cmds">make</span> install-config
+      <span class="cmts"># 會在 /usr/local/nagios/etc 目錄下安裝一些副檔名為 cfg-sample 範例檔, 可將這些副檔名為 cfg-sample 改為 cfg, 即可執行</span>
+      <br />SLES:/usr/src/nagios-2.7 # <span class="cmds">make</span> install-init
+      <br />
+
+      <br /><span class="cmts"># 安裝 nagios plugin</span>
+      <br />SLES:/usr/src # <span class="cmds">tar</span> zxf <span class="vars">nagios-plugins-1.4.6.tar.gz</span>
+      <br />SLES:/usr/src # <span class="cmds">cd</span> <span class="vars">nagios-plugins-1.4.6</span>
+      <br />SLES:/usr/src/nagios-plugins-1.4.6 # ./configure --prefix=<span class="vars">/usr/local/nagios</span>
+      <br />SLES:/usr/src/nagios-plugins-1.4.6 # <span class="cmds">make</span> 
+      <br />SLES:/usr/src/nagios-plugins-1.4.6 # <span class="cmds">make</span> install
+      <br />
+
+      <br /><span class="cmts"># 設定 apache</span>
+      <br />SLES:~ # <span class="cmds">cat</span> /etc/apache2/conf.d/nagios.conf
+      <br />#Nagios Setup 
+      <br />Alias /nagios/ /usr/local/nagios/share/ 
+      <br />&lt;Directory &quot;/usr/local/nagios/share&quot;&gt;
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Options None 
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AllowOverride AuthConfig 
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Order allow,deny 
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Allow from all 
+      <br />&lt;/Directory&gt;
+
+      </div>
+-->
+
+
+      <h3>設定</h3>
+      <p class="h3">Nagios 的設定檔主要有四種，分別為 Main Configuration File, Resource File, CGI Configuration File 和 Object Define File.
+      <ul class="h3">
+        <li>Main Configuration File: 主要是設定 Nagios 的運作方式及讀取各 Resource File 和 Object Define File (預設為 /etc/nagios/nagios.cfg)
+        <!-- /usr/local/nagios/etc/nagios.cfg -->
+        </li>
+        
+        <li>CGI Configuration File: 設定 Nagios 的運作時 CGI 的執行 (預設為 /etc/nagios/cgi.cfg)
+        <!-- /usr/local/naiogs/etc/cgi.cfg -->
+        </li>
+        
+        <li>Resource File: 定義使用者自定的巨集 (user-defined macro) (預設為 /etc/nagios/resource.cfg)</li>
+        <li>Object Define File: 分成 Services, Service Groups, Hosts, Host Groups, Contacts, Contact Groups, Commands, Time Periods 等多種 Object ( 預設目錄為 /etc/nagios/objects)</li>
+      </ul>
+      </p>
+      <div class="commands">SLES:~ # <span class="cmds">htpasswd2</span> -bc /etc/nagios/htpasswd.users <span class="vars"></span>{nagiosadmin} <span class="vars">password</span>
+      <span class="cmts"># 設定進入網頁的帳號密碼; -c: 建立檔案, 但檔案存在則會覆蓋; -b: 在 CLI 中輸入密碼.</span>
+      <br />SLES:~ # /etc/init.d/nagios start
+      <br />SELS:~ # /etc/init.d/apache2
+      <span class="cmts"># 在瀏覽器輸入 127.0.0.1/nagios 可看到網頁</span>
+      <br />
+
+      <br /><span class="cmts"># nagios.cfg</span>
+      <br />SLES:~ # <span class="cmds">grep</span> -P '~[^$#]' /etc/nagios/nagios.cfg
+      <br />log_file=/var/log/nagios/nagios.log
+      <span class="cmts"># 設定 log </span>
+      <br />cfg_file=/etc/nagios/objects/commands.cfg
+      <br />cfg_file=/etc/nagios/objects/contacts.cfg
+      <br />cfg_file=/etc/nagios/objects/timeperiods.cfg
+      <br />cfg_file=/etc/nagios/objects/templates.cfg
+      <br />cfg_file=/etc/nagios/objects/localhost.cfg
+      <span class="cmts"># 自定設定檔, 也是類似 localhost.cfg 方式</span>
+      <br />...
+      <br />resource_file=/etc/nagios/resource.cfg
+      <br />...
+      <br />nagios_user=nagios
+      <br />nagios_group=nagios
+      <br />...
+      <br />SLES:~ # <span class="cmds">nagios</span> -v /etc/nagios/nagios.cfg
+      <span class="cmts"># 檢查 Nagis 設定檔</span>
+      </div>
+      <br />
+
+      <h3>Object Define File</h3>
+      <p class="h3">Nagios 中的 Object 為 Host, Service 等, 可以將這些 Object 定義在任何文字檔中. 形式很像 C 的 structure 或是 C++ 的 class. define 是 key word, 在 define 之後所接的 object-type 就是 host, service 等, 然後所要定義的內容都在大括弧 ({})之中. object-specfic 是物件屬性和 variable 對應值, 使用上可以查 Nagios Ducoment.其形式如下:</p>
+      <div class="commands"><span class="cmts">; Object Define File</span>
+      <br />define <span class="ftns">object-type</span>{ 
+      <br />&nbsp;&nbsp;<span class="ftns">object-specific</span>&nbsp;&nbsp;<span class="vars">variable</span>
+      <br />}
+      <br />
+
+      
+      <br />define host{
+      <br />&nbsp;&nbsp;name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">generic-host</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; The name of this host template</span>
+      <br />&nbsp;&nbsp;notifications_enabled&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Host notifications are enabled</span>
+      <br />&nbsp;&nbsp;event_handler_enabled&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Host event handler is enabled</span>
+      <br />&nbsp;&nbsp;flap_detection_enabled&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Flap detection is enabled</span>
+      <br />&nbsp;&nbsp;failure_prediction_enabled&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Failure prediction is enabled</span>
+      <br />&nbsp;&nbsp;process_perf_data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Process performance data</span>
+      <br />&nbsp;&nbsp;retain_status_information &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Retain status information across program restarts</span>
+      <br />&nbsp;&nbsp;retain_nonstatus_information&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Retain non-status information across program restarts</span>
+      <br />&nbsp;&nbsp;notification_period&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">24x7</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Send host notifications at any time</span>
+      <br />&nbsp;&nbsp;register&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">0</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; DONT REGISTER THIS DEFINITION - ITS NOT A REAL HOST, JUST A TEMPLATE!</span>
+      <br />&nbsp;&nbsp;}
+      <br />
+
+      
+      <br />define host{
+      <br />&nbsp;&nbsp;use&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">linux-server</span>&nbsp;&nbsp;<span class="cmts">; Name of host template to use</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; This host definition will inherit all variables that are defined</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; in (or inherited by) the linux-server host template definition.</span>
+      <br />&nbsp;&nbsp;host_name&nbsp;&nbsp;<span class="vars">localhost</span>
+      <br />&nbsp;&nbsp;alias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">localhost</span>
+      <br />&nbsp;&nbsp;address&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">127.0.0.1</span>
+      <br />&nbsp;&nbsp;}
+      <br />
+
+
+      <br />define hostgroup{
+      <br />&nbsp;&nbsp;hostgroup_name&nbsp;&nbsp;<span class="vars">linux-servers</span>&nbsp;<span class="cmts">; The name of the hostgroup</span>
+      <br />&nbsp;&nbsp;alias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">Linux Servers</span>&nbsp;<span class="cmts">; Long name of the group</span>
+      <br />&nbsp;&nbsp;members&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">host1</span>, <span class="vars">host2</span>&nbsp;&nbsp;<span class="cmts">; Comma separated list of hosts that belong to this group</span>
+      <br />&nbsp;&nbsp;}
+      <br />
+
+
+      <br />define service{
+      <br />&nbsp;&nbsp;name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">generic-service</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; The 'name' of this service template</span>
+      <br />&nbsp;&nbsp;active_checks_enabled&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Active service checks are enabled</span>
+      <br />&nbsp;&nbsp;passive_checks_enabled&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Passive service checks are enabled/accepted</span>
+      <br />&nbsp;&nbsp;parallelize_check&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Active service checks should be parallelized (disabling this can lead to major performance problems)</span>
+      <br />&nbsp;&nbsp;obsess_over_service&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; We should obsess over this service (if necessary)</span>
+      <br />&nbsp;&nbsp;check_freshness&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">0</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Default is to NOT check service 'freshness'</span>
+      <br />&nbsp;&nbsp;notifications_enabled &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Service notifications are enabled</span>
+      <br />&nbsp;&nbsp;event_handler_enabled &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Service event handler is enabled</span>
+      <br />&nbsp;&nbsp;flap_detection_enabled&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Flap detection is enabled</span>
+      <br />&nbsp;&nbsp;failure_prediction_enabled&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Failure prediction is enabled</span>
+      <br />&nbsp;&nbsp;process_perf_data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Process performance data</span>
+      <br />&nbsp;&nbsp;retain_status_information&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Retain status information across program restarts</span>
+      <br />&nbsp;&nbsp;retain_nonstatus_information&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Retain non-status information across program restarts</span>
+      <br />&nbsp;&nbsp;is_volatile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">0</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; The service is not volatile</span>
+      <br />&nbsp;&nbsp;check_period&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">24x7</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; The service can be checked at any time of the day</span>
+      <br />&nbsp;&nbsp;max_check_attempts&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">3</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Re-check the service up to 3 times in order to determine its final (hard) state</span>
+      <br />&nbsp;&nbsp;normal_check_interval&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">10</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Check the service every 10 minutes under normal conditions</span>
+      <br />&nbsp;&nbsp;retry_check_interval&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">2</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Re-check the service every two minutes until a hard state can be determined</span>
+      <br />&nbsp;&nbsp;contact_groups&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">admins</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Notifications get sent out to everyone in the 'admins' group</span>
+      <br />&nbsp;&nbsp;notification_options &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">w,u,c,r</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Send notifications about warning, unknown, critical, and recovery events</span>
+      <br />&nbsp;&nbsp;notification_interval&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">60</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Re-notify about service problems every hour</span>
+      <br />&nbsp;&nbsp;notification_period&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">24x7</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Notifications can be sent out at any time</span>
+      <br />&nbsp;&nbsp;register&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">0</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; DONT REGISTER THIS DEFINITION - ITS NOT A REAL SERVICE, JUST A TEMPLATE!</span>
+      <br />&nbsp;&nbsp;}
+      <br />
+
+
+      <br />define service{
+      <br />&nbsp;&nbsp;use&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">local-service</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; Name of service template to use</span>
+      <br />&nbsp;&nbsp;host_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">localhost</span>
+      <br />&nbsp;&nbsp;service_description&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">PING</span>
+      <br />&nbsp;&nbsp;check_command&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">check_ping!100.0,20%!500.0,60%</span>
+      <br />&nbsp;&nbsp;}
+      <br />
+
+
+      <br />define serivcegroup{
+      <br />&nbsp;&nbsp;servicegroup_name&nbsp;&nbsp;<span class="vars">linux-service</span>&nbsp;<span class="cmts">; The name of the hostgroup</span>
+      <br />&nbsp;&nbsp;alias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">Linux Service</span>&nbsp;<span class="cmts">; Long name of the group</span>
+      <br />&nbsp;&nbsp;members&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">host1</span>, <span class="vars">host2</span>&nbsp;&nbsp;<span class="cmts">; Comma separated list of hosts that belong to this group</span>
+      <br />&nbsp;&nbsp;}
+      <br />
+
+
+      <br />define command{
+      <br />&nbsp;&nbsp;command_name&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">check_ping</span>
+      <br />&nbsp;&nbsp;command_line&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">1USER11/check_ping -H 1HOSTADDRESS1 -w 1ARG11 -c 1ARG21 -p 5</span>
+      <br />&nbsp;&nbsp;}
+      <br />
+ 
+
+      <br />define contact{
+      <br />&nbsp;&nbsp;name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">generic-contact</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; The name of this contact template</span>
+      <br />&nbsp;&nbsp;service_notification_period&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">24x7</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; service notifications can be sent anytime</span>
+      <br />&nbsp;&nbsp;host_notification_period&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">24x7</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; host notifications can be sent anytime</span>
+      <br />&nbsp;&nbsp;service_notification_options&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">w,u,c,r,f,s</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; send notifications for all service states, flapping events, and scheduled downtime events</span>
+      <br />&nbsp;&nbsp;host_notification_options&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">d,u,r,f,s</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; send notifications for all host states, flapping events, and scheduled downtime events</span>
+      <br />&nbsp;&nbsp;service_notification_commands&nbsp;&nbsp;&nbsp;<span class="vars">notify-service-by-email</span>&nbsp;<span class="cmts">; send service notifications via email</span>
+      <br />&nbsp;&nbsp;host_notification_commands&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">notify-host-by-email</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; send host notifications via email</span>
+      <br />&nbsp;&nbsp;register&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">0</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts">; DONT REGISTER THIS DEFINITION - ITS NOT A REAL CONTACT, JUST A TEMPLATE!</span>
+      <br />&nbsp;&nbsp;}
+      <br />
+
+      <br />define timeperiod{
+      <br />&nbsp;&nbsp;timeperiod_name&nbsp;<span class="vars">24x7</span>
+      <br />&nbsp;&nbsp;alias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">24 Hours A Day, 7 Days A Week</span>
+      <br />&nbsp;&nbsp;sunday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">00:00-24:00</span>
+      <br />&nbsp;&nbsp;monday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">00:00-24:00</span>
+      <br />&nbsp;&nbsp;tuesday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">00:00-24:00</span>
+      <br />&nbsp;&nbsp;wednesday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">00:00-24:00</span>
+      <br />&nbsp;&nbsp;thursday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">00:00-24:00</span>
+      <br />&nbsp;&nbsp;friday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">00:00-24:00</span>
+      <br />&nbsp;&nbsp;saturday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">00:00-24:00</span>
+      <br />&nbsp;&nbsp;}
+      </div>
+
+      <p class="h3">Host: Nagios 監視的主體, 只要列入 Nagios 監視清單內的機器均可視為主機的角色
+      <br />Service: 這算是主機角色的下層角色, 通常一個主機會運作多個服務 (如 HTTP, FTP 服務等, Nagios 可針對某個服務來進行監控)
+      <br />Command: 設定用來監控主機, 監控服務或通知聯絡人的程式. Nagios 採用 plugin 的方式, 可無限擴充監控的能力
+      <br />Contact: 設定當所監控的主機或服務發生異常時要通知的聯絡人資訊 (可在此設定聯絡人 Email 等相關資訊)
+      <br />Time Period: 設定監控的時間區間 (如僅在上班時間進行監控)
+      <br />Status: 即是 Nagios 監控回覆的結果. 可分為針對主機狀態的回覆, 與針對服務狀態的回覆：
+      <br />針對主機部份的狀態, 如下所示: </p>
+      <ul class="h3">
+        <li>OK: 主機運作正常, 無任何異狀</li>
+        <li>Unreachable: 被監控主機無法回應 ICMP 指令, 通常是網路出問題或被監控主機關閉 ICMP 的回應</li>
+        <li>UP: 主機重新啟動 (通常在主機從關閉到啟動會呈現此種狀態)</li>
+        <li>Down: 主機停止運作 (除了主機當掉以外, 剛加入監控的主機, 也會呈現此狀態)</li>        
+      </ul>
+      <p class="h3">針對服務部份的狀態, 如下所示:
+      </p>
+      <ul class="h3">
+        <li>OK: 服務運作正常, 無任何異狀</li>
+        <li>Warning: 服務出現異狀 (情節輕微是可被忽略的)</li>
+        <li>Critical: 服務出現嚴重問題 (需要立即處理的情況)</li>
+        <li>Unknown: 服務狀態不明 (最常見的情況為偵測不到服務)</li>
+      </ul>
+      <hr />
+
+
+
+      <!-- NRPE -->
+      <a name="nrpe"><h2>NRPE</h2>
+      <p class="h2">雖然 Nagios 好用, 若只能在 localhost 上使用時, 不就失去網路監控的意義嗎? 一般來講, Nagios 是有提供遠端監控的能力, 但不是每一個服務都有支援, 例如 check_local_xx 這指令只適用在 local 端, 所以到 remote 端就不行; 若是 Nagios server (監視主機) 和 Nagios client (被監視主機) 間有防火牆等, 使著 server 無法傳訊息給 client, 因而發展了 NRPE. NRPE 全名為 Nagios Remote Plugin Executor, NRPE 就像是一個訊號發射器, 只要在 client 端裝上 NRPE, 在 server 只要發出一個要求 NRPE 的訊息給 client, client 會將要求回傳給 server, 其工作原理就是這樣.
+      <br /><img src="http://exchange.nagios.org/components/com_mtree/img/listings/m/93.png" alt="" />
+      </p>
+      <br />
+
+      <h3>狀態</h3>
+      <p class="h3">Nagios Server / NRPE client
+      <br />Nagios Client / NRPE server
+      </p>
+      <br />
+      
+
+      <h3>Nagios Server / NRPE client 安裝設定</h3>
+      <div class="commands"><span class="cmts"># 安裝 nrpe</span>
+      <br />NagiosServer:~ # <span class="cmds">zypper</span> install nagios-plugins-nrpe
+      <br />
+
+      <br /><span class="cmts"># 設定</span>
+      <br />NagiosServer:~ #  <span class="cmds">cat</span> &lt;&lt; EOF &gt;&gt; /etc/nagios/objects/nrpe_check_control.cfg
+      <br />&gt; define command{
+      <span class="cmts">; 設定 check_nrpe</span>
+      <br />&gt; &nbsp;&nbsp;command_name &nbsp;&nbsp; check_nrpe
+      <br />&gt; &nbsp;&nbsp;command_line &nbsp;&nbsp; /usr/lib/nagios/plugins/check_nrpe -H $HOSTADDRESS$ -c $ARG1$ 
+      <br />&gt; }
+      <br />&gt; EOF
+      <br />
+
+      <br />NagiosServer:~ # <span class="cmds">cat</span> &lt;&lt; EOF &gt;&gt; /etc/nagios/objects/nrpe_host.cfg
+      <br />&gt; define host{
+      <span class="cmts">; 設定對應 Nagios client host</span>
+      <br />&gt; &nbsp;&nbsp;use &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; linux-server
+      <br />&gt; &nbsp;&nbsp;host_name &nbsp;&nbsp; NagiosClient
+      <br />&gt; &nbsp;&nbsp;alias &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NagiosClient
+      <br />&gt; &nbsp;&nbsp;address &nbsp;&nbsp;&nbsp;&nbsp; 192.168.0.11
+      <br />&gt; }
+      <br />&gt; 
+      <br />&gt; define service{
+      <span class="cmts">; 設定對應 Nagios client service</span>
+      <br />&gt; &nbsp;&nbsp;use &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; local-service
+      <br />&gt; &nbsp;&nbsp;host_name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NagiosCient
+      <br />&gt; &nbsp;&nbsp;service_description &nbsp;&nbsp; Current Load
+      <br />&gt; &nbsp;&nbsp;check_command &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; check_nrpe! check_load
+      <span class="cmts">; 執行的 check_load 是對應到 nrpe server 主機上的 nrpe.cfg 中的 check_command[check_load]</span>
+      <br />&gt; }
+      <br />
+
+      <br />NagiosServer:~ # <span class="cmds">cat</span> /etc/nagios/nagios.cfg
+      <br />...
+      <br />cfg_file=/etc/nagios/objects/nrpe_check_control.cfg
+      <span class="cmts"># 新增此行, 載入 nrpe_check_control.cfg</span>
+      <br />cfg_file=/etc/nagios/objects/nrpe_host.cfg
+      <span class="cmts"># 新增此行, 載入 nrpe_host.cfg</span>
+      <br />...
+      <br /> 
+
+      <br /><span class="cmts"># 啟動服務</span>
+      <br />NagiosServer:~ # /etc/init.d/nagios start
+      </div>
+      <br />
+
+
+<!-- /var/lib/nagios  /var/log/nagios  /var/run/nagios  /var/spool/nagios
+ls -l /var/lib/nagios -->
+
+<!-- define command {
+    command_name    nrpe_check_control
+    command_line    /usr/lib/nagios/plugins/nrpe_check_control $SERVICESTATE$ $SERVICESTATETYPE$ $SERVICEATTEMPT$ "$HOSTNAME$"
+} -->
+
+      <h3>Nagios Client / NRPE Server 安裝設定</h3>
+      <div class="commands"><span class="cmts"># 安裝 nrpe, 建議 nagios-plugins 和 nagios-plugins-extras</span>
+      <br />NagiosClient:~ # <span class="cmds">zypper</span>nagios-nrpe
+
+      <br />
+
+      <br /><span class="cmts"># 設定 nrpe</span>
+      <br />NagiosClient:~ # <span class="cmds">cat</span> /etc/nagios/nrpe.cfg
+      <br />...
+      <br />server_port=<span class="vars">5666</span>
+      <span class="cmts"># 設定 port</span>
+      <br />...
+      <br />nrpe_user=<span class="vars">nagios</span>
+      <span class="cmts"># 設定執行 npre 的使用者</span>
+      <br />...
+      <br />nrpe_group=<span class="vars">nagios</span>
+      <span class="cmts"># 設定執行 nrpe 的群組</span>
+      <br />...      
+      <br />allowed_hosts=<span class="vars">127.0.0.1</span>,<span class="vars">192.168.0.1</span>
+      <span class="cmts"># 設定可執行 nrpe 的主機</span>
+      <br />...
+      <br />command[<span class="vars">check_load</span>]=/usr/lib/nagios/plugins/check_load -w 15,10,5 -c 30,25,20
+      <span class="cmts"># 設定對應 command</span>
+      <br />
+
+      <br /><span class="cmts"># 啟動服務</span>
+      <br />NagiosClient:~ # /etc/init.d/nrpe start
+      <!-- NagiosClient:~ # nrpe -d -c /etc/nagios/nrpe.cfg -->
+      <br />
+
+      <br /><span class="cmts"># 檢查</span>
+      <br />NagiosClient:~ # <span class="cmds">netstat</span> -lutn | <span class="cmds">grep</span> 5666
+      <span class="cmts"># 預設是使用 5666 port, 可查這 port 確定是否有啟動</span> 
+      </div>
+      <hr />
+
+
+
+      <!-- NSCA -->
+      <a name="nsca"><h2>NSCA</h2>
+      <p class="h2">Nagios 除了使用 NRPE 之外, 還可以用 NSCA (Nagios Service Check Acceptor) 來作網路監控, NRPE 是使用 active (主動方式)去作監控, 而 NSCA 使用 passive (被動方式). 所謂的 active 就是 server 向 client 要訊息, 而 passive 則是 client 提供訊息給 server
+      <br /><img src="http://exchange.nagios.org/components/com_mtree/img/listings/m/92.png" alt="" />
+      </p>
+
+      <h3>狀態</h3>
+      <p class="h3">Nagios Server / NSCA Server
+      <br />Nagios Client / NSCA Client
+      </p>
+      <br />
+
+      <h3>Nagios Server / NSCA Server 安裝</h3>
+      <div class="commands"><span class="cmts"># 安裝 nsca</span>
+      <br />NagiosServer:~ # <span class="cmds">zypper</span> install nagios-nsca
+      <br />
+
+      <br /><span class="cmts"># 設定 nsca</span>
+      <br />NagiosServer:~ # <span class="cmds">cat</span> /etc/nagios/nsca.cfg
+      <br />...
+      <br />server_port=<span class="vars">5667</span>
+      <span class="cmts"># 設定 port</span>
+      <br />...
+      <br />nsca_user=<span class="vars">nagios</span>
+      <span class="cmts"># 設定執行 nsca 的使用者</span>
+      <br />...
+      <br />nsca_group=<span class="vars">nagios</span>
+      <span class="cmts"># 設定執行 nsca 的群組 </span>
+      <br />...
+      <br />password=<span class="vars">secret</span>
+      <span class="cmts"># 密碼要跟 NagiosClient 一樣</span>
+      <br />...
+      <br />
+
+      <br /><span class="cmts"># 設定</span>
+      <br />NagiosServer:~ #  <span class="cmds">cat</span> &lt;&lt; EOF &gt;&gt; /etc/nagios/objects/nsca_cmd.cfg
+      <br />&gt; define command{
+      <span class="cmts">; 設定 check_nrpe</span>
+      <br />&gt; &nbsp;&nbsp;command_name &nbsp;&nbsp; check_nsca_cmd
+      <br />&gt; &nbsp;&nbsp;command_line &nbsp;&nbsp; $USER1$/check_dummy $ARG1$ $ARG2$
+      <span class="cmts">; check_dummy 可接受兩個參數; arg1: status, status 以整數表示, 0: OK, 1: WARNING, 2: CRITICAL; arg2: message</span>
+      <br />&gt; }
+      <br />&gt; EOF
+      <br />
+
+      <br />NagiosServer:~ # <span class="cmds">cat</span> &lt;&lt; EOF &gt;&gt; /etc/nagios/objects/nsca_host.cfg
+      <br />&gt; define host{
+      <span class="cmts">; 設定對應 Nagios client host</span>
+      <br />&gt; &nbsp;&nbsp;use &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; linux-server
+      <br />&gt; &nbsp;&nbsp;host_name &nbsp;&nbsp; NagiosClient
+      <br />&gt; &nbsp;&nbsp;alias &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NagiosClient
+      <br />&gt; &nbsp;&nbsp;address &nbsp;&nbsp;&nbsp;&nbsp; 192.168.0.21
+      <br />&gt; }
+      <br />&gt; 
+      <br />&gt; define service{
+      <span class="cmts">; 設定對應 Nagios client service</span>
+      <br />&gt; &nbsp;&nbsp;use &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; local-service 
+      <br />&gt; &nbsp;&nbsp;host_name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NagiosCient
+      <br />&gt; &nbsp;&nbsp;service_description &nbsp;&nbsp; <span class="vars">Current Load</span>
+      <span class="cmts">; 除了是在網頁上顯示名稱之外, nsca 在接受時, 是使用此欄位解析</span>
+      <br />&gt; &nbsp;&nbsp;check_command &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; check_nsca_cmd!$ARG1$!$ARG2$
+      <span class="cmts">; 執行的 check_nsca_cmd 時, 實際上是透過 check_dummy 去收訊息</span>
+      <br />&gt; }
+      <br />
+      
+      <br /><span class="cmts"># 設定 nagios 的 nsca</span>
+      <br />NagiosServer:~ # <span class="cmds">cat</span> /etc/nagios/nagios.cfg
+      <br />...
+      <br />cfg_file=/etc/nagios/objects/nsca_cmd.cfg
+      <span class="cmts"># 新增此行, 載入 snca_cmd.cfg</span>
+      <br />cfg_file=/etc/nagios/objects/nsca_host.cfg
+      <span class="cmts"># 新增此行, 載入 nsca_host.cfg</span>
+      <br />...
+      <span class="cmts"># 修改底下設定</span>
+      <br />check_external_commands=1
+      <br />...
+      <br />accept_passive_service_checks=1
+      <br />...
+      <br />accept_passive_host_checks=1
+      <br />
+
+      <br /><span class="cmts"># 啟動服務</span>
+      <br />NagiosServer:~ # /etc/init.d/nagios start
+      <br />NagiosServer:~ # /etc/init.d/nsca start
+      </div>
+      <br />
+
+
+      <h3>Nagios Client / NSCA Client 安裝</h3>
+      <div class="commands"><span class="cmts"># 安裝 nsca</span>
+      <br />NagiosClinet: ~ # <span class="cmds">zypper</span> install nagios-nsca-client
+      <br />
+
+      <br /><span class="cmts"># 設定</span>
+      <br />NagiosClient:~ # <span class="cmds">cat</span> /etc/nagios/send_nsca.cfg
+      <br />...
+      <br />password=<span class="vars">secret</span>
+      <span class="cmts"># 密碼要跟 NagiosServer 一樣</span>
+      <br />...
+      <br />encryption_method=<span class="vars">1</span>
+      <span class="cmts"># 設定加密方式</span>
+      <br />
+
+      <br /><span class="cmts"># 測試</span>
+      <br />NagiosClient:~ # DESC='Current Load'
+      <span class="cmts"># 必須和 service_description 的設定名稱一樣</span>
+      <br />NagiosClient:~ # STAT=0
+      <span class="cmts"># 0: OK, 1: WARNING, 2: CRITICAL, 其他都是 UNKNOWN</span>
+      <br />NagiosClient:~ # MESG=`/usr/lib/nagios/plugins/check_loadcheck_load -w 5.0,4.0,3.0 -c 10.0,6.0,4.0`
+      <span class="cmts"># 回傳訊息</span>
+      <br />NagiosClient:~ # <span class="cmds">echo</span> -e &quot;$HOST\t<span class="vars">$DESC</span>\t%$STAT\t$MESG&quot; | <span class="cmds">send_nsca</span> -H <span class="vars">NagiosServer</span>
+      -c /etc/nagios/send_nsca.cfg
+      <span class="cmts"># 回傳給 NagisServer</span>
+      <!-- NagiosServer 的 /var/log/message 看見接收 -->
+      <!-- NagiosClient 使 cronteab 便可自動傳訊息 -->
+      </div>
+      <hr />
+
+
+      <!-- PNP4Nagios -->
+      <a name="pnp4nagios"><h2>PNP4Nagios</h2>
+      <p class="h2">Nagios 本身並沒有提供圖形化數據顯示, 但可以透過其他 addon 去實現, PNP 是個分析 Nagios 所提供的性能數據並自動存儲到 RRD (Round Robin Databases, RRDTool) 的 addon.
+      </p>
+
+      <h3>安裝</h3>
+      <div class="commands"><span class="cmts"># 安裝 pnp4nagios 會用到 rrdtool</span>
+      <br />SLES:/usr/local # <span class="cmds">tar</span> zxf pnp4nagios-0.6.21.tar.gz 
+      <br />SLES:/usr/local # <span class="cmds">cd</span> pnp4nagios-0.6.21/
+      <br />SLES:/usr/local/pnp4nagios-0.6.21 # ./configure --prefix=<span class="vars">/usr/local/pnp4nagios</span> --with-nagios-user=<span class="vars">nagios</span> --with-nagios-group=<span class="vars">nagios</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts"># --with-nagios-user: 設定啟動 nagios 的使用者</span>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmts"># --with-nagios-group: 設定啟動 nagios 的群組</span>
+      <br />SLES:/usr/local/pnp4nagios-0.6.21 # <span class="cmds">make</span> all
+      <span class="cmts"># 編譯程式</span>
+      <br />SLES:/usr/local/pnp4nagios-0.6.21 # <span class="cmds">make</span> install
+      <span class="cmts"># 安裝主程式</span>
+      <br />SLES:/usr/local/pnp4nagios-0.6.21 # <span class="cmds">make</span> install-webconf
+      <span class="cmts"># 安裝 apache 設定檔 /etc/apache2/conf.d/pnp4nagios.conf</span>
+      <br />SLES:/usr/local/pnp4nagios-0.6.21 # <span class="cmds">make</span> install-config
+      <br />SLES:/usr/local/pnp4nagios-0.6.21 # <span class="cmds">make</span> install-init
+      <span class="cmts"># 安裝 init file, /etc/rc.d/init.d/npcd, /etc/rc.d/init.d/pnp_gearman_worker</span>
+      <br />
+      </div>
+      <br />
+
+      <h3>設定</h3>
+      <p class="h3"></p>
+      <div class="commands"><span class="cmts"># 可先使用瀏覽器連 http://127.0.0.0.1/pnp4nagios 確認需要的套件是否都安裝設定</span>
+<!-- 
+PHP socket extension   -> zypper in php53-sockets, vi php.ini ;php_sockets
+Apache Rewrite Module  -> a2enmod rewrite
+ -->
+      <br />SLES:/usr/local/pnp4nagios # <span class="vars">mv</span> /share/install.php share/install.ignore
+      <span class="cmts"># 確認無誤後, 即可移除</span>
+      <br />
+
+      <br />SLES:~ # <span class="cmds">cat</span> &lt;&lt; EOF &gt;&gt; /etc/nagios/objects/commands.cfg
+      <br />define command {
+      <br />&nbsp;&nbsp;command_name&nbsp;&nbsp;process-host-perfdata
+      <br />&nbsp;&nbsp;command_line&nbsp;&nbsp;/usr/bin/perl /usr/local/pnp4nagios/libexec/process_perfdata.pl -d HOSTPERFDATA
+      <br />}
+      <br />
+      <br />define command {
+      <br />&nbsp;&nbsp;command_name&nbsp;&nbsp;process-service-perfdata
+      <br />&nbsp;&nbsp;command_line&nbsp;&nbsp;/usr/bin/perl /usr/local/pnp4nagios/libexec/process_perfdata.pl
+      <br />}
+      <br />
+
+      <br />SLES:~ # <span class="cmds">vi</span> /etc/nagios/objects/localhost.cfg
+      <br />define host {
+      <span class="cmts"># 新增此 host 設定, 之後加在對應的 host</span>
+      <br />&nbsp;&nbsp;name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host-pnp
+      <br />&nbsp;&nbsp;action_url&nbsp;&nbsp;/pnp4nagios/index.php/graph?host=$HOSTNAME$&amp;srv=_HOST_
+      <br />&nbsp;&nbsp;register&nbsp;&nbsp;&nbsp;&nbsp;0
+      <br />}
+      <br />
+      <br />define service {
+      <span class="cmts"># 新增此 service 設定, 之後加在對應的 service</span>
+      <br />&nbsp;&nbsp;name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;srv-pnp
+      <br />&nbsp;&nbsp;action_url&nbsp;&nbsp;/pnp4nagios/index.php/graph?host=$HOSTNAME$&amp;srv=$SERVICEDESC$
+      <br />&nbsp;&nbsp;register&nbsp;&nbsp;&nbsp;&nbsp;0
+      <br />}
+      <br />...
+      <br />define host{
+      <br />&nbsp;&nbsp;use&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;linux-server,<span class="vars">host-pnp</span>
+      <span class="cmts"># 載入 pnp4nagios 對應設定</span>
+      <br />&nbsp;&nbsp;host_name&nbsp;&nbsp;localhost
+      <br />&nbsp;&nbsp;alias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;localhost
+      <br />&nbsp;&nbsp;address&nbsp;&nbsp;&nbsp;&nbsp;127.0.0.1
+      <br />}
+      <br />
+      <br />define service{
+      <br />&nbsp;&nbsp;use&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local-service,<span class="vars">srv-pnp</span>
+      <span class="cmts"># 載入 pnp4nagios 對應設定</span>
+      <br />&nbsp;&nbsp;host_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;localhost
+      <br />&nbsp;&nbsp;service_description&nbsp;&nbsp;PING
+      <br />&nbsp;&nbsp;check_command&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;check_ping!100.0,20%!500.0,60%
+      <br />}
+      </div>
+      <br />
+
+      <h3>Synchronous Mode 設定</h3>
+      <p class="h3">
+      <img src="http://docs.pnp4nagios.org/_media/synchronous.png?cache=&w=539&h=311" alt="" />
+      </p>
+      <div class="commands">SLES:~ # <span class="cmds">vi</span> /etc/nagios/nagios.cfg
+      <br />...
+      <br />process_performance_data=1
+      <br />..
+      <br />enable_environment_macros=1
+      <br />...
+      <br />service_perfdata_command=process-service-perfdata
+      <br />host_perfdata_command=process-host-perfdata
+      <br />...
+      <!-- disable process_perf_data=0 -->
+      </div>
+
+      <h3></h3>
+      
+      <hr />
+
+
+
+<!--      
+
+/etc/nagios/nagios.cfg
+process_performance_data=1
+
+service_perfdata_command=process-service-perfdata
+host_perfdata_command=process-host-perfdata 
+
+-->
+
+<!-- reference -->
+    <h2>Reference</h2>
+
+    <li class="reference"><a href="http://www.nagios.org/">Nagios</a></li>
+    <br /><li class="reference"><a href="http://cubic9.com">cubic9.com</a></li>
+    <br /><li class="reference">網路與伺服器監視軟體 Nagios 入門與應用 , 林國立 , 博碩文化</li>
+    <br /><li class="reference"><a href="http://docs.pnp4nagios.org/start">PNP4Nagios</a></li>
+    <hr />
+
+<!-- changelog -->
+    <h2>Changelog</h2>
+    <li class="changelog">2014/03/17 第一次完成</li>
+</body>
+</html>
