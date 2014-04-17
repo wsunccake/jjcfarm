@@ -68,3 +68,11 @@ span.name {
     width: 750px;
   }
 }
+
+.featurette-heading {
+  margin-top: 0px;  
+}
+
+.lead {
+  font-size: 15px;
+}
