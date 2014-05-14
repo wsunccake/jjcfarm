@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+	<style type="text/css">
+		div {
+		    position: relative;
+		    display: inline-block;
+		}
+		
+		div:hover img.watermark {
+		    display: block;
+		}
+		
+		img.watermark {
+		    position: absolute;
+		    bottom: 0;
+		    right: 0;
+		    opacity: .6;
+		    display: none;
+		}
+		
+	</style>
+</head>
+<body>
+	<div>
+	    <img src="http://lorempixel.com/300/200" />
+	    <img src="http://cdn-img.easyicon.cn/png/270/27093.png" class="watermark" />
+	</div>
+</body>
+</html>

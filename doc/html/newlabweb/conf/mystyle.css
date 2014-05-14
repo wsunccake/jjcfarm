@@ -1,10 +1,17 @@
-h1 {
+  h1 {
   font-size: 60px;
   text-align: center;
   color: #33333;
 }
 
-a {
+h2 {
+  color: #000000
+}
+
+a,
+a:focus,
+a.mark {
+  text-decoration: none;
   color: #000000;
 }
 
@@ -75,4 +82,39 @@ span.name {
 
 .lead {
   font-size: 15px;
+}
+
+.table-hover > tbody > tr:nth-child(odd) > td,
+.table-hover > tbody > tr:nth-child(odd) > th {
+  background-color: #DDDDDD;
+}
+
+.table-hover > tbody > tr:nth-child(even) > td,
+.table-hover > tbody > tr:nth-child(even) > th {
+  background-color: #AAAAAA;
+}
+
+.table-hover > tbody > tr:hover > td,
+.table-hover > tbody > tr:hover > th, 
+.table-hover > tbody > tr:hover > td > span,
+.table-hover > tbody > tr:hover > th > span {
+  background-color: #007799;
+  color: #FFFFFF;
+}
+
+div.mailfig {
+    position: relative;
+    display: inline-block;
+}
+
+div:hover > img.watermark {
+    display: block;
+}
+
+img.watermark {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    opacity: 0.6;
+    display: none;
 }
