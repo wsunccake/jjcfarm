@@ -1,0 +1,33 @@
+#!/bin/bash
+
+JOB=$1
+#INPFILE=$1
+#JOB=${INPFILE%.*}
+
+echo -n "how many node do you use?(1 node = 8 CPU) 1, 2, 4, ... [2]: "
+read NNODE
+NNODE=${NNODE:-2}
+
+cat <<EOF > $JOB.pbs
+#!/bin/sh
+#PBS -N $JOB
+#PBS -o $JOB.out
+#PBS -e $JOB.err
+#PBS -q VASPq
+#PBS -l nodes=$NNODE:ppn=8
+#PBS -V
+
+cd \$PBS_O_WORKDIR
+cp \$PBS_NODEFILE NODE.\$PBS_JOBID
+source /work/pkg/openmpi.intel/ompiset.sh
+source /work/pkg/vasp4/vset.sh
+ulimit -s unlimited
+
+echo "Begin time: \`date\`"
+mpirun -np `expr $NNODE \* 8` vasp >& $JOB.log
+echo "Finish time: \`date\`"
+
+EOF
+
+chmod u+x $JOB.pbs
+qsub $JOB.pbs

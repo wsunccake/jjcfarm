@@ -1,0 +1,43 @@
+$TTL 2D
+@		IN SOA		k0.site.	root.k0.site. (
+				2013102300	; serial
+				3H		; refresh
+				1H		; retry
+				1W		; expiry
+				1D )		; minimum
+
+1.0.168.192.in-addr.arpa.	IN PTR		k0.site.
+;2.0.168.192.in-addr.arpa.	IN PTR		k1.site.
+11.0.168.192.in-addr.arpa.	IN PTR		fs1.site.
+12.0.168.192.in-addr.arpa.	IN PTR		fs2.site.
+13.0.168.192.in-addr.arpa.	IN PTR		fs3.site.
+101.0.168.192.in-addr.arpa.	IN PTR		i01.site.
+102.0.168.192.in-addr.arpa.	IN PTR		i02.site.
+103.0.168.192.in-addr.arpa.	IN PTR		i03.site.
+104.0.168.192.in-addr.arpa.	IN PTR		i04.site.
+105.0.168.192.in-addr.arpa.	IN PTR		i05.site.
+106.0.168.192.in-addr.arpa.	IN PTR		i06.site.
+107.0.168.192.in-addr.arpa.     IN PTR          i07.site.
+108.0.168.192.in-addr.arpa.     IN PTR          i08.site.
+109.0.168.192.in-addr.arpa.     IN PTR          i09.site.
+110.0.168.192.in-addr.arpa.     IN PTR          i10.site.
+111.0.168.192.in-addr.arpa.     IN PTR          i11.site.
+112.0.168.192.in-addr.arpa.     IN PTR          i12.site.
+113.0.168.192.in-addr.arpa.     IN PTR          i13.site.
+114.0.168.192.in-addr.arpa.     IN PTR          i14.site.
+115.0.168.192.in-addr.arpa.     IN PTR          i15.site.
+116.0.168.192.in-addr.arpa.     IN PTR          i16.site.
+117.0.168.192.in-addr.arpa.     IN PTR          i17.site.
+118.0.168.192.in-addr.arpa.     IN PTR          i18.site.
+119.0.168.192.in-addr.arpa.     IN PTR          i19.site.
+120.0.168.192.in-addr.arpa.     IN PTR          i20.site.
+121.0.168.192.in-addr.arpa.     IN PTR          i21.site.
+122.0.168.192.in-addr.arpa.     IN PTR          i22.site.
+123.0.168.192.in-addr.arpa.     IN PTR          i23.site.
+124.0.168.192.in-addr.arpa.     IN PTR          i24.site.
+125.0.168.192.in-addr.arpa.     IN PTR          i25.site.
+126.0.168.192.in-addr.arpa.     IN PTR          e01.site.
+127.0.168.192.in-addr.arpa.     IN PTR          e02.site.
+128.0.168.192.in-addr.arpa.     IN PTR          e03.site.
+129.0.168.192.in-addr.arpa.     IN PTR          e04.site.
+130.0.168.192.in-addr.arpa.     IN PTR          e05.site.

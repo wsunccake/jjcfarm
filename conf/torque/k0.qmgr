@@ -1,0 +1,21 @@
+# workq
+create queue workq 
+set queue workq queue_type = Execution 
+set queue workq resources_default.neednodes = workq
+set queue workq enabled = True 
+set queue workq started = True 
+# fmemq
+create queue fmemq 
+set queue fmemq queue_type = Execution 
+set queue fmemq resources_default.neednodes = fmemq
+set queue fmemq enabled = True 
+set queue fmemq started = True 
+# xeonq
+create queue xeonq 
+set queue xeonq queue_type = Execution 
+set queue xeonq resources_default.neednodes = xeonq
+set queue xeonq enabled = True 
+set queue xeonq started = True 
+# server
+set server default_queue = workq
+set server query_other_jobs = True

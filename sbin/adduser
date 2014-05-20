@@ -1,0 +1,93 @@
+#!/usr/bin/sh
+#
+### modified date:2013/11/09
+#
+
+
+echo -n "Input user name : "
+read USER
+if [ -z $USER ]
+then
+  echo "user name is error"
+  exit 1
+fi
+echo "user name : " $USER
+
+echo -n "Setup group [jjc] : "
+read GROUP
+GROUP=${GROUP:-'jjc'}
+#if [ -z $GROUP ]
+#then
+#  GROUP=jjc
+#fi
+
+echo -n "Setup shell [/bin/bash] : "
+read SHELL
+SHELL=${SHELL:-'/bin/bash'}
+#if [ -z $SHELL ]
+#then
+#  SHELL=/bin/bash
+#fi
+
+echo -n "Setup expire date (YYYY-MM-DD) : "
+read EXPIREDATE
+EXPIREDATE=${EXPIREDATE:-0}
+#if [ -z $EXPIREDATE ]
+#then
+## If EXPIREDATE was equal 0, account doesn't expire
+#  EXPIREDATE=0
+#fi
+
+#echo -n "Setup home diretory [/home/$USER] : "
+#read HOMEDIR
+#if [ -z $HOMEDIR ]
+#then
+#  HOMEDIR=/home/$USER
+#fi
+#HOMEDIR=/home/$USER
+
+#useradd -g $GROUP -s $SHELL -e $EXPIREDATE -m $HOMEDIR $USER
+useradd -g $GROUP -s $SHELL -e $EXPIREDATE -m $USER
+HOMEDIR=`awk -F: "/^$USER:/{print \\$6}" /etc/passwd`
+#REALHOME=/external/$USER
+#mkdir $REALHOME
+#chown $USER.$GROUP $REALHOME
+
+chfn $USER
+
+#echo "Setup password"
+#passwd $USER
+
+# Setup public and private key
+mkdir -p /home/$USER/.ssh
+ssh-keygen -t dsa -P '' -f /home/$USER/.ssh/id_dsa
+#expect -c "
+#spawn ssh-keygen -f /home/$USER/.ssh/id_dsa
+##expect \"Enter file in which to save the key\"
+##send \"\r\"
+#expect \"Enter passphrase\"
+#send \"\r\"
+#expect \"Enter same passphrase again:\"
+#send \"\r\"
+#interact
+#"
+#cat $REALHOME/.ssh/id_dsa.pub >> $REALHOME/.ssh/authorized_keys
+cat $HOMEDIR/.ssh/id_dsa.pub >> /$HOMEDIR/.ssh/authorized_keys
+#chown -R $USER.$GROUP /home/$USER
+chown -R $USER.$GROUP $HOMEDIR
+
+mkdir -p /work/$USER
+chown $USER.$GROUP/work/$USER
+mkdir -p /work2/$USER
+chown $USER.$GROUP/work2/$USER
+
+echo -n "Keyin your Student ID (ie, M1234567): "
+read STUDENT_ID
+# If EXPIREDATE was equal 0, account doesn't expire
+# EMAIL
+#mail -s 'Login private key' -a $REALHOME/.ssh/id_rsa $STUDENT_ID@mail.ntust.edu.tw < /usr/local/sbin/login.txt
+mail -s 'Login private key' -a /$HOMEDIR/.ssh/id_dsa -a /home/tsung/SSH.pdf $STUDENT_ID@mail.ntust.edu.tw < /usr/local/sbin/login.txt
+
+# Update NIS database
+cd /var/yp
+make

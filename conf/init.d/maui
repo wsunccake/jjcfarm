@@ -1,0 +1,39 @@
+#! /bin/bash
+#
+#  This script will start and stop the MAUI daemons for SuSE 9.x
+#
+. /etc/rc.status
+MAUI_SBIN=/usr/local/maui/sbin
+# Find how the script was called
+case "$1" in
+  start)
+        if [ -x $MAUI_SBIN/maui ] ; then
+                echo -n "Starting MAUI daemons: "
+                $MAUI_SBIN/maui
+                rc_status -v
+        fi
+  ;;
+  stop)
+        if [ -x $MAUI_SBIN/maui ] ; then
+                echo -n "Stopping MAUI daemons: "
+                killproc $MAUI_SBIN/maui -TERM
+                rc_status -v
+        fi
+        sleep 2
+  ;;
+  status)
+        if [ -x $MAUI_SBIN/maui ] ; then
+                echo -n "Status MAUI daemons: "
+                checkproc $MAUI_SBIN/maui
+                rc_status -v
+        fi
+  ;;
+  restart)
+        echo "Restarting MAUI"
+        $0 stop
+        $0 start
+  ;;
+  *)
+        echo "Usage: maui {start|stop|restart|status}"
+        exit 1
+esac

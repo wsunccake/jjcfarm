@@ -1,0 +1,48 @@
+### broadcast message when power failure
+### shutdown power 3 minutes
+
+#
+### for slave
+#
+
+i03:~ #
+
+Broadcast Message from root@i03
+        (somewhere) at 17:53 ...
+
+Power failure on UPS x1. Running on batteries.
+
+
+Broadcast Message from root@i03
+        (somewhere) at 17:56 ...
+
+Power has returned on UPS x1...
+
+i03:~ # tail /var/log/message
+Nov  5 17:53:31 i03 apcupsd[19699]: Power failure.
+Nov  5 17:53:37 i03 apcupsd[19699]: Running on UPS batteries.
+Nov  5 17:56:18 i03 apcupsd[19699]: Mains returned. No longer on UPS batteries.
+Nov  5 17:56:18 i03 apcupsd[19699]: Power is back. UPS running on mains.
+
+#
+### for master
+#
+
+x1:~ # 
+
+Broadcast Message from root@x1
+        (somewhere) at 17:52 ...
+
+Power failure on UPS x1. Running on batteries.
+
+
+Broadcast Message from root@x1
+        (somewhere) at 17:55 ...
+
+Power has returned on UPS x1...
+
+x1:~ # tail /var/log/messages
+Nov  5 17:52:29 x1 apcupsd[6879]: Power failure.
+Nov  5 17:52:35 x1 apcupsd[6879]: Running on UPS batteries.
+Nov  5 17:55:30 x1 apcupsd[6879]: Mains returned. No longer on UPS batteries.
+Nov  5 17:55:30 x1 apcupsd[6879]: Power is back. UPS running on mains.
